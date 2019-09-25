@@ -1,0 +1,6 @@
+.idea
+/storage
+/vendor
+.phpunit.result.cache
+/config/dev_config.php
+/config/production_config.php
