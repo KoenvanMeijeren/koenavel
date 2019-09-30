@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\session;
 
-
 use App\services\core\Log;
 use Cake\Chronos\Chronos;
 use Exception;
@@ -56,12 +55,12 @@ final class Builder
     /**
      * Construct the session.
      *
-     * @param string $sessionName the name of the session
-     * @param int $expiringTime the expiring time of the session
-     * @param string $path The path of the session
-     * @param string $domain The domain of the session
-     * @param bool $secure Determine if the session must be secure
-     * @param bool $httpOnly Determine if the session must be http only
+     * @param string $sessionName  the name of the session
+     * @param int    $expiringTime the expiring time of the session
+     * @param string $path         The path of the session
+     * @param string $domain       The domain of the session
+     * @param bool   $secure       Determine if the session must be secure
+     * @param bool   $httpOnly     Determine if the session must be http only
      *
      * @throws Exception
      */
@@ -124,9 +123,13 @@ final class Builder
         if ($expired->lte($now)) {
             $params = session_get_cookie_params();
             setcookie(
-                session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
 
             session_unset();

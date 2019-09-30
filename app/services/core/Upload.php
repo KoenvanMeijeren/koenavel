@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 use App\services\session\Session;
 use App\services\translation\Translation;
 use Exception;
@@ -46,8 +45,8 @@ class Upload
     /**
      * Prepare the file.
      *
-     * @param array $file the file
-     * @param string $path the path to store the file in
+     * @param array  $file        the file
+     * @param string $path        the path to store the file in
      * @param string $stripedPath the striped path to store the file in
      */
     public function __construct(
@@ -102,7 +101,8 @@ class Upload
             'Profile picture'
         );
         $uploadHandler->addRule(
-            'size', ['max' => '8M'],
+            'size',
+            ['max' => '8M'],
             '{label} should have less than {max}',
             'Profile picture'
         );
@@ -111,7 +111,7 @@ class Upload
         if ($result->isValid()) {
             try {
                 $result->confirm();
-                $filename = $result->name ?? '';
+                $filename = isset($result->name) ? $result->name : '';
                 $this->setStoredFilePath($this->stripedPath . $filename);
 
                 return true;
@@ -151,31 +151,33 @@ class Upload
 
         if (isset($this->file['type'], $this->file['name'])) {
             switch ($this->file['type']) {
-                case 'image/png':
-                    $this->file['name'] = $randomBytes . '.png';
+            case 'image/png':
+                $this->file['name'] = $randomBytes . '.png';
 
-                    return true;
+                return true;
                     break;
-                case 'image/jpg':
-                    $this->file['name'] = $randomBytes . '.jpg';
+            case 'image/jpg':
+                $this->file['name'] = $randomBytes . '.jpg';
 
-                    return true;
+                return true;
                     break;
-                case 'image/jpeg':
-                    $this->file['name'] = $randomBytes . '.jpeg';
+            case 'image/jpeg':
+                $this->file['name'] = $randomBytes . '.jpeg';
 
-                    return true;
+                return true;
                     break;
-                case 'image/svg+xml':
-                    $this->file['name'] = $randomBytes . '.svg';
+            case 'image/svg+xml':
+                $this->file['name'] = $randomBytes . '.svg';
 
-                    return true;
+                return true;
                     break;
-                default:
-                    Session::flash('error',
-                        Translation::get('not_allowed_file_upload'));
+            default:
+                Session::flash(
+                    'error',
+                    Translation::get('not_allowed_file_upload')
+                );
 
-                    return false;
+                return false;
                     break;
             }
         }

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 final class Sanitize
 {
     /**
      * The data to be sanitized.
      *
-     * @var string
+     * @var string|bool|float|int
      */
     private $data;
 
@@ -38,10 +37,10 @@ final class Sanitize
     /**
      * Construct the data.
      *
-     * @param string|float|double|int|bool $data the data to be sanitized
-     * @param string                $type the type of the data
-     * @param int                   $flags the flags for htmlspecialchars filtering
-     * @param string                $encoding the encoding for htmlspecialchars filtering
+     * @param string|float|double|int|bool $data     the data to be sanitized
+     * @param string                       $type     the type of the data
+     * @param int                          $flags    the flags for htmlspecialchars filtering
+     * @param string                       $encoding the encoding for htmlspecialchars filtering
      */
     public function __construct(
         $data,
@@ -79,29 +78,29 @@ final class Sanitize
     private function filterData($data)
     {
         switch ($this->type) {
-            case 'string':
-                $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
-                $data = trim($data);
+        case 'string':
+            $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
+            $data = trim($data);
 
-                break;
-            case 'integer':
-                $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+            break;
+        case 'integer':
+            $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
 
-                break;
-            case 'float':
-                $data = (float) filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT);
+            break;
+        case 'float':
+            $data = (float) filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT);
 
-                break;
-            case 'url':
-                $data = parse_url((string) $data, PHP_URL_PATH);
-                $data = trim((string) $data, '/');
-                $data = filter_var($data, FILTER_SANITIZE_URL);
+            break;
+        case 'url':
+            $data = parse_url((string) $data, PHP_URL_PATH);
+            $data = trim((string) $data, '/');
+            $data = filter_var($data, FILTER_SANITIZE_URL);
 
-                break;
-            default:
-                $data = filter_var($data);
+            break;
+        default:
+            $data = filter_var($data);
 
-                break;
+            break;
         }
 
         return $data;

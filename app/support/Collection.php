@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\support;
 
-
 use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
@@ -40,10 +39,11 @@ class Collection implements IteratorAggregate
 
     /**
      * Retrieve an external iterator
-     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
+     * @link   https://php.net/manual/en/iteratoraggregate.getiterator.php
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
      * <b>Traversable</b>
-     * @since 5.0.0
+     * @since  5.0.0
      */
     public function getIterator()
     {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 use App\services\session\Security as SessionSecurity;
 use App\services\session\Session;
 use App\services\translation\Builder as TranslationBuilder;
@@ -70,7 +69,7 @@ final class App
     /**
      * Log the request for the app.
      *
-     * @param string $url the live url of the app
+     * @param string $url         the live url of the app
      * @param string $requestType the type of the request for the app
      *
      * @throws Exception
@@ -85,5 +84,4 @@ final class App
             "Successful {$requestType} Request for page '{$url}' "
         );
     }
-
 }

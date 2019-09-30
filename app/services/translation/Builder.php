@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\translation;
 
-
 use App\services\core\Config;
 use App\services\core\URI;
 use Exception;

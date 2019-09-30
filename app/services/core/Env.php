@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 use App\services\validate\Validate;
 use Exception;
 use Whoops\Handler\PrettyPageHandler;
@@ -100,10 +99,14 @@ final class Env
      */
     private function setErrorHandling()
     {
-        ini_set('display_errors',
-            (self::DEVELOPMENT === $this->env ? '1' : '0'));
-        ini_set('display_startup_errors',
-            (self::DEVELOPMENT === $this->env ? '1' : '0'));
+        ini_set(
+            'display_errors',
+            (self::DEVELOPMENT === $this->env ? '1' : '0')
+        );
+        ini_set(
+            'display_startup_errors',
+            (self::DEVELOPMENT === $this->env ? '1' : '0')
+        );
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
 
         $whoops = new Whoops();
