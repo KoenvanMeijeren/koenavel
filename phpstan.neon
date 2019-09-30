@@ -3,3 +3,5 @@ parameters:
         # A lot of functions are in extensions so it is ok not to find those
         - "#Function .* not found#"
         - "#Constant .* not found.#"
+includes:
+    - phpstan-strict-rules.neon
