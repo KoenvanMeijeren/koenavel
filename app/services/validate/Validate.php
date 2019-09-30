@@ -29,7 +29,7 @@ final class Validate
      *
      * @return Validate
      */
-    public static function var($var)
+    public static function var($var): Validate
     {
         self::$var = $var;
 

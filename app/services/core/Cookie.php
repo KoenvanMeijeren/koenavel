@@ -84,7 +84,7 @@ final class Cookie
         }
 
         $sanitize = new Sanitize($value);
-        $data = new Encrypt($sanitize->data());
+        $data = new Encrypt((string) $sanitize->data());
 
         setcookie(
             $key,
@@ -110,7 +110,7 @@ final class Cookie
     {
         if (isset($_COOKIE[$key])) {
             $sanitize = new Sanitize($_COOKIE[$key]);
-            $data = new Encrypt($sanitize->data());
+            $data = new Encrypt((string) $sanitize->data());
 
             return $data->decrypt();
         }

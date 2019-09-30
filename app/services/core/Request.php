@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 final class Request
 {
     /**
@@ -21,16 +20,16 @@ final class Request
         }
 
         if (is_scalar($_POST[$key])) {
-            return (new Sanitize($_POST[$key]))->data();
+            return (string) (new Sanitize($_POST[$key]))->data();
         }
 
         if (is_array($_POST[$key])) {
             return (string) json_encode(
-                    $this->buildNewArray($key, $_POST)
-                );
+                $this->buildNewArray($key, $_POST)
+            );
         }
 
-        return $_POST[$key];
+        return (string) $_POST[$key];
     }
 
     /**
@@ -47,7 +46,7 @@ final class Request
         }
 
         if (is_scalar($_GET[$key])) {
-            return (new Sanitize($_GET[$key]))->data();
+            return (string) (new Sanitize($_GET[$key]))->data();
         }
 
         if (is_array($_GET[$key])) {
@@ -56,7 +55,7 @@ final class Request
             );
         }
 
-        return $_GET[$key];
+        return (string) $_GET[$key];
     }
 
     /**

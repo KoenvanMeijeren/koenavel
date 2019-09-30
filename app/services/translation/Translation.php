@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\translation;
 
-
 use App\services\core\Sanitize;
 use Exception;
 
@@ -20,7 +19,7 @@ final class Translation
     /**
      * Set a new translation item.
      *
-     * @param string $key the key to save the value in
+     * @param string $key   the key to save the value in
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -53,6 +52,6 @@ final class Translation
         }
 
         $sanitize = new Sanitize(self::$translation[$key]);
-        return htmlspecialchars_decode($sanitize->data());
+        return htmlspecialchars_decode((string) $sanitize->data());
     }
 }

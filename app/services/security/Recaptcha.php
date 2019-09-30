@@ -32,11 +32,13 @@ final class Recaptcha
      */
     public function __construct(Request $request)
     {
-        $recaptcha = http_build_query([
+        $recaptcha = http_build_query(
+            [
                 'secret' => Config::get('recaptcha_secret_key'),
                 'response' => $request->post('g-recaptcha-response'),
                 'remoteip' => URI::getRemoteIp(),
-            ]);
+            ]
+        );
 
         $this->query = [
             'http' => [
@@ -66,7 +68,7 @@ final class Recaptcha
             $recaptchaResult = json_decode($response);
         }
 
-        if ($recaptchaResult->success ?? false) {
+        if (isset($recaptchaResult) && $recaptchaResult->success) {
             return true;
         }
 

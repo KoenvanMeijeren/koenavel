@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\session;
 
-
 use App\services\core\Log;
 use App\services\core\Sanitize;
 use App\services\core\URI;
@@ -28,7 +27,7 @@ final class Session
     /**
      * Save data in the session.
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -40,14 +39,14 @@ final class Session
         }
 
         $sanitize = new Sanitize($value);
-        $data = new Encrypt($sanitize->data());
+        $data = new Encrypt((string) $sanitize->data());
         $_SESSION[$key] = $data->encrypt();
     }
 
     /**
      * Force to save data in the session.
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -55,7 +54,7 @@ final class Session
     public static function saveForced(string $key, string $value)
     {
         $sanitize = new Sanitize($value);
-        $data = new Encrypt($sanitize->data());
+        $data = new Encrypt((string) $sanitize->data());
         $_SESSION[$key] = $data->encrypt();
     }
 
@@ -66,7 +65,7 @@ final class Session
      * TODO: If you do this then the name makes sense
      * TODO: otherwise you can better remove the function
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -79,9 +78,9 @@ final class Session
     /**
      * Get data from the session; unset the data if specified.
      *
-     * @param string $key the key for searching to the
+     * @param string $key   the key for searching to the
      *                      corresponding session value
-     * @param bool $unset Must the session value be destroyed?
+     * @param bool   $unset Must the session value be destroyed?
      *
      * @return string
      *
@@ -91,7 +90,7 @@ final class Session
     {
         if (isset($_SESSION[$key])) {
             $sanitize = new Sanitize($_SESSION[$key]);
-            $data = new Encrypt($sanitize->data());
+            $data = new Encrypt((string) $sanitize->data());
             $value = $data->decrypt();
 
             if ($unset) {
@@ -136,9 +135,13 @@ final class Session
         Log::info('The session is destroyed.');
         $params = session_get_cookie_params();
         setcookie(
-            session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
         );
 
         session_unset();
@@ -150,8 +153,9 @@ final class Session
     /**
      * Log the session request.
      *
-     * @param string $key the key to search for
-     *                      the corresponding value
+     * @param string $key   the key to search for
+     *                      the corresponding
+     *                      value
      * @param string $value the value of the key
      *
      * @throws Exception

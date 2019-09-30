@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 use App\services\validate\Validate;
 use Exception;
 

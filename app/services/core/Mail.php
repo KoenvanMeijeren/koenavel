@@ -9,6 +9,7 @@ use Exception;
 
 /**
  * Class Mail
+ *
  * @package App\services\core
  *
  * TODO: find a way to test this class automatically
@@ -76,9 +77,9 @@ final class Mail
     /**
      * Set the mail body.
      *
-     * @param string $subject the subject of the mail
+     * @param string $subject  the subject of the mail
      * @param string $htmlBody the html body of the mail
-     * @param mixed $vars the vars to use in the mail
+     * @param mixed  $vars     the vars to use in the mail
      *
      * @throws Exception
      */

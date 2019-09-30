@@ -32,10 +32,14 @@ trait UriValidation
      */
     public function isDomain()
     {
-        if (!strstr(self::$var, 'localhost') && !strstr(self::$var,
-                '127.0.0.1')
-            && !preg_match('^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.){1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^',
-                self::$var)
+        if (!strstr(self::$var, 'localhost') && !strstr(
+            self::$var,
+            '127.0.0.1'
+        )
+            && !preg_match(
+                '^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.){1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^',
+                self::$var
+            )
         ) {
             throw new Exception('Invalid domain given.');
         }

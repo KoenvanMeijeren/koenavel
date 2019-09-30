@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\session;
 
-
 use App\services\core\Log;
 use App\services\core\URI;
 use Exception;

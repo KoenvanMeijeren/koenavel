@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 use Exception;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\RotatingFileHandler;
@@ -27,7 +26,10 @@ final class Log
      */
     private function __construct()
     {
-        self::$logger = new Logger((string) Config::get('appName'));
+        self::$logger = new Logger(
+            is_string(Config::get('appName')) ?
+                Config::get('appName') : ''
+        );
         self::$logger->pushHandler(
             new RotatingFileHandler(
                 START_PATH . '/storage/logs/app.log',
@@ -52,7 +54,7 @@ final class Log
     {
         new static();
 
-        return file_get_contents(
+        return (string) file_get_contents(
             START_PATH . '/storage/logs/app-' .
             $date . '.log'
         );
@@ -62,7 +64,7 @@ final class Log
      * Log info.
      *
      * @param string $message the log message
-     * @param array $context the log context
+     * @param array  $context the log context
      *
      * @throws Exception
      */
@@ -76,7 +78,7 @@ final class Log
      * Log error info.
      *
      * @param string $message the log message
-     * @param array $context the log context
+     * @param array  $context the log context
      *
      * @throws Exception
      */

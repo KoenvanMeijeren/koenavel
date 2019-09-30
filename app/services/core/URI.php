@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-
 class URI
 {
     /**
@@ -16,7 +15,7 @@ class URI
     {
         $sanitize = new Sanitize($_SERVER['REQUEST_URI'], 'url');
 
-        return $sanitize->data();
+        return (string) $sanitize->data();
     }
 
     /**
@@ -28,7 +27,7 @@ class URI
     {
         $sanitize = new Sanitize($_SERVER['HTTP_REFERER'], 'url');
 
-        return $sanitize->data();
+        return (string) $sanitize->data();
     }
 
     /**
