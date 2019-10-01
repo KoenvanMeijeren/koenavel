@@ -13,4 +13,19 @@ class TranslationTest extends TestCase
 
         $this->assertEquals('test', Translation::get('test'));
     }
+
+    public function test_that_we_cannot_get_a_translation()
+    {
+        $this->expectException(Exception::class);
+
+        Translation::get('testennn');
+    }
+
+    public function test_that_we_cannot_set_a_duplicated_translation()
+    {
+        $this->expectException(Exception::class);
+
+        Translation::set('test1', 'test');
+        Translation::set('test1', 'test');
+    }
 }

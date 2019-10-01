@@ -5,6 +5,10 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutTodoAnnotatedTests="true"
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
@@ -15,10 +19,19 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">app</directory>
+            <exclude>
+                <directory suffix=".php">app/services/exceptions</directory>
+                <directory suffix=".php">app/functions</directory>
+                <directory suffix=".php">app/controllers</directory>
+                <file>app/services/security/CSRF.php</file>
+                <file>app/services/security/Recaptcha.php</file>
+                <file>app/services/session/Builder.php</file>
+                <file>app/services/session/Security.php</file>
+                <file>app/services/response/Redirect.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="build/coverage"/>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="coverage-html" target="./coverage"/>
     </logging>
 </phpunit>
