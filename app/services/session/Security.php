@@ -15,7 +15,7 @@ final class Security
      *
      * @throws Exception
      */
-    public static function userAgentProtection()
+    public static function userAgentProtection(): void
     {
         Session::saveForced('user_agent', URI::getUserAgent());
 
@@ -30,7 +30,7 @@ final class Security
      *
      * @throws Exception
      */
-    public static function remoteIpProtection()
+    public static function remoteIpProtection(): void
     {
         Session::saveForced('user_remote_ip', URI::getRemoteIp());
 
