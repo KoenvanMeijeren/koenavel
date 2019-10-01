@@ -2,7 +2,8 @@
 
 namespace App\services\validate;
 
-use Exception;
+use App\services\exceptions\basic\EmptyVarException;
+use App\services\exceptions\basic\InvalidTypeException;
 
 trait BasicValidation
 {
@@ -11,12 +12,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws EmptyVarException
      */
-    public function isNotEmpty()
+    public function isNotEmpty(): Validate
     {
         if ((int)(0 !== self::$var) && empty(self::$var)) {
-            throw new Exception(
+            throw new EmptyVarException(
                 'Empty variable given. The variable cannot be empty.'
             );
         }
@@ -29,12 +30,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isScalar()
+    public function isScalar(): Validate
     {
         if (!is_scalar(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be a scalar type.'
             );
         }
@@ -47,12 +48,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isString()
+    public function isString(): Validate
     {
         if (!is_string(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be a string.'
             );
         }
@@ -65,12 +66,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isInt()
+    public function isInt(): Validate
     {
         if (!is_int(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be an int.'
             );
         }
@@ -83,12 +84,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isFloat()
+    public function isFloat(): Validate
     {
         if (!is_float(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be a float.'
             );
         }
@@ -101,12 +102,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isNumeric()
+    public function isNumeric(): Validate
     {
         if (!is_numeric(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be numeric.'
             );
         }
@@ -119,12 +120,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isCountable()
+    public function isCountable(): Validate
     {
         if (!is_countable(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be countable.'
             );
         }
@@ -137,12 +138,12 @@ trait BasicValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidTypeException
      */
-    public function isArray()
+    public function isArray(): Validate
     {
         if (!is_array(self::$var)) {
-            throw new Exception(
+            throw new InvalidTypeException(
                 gettype(self::$var) . ' given. The variable must be an array.'
             );
         }

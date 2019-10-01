@@ -76,7 +76,7 @@ final class Cookie
      *
      * @throws Exception
      */
-    public function save(string $key, string $value)
+    public function save(string $key, string $value): void
     {
         Validate::var($value)->isString()->isNotEmpty();
         if (isset($_COOKIE[$key])) {
@@ -106,7 +106,7 @@ final class Cookie
      *
      * @throws Exception
      */
-    public static function get(string $key)
+    public static function get(string $key): string
     {
         if (isset($_COOKIE[$key])) {
             $sanitize = new Sanitize($_COOKIE[$key]);
@@ -124,7 +124,7 @@ final class Cookie
      * @param string $key
      * @param string $value
      */
-    public function unset(string $key, string $value)
+    public function unset(string $key, string $value): void
     {
         if (isset($_COOKIE[$key])) {
             setcookie(

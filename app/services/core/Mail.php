@@ -58,7 +58,7 @@ final class Mail
      *
      * @param string $address the address of the receiver
      */
-    public function addAddress(string $address)
+    public function addAddress(string $address): void
     {
         $this->receivers .= $address;
     }
@@ -69,7 +69,7 @@ final class Mail
      * @param string $address the address of the receiver
      * @param string $name    the name of the receiver
      */
-    public function setFrom(string $address, string $name = '')
+    public function setFrom(string $address, string $name = ''): void
     {
         $this->headers .= 'From: '.$name.' <'.$address.'>'."\r\n";
     }
@@ -83,7 +83,7 @@ final class Mail
      *
      * @throws Exception
      */
-    public function setBody(string $subject, string $htmlBody, $vars = null)
+    public function setBody(string $subject, string $htmlBody, $vars = null): void
     {
         if (!empty($vars)) {
             extract($vars);
@@ -116,9 +116,9 @@ final class Mail
      *
      * @throws Exception
      */
-    public function send()
+    public function send(): void
     {
-        if ('production' === Config::get('env')) {
+        if (Env::PRODUCTION === Config::get('env')) {
             mail($this->receivers, $this->subject, $this->body, $this->headers);
         }
     }

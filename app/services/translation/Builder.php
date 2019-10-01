@@ -65,7 +65,7 @@ final class Builder
     /**
      * Set the language id.
      */
-    private function setLanguageID()
+    private function setLanguageID(): void
     {
         if (strstr(URI::getDomainExtension(), 'localhost')
             || strstr(URI::getDomainExtension(), 'nl')
@@ -81,7 +81,7 @@ final class Builder
      *
      * @return int
      */
-    public static function getLanguageID()
+    public static function getLanguageID(): int
     {
         return self::$language;
     }

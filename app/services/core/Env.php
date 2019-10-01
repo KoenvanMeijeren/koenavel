@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
+use App\services\exceptions\basic\InvalidConfigException;
+use App\services\exceptions\uri\InvalidEnvException;
 use App\services\validate\Validate;
 use Exception;
 use Whoops\Handler\PrettyPageHandler;
@@ -60,8 +62,10 @@ final class Env
      * Set the current env based on the uri.
      *
      * @throws Exception
+     * @throws InvalidEnvException
+     * @throws InvalidConfigException
      */
-    private function setEnv()
+    private function setEnv(): void
     {
         $this->env = self::PRODUCTION;
         $this->configLocation = CONFIG_PATH . '/production_config.php';
@@ -78,7 +82,7 @@ final class Env
         loadFile($this->configLocation);
 
         if (!Config::isPrepared()) {
-            throw new Exception(
+            throw new InvalidConfigException(
                 'The config must be prepared before setting the error handling.'
             );
         }
@@ -89,7 +93,7 @@ final class Env
      *
      * @return string
      */
-    public function getEnv()
+    public function getEnv(): string
     {
         return $this->env;
     }
@@ -97,7 +101,7 @@ final class Env
     /**
      * Set the error handling
      */
-    private function setErrorHandling()
+    private function setErrorHandling(): void
     {
         ini_set(
             'display_errors',

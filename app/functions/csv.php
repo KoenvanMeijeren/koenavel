@@ -28,8 +28,11 @@ function arrayToCSV(array $inputArray)
  *
  * @return string
  */
-function strPutCSV(array $input, string $delimiter = ',', string $enclosure = '"')
-{
+function strPutCSV(
+    array $input,
+    string $delimiter = ',',
+    string $enclosure = '"'
+) {
     // Open a memory "file" for read/write
     $fp = fopen('php://temp', 'r+');
 

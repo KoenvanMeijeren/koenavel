@@ -19,7 +19,9 @@
         "php": "^7.3",
         "cakephp/chronos": "^1.2",
         "kminek/email-obfuscator": "^1.0",
-        "filp/whoops": "^2.5"
+        "filp/whoops": "^2.5",
+        "ext-intl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.3",
@@ -32,7 +34,8 @@
     },
     "scripts": {
         "phpunit": "phpunit",
-        "phpstan": "phpstan analyse app -c phpstan.neon --level=7",
+        "phpstan": "phpstan analyse app -c phpstan.Neon --level=7",
+        "psalm": "psalm",
         "cs-fix": "phpcbf",
         "cs-check": "phpcs"
     }

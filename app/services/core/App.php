@@ -58,7 +58,7 @@ final class App
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         Router::load($this->routesLocation)
             ->direct(URI::getUrl(), URI::method(), 0);
@@ -74,7 +74,7 @@ final class App
      *
      * @throws Exception
      */
-    private function logRequest(string $url, string $requestType)
+    private function logRequest(string $url, string $requestType): void
     {
         if (empty($url)) {
             $url = 'home';

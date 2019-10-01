@@ -87,7 +87,7 @@ final class Builder
     /**
      * Start the session.
      */
-    private function startSession()
+    private function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status()) {
             session_name($this->name);
@@ -109,7 +109,7 @@ final class Builder
      *
      * @throws Exception
      */
-    private function setExpiringSession()
+    private function setExpiringSession(): void
     {
         $now = new Chronos();
         if (empty(Session::get('time'))) {
@@ -143,7 +143,7 @@ final class Builder
     /**
      * Regenerate session ID every five minutes.
      */
-    private function setCanarySession()
+    private function setCanarySession(): void
     {
         if (!isset($_SESSION['canary'])) {
             session_regenerate_id(true);

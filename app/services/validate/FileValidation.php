@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\services\validate;
 
-use Exception;
+use App\services\exceptions\file\FileNotExistingException;
+use App\services\exceptions\file\FileNotOfResourceTypeException;
+use App\services\exceptions\file\FileNotReadableException;
+use App\services\exceptions\file\FileNotWritableException;
 
 trait FileValidation
 {
@@ -13,12 +16,12 @@ trait FileValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws FileNotExistingException
      */
-    public function fileExists()
+    public function fileExists(): Validate
     {
         if (!file_exists(self::$var)) {
-            throw new Exception(
+            throw new FileNotExistingException(
                 'Could not load the given file ' . self::$var
             );
         }
@@ -31,12 +34,12 @@ trait FileValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws FileNotOfResourceTypeException
      */
-    public function isResource()
+    public function isResource(): Validate
     {
         if (!is_resource(self::$var)) {
-            throw new Exception(
+            throw new FileNotOfResourceTypeException(
                 'The file must be a resource: ' . self::$var
             );
         }
@@ -49,12 +52,12 @@ trait FileValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws FileNotReadableException
      */
-    public function isReadable()
+    public function isReadable(): Validate
     {
         if (!is_readable(self::$var)) {
-            throw new Exception(
+            throw new FileNotReadableException(
                 'The file must be readable: ' . self::$var
             );
         }
@@ -67,12 +70,12 @@ trait FileValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws FileNotWritableException
      */
-    public function isWritable()
+    public function isWritable(): Validate
     {
         if (!is_writable(self::$var)) {
-            throw new Exception(
+            throw new FileNotWritableException(
                 'The file must be writable: ' . self::$var
             );
         }

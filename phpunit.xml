@@ -23,10 +23,18 @@
                 <directory suffix=".php">app/services/exceptions</directory>
                 <directory suffix=".php">app/functions</directory>
                 <directory suffix=".php">app/controllers</directory>
+
+                <file>app/services/core/App.php</file>
+                <file>app/services/core/Upload.php</file>
+                <file>app/services/core/Mail.php</file>
+                <file>app/services/core/Cookie.php</file>
+
                 <file>app/services/security/CSRF.php</file>
                 <file>app/services/security/Recaptcha.php</file>
+
                 <file>app/services/session/Builder.php</file>
                 <file>app/services/session/Security.php</file>
+
                 <file>app/services/response/Redirect.php</file>
             </exclude>
         </whitelist>

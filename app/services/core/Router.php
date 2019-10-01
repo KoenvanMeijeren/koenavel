@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
+use App\services\exceptions\basic\InvalidRouteAndUriException;
+use App\services\exceptions\file\FileNotExistingException;
+use App\services\exceptions\object\InvalidMethodCalledException;
+use App\services\exceptions\object\InvalidObjectException;
 use App\services\validate\Validate;
-use Exception;
 
 final class Router
 {
@@ -48,9 +51,9 @@ final class Router
      *
      * @return Router
      *
-     * @throws Exception
+     * @throws FileNotExistingException
      */
-    public static function load(string $file)
+    public static function load(string $file): Router
     {
         loadFile(ROUTES_PATH.'/'.$file);
 
@@ -64,8 +67,11 @@ final class Router
      * @param string $controller the controller to execute when the route is called
      * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
      */
-    public static function get(string $route, string $controller, int $rights = 0)
-    {
+    public static function get(
+        string $route,
+        string $controller,
+        int $rights = 0
+    ): void {
         self::$routes['GET'][$rights][$route] = $controller;
     }
 
@@ -76,8 +82,11 @@ final class Router
      * @param string $controller the controller to execute when the route is called
      * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
      */
-    public static function post(string $route, string $controller, int $rights = 0)
-    {
+    public static function post(
+        string $route,
+        string $controller,
+        int $rights = 0
+    ): void {
         self::$routes['POST'][$rights][$route] = $controller;
     }
 
@@ -100,9 +109,11 @@ final class Router
      *
      * @return View
      *
-     * @throws Exception
+     * @throws InvalidObjectException
+     * @throws InvalidMethodCalledException
+     * @throws InvalidRouteAndUriException
      */
-    public function direct(string $url, string $requestType, int $rights)
+    public function direct(string $url, string $requestType, int $rights): View
     {
         $this->setAvailableRoutes($requestType, $rights);
         $this->replaceWildcards($url);
@@ -115,7 +126,9 @@ final class Router
             return $this->executeRoute('fourNullFour');
         }
 
-        throw new Exception('No route defined for this url');
+        throw new InvalidRouteAndUriException(
+            'No route defined for this url'
+        );
     }
 
     /**
@@ -125,9 +138,10 @@ final class Router
      *
      * @return View
      *
-     * @throws Exception
+     * @throws InvalidObjectException
+     * @throws InvalidMethodCalledException
      */
-    private function executeRoute(string $url)
+    private function executeRoute(string $url): View
     {
         $route = explode('@', self::$availableRoutes[$url]);
         $controller = 'App\controllers\\'.$route[0] ?? '';
@@ -146,11 +160,14 @@ final class Router
      * @param string $requestType the request type
      * @param int    $rights      the current rights of the user of the app
      */
-    private function setAvailableRoutes(string $requestType, int $rights)
+    private function setAvailableRoutes(string $requestType, int $rights): void
     {
         for ($i = 0; $i <= $rights; ++$i) {
             if (isset(self::$routes[$requestType][$i])) {
-                self::$availableRoutes = array_merge(self::$availableRoutes, self::$routes[$requestType][$i]);
+                self::$availableRoutes = array_merge(
+                    self::$availableRoutes,
+                    self::$routes[$requestType][$i]
+                );
             }
         }
     }
@@ -161,7 +178,7 @@ final class Router
      *
      * @param string $url the current url
      */
-    private function replaceWildcards(string $url)
+    private function replaceWildcards(string $url): void
     {
         foreach (array_keys(self::$availableRoutes) as $route) {
             $routeExploded = explode('/', $route);
@@ -175,12 +192,15 @@ final class Router
     /**
      * Update a specific route. Replace the slug for the matching value from the url.
      *
-     * @param array  $routeExploded the route exploded in parts divided by slashes
-     * @param array  $urlExploded   the url exploded in parts divided by slashes
-     * @param string $route         the route to search for a replacement
+     * @param string[]  $routeExploded the route exploded in parts divided by slashes
+     * @param string[]  $urlExploded   the url exploded in parts divided by slashes
+     * @param string    $route         the route to search for a replacement
      */
-    private function updateRoute(array $routeExploded, array $urlExploded, string $route)
-    {
+    private function updateRoute(
+        array $routeExploded,
+        array $urlExploded,
+        string $route
+    ): void {
         // if route and url exploded are not the same size, return void.
         if (count($urlExploded) !== count($routeExploded)) {
             return;

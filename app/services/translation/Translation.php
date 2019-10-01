@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\services\translation;
 
 use App\services\core\Sanitize;
+use App\services\exceptions\basic\DuplicatedKeyException;
+use App\services\exceptions\basic\InvalidKeyException;
 use Exception;
 
 final class Translation
@@ -22,12 +24,12 @@ final class Translation
      * @param string $key   the key to save the value in
      * @param string $value the value of the key
      *
-     * @throws Exception
+     * @throws DuplicatedKeyException
      */
-    public static function set(string $key, string $value)
+    public static function set(string $key, string $value): void
     {
         if (isset(self::$translation[$key])) {
-            throw new Exception(
+            throw new DuplicatedKeyException(
                 "Other translation was found with the given key: {$key} and the value is: "
                 . self::$translation[$key]
             );
@@ -43,12 +45,12 @@ final class Translation
      *
      * @return string
      *
-     * @throws Exception
+     * @throws InvalidKeyException
      */
-    public static function get(string $key)
+    public static function get(string $key): string
     {
         if (!isset(self::$translation[$key])) {
-            throw new Exception('No translation was found with the given key');
+            throw new InvalidKeyException('No translation was found with the given key');
         }
 
         $sanitize = new Sanitize(self::$translation[$key]);

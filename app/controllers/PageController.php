@@ -8,7 +8,7 @@ use App\services\core\View;
 
 class PageController
 {
-    public function index()
+    public function index(): View
     {
         return new View('index');
     }

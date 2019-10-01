@@ -2,50 +2,85 @@
 declare(strict_types=1);
 
 
-namespace App\model;
+namespace App\models;
 
 class User
 {
+    /**
+     * @var string
+     */
     private $firstName;
+
+    /**
+     * @var string
+     */
     private $lastName;
+
+    /**
+     * @var string
+     */
     private $email;
 
-    public function setFirstName(string $name)
+    /**
+     * @param string $name
+     */
+    public function setFirstName(string $name): void
     {
         $this->firstName = trim($name);
     }
 
-    public function getFirstName()
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function setLastName(string $name)
+    /**
+     * @param string $name
+     */
+    public function setLastName(string $name): void
     {
         $this->lastName = trim($name);
     }
 
-    public function getLastName()
+    /**
+     * @return string
+     */
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function getFullName()
+    /**
+     * @return string
+     */
+    public function getFullName(): string
     {
         return "$this->firstName $this->lastName";
     }
 
-    public function setEmail(string $email)
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function getEmail()
+    /**
+     * @return string
+     */
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getEmailVariables()
+    /**
+     * @return string[]
+     */
+    public function getEmailVariables(): array
     {
         return [
             'full_name' => $this->getFullName(),

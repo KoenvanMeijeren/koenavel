@@ -33,7 +33,7 @@ class Redirect
     /**
      * Redirect the path.
      */
-    private function redirect()
+    private function redirect(): void
     {
         URI::redirect($this->path);
     }

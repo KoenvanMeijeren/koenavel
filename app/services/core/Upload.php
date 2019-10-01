@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
+use App\services\exceptions\file\ErrorWhileUploadingFileException;
 use App\services\session\Session;
 use App\services\translation\Translation;
 use Exception;
@@ -45,9 +46,9 @@ class Upload
     /**
      * Prepare the file.
      *
-     * @param array  $file        the file
-     * @param string $path        the path to store the file in
-     * @param string $stripedPath the striped path to store the file in
+     * @param string[]  $file           the file
+     * @param string    $path           the path to store the file in
+     * @param string    $stripedPath    the striped path to store the file in
      */
     public function __construct(
         array $file,
@@ -66,7 +67,7 @@ class Upload
      *
      * @throws Exception
      */
-    public function prepare()
+    public function prepare(): bool
     {
         return $this->convertFileName();
     }
@@ -76,11 +77,13 @@ class Upload
      *
      * @return string
      */
-    public function getFileIfItExists()
+    public function getFileIfItExists(): string
     {
         $fileLocation = $this->stripedPath . $this->file['name'];
 
-        return file_exists($_SERVER['DOCUMENT_ROOT'] . $fileLocation) ? $fileLocation : '';
+        return file_exists(
+            $_SERVER['DOCUMENT_ROOT'] . $fileLocation
+        ) ? $fileLocation : '';
     }
 
     /**
@@ -88,9 +91,10 @@ class Upload
      *
      * @return bool
      *
+     * @throws ErrorWhileUploadingFileException
      * @throws Exception
      */
-    public function execute()
+    public function execute(): bool
     {
         $uploadHandler = new UploadHandler($this->path);
 
@@ -119,7 +123,11 @@ class Upload
                 $result->clear();
 
                 Log::error($exception->getMessage());
-                return false;
+                throw new ErrorWhileUploadingFileException(
+                    'There was an error while uploading the file',
+                    114,
+                    $exception
+                );
             }
         }
 
@@ -132,7 +140,7 @@ class Upload
      *
      * @return string
      */
-    public function getStoredFilePath()
+    public function getStoredFilePath(): string
     {
         return $this->storedPath;
     }
@@ -144,7 +152,7 @@ class Upload
      *
      * @throws Exception
      */
-    private function convertFileName()
+    private function convertFileName(): bool
     {
         $randomBytes = bin2hex($this->file['name']);
         $randomBytes .= bin2hex(random_bytes(40));
@@ -191,7 +199,7 @@ class Upload
      *
      * @param string $path the stored path of the file
      */
-    private function setStoredFilePath(string $path)
+    private function setStoredFilePath(string $path): void
     {
         $this->storedPath = $path;
     }

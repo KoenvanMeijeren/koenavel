@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\services\exceptions\file\FileNotExistingException;
 use App\services\validate\Validate;
 
 /**
@@ -10,9 +11,9 @@ use App\services\validate\Validate;
  * @param string $filename the filename
  * @param null   $vars     the vars to use in the loaded file file
  *
- * @return resource
+ * @return string
  *
- * @throws Exception
+ * @throws FileNotExistingException
  */
 function loadFile(string $filename, $vars = null)
 {
@@ -52,9 +53,9 @@ function loadImage(string $name, string $fallback)
  * @param array  $keys     the keys to use in the loaded table
  * @param array  $rows     the rows to use in the loaded table
  *
- * @return resource
+ * @return string
  *
- * @throws Exception
+ * @throws FileNotExistingException
  */
 function loadTable(string $filename, array $keys, array $rows = [])
 {

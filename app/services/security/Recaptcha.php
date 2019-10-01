@@ -55,7 +55,7 @@ final class Recaptcha
      * @return bool
      * @throws Exception
      */
-    public function validate()
+    public function validate(): bool
     {
         $context = stream_context_create($this->query);
         $response = file_get_contents(

@@ -50,7 +50,7 @@ final class Log
      *
      * @throws Exception
      */
-    public static function get(string $date)
+    public static function get(string $date): string
     {
         new static();
 
@@ -63,12 +63,12 @@ final class Log
     /**
      * Log info.
      *
-     * @param string $message the log message
-     * @param array  $context the log context
+     * @param string    $message the log message
+     * @param mixed[]   $context the log context
      *
      * @throws Exception
      */
-    public static function info(string $message, array $context = [])
+    public static function info(string $message, array $context = []): void
     {
         new static();
         self::$logger->info($message, $context);
@@ -77,12 +77,12 @@ final class Log
     /**
      * Log error info.
      *
-     * @param string $message the log message
-     * @param array  $context the log context
+     * @param string    $message the log message
+     * @param mixed[]   $context the log context
      *
      * @throws Exception
      */
-    public static function error(string $message, array $context = [])
+    public static function error(string $message, array $context = []): void
     {
         new static();
         self::$logger->error($message, $context);

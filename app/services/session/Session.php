@@ -32,7 +32,7 @@ final class Session
      *
      * @throws Exception
      */
-    public static function save(string $key, string $value)
+    public static function save(string $key, string $value): void
     {
         if (isset($_SESSION[$key])) {
             return;
@@ -51,7 +51,7 @@ final class Session
      *
      * @throws Exception
      */
-    public static function saveForced(string $key, string $value)
+    public static function saveForced(string $key, string $value): void
     {
         $sanitize = new Sanitize($value);
         $data = new Encrypt((string) $sanitize->data());
@@ -70,7 +70,7 @@ final class Session
      *
      * @throws Exception
      */
-    public static function flash(string $key, string $value)
+    public static function flash(string $key, string $value): void
     {
         self::saveForced($key, $value);
     }
@@ -86,7 +86,7 @@ final class Session
      *
      * @throws Exception
      */
-    public static function get(string $key, bool $unset = false)
+    public static function get(string $key, bool $unset = false): string
     {
         if (isset($_SESSION[$key])) {
             $sanitize = new Sanitize($_SESSION[$key]);
@@ -112,7 +112,7 @@ final class Session
      *
      * @return bool
      */
-    public static function unset(string $key)
+    public static function unset(string $key): bool
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
@@ -130,7 +130,7 @@ final class Session
      *
      * @throws Exception
      */
-    public static function destroy()
+    public static function destroy(): void
     {
         Log::info('The session is destroyed.');
         $params = session_get_cookie_params();
@@ -160,7 +160,7 @@ final class Session
      *
      * @throws Exception
      */
-    private static function logRequest(string $key, string $value)
+    private static function logRequest(string $key, string $value): void
     {
         $message = URI::method();
         $message .= ' request for page ';
