@@ -39,7 +39,7 @@ class Encrypt
      *
      * @throws Exception
      */
-    public function encrypt()
+    public function encrypt(): string
     {
         return Crypto::encrypt($this->data, $this->loadKeyFromConfig());
     }
@@ -51,7 +51,7 @@ class Encrypt
      *
      * @throws Exception
      */
-    public function decrypt()
+    public function decrypt(): string
     {
         return Crypto::decrypt($this->data, $this->loadKeyFromConfig());
     }
@@ -63,7 +63,7 @@ class Encrypt
      *
      * @throws Exception
      */
-    private function loadKeyFromConfig()
+    private function loadKeyFromConfig(): Key
     {
         return Key::loadFromAsciiSafeString(
             is_string(Config::get('encryptionToken')) ?
