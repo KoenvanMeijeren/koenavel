@@ -14,7 +14,7 @@ class ProductionErrorView extends Handler
      *
      * @throws Exception
      */
-    public function handle()
+    public function handle(): int
     {
         new View('500-error');
 

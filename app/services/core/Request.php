@@ -13,7 +13,7 @@ final class Request
      *
      * @return string
      */
-    public function post(string $key)
+    public function post(string $key): string
     {
         if (!isset($_POST[$key])) {
             return '';
@@ -39,7 +39,7 @@ final class Request
      *
      * @return string
      */
-    public function get(string $key)
+    public function get(string $key): string
     {
         if (!isset($_GET[$key])) {
             return '';
@@ -65,7 +65,7 @@ final class Request
      *
      * @return array
      */
-    public function file(string $key)
+    public function file(string $key): array
     {
         return isset($_FILES[$key]) ? $_FILES[$key] : [];
     }
@@ -77,7 +77,7 @@ final class Request
      *
      * @return array
      */
-    public function posts(array $parameters)
+    public function posts(array $parameters): array
     {
         $posts = [];
         foreach ($parameters as $parameter) {
@@ -95,7 +95,7 @@ final class Request
      *
      * @return array
      */
-    private function buildNewArray(string $key, array $method)
+    private function buildNewArray(string $key, array $method): array
     {
         $newArray = [];
         foreach ($method[$key] as $data) {

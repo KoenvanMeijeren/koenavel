@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
+use App\services\exceptions\basic\DuplicatedKeyException;
+use App\services\exceptions\basic\InvalidKeyException;
 use Exception;
 
 final class Config
@@ -28,12 +30,12 @@ final class Config
      * @param string                      $key   the key to save the value in
      * @param string|int|float|array|bool $value the value of the key
      *
-     * @throws Exception
+     * @throws DuplicatedKeyException
      */
-    public static function set(string $key, $value)
+    public static function set(string $key, $value): void
     {
         if (isset(self::$config[$key])) {
-            throw new Exception('There is already a config item specified with the same key: ' . $key);
+            throw new DuplicatedKeyException('There is already a config item specified with the same key: ' . $key);
         }
 
         if (is_scalar($value)) {
@@ -50,12 +52,12 @@ final class Config
      *
      * @return string|int|float|array|bool
      *
-     * @throws Exception
+     * @throws InvalidKeyException
      */
-    public static function get(string $key)
+    public static function get(string $key): string
     {
         if (!isset(self::$config[$key])) {
-            throw new Exception('There is no existing config item with the given key: ' . $key);
+            throw new InvalidKeyException('There is no existing config item with the given key: ' . $key);
         }
 
         if (is_scalar(self::$config[$key])) {
@@ -72,12 +74,12 @@ final class Config
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws InvalidKeyException
      */
-    public static function unset(string $key)
+    public static function unset(string $key): bool
     {
         if (!isset(self::$config[$key])) {
-            throw new Exception(
+            throw new InvalidKeyException(
                 'There is no existing config item with the given key: '
                 . $key
             );
@@ -95,7 +97,7 @@ final class Config
     /**
      * Unset all config items.
      */
-    public static function unsetAll()
+    public static function unsetAll(): void
     {
         self::$config = [];
     }
@@ -105,7 +107,7 @@ final class Config
      *
      * @param bool $state The prepare state of the config
      */
-    public static function setPreparedState(bool $state = true)
+    public static function setPreparedState(bool $state = true): void
     {
         self::$isPrepared = $state;
     }
@@ -115,7 +117,7 @@ final class Config
      *
      * @return bool
      */
-    public static function isPrepared()
+    public static function isPrepared(): bool
     {
         return self::$isPrepared;
     }
