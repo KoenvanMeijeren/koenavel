@@ -6,3 +6,4 @@
 /config/dev_config.php
 /config/production_config.php
 /build
+composer.lock
