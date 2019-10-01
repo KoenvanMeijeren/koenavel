@@ -65,6 +65,9 @@ class Encrypt
      */
     private function loadKeyFromConfig(): Key
     {
-        return Key::loadFromAsciiSafeString(Config::get('encryptionToken'));
+        return Key::loadFromAsciiSafeString(
+            is_string(Config::get('encryptionToken')) ?
+                Config::get('encryptionToken') : ''
+        );
     }
 }

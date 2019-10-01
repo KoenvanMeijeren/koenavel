@@ -53,7 +53,7 @@ final class Router
      *
      * @throws FileNotExistingException
      */
-    public static function load(string $file)
+    public static function load(string $file): Router
     {
         loadFile(ROUTES_PATH.'/'.$file);
 
@@ -192,9 +192,9 @@ final class Router
     /**
      * Update a specific route. Replace the slug for the matching value from the url.
      *
-     * @param array  $routeExploded the route exploded in parts divided by slashes
-     * @param array  $urlExploded   the url exploded in parts divided by slashes
-     * @param string $route         the route to search for a replacement
+     * @param string[]  $routeExploded the route exploded in parts divided by slashes
+     * @param string[]  $urlExploded   the url exploded in parts divided by slashes
+     * @param string    $route         the route to search for a replacement
      */
     private function updateRoute(
         array $routeExploded,

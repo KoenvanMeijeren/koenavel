@@ -10,7 +10,7 @@ use Whoops\Handler\Handler;
 class ProductionErrorView extends Handler
 {
     /**
-     * @return int|null A handler may return nothing, or a Handler::HANDLE_* constant
+     * @return int A handler may return nothing, or a Handler::HANDLE_* constant
      *
      * @throws Exception
      */

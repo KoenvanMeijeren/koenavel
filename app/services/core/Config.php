@@ -54,7 +54,7 @@ final class Config
      *
      * @throws InvalidKeyException
      */
-    public static function get(string $key): string
+    public static function get(string $key)
     {
         if (!isset(self::$config[$key])) {
             throw new InvalidKeyException('There is no existing config item with the given key: ' . $key);

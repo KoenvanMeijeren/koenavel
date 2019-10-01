@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
+use App\services\exceptions\file\ErrorWhileUploadingFileException;
 use App\services\session\Session;
 use App\services\translation\Translation;
 use Exception;
@@ -45,9 +46,9 @@ class Upload
     /**
      * Prepare the file.
      *
-     * @param array  $file        the file
-     * @param string $path        the path to store the file in
-     * @param string $stripedPath the striped path to store the file in
+     * @param string[]  $file           the file
+     * @param string    $path           the path to store the file in
+     * @param string    $stripedPath    the striped path to store the file in
      */
     public function __construct(
         array $file,
@@ -90,6 +91,7 @@ class Upload
      *
      * @return bool
      *
+     * @throws ErrorWhileUploadingFileException
      * @throws Exception
      */
     public function execute(): bool
@@ -121,7 +123,11 @@ class Upload
                 $result->clear();
 
                 Log::error($exception->getMessage());
-                return false;
+                throw new ErrorWhileUploadingFileException(
+                    'There was an error while uploading the file',
+                    114,
+                    $exception
+                );
             }
         }
 

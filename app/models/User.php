@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\model;
+namespace App\models;
 
 class User
 {
@@ -78,7 +78,7 @@ class User
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEmailVariables(): array
     {

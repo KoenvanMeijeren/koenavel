@@ -63,8 +63,8 @@ final class Log
     /**
      * Log info.
      *
-     * @param string $message the log message
-     * @param array  $context the log context
+     * @param string    $message the log message
+     * @param mixed[]   $context the log context
      *
      * @throws Exception
      */
@@ -77,8 +77,8 @@ final class Log
     /**
      * Log error info.
      *
-     * @param string $message the log message
-     * @param array  $context the log context
+     * @param string    $message the log message
+     * @param mixed[]   $context the log context
      *
      * @throws Exception
      */

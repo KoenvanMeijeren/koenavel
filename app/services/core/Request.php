@@ -50,9 +50,7 @@ final class Request
         }
 
         if (is_array($_GET[$key])) {
-            return (string) json_encode(
-                $this->buildNewArray($key, $_GET)
-            );
+            return (string) json_encode($this->buildNewArray($key, $_GET));
         }
 
         return (string) $_GET[$key];
@@ -61,9 +59,11 @@ final class Request
     /**
      * Get a uploaded file.
      *
-     * @param string $key the key to search for the corresponding value in the file array
+     * @param string $key   the key to search for the
+ *                          corresponding value in the
+     *                      file array
      *
-     * @return array
+     * @return string[]
      */
     public function file(string $key): array
     {
@@ -73,9 +73,11 @@ final class Request
     /**
      * Get all post items which are matching with the given parameters.
      *
-     * @param array $parameters the parameters to loop through and search for the corresponding values
+     * @param string[] $parameters  the parameters to loop
+     *                              through and search for the
+     *                              corresponding values
      *
-     * @return array
+     * @return string[]
      */
     public function posts(array $parameters): array
     {
@@ -90,10 +92,12 @@ final class Request
     /**
      * Build a new array with sanitized values.
      *
-     * @param string $key    the key to search for the corresponding value in the array
-     * @param array  $method the array to search for the corresponding value
+     * @param string    $key    the key to search for the
+     *                          corresponding value in the array
+     * @param array[]  $method the array to search for the
+     *                          corresponding value
      *
-     * @return array
+     * @return string[]|int[]|bool[]|float[]
      */
     private function buildNewArray(string $key, array $method): array
     {
