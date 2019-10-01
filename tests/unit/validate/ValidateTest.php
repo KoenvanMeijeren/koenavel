@@ -87,6 +87,11 @@ class ValidateTest extends TestCase
             Validate::class,
             Validate::var(new sampleTest())->methodExists('test')
         );
+
+        $this->assertInstanceOf(
+            Validate::class,
+            Validate::var('test')->isCallable()
+        );
     }
 
     public function test_that_we_can_fail_a_not_empty_validation_check()
@@ -152,7 +157,7 @@ class ValidateTest extends TestCase
     public function test_that_we_can_fail_a_domain_validation_check()
     {
         $this->expectException(Exception::class);
-        Validate::var(['test'])->isDomain();
+        Validate::var(1234)->isDomain();
     }
 
     public function test_that_we_can_fail_an_env_validation_check()
@@ -184,6 +189,18 @@ class ValidateTest extends TestCase
         $this->expectException(Exception::class);
         Validate::var(new sampleTest())->methodExists('index');
     }
+
+    public function test_that_we_can_fail_a_callable_method_validation_check()
+    {
+        $this->expectException(Exception::class);
+        Validate::var('non_existing_method')->isCallable();
+    }
+
+    public function test_that_we_can_fail_a_resource_validation_check()
+    {
+        $this->expectException(Exception::class);
+        Validate::var('test')->isResource();
+    }
 }
 
 class sampleTest
@@ -192,4 +209,8 @@ class sampleTest
     {
         return;
     }
+}
+
+function test() {
+    return true;
 }
