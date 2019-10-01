@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <psalm
     useDocblockTypes="true"
-    totallyTyped="true"
+    totallyTyped="false"
     strictBinaryOperands="false"
     rememberPropertyAssignmentsAfterCall="true"
     checkForThrowsDocblock="false"
@@ -15,9 +15,9 @@
         <directory name="app" />
         <directory name="config" />
         <directory name="routes" />
-        <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="tests" />
         </ignoreFiles>
     </projectFiles>
 

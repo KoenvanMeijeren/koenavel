@@ -10,7 +10,7 @@ declare(strict_types=1);
  *
  * @return bool
  */
-function validateDate(string $date, string $format = 'Y-m-d'): bool
+function validateDate(string $date, string $format = 'Y-m-d')
 {
     $d = DateTime::createFromFormat($format, $date);
 
@@ -24,7 +24,7 @@ function validateDate(string $date, string $format = 'Y-m-d'): bool
  *
  * @return string
  */
-function parseToDate(string $datetime): string
+function parseToDate(string $datetime)
 {
     $fmt = new IntlDateFormatter(
         'nl_NL',
@@ -42,7 +42,7 @@ function parseToDate(string $datetime): string
  *
  * @return string
  */
-function parseToTime(string $datetime): string
+function parseToTime(string $datetime)
 {
     $fmt = new IntlDateFormatter(
         'nl_NL',
@@ -60,7 +60,7 @@ function parseToTime(string $datetime): string
  *
  * @return string
  */
-function parseToInput(string $datetime): string
+function parseToInput(string $datetime)
 {
     $newDatetime = strtotime($datetime);
 
@@ -74,7 +74,7 @@ function parseToInput(string $datetime): string
  *
  * @return string
  */
-function parseToDateInput(string $datetime): string
+function parseToDateInput(string $datetime)
 {
     $newDatetime = strtotime($datetime);
 
@@ -88,7 +88,7 @@ function parseToDateInput(string $datetime): string
  *
  * @return string
  */
-function parseToTimeInput(string $datetime): string
+function parseToTimeInput(string $datetime)
 {
     $newDatetime = strtotime($datetime);
 

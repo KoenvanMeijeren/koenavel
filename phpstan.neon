@@ -4,5 +4,6 @@ parameters:
         - "#Function .* not found.#"
         - "#Constant .* not found.#"
         - "#not use the .* superglobal.#"
+        - "#Internal error#"
 includes:
-    - phpstan-strict-rules.neon
+    - phpstan-strict-rules.Neon
