@@ -3,6 +3,9 @@
 namespace App\services\validate;
 
 use App\services\core\Env;
+use App\services\exceptions\uri\InvalidDomainException;
+use App\services\exceptions\uri\InvalidEnvException;
+use App\services\exceptions\uri\InvalidUriException;
 use Exception;
 
 trait UriValidation
@@ -14,10 +17,10 @@ trait UriValidation
      *
      * @throws Exception
      */
-    public function isUrl()
+    public function isUrl(): Validate
     {
         if (!filter_var(self::$var, FILTER_VALIDATE_URL)) {
-            throw new Exception('Invalid url given.');
+            throw new InvalidUriException('Invalid url given.');
         }
 
         return new Validate();
@@ -28,20 +31,15 @@ trait UriValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidDomainException
      */
-    public function isDomain()
+    public function isDomain(): Validate
     {
-        if (!strstr(self::$var, 'localhost') && !strstr(
-            self::$var,
-            '127.0.0.1'
-        )
-            && !preg_match(
-                '^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.){1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^',
-                self::$var
-            )
+        if (!strstr(self::$var, 'localhost') &&
+            !strstr(self::$var, '127.0.0.1') &&
+            !preg_match('^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.){1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^', self::$var)
         ) {
-            throw new Exception('Invalid domain given.');
+            throw new InvalidDomainException('Invalid domain given.');
         }
 
         return new Validate();
@@ -52,12 +50,12 @@ trait UriValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidEnvException
      */
-    public function isEnv()
+    public function isEnv(): Validate
     {
         if (Env::DEVELOPMENT !== self::$var && Env::PRODUCTION !== self::$var) {
-            throw new Exception('Invalid environment given.');
+            throw new InvalidEnvException('Invalid environment given.');
         }
 
         return new Validate();

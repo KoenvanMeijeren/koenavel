@@ -31,7 +31,7 @@ final class CSRF
     /**
      * Construct the csrf
      */
-    public function __construct()
+    private function __construct()
     {
         self::$csrf = new AntiCSRF();
     }
@@ -44,8 +44,9 @@ final class CSRF
      * @return string
      * @throws Exception
      */
-    public static function formToken(string $lockTo)
+    public static function insertToken(string $lockTo)
     {
+        new CSRF();
         return self::$csrf->insertToken($lockTo, self::ECHO_CSRF_TOKEN);
     }
 
@@ -57,6 +58,7 @@ final class CSRF
      */
     public static function validate()
     {
+        new CSRF();
         if (self::$csrf->validateRequest()) {
             return true;
         }

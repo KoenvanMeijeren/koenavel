@@ -2,7 +2,9 @@
 
 namespace App\services\validate;
 
-use Exception;
+use App\services\exceptions\object\InvalidMethodCalledException;
+use App\services\exceptions\object\InvalidObjectException;
+use App\services\exceptions\object\MethodNotCallableException;
 
 trait ObjectValidation
 {
@@ -11,13 +13,14 @@ trait ObjectValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidObjectException
      */
-    public function isObject()
+    public function isObject(): Validate
     {
         if (!is_object(self::$var)) {
-            throw new Exception(
-                gettype(self::$var) . ' given. The variable must be an object.'
+            throw new InvalidObjectException(
+                gettype(self::$var) .
+                ' given. The variable must be an object.'
             );
         }
 
@@ -31,12 +34,12 @@ trait ObjectValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws InvalidMethodCalledException
      */
-    public function methodExists(string $methodName)
+    public function methodExists(string $methodName): Validate
     {
         if (!method_exists(self::$var, $methodName)) {
-            throw new Exception(
+            throw new InvalidMethodCalledException(
                 "The called method {$methodName} does not exist in the object " . serialize(self::$var) . '.'
             );
         }
@@ -52,13 +55,13 @@ trait ObjectValidation
      *
      * @return Validate
      *
-     * @throws Exception
+     * @throws MethodNotCallableException
      */
     public function isCallable(
-        string $syntax_only = null, $callable_name = null
-    ) {
+        string $syntax_only = null, string $callable_name = null
+    ): Validate {
         if (!is_callable(self::$var)) {
-            throw new Exception(
+            throw new MethodNotCallableException(
                 "The called method does not exist: " .
                 serialize(self::$var) . '.'
             );
