@@ -11,11 +11,11 @@ use App\services\validate\Validate;
  * @param string $filename the filename
  * @param null   $vars     the vars to use in the loaded file file
  *
- * @return resource
+ * @return string
  *
  * @throws FileNotExistingException
  */
-function loadFile(string $filename, $vars = null)
+function loadFile(string $filename, $vars = null): string
 {
     if (!empty($vars)) {
         extract($vars);
@@ -33,7 +33,7 @@ function loadFile(string $filename, $vars = null)
  *
  * @return string the image or a fallback otherwise nothing
  */
-function loadImage(string $name, string $fallback)
+function loadImage(string $name, string $fallback): string
 {
     if (!empty($name) && file_exists($_SERVER['DOCUMENT_ROOT'].$name)) {
         return $name;
@@ -53,11 +53,11 @@ function loadImage(string $name, string $fallback)
  * @param array  $keys     the keys to use in the loaded table
  * @param array  $rows     the rows to use in the loaded table
  *
- * @return resource
+ * @return string
  *
  * @throws FileNotExistingException
  */
-function loadTable(string $filename, array $keys, array $rows = [])
+function loadTable(string $filename, array $keys, array $rows = []): string
 {
     $filename = RESOURCES_PATH."/partials/tables/{$filename}.view.php";
     Validate::var($filename)->fileExists();

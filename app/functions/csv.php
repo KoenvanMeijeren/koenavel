@@ -9,7 +9,7 @@ declare(strict_types=1);
  *
  * @return string
  */
-function arrayToCSV(array $inputArray)
+function arrayToCSV(array $inputArray): string
 {
     $csvFieldRow = [];
     foreach ($inputArray as $CSBRow) {
@@ -28,8 +28,11 @@ function arrayToCSV(array $inputArray)
  *
  * @return string
  */
-function strPutCSV(array $input, string $delimiter = ',', string $enclosure = '"')
-{
+function strPutCSV(
+    array $input,
+    string $delimiter = ',',
+    string $enclosure = '"'
+): string {
     // Open a memory "file" for read/write
     $fp = fopen('php://temp', 'r+');
 
@@ -54,7 +57,7 @@ function strPutCSV(array $input, string $delimiter = ',', string $enclosure = '"
  * @param string $fileName       The filename
  * @param array  $assocDataArray The assoc data array
  */
-function outputCsv(string $fileName, array $assocDataArray)
+function outputCsv(string $fileName, array $assocDataArray): void
 {
     ob_clean();
     header('Pragma: public');

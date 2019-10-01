@@ -8,7 +8,7 @@ if (!function_exists('dd')) {
      *
      * @param mixed ...$expression The expression to debug.
      */
-    function dd(...$expression)
+    function dd(...$expression): void
     {
         foreach ($expression as $item) {
             echo '<pre>';
@@ -47,7 +47,7 @@ if (!function_exists('array_replace_keys')) {
      *
      * @return array with replaced keys
      */
-    function array_replace_keys(array $array, array $keys)
+    function array_replace_keys(array $array, array $keys): void
     {
         foreach ($keys as $search => $replace) {
             if (isset($array[$search])) {
@@ -68,7 +68,7 @@ if (!function_exists('parseHTMLEntities')) {
      *
      * @return string
      */
-    function parseHTMLEntities(string $data)
+    function parseHTMLEntities(string $data): string
     {
         return html_entity_decode(htmlspecialchars_decode($data));
     }
