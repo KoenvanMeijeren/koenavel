@@ -19,13 +19,6 @@ final class App
     private $routesLocation;
 
     /**
-     * The user of the app.
-     *
-     * @var object
-     */
-    private $user;
-
-    /**
      * Construct the app.
      *
      * Set the env based on the current environment (development - production)
