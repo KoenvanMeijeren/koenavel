@@ -49,7 +49,7 @@ final class Config
      *
      * @param string $key the key to search for the corresponding value
      *
-     * @return string|int|float|array|bool
+     * @return mixed
      *
      * @throws InvalidKeyException
      */
