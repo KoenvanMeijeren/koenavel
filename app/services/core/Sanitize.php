@@ -65,7 +65,7 @@ final class Sanitize
             $data = htmlspecialchars($this->data, $this->flags, $this->encoding);
         }
 
-        return self::filterData($data ?? $this->data);
+        return $this->filterData($data ?? $this->data);
     }
 
     /**
