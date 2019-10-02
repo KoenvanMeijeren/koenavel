@@ -16,7 +16,7 @@ use Sirius\Upload\Handler as UploadHandler;
 class Upload
 {
     /**
-     * The various file options
+     * The various allowed file options
      *
      * @var string[]
      */
