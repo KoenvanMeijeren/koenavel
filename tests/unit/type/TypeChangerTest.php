@@ -54,4 +54,19 @@ class TypeChangerTest extends TestCase
         $this->expectException(Exception::class);
         $typeChanger->toFloat();
     }
+
+    public function test_that_we_can_convert_an_array()
+    {
+        $typeChanger = new TypeChanger(json_encode(['test', 'test1']));
+
+        $this->assertIsArray($typeChanger->toArray());
+    }
+
+    public function test_that_we_cannot_convert_an_array()
+    {
+        $this->expectException(Exception::class);
+
+        $typeChanger = new TypeChanger(1);
+        $typeChanger->toArray();
+    }
 }

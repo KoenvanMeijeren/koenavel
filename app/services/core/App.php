@@ -7,6 +7,7 @@ namespace App\services\core;
 use App\services\session\Security as SessionSecurity;
 use App\services\session\Session;
 use App\services\translation\Builder as TranslationBuilder;
+use App\services\type\TypeChanger;
 use Exception;
 
 final class App

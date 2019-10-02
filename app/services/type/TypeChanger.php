@@ -32,7 +32,7 @@ class TypeChanger
     {
         if (is_scalar($this->var)) {
             $sanitize = new Sanitize($this->var);
-            return (string) $sanitize->data();
+            return (string)$sanitize->data();
         }
 
         throw new InvalidTypeException(
@@ -50,7 +50,7 @@ class TypeChanger
     {
         if (is_scalar($this->var)) {
             $sanitize = new Sanitize($this->var);
-            return (int) $sanitize->data();
+            return (int)$sanitize->data();
         }
 
         throw new InvalidTypeException(
@@ -68,7 +68,7 @@ class TypeChanger
     {
         if (is_scalar($this->var)) {
             $sanitize = new Sanitize($this->var);
-            return (float) $sanitize->data();
+            return (float)$sanitize->data();
         }
 
         throw new InvalidTypeException(
@@ -85,11 +85,18 @@ class TypeChanger
     public function toArray(): array
     {
         if (is_array($this->var)) {
-            return (array) $this->var;
+            return (array)$this->var;
+        }
+
+        if (is_string($this->var)) {
+            $possibleArray = json_decode($this->var);
+            if (is_array($possibleArray)) {
+                return $possibleArray;
+            }
         }
 
         throw new InvalidTypeException(
-            "Cannot convert a scalar variable to array."
+            "Cannot convert the variable to an array."
         );
     }
 }
