@@ -16,6 +16,16 @@ use Sirius\Upload\Handler as UploadHandler;
 class Upload
 {
     /**
+     * The various file options
+     *
+     * @var string[]
+     */
+    const ALLOWED_FILE_TYPES = [
+        'image/jpg', 'image/jpeg',
+        'image/svg+xml', 'image/png'
+    ];
+
+    /**
      * The file.
      *
      * @var array
@@ -156,42 +166,15 @@ class Upload
     {
         $randomBytes = bin2hex($this->file['name']);
         $randomBytes .= bin2hex(random_bytes(40));
+        $type = isset($this->file['type'], $this->file['name']) ? $this->file['type'] : '' ;
 
-        if (isset($this->file['type'], $this->file['name'])) {
-            switch ($this->file['type']) {
-            case 'image/png':
-                $this->file['name'] = $randomBytes . '.png';
-
-                return true;
-                    break;
-            case 'image/jpg':
-                $this->file['name'] = $randomBytes . '.jpg';
-
-                return true;
-                    break;
-            case 'image/jpeg':
-                $this->file['name'] = $randomBytes . '.jpeg';
-
-                return true;
-                    break;
-            case 'image/svg+xml':
-                $this->file['name'] = $randomBytes . '.svg';
-
-                return true;
-                    break;
-            default:
-                Session::flash(
-                    'error',
-                    Translation::get('not_allowed_file_upload')
-                );
-
-                return false;
-                    break;
-            }
+        if (!key_exists($type, self::ALLOWED_FILE_TYPES)) {
+            Session::flash('error', Translation::get('not_allowed_file_upload'));
+            return false;
         }
 
-        Session::flash('error', Translation::get('error_while_uploading_file'));
-        return false;
+        $this->file['name'] = $randomBytes.self::ALLOWED_FILE_TYPES[$type];
+        return true;
     }
 
     /**
