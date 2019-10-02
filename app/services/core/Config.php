@@ -6,6 +6,7 @@ namespace App\services\core;
 
 use App\services\exceptions\basic\DuplicatedKeyException;
 use App\services\exceptions\basic\InvalidKeyException;
+use App\services\type\TypeChanger;
 
 final class Config
 {
@@ -49,7 +50,7 @@ final class Config
      *
      * @param string $key the key to search for the corresponding value
      *
-     * @return mixed
+     * @return TypeChanger
      *
      * @throws InvalidKeyException
      */
@@ -59,11 +60,7 @@ final class Config
             throw new InvalidKeyException('There is no existing config item with the given key: ' . $key);
         }
 
-        if (is_scalar(self::$config[$key])) {
-            return (new Sanitize(self::$config[$key]))->data();
-        }
-
-        return self::$config[$key];
+        return new TypeChanger(self::$config[$key]);
     }
 
     /**

@@ -12,15 +12,15 @@ class ConfigTest extends TestCase
         Config::set('test', 'test');
         Config::set('test1', ['test' => 'test']);
 
-        $this->assertEquals('test', Config::get('test'));
-        $this->assertIsArray(Config::get('test1'));
+        $this->assertEquals('test', Config::get('test')->toString());
+        $this->assertIsArray(Config::get('test1')->toArray());
     }
 
     public function test_that_we_cannot_get_a_config_item()
     {
         $this->expectException(Exception::class);
 
-        Config::get('empty');
+        Config::get('empty')->toString();
     }
 
     public function test_that_we_can_unset_a_config_item()
@@ -30,7 +30,7 @@ class ConfigTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        Config::get('unset');
+        Config::get('unset')->toString();
     }
 
     public function test_that_we_cannot_unset_a_config_item()
@@ -47,7 +47,7 @@ class ConfigTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        Config::get('unsetAll');
+        Config::get('unsetAll')->toString();
     }
 
     public function test_that_we_cannot_add_duplicated_config_items()
@@ -72,7 +72,12 @@ class ConfigTest extends TestCase
         Config::set('sanitize', '<script>');
         Config::set('sanitize1', '   test    ');
 
-        $this->assertNotEquals('<script>', Config::get('sanitize'));
-        $this->assertNotEquals('   test    ', Config::get('sanitize1'));
+        $this->assertNotEquals(
+            '<script>', Config::get('sanitize')->toString()
+        );
+        $this->assertNotEquals(
+            '   test    ',
+            Config::get('sanitize1')->toString()
+        );
     }
 }

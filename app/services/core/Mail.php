@@ -118,7 +118,7 @@ final class Mail
      */
     public function send(): void
     {
-        if (Env::PRODUCTION === Config::get('env')) {
+        if (Env::PRODUCTION === Config::get('env')->toString()) {
             mail($this->receivers, $this->subject, $this->body, $this->headers);
         }
     }

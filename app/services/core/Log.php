@@ -27,8 +27,7 @@ final class Log
     private function __construct()
     {
         self::$logger = new Logger(
-            is_string(Config::get('appName')) ?
-                Config::get('appName') : ''
+            Config::get('appName')->toString()
         );
         self::$logger->pushHandler(
             new RotatingFileHandler(
