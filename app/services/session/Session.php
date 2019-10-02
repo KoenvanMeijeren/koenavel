@@ -27,7 +27,7 @@ final class Session
     /**
      * Save data in the session.
      *
-     * @param string $key   the key of the session item
+     * @param string $key the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -39,14 +39,14 @@ final class Session
         }
 
         $sanitize = new Sanitize($value);
-        $data = new Encrypt((string) $sanitize->data());
+        $data = new Encrypt((string)$sanitize->data());
         $_SESSION[$key] = $data->encrypt();
     }
 
     /**
      * Force to save data in the session.
      *
-     * @param string $key   the key of the session item
+     * @param string $key the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -54,7 +54,7 @@ final class Session
     public static function saveForced(string $key, string $value): void
     {
         $sanitize = new Sanitize($value);
-        $data = new Encrypt((string) $sanitize->data());
+        $data = new Encrypt((string)$sanitize->data());
         $_SESSION[$key] = $data->encrypt();
     }
 
@@ -65,7 +65,7 @@ final class Session
      * TODO: If you do this then the name makes sense
      * TODO: otherwise you can better remove the function
      *
-     * @param string $key   the key of the session item
+     * @param string $key the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -78,9 +78,9 @@ final class Session
     /**
      * Get data from the session; unset the data if specified.
      *
-     * @param string $key   the key for searching to the
+     * @param string $key the key for searching to the
      *                      corresponding session value
-     * @param bool   $unset Must the session value be destroyed?
+     * @param bool $unset Must the session value be destroyed?
      *
      * @return string
      *
@@ -90,7 +90,7 @@ final class Session
     {
         if (isset($_SESSION[$key])) {
             $sanitize = new Sanitize($_SESSION[$key]);
-            $data = new Encrypt((string) $sanitize->data());
+            $data = new Encrypt((string)$sanitize->data());
             $value = $data->decrypt();
 
             if ($unset) {
@@ -118,11 +118,7 @@ final class Session
             unset($_SESSION[$key]);
         }
 
-        if (!isset($_SESSION[$key])) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -153,7 +149,7 @@ final class Session
     /**
      * Log the session request.
      *
-     * @param string $key   the key to search for
+     * @param string $key the key to search for
      *                      the corresponding
      *                      value
      * @param string $value the value of the key

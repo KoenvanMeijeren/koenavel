@@ -6,7 +6,6 @@ namespace App\services\core;
 
 use App\services\exceptions\basic\DuplicatedKeyException;
 use App\services\exceptions\basic\InvalidKeyException;
-use Exception;
 
 final class Config
 {
@@ -27,7 +26,7 @@ final class Config
     /**
      * Set a new config item.
      *
-     * @param string                      $key   the key to save the value in
+     * @param string $key the key to save the value in
      * @param string|int|float|array|bool $value the value of the key
      *
      * @throws DuplicatedKeyException
@@ -86,12 +85,7 @@ final class Config
         }
 
         unset(self::$config[$key]);
-
-        if (!isset(self::$config[$key])) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
