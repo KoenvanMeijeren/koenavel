@@ -58,9 +58,10 @@ trait ObjectValidation
      * @throws MethodNotCallableException
      */
     public function isCallable(
-        string $syntax_only = null, string $callable_name = null
+        string $syntax_only = null,
+        string $callable_name = null
     ): Validate {
-        if (!is_callable(self::$var)) {
+        if (!is_callable(self::$var, $syntax_only, $callable_name)) {
             throw new MethodNotCallableException(
                 "The called method does not exist: " .
                 serialize(self::$var) . '.'
