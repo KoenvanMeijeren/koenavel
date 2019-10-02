@@ -64,15 +64,13 @@ final class Recaptcha
             $context
         );
 
-        if (is_string($response)) {
-            $recaptchaResult = json_decode($response);
-        }
-
-        if (isset($recaptchaResult) && $recaptchaResult->success) {
+        $recaptchaResult = json_decode($response);
+        if ($recaptchaResult->success) {
             return true;
         }
 
-        Session::flash('error', Translation::get('failed_recaptcha_check_message'));
+        Session::flash('error',
+            Translation::get('failed_recaptcha_check_message'));
         return false;
     }
 }
