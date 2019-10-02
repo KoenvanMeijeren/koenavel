@@ -26,9 +26,7 @@ final class Log
      */
     private function __construct()
     {
-        self::$logger = new Logger(
-            Config::get('appName')->toString()
-        );
+        self::$logger = new Logger(Config::get('appName')->toString());
         self::$logger->pushHandler(
             new RotatingFileHandler(
                 START_PATH . '/storage/logs/app.log',

@@ -28,7 +28,7 @@ class TypeChanger
      * @return string
      * @throws InvalidTypeException
      */
-    public function toString()
+    public function toString(): string
     {
         if (is_scalar($this->var)) {
             $sanitize = new Sanitize($this->var);
@@ -41,12 +41,48 @@ class TypeChanger
     }
 
     /**
+     * Convert a variable to int.
+     *
+     * @return int
+     * @throws InvalidTypeException
+     */
+    public function toInt(): int
+    {
+        if (is_scalar($this->var)) {
+            $sanitize = new Sanitize($this->var);
+            return (int) $sanitize->data();
+        }
+
+        throw new InvalidTypeException(
+            "Cannot convert a non scalar variable to int."
+        );
+    }
+
+    /**
+     * Convert a variable to float.
+     *
+     * @return float
+     * @throws InvalidTypeException
+     */
+    public function toFloat(): float
+    {
+        if (is_scalar($this->var)) {
+            $sanitize = new Sanitize($this->var);
+            return (float) $sanitize->data();
+        }
+
+        throw new InvalidTypeException(
+            "Cannot convert a non scalar variable to float."
+        );
+    }
+
+    /**
      * Convert a variable to an array.
      *
      * @return array
      * @throws InvalidTypeException
      */
-    public function toArray()
+    public function toArray(): array
     {
         if (is_array($this->var)) {
             return (array) $this->var;
