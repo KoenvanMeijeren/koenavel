@@ -3,7 +3,7 @@ parameters:
         # A lot of functions are in extensions so it is ok not to find those
         - "#Function .* not found.#"
         - "#Constant .* not found.#"
-        - "#not use the .* superglobal.#"
         - "#Internal error#"
+        - "#function .* expects .*, .*|false given.#"
 includes:
     - phpstan-strict-rules.Neon

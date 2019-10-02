@@ -9,7 +9,7 @@ use App\services\validate\Validate;
  * Load a file and return it.
  *
  * @param string $filename the filename
- * @param null   $vars     the vars to use in the loaded file file
+ * @param mixed[] $vars     the vars to use in the loaded file file
  *
  * @return string
  *
@@ -35,11 +35,15 @@ function loadFile(string $filename, $vars = null)
  */
 function loadImage(string $name, string $fallback)
 {
-    if (!empty($name) && file_exists($_SERVER['DOCUMENT_ROOT'].$name)) {
+    if (!empty($name) &&
+        file_exists($_SERVER['DOCUMENT_ROOT'].$name)
+    ) {
         return $name;
     }
 
-    if (!empty($fallback) && file_exists($_SERVER['DOCUMENT_ROOT'].$fallback)) {
+    if (!empty($fallback) &&
+        file_exists($_SERVER['DOCUMENT_ROOT'].$fallback)
+    ) {
         return $fallback;
     }
 
