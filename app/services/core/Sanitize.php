@@ -7,7 +7,7 @@ namespace App\services\core;
 final class Sanitize
 {
     /**
-     * The various type options
+     * The various variable type options
      *
      * @var string
      */
