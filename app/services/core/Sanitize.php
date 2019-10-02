@@ -7,9 +7,19 @@ namespace App\services\core;
 final class Sanitize
 {
     /**
+     * The various type options
+     *
+     * @var string
+     */
+    const TYPE_STRING = 'string';
+    const TYPE_INT = 'integer';
+    const TYPE_FLOAT = 'float';
+    const TYPE_URL = 'url';
+
+    /**
      * The data to be sanitized.
      *
-     * @var string|bool|float|int
+     * @var string|bool|float|double|int
      */
     private $data;
 
@@ -78,20 +88,20 @@ final class Sanitize
     private function filterData($data)
     {
         switch ($this->type) {
-        case 'string':
+        case self::TYPE_STRING:
             $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
             $data = trim($data);
 
             break;
-        case 'integer':
+        case self::TYPE_INT:
             $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
 
             break;
-        case 'float':
+        case self::TYPE_FLOAT:
             $data = (float) filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT);
 
             break;
-        case 'url':
+        case self::TYPE_URL:
             $data = parse_url((string) $data, PHP_URL_PATH);
             $data = trim((string) $data, '/');
             $data = filter_var($data, FILTER_SANITIZE_URL);
