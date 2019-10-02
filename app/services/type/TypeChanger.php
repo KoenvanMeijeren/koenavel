@@ -99,4 +99,21 @@ class TypeChanger
             "Cannot convert the variable to an array."
         );
     }
+
+    /**
+     * Convert a variable to json
+     *
+     * @return string
+     * @throws InvalidTypeException
+     */
+    public function toJson(): string
+    {
+        if (is_scalar($this->var)) {
+            return (string) json_encode($this->var);
+        }
+
+        throw new InvalidTypeException(
+            "Cannot convert the variable to json"
+        );
+    }
 }

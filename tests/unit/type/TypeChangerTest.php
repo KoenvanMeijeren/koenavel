@@ -69,4 +69,19 @@ class TypeChangerTest extends TestCase
         $typeChanger = new TypeChanger(1);
         $typeChanger->toArray();
     }
+
+    public function test_that_we_can_convert_a_var_to_json()
+    {
+        $typeChanger = new TypeChanger('test');
+
+        $this->assertJson($typeChanger->toJson());
+    }
+
+    public function test_that_we_cannot_convert_a_var_to_json()
+    {
+        $this->expectException(Exception::class);
+
+        $typeChanger = new TypeChanger(array('é', 1));
+        $typeChanger->toJson();
+    }
 }
