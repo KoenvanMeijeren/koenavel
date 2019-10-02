@@ -46,6 +46,21 @@ class EnvTest extends TestCase
         echo $test;
     }
 
+    public function test_that_we_can_get_the_env()
+    {
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $this->env = new Env();
+
+        $this->assertEquals(Env::DEVELOPMENT, $this->env->getEnv());
+        unset($this->env);
+        Config::unsetAll();
+
+        $_SERVER['HTTP_HOST'] = 'www.test.com';
+        $this->env = new Env();
+
+        $this->assertEquals(Env::PRODUCTION, $this->env->getEnv());
+    }
+
     public function tearDown(): void
     {
         unset($this->env);

@@ -67,6 +67,10 @@ class SessionTest extends TestCase
 
         Session::unset('test');
         $this->assertEmpty(Session::get('test'));
+
+        Session::save('test', 'test');
+        $this->assertNotEmpty(Session::get('test', true));
+        $this->assertEmpty(Session::get('test'));
     }
 
     public function test_that_we_can_flash_data_into_the_session()

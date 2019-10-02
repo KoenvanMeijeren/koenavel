@@ -10,8 +10,10 @@ class ConfigTest extends TestCase
     public function test_that_we_can_get_a_config_item()
     {
         Config::set('test', 'test');
+        Config::set('test1', ['test' => 'test']);
 
         $this->assertEquals('test', Config::get('test'));
+        $this->assertIsArray(Config::get('test1'));
     }
 
     public function test_that_we_cannot_get_a_config_item()
@@ -29,6 +31,13 @@ class ConfigTest extends TestCase
         $this->expectException(Exception::class);
 
         Config::get('unset');
+    }
+
+    public function test_that_we_cannot_unset_a_config_item()
+    {
+        $this->expectException(Exception::class);
+
+        Config::unset('non_existing_item');
     }
 
     public function test_that_we_can_unset_all_config_items()
