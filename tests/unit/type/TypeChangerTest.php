@@ -84,4 +84,13 @@ class TypeChangerTest extends TestCase
         $typeChanger = new TypeChanger(array('é', 1));
         $typeChanger->toJson();
     }
+
+    public function test_that_we_can_decode_a_json_string()
+    {
+        $typeChanger = new TypeChanger('test');
+        $typeChanger = new TypeChanger($typeChanger->toJson());
+
+        $this->assertEquals('test', $typeChanger->decodeJson()->toString());
+        $this->assertIsString($typeChanger->decodeJson()->toString());
+    }
 }

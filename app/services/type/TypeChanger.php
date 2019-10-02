@@ -116,4 +116,16 @@ class TypeChanger
             "Cannot convert the variable to json"
         );
     }
+
+    /**
+     * Decode a json string and return the type changer.
+     *
+     * @return TypeChanger
+     */
+    public function decodeJson(): TypeChanger
+    {
+        $var = json_decode($this->var);
+
+        return new TypeChanger($var);
+    }
 }
