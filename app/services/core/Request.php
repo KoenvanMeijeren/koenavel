@@ -19,17 +19,13 @@ final class Request
             return '';
         }
 
-        if (is_scalar($_POST[$key])) {
-            return (string) (new Sanitize($_POST[$key]))->data();
-        }
-
         if (is_array($_POST[$key])) {
             return (string) json_encode(
                 $this->buildNewArray($key, $_POST)
             );
         }
 
-        return (string) $_POST[$key];
+        return (string) (new Sanitize($_POST[$key]))->data();
     }
 
     /**
@@ -45,15 +41,11 @@ final class Request
             return '';
         }
 
-        if (is_scalar($_GET[$key])) {
-            return (string) (new Sanitize($_GET[$key]))->data();
-        }
-
         if (is_array($_GET[$key])) {
             return (string) json_encode($this->buildNewArray($key, $_GET));
         }
 
-        return (string) $_GET[$key];
+        return (string) (new Sanitize($_GET[$key]))->data();
     }
 
     /**
