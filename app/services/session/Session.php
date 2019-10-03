@@ -133,7 +133,7 @@ final class Session
      */
     public static function destroy(): Session
     {
-        if (!headers_sent() && PHP_SESSION_ACTIVE !== session_status()) {
+        if (PHP_SESSION_ACTIVE !== session_status()) {
             throw new InvalidSessionException(
                 "Cannot destroy the session if the session does not exists"
             );
