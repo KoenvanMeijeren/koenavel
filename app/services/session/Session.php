@@ -133,27 +133,27 @@ final class Session
      */
     public static function destroy(): Session
     {
-        if (headers_sent() && PHP_SESSION_NONE !== session_status()) {
-            Log::info('The session is destroyed.');
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
+        if (!headers_sent() && PHP_SESSION_NONE === session_status()) {
+            throw new InvalidSessionException(
+                "Cannot destroy the session if the session does not exists"
             );
-
-            session_unset();
-            session_destroy();
-
-            return new Session();
         }
 
-        throw new InvalidSessionException(
-            "Cannot destroy the session if the session does not exists"
+        Log::info('The session is destroyed.');
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
         );
+
+        session_unset();
+        session_destroy();
+
+        return new Session();
     }
 }
