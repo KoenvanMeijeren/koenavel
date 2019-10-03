@@ -18,13 +18,34 @@ class SessionTest extends TestCase
         Config::set('appName', 'TestApp');
     }
 
+    public function test_that_we_can_set_up_the_session()
+    {
+        $this->assertInstanceOf(
+            Session::class,
+            new Session()
+        );
+    }
+
+    public function test_that_we_cannot_destroy_the_session()
+    {
+        $this->expectException(Exception::class);
+
+        Session::destroy();
+    }
+
     public function test_that_we_can_get_data_from_the_session()
     {
         Session::save('test', 'test');
+        Session::save('error', 'test');
+        Session::save('success', 'test');
 
         $this->assertEquals('test', Session::get('test'));
+        $this->assertEquals('test', Session::get('error'));
+        $this->assertEquals('test', Session::get('success'));
 
         unset($_SESSION['test']);
+        unset($_SESSION['error']);
+        unset($_SESSION['success']);
     }
 
     public function test_that_we_cannot_get_duplicated_data_from_the_session()

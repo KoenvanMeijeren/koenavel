@@ -89,7 +89,7 @@ final class Builder
      */
     private function startSession(): void
     {
-        if (PHP_SESSION_NONE === session_status()) {
+        if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
             session_name($this->name);
 
             session_set_cookie_params(
@@ -120,7 +120,7 @@ final class Builder
         $expired = new Chronos($sessionCreatedAt);
         $expired = $expired->addSeconds($this->expiringTime);
 
-        if ($expired->lte($now)) {
+        if ($expired->lte($now) && !headers_sent()) {
             $params = session_get_cookie_params();
             setcookie(
                 session_name(),
@@ -145,12 +145,17 @@ final class Builder
      */
     private function setCanarySession(): void
     {
-        if (!isset($_SESSION['canary'])) {
+        if (!isset($_SESSION['canary']) &&
+            PHP_SESSION_NONE !== session_status()
+        ) {
             session_regenerate_id(true);
             $_SESSION['canary'] = time();
         }
 
-        if ($_SESSION['canary'] < time() - 300) {
+        if (isset($_SESSION['canary']) &&
+            $_SESSION['canary'] < time() - 300 &&
+            PHP_SESSION_NONE !== session_status()
+        ) {
             session_regenerate_id(true);
             $_SESSION['canary'] = time();
         }
