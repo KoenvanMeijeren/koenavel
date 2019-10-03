@@ -17,6 +17,9 @@ class TypeChanger
      */
     private $var;
 
+    /**
+     * @param mixed $var The var to change the type of
+     */
     public function __construct($var)
     {
         $this->var = $var;
@@ -79,7 +82,7 @@ class TypeChanger
     /**
      * Convert a variable to an array.
      *
-     * @return array
+     * @return mixed[]
      * @throws InvalidTypeException
      */
     public function toArray(): array
