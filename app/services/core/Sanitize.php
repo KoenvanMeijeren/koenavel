@@ -13,6 +13,7 @@ final class Sanitize
      */
     const TYPE_STRING = 'string';
     const TYPE_INT = 'integer';
+    const TYPE_DOUBLE = 'double';
     const TYPE_FLOAT = 'float';
     const TYPE_URL = 'url';
 
@@ -97,8 +98,9 @@ final class Sanitize
             $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
 
             break;
+        case self::TYPE_DOUBLE:
         case self::TYPE_FLOAT:
-            $data = (float) filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT);
+            $data = (double) filter_var($data);
 
             break;
         case self::TYPE_URL:
