@@ -6,7 +6,6 @@ namespace App\services\session;
 
 use App\services\core\Log;
 use App\services\core\Sanitize;
-use App\services\core\URI;
 use App\services\exceptions\session\InvalidSessionException;
 use App\services\security\Encrypt;
 use Exception;
@@ -98,7 +97,11 @@ final class Session
                 self::unset($key);
             }
 
-            self::logRequest($key, $value);
+            if ($key === 'error' || $key === 'success') {
+                Log::appRequest(
+                    $value, $key === 'success' ? 'Successful' : 'Failed'
+                );
+            }
         }
 
         return $value ?? '';
@@ -152,33 +155,5 @@ final class Session
         throw new InvalidSessionException(
             "Cannot destroy the session if the session does not exists"
         );
-    }
-
-    /**
-     * Log the session request.
-     *
-     * @param string $key the key to search for
-     *                      the corresponding
-     *                      value
-     * @param string $value the value of the key
-     *
-     * @throws Exception
-     */
-    private static function logRequest(string $key, string $value): void
-    {
-        $message = URI::method();
-        $message .= ' request for page ';
-        $message .= URI::getUrl();
-        $message .= ' with message "';
-        $message .= $value;
-        $message .= '"';
-
-        if ('error' === $key) {
-            Log::info("Failed {$message}");
-        } elseif ('success' === $key) {
-            Log::info("Successful {$message}");
-        }
-
-        Log::info($message);
     }
 }

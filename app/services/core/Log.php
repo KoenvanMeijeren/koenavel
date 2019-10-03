@@ -84,4 +84,26 @@ final class Log
         new static();
         self::$logger->error($message, $context);
     }
+
+    /**
+     * Log the app request.
+     *
+     * @param string $state   specify the key if you want to add a state
+     * @param string $value the message
+     *
+     * @throws Exception
+     */
+    public static function appRequest(
+        string $value = '',
+        string $state = 'successful'
+    ): void {
+        $message = URI::method();
+        $message .= ' request for page ';
+        $message .= URI::getUrl();
+        $message .= ' with message "';
+        $message .= $value;
+        $message .= '"';
+
+        Log::info($state . " " . $message);
+    }
 }

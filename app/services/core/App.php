@@ -57,25 +57,6 @@ final class App
         Router::load($this->routesLocation)
             ->direct(URI::getUrl(), URI::method(), 0);
 
-        $this->logRequest(URI::getUrl(), URI::method());
-    }
-
-    /**
-     * Log the request for the app.
-     *
-     * @param string $url         the live url of the app
-     * @param string $requestType the type of the request for the app
-     *
-     * @throws Exception
-     */
-    private function logRequest(string $url, string $requestType): void
-    {
-        if (empty($url)) {
-            $url = 'home';
-        }
-
-        Log::info(
-            "Successful {$requestType} Request for page '{$url}' "
-        );
+        Log::appRequest();
     }
 }
