@@ -71,14 +71,16 @@ final class Router
      *
      * @param string $route      the get route
      * @param string $controller the controller to execute when the route is called
+     * @param string $method     a specific method from the controller
      * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
      */
     public static function get(
         string $route,
         string $controller,
+        string $method = 'index',
         int $rights = 0
     ): void {
-        self::$routes['GET'][$rights][$route] = $controller;
+        self::$routes['GET'][$rights][$route] = [$controller, $method];
     }
 
     /**
@@ -86,14 +88,16 @@ final class Router
      *
      * @param string $route      the post route
      * @param string $controller the controller to execute when the route is called
+     * @param string $method     a specific method from the controller
      * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
      */
     public static function post(
         string $route,
         string $controller,
+        string $method = 'index',
         int $rights = 0
     ): void {
-        self::$routes['POST'][$rights][$route] = $controller;
+        self::$routes['POST'][$rights][$route] = [$controller, $method];
     }
 
     /**
@@ -149,10 +153,9 @@ final class Router
      */
     private function executeRoute(string $url)
     {
-        $route = explode('@', self::$availableRoutes[$url]);
-        $controller = 'App\controllers\\'.$route[0] ?? '';
-        $controller = new $controller();
-        $methodName = $route[1] ?? 'index';
+        $route = self::$availableRoutes[$url];
+        $controller = new $route[0]();
+        $methodName = $route[1];
 
         Validate::var($controller)->isObject();
         Validate::var($controller)->methodExists($methodName);

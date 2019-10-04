@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 
-namespace App\controllers;
-
 class TestController
 {
     public function index(): string

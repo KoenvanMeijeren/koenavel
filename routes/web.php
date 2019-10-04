@@ -9,10 +9,11 @@ declare(strict_types=1);
  * 3 = Admin
  * 4 = Super admin.
  */
+use App\controllers\PageController;
 use App\services\core\Router;
 
 // Pages.
-Router::get('', 'PageController@index');
+Router::get('', PageController::class, 'index', 0);
 
 // Page not found.
-Router::get('fourNullFour', 'PageController@notFound');
+Router::get('fourNullFour', PageController::class, 'notFound', 0);

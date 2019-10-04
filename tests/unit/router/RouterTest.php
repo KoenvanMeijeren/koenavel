@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
+use App\controllers\PageController;
 use App\services\core\Router;
-use App\services\core\View;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
@@ -27,14 +27,14 @@ class RouterTest extends TestCase
     public function test_that_we_can_set_a_get_route()
     {
         $this->assertNull(
-            Router::get('', 'PageController@index')
+            Router::get('', PageController::class)
         );
     }
 
     public function test_that_we_can_set_a_post_route()
     {
         $this->assertNull(
-            Router::post('test', 'PageController@store')
+            Router::post('test', PageController::class)
         );
     }
 
