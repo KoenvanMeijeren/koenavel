@@ -13,6 +13,12 @@ use PDO;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as Whoops;
 
+/**
+ * Class Env
+ * @package App\services\core
+ *
+ * TODO: rewrite config to .env files
+ */
 final class Env
 {
     /**
