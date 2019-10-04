@@ -8,7 +8,7 @@ use App\services\core\Log;
 use Cake\Chronos\Chronos;
 use Exception;
 
-final class Builder
+class Builder
 {
     /**
      * The name of the session.
@@ -78,16 +78,12 @@ final class Builder
         $this->domain = $domain;
         $this->secure = $secure;
         $this->httpOnly = $httpOnly;
-
-        $this->startSession();
-        $this->setExpiringSession();
-        $this->setCanarySession();
     }
 
     /**
      * Start the session.
      */
-    private function startSession(): void
+    protected function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
             session_name($this->name);
@@ -109,7 +105,7 @@ final class Builder
      *
      * @throws Exception
      */
-    private function setExpiringSession(): void
+    protected function setExpiringSession(): void
     {
         $now = new Chronos();
         if (empty(Session::get('time'))) {
@@ -143,7 +139,7 @@ final class Builder
     /**
      * Regenerate session ID every five minutes.
      */
-    private function setCanarySession(): void
+    protected function setCanarySession(): void
     {
         if (!isset($_SESSION['canary']) &&
             PHP_SESSION_NONE !== session_status()

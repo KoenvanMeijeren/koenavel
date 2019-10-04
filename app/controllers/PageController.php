@@ -12,4 +12,9 @@ class PageController
     {
         return new View('index');
     }
+
+    public function notFound(): View
+    {
+        return new View('404');
+    }
 }

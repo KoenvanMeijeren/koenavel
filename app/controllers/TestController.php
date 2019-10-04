@@ -4,12 +4,30 @@ declare(strict_types=1);
 
 namespace App\controllers;
 
-use App\services\core\View;
-
 class TestController
 {
-    public function index(): View
+    public function index(): string
     {
-        return new View('test');
+        return "index";
+    }
+
+    public function rightOne(): string
+    {
+        return "1";
+    }
+
+    public function rightTwo(): string
+    {
+        return "2";
+    }
+
+    public function wildcard(): string
+    {
+        return "wildcard";
+    }
+
+    public function notFound(): string
+    {
+        return "404";
     }
 }

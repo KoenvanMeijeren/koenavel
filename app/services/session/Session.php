@@ -8,9 +8,10 @@ use App\services\core\Log;
 use App\services\core\Sanitize;
 use App\services\exceptions\session\InvalidSessionException;
 use App\services\security\Encrypt;
+use App\services\session\Security as SessionSecurity;
 use Exception;
 
-final class Session
+final class Session extends Builder
 {
     /**
      * Construct the session.
@@ -21,7 +22,14 @@ final class Session
      */
     public function __construct(int $expiringTime = 1 * 1 * 60 * 60)
     {
-        new Builder('websiteID', $expiringTime);
+        parent::__construct('websiteID', $expiringTime);
+
+        $this->startSession();
+        $this->setExpiringSession();
+        $this->setCanarySession();
+
+        SessionSecurity::remoteIpProtection();
+        SessionSecurity::userAgentProtection();
     }
 
     /**

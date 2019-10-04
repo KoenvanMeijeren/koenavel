@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\core;
 
-use App\services\session\Security as SessionSecurity;
 use App\services\session\Session;
 use App\services\translation\Builder as TranslationBuilder;
-use App\services\type\TypeChanger;
 use Exception;
 
 final class App
@@ -35,15 +33,10 @@ final class App
     public function __construct(string $routesLocation = 'web.php')
     {
         $this->routesLocation = $routesLocation;
-
         date_default_timezone_set('Europe/Amsterdam');
 
         new Env();
-
         new Session(1 * 1 * 60 * 60);
-        SessionSecurity::remoteIpProtection();
-        SessionSecurity::userAgentProtection();
-
         new TranslationBuilder();
     }
 

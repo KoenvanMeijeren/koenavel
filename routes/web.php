@@ -13,3 +13,6 @@ use App\services\core\Router;
 
 // Pages.
 Router::get('', 'PageController@index');
+
+// Page not found.
+Router::get('fourNullFour', 'PageController@notFound');

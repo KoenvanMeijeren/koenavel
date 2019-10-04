@@ -17,11 +17,8 @@ final class Router
      * Rights:
      * 1 = Student
      * 2 = Teacher
-     * 3 = read
-     * 4 = read and write
-     * 5 = read, write and update
-     * 6 = read, write, update and destroy
-     * 7 = account management.
+     * 3 = Maintainer
+     * 4 = Super maintainer
      *
      * @var array
      */
@@ -47,15 +44,24 @@ final class Router
     /**
      * Load the routes.
      *
-     * @param string $file the file location of the routes
+     * @param string $file          the file location of the routes
+     * @param string $directoryPath the directory location of the routes
      *
      * @return Router
      *
      * @throws FileNotExistingException
      */
-    public static function load(string $file): Router
-    {
-        loadFile(ROUTES_PATH.'/'.$file);
+    public static function load(
+        string $file,
+        $directoryPath = ROUTES_PATH .'/'
+    ): Router {
+        self::$routes = [
+            'GET' => [],
+            'POST' => [],
+        ];
+        self::$availableRoutes = [];
+
+        loadFile($directoryPath.$file);
 
         return new static();
     }
@@ -107,13 +113,13 @@ final class Router
      * @param string $requestType the request type
      * @param int    $rights      the rights of the user
      *
-     * @return View
+     * @return View|string
      *
      * @throws InvalidObjectException
      * @throws InvalidMethodCalledException
      * @throws InvalidRouteAndUriException
      */
-    public function direct(string $url, string $requestType, int $rights): View
+    public function direct(string $url, string $requestType, int $rights)
     {
         $this->setAvailableRoutes($requestType, $rights);
         $this->replaceWildcards($url);
@@ -136,12 +142,12 @@ final class Router
      *
      * @param string $url the current url to search for the corresponding route in the routes
      *
-     * @return View
+     * @return View|string
      *
      * @throws InvalidObjectException
      * @throws InvalidMethodCalledException
      */
-    private function executeRoute(string $url): View
+    private function executeRoute(string $url)
     {
         $route = explode('@', self::$availableRoutes[$url]);
         $controller = 'App\controllers\\'.$route[0] ?? '';
@@ -162,6 +168,8 @@ final class Router
      */
     private function setAvailableRoutes(string $requestType, int $rights): void
     {
+        self::$availableRoutes = [];
+
         for ($i = 0; $i <= $rights; ++$i) {
             if (isset(self::$routes[$requestType][$i])) {
                 self::$availableRoutes = array_merge(
@@ -215,8 +223,10 @@ final class Router
                 self::$wildcard = $urlExploded[$key];
                 self::$availableRoutes = array_replace_keys(self::$availableRoutes, [$route => $newRoute]);
 
-                return;
+                break;
             }
         }
+
+        return;
     }
 }

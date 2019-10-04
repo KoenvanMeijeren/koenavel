@@ -59,6 +59,16 @@ final class Env
     }
 
     /**
+     * Get the env
+     *
+     * @return string
+     */
+    public function getEnv(): string
+    {
+        return $this->env;
+    }
+
+    /**
      * Set the current env based on the uri.
      *
      * @throws Exception
@@ -89,16 +99,6 @@ final class Env
     }
 
     /**
-     * Get the env
-     *
-     * @return string
-     */
-    public function getEnv(): string
-    {
-        return $this->env;
-    }
-
-    /**
      * Set the error handling
      */
     private function setErrorHandling(): void
@@ -124,15 +124,5 @@ final class Env
 
         $whoops->prependHandler(new ProductionErrorView());
         $whoops->register();
-    }
-
-    /**
-     * Destruct the env.
-     */
-    public function __destruct()
-    {
-        unset($this->host);
-        unset($this->env);
-        unset($this->configLocation);
     }
 }
