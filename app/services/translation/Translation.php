@@ -7,7 +7,6 @@ namespace App\services\translation;
 use App\services\core\Sanitize;
 use App\services\exceptions\basic\DuplicatedKeyException;
 use App\services\exceptions\basic\InvalidKeyException;
-use Exception;
 
 final class Translation
 {
