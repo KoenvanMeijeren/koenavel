@@ -53,7 +53,7 @@ final class Router
      */
     public static function load(
         string $file,
-        $directoryPath = ROUTES_PATH .'/'
+        string $directoryPath = ROUTES_PATH . '/'
     ): Router {
         self::$routes = [
             'GET' => [],

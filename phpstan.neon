@@ -5,5 +5,28 @@ parameters:
         - "#Constant .* not found.#"
         - "#Internal error#"
         - "#function .* expects .*, .*|false given.#"
-includes:
-    - phpstan-strict-rules.Neon
+services:
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\ThrowMustBundlePreviousExceptionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\DoNotThrowExceptionBaseClassRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\EmptyExceptionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\MustRethrowRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\TypeHints\MissingTypeHintInFunctionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\TypeHints\MissingTypeHintInMethodRule
+    tags:
+      - phpstan.rules.rule

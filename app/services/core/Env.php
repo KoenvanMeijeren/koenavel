@@ -114,6 +114,8 @@ final class Env
 
     /**
      * Set the error handling
+     *
+     * @return void
      */
     private function setErrorHandling(): void
     {
@@ -128,7 +130,6 @@ final class Env
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
 
         $whoops = new Whoops();
-
         if (self::DEVELOPMENT === $this->env) {
             $whoops->prependHandler(new PrettyPageHandler());
             $whoops->register();
@@ -143,9 +144,10 @@ final class Env
     /**
      * Temporary fix for development config.
      *
+     * @return void
      * @throws DuplicatedKeyException
      */
-    private function setDevelopmentConfig()
+    private function setDevelopmentConfig(): void
     {
         // APP NAME
         Config::set('appName', 'CC Westeinde');
