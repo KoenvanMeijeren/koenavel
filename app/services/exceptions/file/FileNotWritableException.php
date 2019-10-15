@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\exceptions\file;
 
-
-class FileNotWritableException extends \Exception
+use Exception;
+class FileNotWritableException extends Exception
 {
 
 }

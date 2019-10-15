@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\exceptions\file;
 
-
-class FileNotExistingException extends \Exception
+use Exception;
+class FileNotExistingException extends Exception
 {
 
 }

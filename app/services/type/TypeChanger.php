@@ -92,7 +92,7 @@ class TypeChanger
         }
 
         if (is_string($this->var)) {
-            $possibleArray = json_decode($this->var);
+            $possibleArray = json_decode($this->var, false, 512, JSON_THROW_ON_ERROR);
             if (is_array($possibleArray)) {
                 return $possibleArray;
             }
@@ -112,7 +112,7 @@ class TypeChanger
     public function toJson(): string
     {
         if (is_scalar($this->var)) {
-            return (string) json_encode($this->var);
+            return (string) json_encode($this->var, JSON_THROW_ON_ERROR);
         }
 
         throw new InvalidTypeException(
@@ -127,7 +127,7 @@ class TypeChanger
      */
     public function decodeJson(): TypeChanger
     {
-        $var = json_decode($this->var);
+        $var = json_decode($this->var, false, 512, JSON_THROW_ON_ERROR);
 
         return new TypeChanger($var);
     }

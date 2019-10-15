@@ -137,7 +137,7 @@ final class Router
         }
 
         throw new InvalidRouteAndUriException(
-            'No route defined for this url'
+            'No route defined for this request'
         );
     }
 
@@ -221,10 +221,16 @@ final class Router
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
         foreach ($routeExploded as $key => $routePart) {
-            if (isset($urlExploded[$key]) && preg_match('/{[a-zA-Z]+}/', $routePart)) {
-                $newRoute = preg_replace('/{[a-zA-Z]+}/', $urlExploded[$key], $route);
+            if (isset($urlExploded[$key]) &&
+                preg_match('/{[a-zA-Z]+}/', $routePart)
+            ) {
+                $newRoute = preg_replace(
+                    '/{[a-zA-Z]+}/', $urlExploded[$key], $route
+                );
                 self::$wildcard = $urlExploded[$key];
-                self::$availableRoutes = array_replace_keys(self::$availableRoutes, [$route => $newRoute]);
+                self::$availableRoutes = array_replace_keys(
+                    self::$availableRoutes, [$route => $newRoute]
+                );
 
                 break;
             }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\exceptions\basic;
 
-
-class DuplicatedKeyException extends \Exception
+use Exception;
+class DuplicatedKeyException extends Exception
 {
 
 }

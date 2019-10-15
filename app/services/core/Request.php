@@ -21,7 +21,7 @@ final class Request
 
         if (is_array($_POST[$key])) {
             return (string) json_encode(
-                $this->buildNewArray($key, $_POST)
+                $this->buildNewArray($key, $_POST), JSON_THROW_ON_ERROR
             );
         }
 
@@ -42,7 +42,7 @@ final class Request
         }
 
         if (is_array($_GET[$key])) {
-            return (string) json_encode($this->buildNewArray($key, $_GET));
+            return (string) json_encode($this->buildNewArray($key, $_GET), JSON_THROW_ON_ERROR);
         }
 
         return (string) (new Sanitize($_GET[$key]))->data();

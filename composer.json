@@ -31,13 +31,25 @@
         "squizlabs/php_codesniffer": "^3.2",
         "php-coveralls/php-coveralls": "^2.1",
         "thecodingmachine/phpstan-strict-rules": "^0.11.2",
-        "vimeo/psalm": "^3.5"
+        "vimeo/psalm": "^3.5",
+        "nunomaduro/phpinsights": "^1.9",
+        "phploc/phploc": "^5.0",
+        "sebastian/phpcpd": "^4.1",
+        "povils/phpmnd": "^2.1",
+        "bmitch/churn-php": "^1.0",
+        "rector/rector": "^0.5.16"
     },
     "scripts": {
         "phpunit": "phpunit",
-        "phpstan": "phpstan analyse app -c phpstan.neon --level=7",
+        "phpstan": "phpstan analyse directory -c phpstan.neon --level=7",
         "psalm": "psalm",
-        "cs-fix": "phpcbf",
-        "cs-check": "phpcs"
+        "cs-fix": "phpcbf directory/",
+        "cs-check": "phpcs directory/",
+        "statistics-code-check": "phploc directory/",
+        "duplicated-code-check": "phpcpd directory/",
+        "magic-number-check": "phpmnd directory/",
+        "refactor-code-check": "churn directory/",
+        "rector-see-diff-first": "vendor/bin/rector process directory/ --dry-run",
+        "rector-apply": "vendor/bin/rector process directory/"
     }
 }

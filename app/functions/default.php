@@ -19,25 +19,6 @@ if (!function_exists('dd')) {
     }
 }
 
-if (!function_exists('array_key_last')) {
-    /**
-     * Polyfill for array_key_last() function added in PHP 7.3.
-     *
-     * Get the last key of the given array without affecting
-     * the internal array pointer.
-     *
-     * @param array $array An array
-     *
-     * @return null|int|string the last key of array if the array is not empty; NULL otherwise
-     */
-    function array_key_last(array $array)
-    {
-        end($array);
-
-        return key($array);
-    }
-}
-
 if (!function_exists('array_replace_keys')) {
     /**
      * This function replaces the keys of an associate array by those supplied in the keys array.

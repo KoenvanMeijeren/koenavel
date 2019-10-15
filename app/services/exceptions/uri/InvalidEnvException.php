@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\services\exceptions\uri;
 
-
-class InvalidEnvException extends \Exception
+use Exception;
+class InvalidEnvException extends Exception
 {
 
 }

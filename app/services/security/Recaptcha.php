@@ -64,7 +64,7 @@ final class Recaptcha
             $context
         );
 
-        $recaptchaResult = json_decode($response);
+        $recaptchaResult = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
         if ($recaptchaResult->success) {
             return true;
         }
