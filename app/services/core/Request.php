@@ -51,9 +51,9 @@ final class Request
     /**
      * Get a uploaded file.
      *
-     * @param string $key   the key to search for the
- *                          corresponding value in the
-     *                      file array
+     * @param string $key the key to search for the
+     *                    corresponding value in
+     *                    the file array
      *
      * @return string[]
      */
@@ -65,9 +65,10 @@ final class Request
     /**
      * Get all post items which are matching with the given parameters.
      *
-     * @param string[] $parameters  the parameters to loop
-     *                              through and search for the
-     *                              corresponding values
+     * @param string[] $parameters the parameters to loop
+     *                             through and search for
+     *                             the corresponding
+     *                             values
      *
      * @return string[]
      */
@@ -84,10 +85,12 @@ final class Request
     /**
      * Build a new array with sanitized values.
      *
-     * @param string    $key    the key to search for the
-     *                          corresponding value in the array
-     * @param array[]  $method the array to search for the
-     *                          corresponding value
+     * @param string  $key    the key to search for the
+     *                        corresponding value in
+     *                        the array
+
+     * @param array[] $method the array to search for the
+     *                        corresponding value
      *
      * @return string[]|int[]|bool[]|float[]
      */

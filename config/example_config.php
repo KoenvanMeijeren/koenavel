@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+use PDO;
 
 use App\services\core\Config;
 

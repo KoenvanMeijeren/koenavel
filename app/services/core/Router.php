@@ -203,9 +203,9 @@ final class Router
     /**
      * Update a specific route. Replace the slug for the matching value from the url.
      *
-     * @param string[]  $routeExploded the route exploded in parts divided by slashes
-     * @param string[]  $urlExploded   the url exploded in parts divided by slashes
-     * @param string    $route         the route to search for a replacement
+     * @param string[] $routeExploded the route exploded in parts divided by slashes
+     * @param string[] $urlExploded   the url exploded in parts divided by slashes
+     * @param string   $route         the route to search for a replacement
      */
     private function updateRoute(
         array $routeExploded,
@@ -221,8 +221,8 @@ final class Router
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
         foreach ($routeExploded as $key => $routePart) {
-            if (isset($urlExploded[$key]) &&
-                preg_match('/{[a-zA-Z]+}/', $routePart)
+            if (isset($urlExploded[$key]) 
+                && preg_match('/{[a-zA-Z]+}/', $routePart)
             ) {
                 $newRoute = preg_replace(
                     '/{[a-zA-Z]+}/', $urlExploded[$key], $route

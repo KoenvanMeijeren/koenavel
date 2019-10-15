@@ -141,16 +141,16 @@ class Builder
      */
     protected function setCanarySession(): void
     {
-        if (!isset($_SESSION['canary']) &&
-            PHP_SESSION_NONE !== session_status()
+        if (!isset($_SESSION['canary']) 
+            && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
             $_SESSION['canary'] = time();
         }
 
-        if (isset($_SESSION['canary']) &&
-            $_SESSION['canary'] < time() - 300 &&
-            PHP_SESSION_NONE !== session_status()
+        if (isset($_SESSION['canary']) 
+            && $_SESSION['canary'] < time() - 300 
+            && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
             $_SESSION['canary'] = time();

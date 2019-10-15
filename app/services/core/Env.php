@@ -15,6 +15,7 @@ use Whoops\Run as Whoops;
 
 /**
  * Class Env
+ *
  * @package App\services\core
  *
  * TODO: rewrite config to .env files
@@ -164,21 +165,29 @@ final class Env
         Config::set('databaseServer', 'mysql:host=localhost');
         Config::set('databasePort', '3306');
         Config::set('databaseCharset', 'utf8');
-        Config::set('databaseOptions',
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        Config::set(
+            'databaseOptions',
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
 
         // MAXIMUM NUMBER OF LOG IN ATTEMPTS
         Config::set('loginAttempts', 3);
 
         // GOOGLE RECAPTCHA KEYS
-        Config::set('recaptcha_public_key',
-            '6LeNC5YUAAAAAFnTMZ0jsov-0eYFa_9khig5djvo');
-        Config::set('recaptcha_secret_key',
-            '6LeNC5YUAAAAAIZcmuHccr8-bqOh1oQOPoR8pht1');
+        Config::set(
+            'recaptcha_public_key',
+            '6LeNC5YUAAAAAFnTMZ0jsov-0eYFa_9khig5djvo'
+        );
+        Config::set(
+            'recaptcha_secret_key',
+            '6LeNC5YUAAAAAIZcmuHccr8-bqOh1oQOPoR8pht1'
+        );
 
         // TINY MCE KEY
-        Config::set('tinyMceKey',
-            'amyz5vlo9d4hlbop0b78rh9earl2dxn0ljxerv4vuyfcqawj');
+        Config::set(
+            'tinyMceKey',
+            'amyz5vlo9d4hlbop0b78rh9earl2dxn0ljxerv4vuyfcqawj'
+        );
 
         // ENCRYPTION TOKEN
         Config::set(

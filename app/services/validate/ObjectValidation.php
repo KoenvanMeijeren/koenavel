@@ -50,7 +50,7 @@ trait ObjectValidation
     /**
      * Check if a function is callable.
      *
-     * @param bool $syntax_only determine if it must be syntax only
+     * @param bool   $syntax_only   determine if it must be syntax only
      * @param string $callable_name the name to be called
      *
      * @return Validate

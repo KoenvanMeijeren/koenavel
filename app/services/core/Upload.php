@@ -56,9 +56,9 @@ class Upload
     /**
      * Prepare the file.
      *
-     * @param string[]  $file           the file
-     * @param string    $path           the path to store the file in
-     * @param string    $stripedPath    the striped path to store the file in
+     * @param string[] $file        the file
+     * @param string   $path        the path to store the file in
+     * @param string   $stripedPath the striped path to store the file in
      */
     public function __construct(
         array $file,

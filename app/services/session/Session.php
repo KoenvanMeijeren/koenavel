@@ -35,7 +35,7 @@ final class Session extends Builder
     /**
      * Save data in the session.
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -54,7 +54,7 @@ final class Session extends Builder
     /**
      * Force to save data in the session.
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -73,7 +73,7 @@ final class Session extends Builder
      * TODO: If you do this then the name makes sense
      * TODO: otherwise you can better remove the function
      *
-     * @param string $key the key of the session item
+     * @param string $key   the key of the session item
      * @param string $value the value of the key
      *
      * @throws Exception
@@ -86,9 +86,10 @@ final class Session extends Builder
     /**
      * Get data from the session; unset the data if specified.
      *
-     * @param string $key the key for searching to the
+     * @param string $key   the key for searching to the
      *                      corresponding session value
-     * @param bool $unset Must the session value be destroyed?
+
+     * @param bool   $unset Must the session value be destroyed?
      *
      * @return string
      *

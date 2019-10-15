@@ -69,8 +69,10 @@ final class Recaptcha
             return true;
         }
 
-        Session::flash('error',
-            Translation::get('failed_recaptcha_check_message'));
+        Session::flash(
+            'error',
+            Translation::get('failed_recaptcha_check_message')
+        );
         return false;
     }
 }
