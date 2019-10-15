@@ -7,7 +7,7 @@ define('BASE_PATH', str_replace('\\', '/', __DIR__));
 
 // Default paths
 define('START_PATH', realpath(__DIR__.'/../'));
-define('APP_PATH', realpath(__DIR__.'/../app'));
+define('APP_PATH', realpath(__DIR__ . '/../App'));
 define('CONFIG_PATH', realpath(__DIR__.'/../config'));
 define('RESOURCES_PATH', realpath(__DIR__.'/../resources'));
 define('ROUTES_PATH', realpath(__DIR__.'/../routes'));

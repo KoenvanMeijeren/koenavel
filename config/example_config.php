@@ -3,7 +3,7 @@
 declare(strict_types=1);
 use PDO;
 
-use App\services\core\Config;
+use App\services\Core\Config;
 
 // APP NAME
 Config::set('appName', 'CC Westeinde');

@@ -10,7 +10,7 @@ class UserTest extends TestCase
 
     public function setUp(): void
     {
-        $this->user = new \App\models\User;
+        $this->user = new \App\Models\User;
     }
 
     public function test_that_we_can_get_the_first_name()

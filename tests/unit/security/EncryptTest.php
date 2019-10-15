@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\services\core\Config;
-use App\services\security\Encrypt;
+use App\services\Core\Config;
+use App\services\Security\Encrypt;
 use PHPUnit\Framework\TestCase;
 
 class EncryptTest extends TestCase

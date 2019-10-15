@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\core\Config;
+use App\services\Core\Config;
 use App\services\translation\Builder;
 use PHPUnit\Framework\TestCase;
 

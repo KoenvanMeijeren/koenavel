@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\controllers\PageController;
-use App\services\core\Router;
+use App\Controllers\PageController;
+use App\services\Core\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

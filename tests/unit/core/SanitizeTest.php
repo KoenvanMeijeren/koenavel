@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\core\Sanitize;
+use App\services\Core\Sanitize;
 use PHPUnit\Framework\TestCase;
 
 class SanitizeTest extends TestCase

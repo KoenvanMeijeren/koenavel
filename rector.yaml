@@ -1,5 +1,8 @@
 # rector.yaml
 services:
+    Rector\Architecture\Rector\Class_\ConstructorInjectionToActionInjectionRector: ~
+    Rector\Autodiscovery\Rector\FileSystem\MoveEntitiesToEntityDirectoryRector: ~
+    Rector\Autodiscovery\Rector\FileSystem\MoveInterfacesToContractNamespaceDirectoryRector: ~
     Rector\Php73\Rector\FuncCall\ArrayKeyFirstLastRector: ~
     Rector\Php73\Rector\BinaryOp\IsCountableRector: ~
     Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector: ~

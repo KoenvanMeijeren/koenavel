@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\core\Request;
+use App\services\Core\Request;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
