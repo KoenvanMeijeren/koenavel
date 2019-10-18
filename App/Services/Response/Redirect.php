@@ -27,14 +27,16 @@ class Redirect
     {
         $this->path = $path;
 
-        $this->redirect();
+        $this->redirect(new URI());
     }
 
     /**
      * Redirect the path.
+     *
+     * @var URI $uri the uri object
      */
-    private function redirect(): void
+    private function redirect(URI $uri): void
     {
-        URI::redirect($this->path);
+        $uri->redirect($this->path);
     }
 }

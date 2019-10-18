@@ -17,25 +17,26 @@ final class Log
      *
      * @var Logger
      */
-    private static $logger;
+    private $logger;
 
     /**
      * Construct the logger.
      *
      * @throws Exception
      */
-    private function __construct()
+    public function __construct()
     {
-        self::$logger = new Logger(Config::get('appName')->toString());
-        self::$logger->pushHandler(
+        $this->logger = new Logger(Config::get('appName')->toString());
+        $this->logger->pushHandler(
             new RotatingFileHandler(
                 START_PATH . '/storage/logs/app.log',
                 365,
                 Logger::DEBUG
             )
         );
-        self::$logger->pushHandler(new FirePHPHandler());
-        self::$logger->pushProcessor(new WebProcessor());
+
+        $this->logger->pushHandler(new FirePHPHandler());
+        $this->logger->pushProcessor(new WebProcessor());
     }
 
     /**
@@ -47,10 +48,8 @@ final class Log
      *
      * @throws Exception
      */
-    public static function get(string $date): string
+    public function get(string $date): string
     {
-        new static();
-
         return (string) file_get_contents(
             START_PATH . '/storage/logs/app-' .
             $date . '.log'
@@ -65,10 +64,9 @@ final class Log
      *
      * @throws Exception
      */
-    public static function info(string $message, array $context = []): void
+    public function info(string $message, array $context = []): void
     {
-        new static();
-        self::$logger->info($message, $context);
+        $this->logger->info($message, $context);
     }
 
     /**
@@ -79,10 +77,9 @@ final class Log
      *
      * @throws Exception
      */
-    public static function error(string $message, array $context = []): void
+    public function error(string $message, array $context = []): void
     {
-        new static();
-        self::$logger->error($message, $context);
+        $this->logger->error($message, $context);
     }
 
     /**
@@ -93,17 +90,19 @@ final class Log
      *
      * @throws Exception
      */
-    public static function appRequest(
+    public function appRequest(
         string $value = '',
         string $state = 'successful'
     ): void {
-        $message = URI::method();
+        $uri = new URI();
+
+        $message = $uri->getMethod();
         $message .= ' request for page ';
-        $message .= URI::getUrl();
+        $message .= $uri->getUrl();
         $message .= ' with message "';
         $message .= $value;
         $message .= '"';
 
-        Log::info($state . " " . $message);
+        $this->info($state . " " . $message);
     }
 }

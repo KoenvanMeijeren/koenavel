@@ -36,8 +36,7 @@
         "phploc/phploc": "^5.0",
         "sebastian/phpcpd": "^4.1",
         "povils/phpmnd": "^2.1",
-        "bmitch/churn-php": "^1.0",
-        "rector/rector": "^0.5.16"
+        "bmitch/churn-php": "^1.0"
     },
     "scripts": {
         "phpunit": "phpunit",
@@ -49,7 +48,5 @@
         "duplicated-code-check": "phpcpd directory/",
         "magic-number-check": "phpmnd directory/",
         "refactor-code-check": "churn directory/",
-        "rector-see-diff-first": "vendor/bin/rector process directory/ --dry-run",
-        "rector-apply": "vendor/bin/rector process directory/"
-    }
+        "rector-see-diff-first": "vendor/bin/rector process directory/ --dry-run"}
 }

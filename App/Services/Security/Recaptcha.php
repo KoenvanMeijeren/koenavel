@@ -6,7 +6,6 @@ namespace App\Services\Security;
 
 use App\Services\Core\Config;
 use App\Services\Core\Request;
-use App\Services\Core\URI;
 use App\Services\Session\Session;
 use App\Services\Translation\Translation;
 use Exception;
@@ -32,13 +31,13 @@ final class Recaptcha
      */
     public function __construct(Request $request)
     {
-        $recaptcha = http_build_query(
-            [
-                'secret' => Config::get('recaptcha_secret_key')->toString(),
-                'response' => $request->post('g-recaptcha-response'),
-                'remoteip' => URI::getRemoteIp(),
-            ]
-        );
+        $request = new Request();
+
+        $recaptcha = http_build_query([
+            'secret' => Config::get('recaptcha_secret_key')->toString(),
+            'response' => $request->post('g-recaptcha-response'),
+            'remoteip' => $request->server(Request::SERVER_REMOTE_ADDR),
+        ]);
 
         $this->query = [
             'http' => [
@@ -64,7 +63,8 @@ final class Recaptcha
             $context
         );
 
-        $recaptchaResult = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
+        $recaptchaResult = json_decode($response, false, 512,
+            JSON_THROW_ON_ERROR);
         if ($recaptchaResult->success) {
             return true;
         }

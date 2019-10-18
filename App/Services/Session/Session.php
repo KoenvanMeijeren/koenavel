@@ -6,30 +6,24 @@ namespace App\Services\Session;
 
 use App\Services\Core\Log;
 use App\Services\Core\Sanitize;
-use App\Services\Exceptions\Session\InvalidSessionException;
 use App\Services\Security\Encrypt;
-use App\Services\Session\Security as SessionSecurity;
 use Exception;
 
-final class Session extends Builder
+final class Session
 {
     /**
-     * Construct the session.
+     * The logger
      *
-     * @param int $expiringTime the expiring time of the session
-     *
-     * @throws Exception
+     * @var Log
      */
-    public function __construct(int $expiringTime = 1 * 1 * 60 * 60)
+    private $log;
+
+    /**
+     * Construct the session.
+     */
+    public function __construct()
     {
-        parent::__construct('websiteID', $expiringTime);
-
-        $this->startSession();
-        $this->setExpiringSession();
-        $this->setCanarySession();
-
-        SessionSecurity::remoteIpProtection();
-        SessionSecurity::userAgentProtection();
+        $this->log = new Log();
     }
 
     /**
@@ -40,7 +34,7 @@ final class Session extends Builder
      *
      * @throws Exception
      */
-    public static function save(string $key, string $value): void
+    public function save(string $key, string $value): void
     {
         if (isset($_SESSION[$key])) {
             return;
@@ -59,7 +53,7 @@ final class Session extends Builder
      *
      * @throws Exception
      */
-    public static function saveForced(string $key, string $value): void
+    public function saveForced(string $key, string $value): void
     {
         $sanitize = new Sanitize($value);
         $data = new Encrypt((string)$sanitize->data());
@@ -78,9 +72,9 @@ final class Session extends Builder
      *
      * @throws Exception
      */
-    public static function flash(string $key, string $value): void
+    public function flash(string $key, string $value): void
     {
-        self::saveForced($key, $value);
+        $this->saveForced($key, $value);
     }
 
     /**
@@ -95,7 +89,7 @@ final class Session extends Builder
      *
      * @throws Exception
      */
-    public static function get(string $key, bool $unset = false): string
+    public function get(string $key, bool $unset = false): string
     {
         if (isset($_SESSION[$key])) {
             $sanitize = new Sanitize($_SESSION[$key]);
@@ -103,12 +97,12 @@ final class Session extends Builder
             $value = $data->decrypt();
 
             if ($unset) {
-                self::unset($key);
+                $this->unset($key);
             }
 
             if ($key === 'error' || $key === 'success') {
-                Log::appRequest(
-                    $value, $key === 'success' ? 'Successful' : 'Failed'
+                $this->log->appRequest($value,
+                    $key === 'success' ? 'Successful' : 'Failed'
                 );
             }
         }
@@ -125,44 +119,12 @@ final class Session extends Builder
      *
      * @return bool
      */
-    public static function unset(string $key): bool
+    public function unset(string $key): bool
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
 
         return true;
-    }
-
-    /**
-     * Destroy the session.
-     *
-     * @return Session
-     * @throws Exception
-     */
-    public static function destroy(): Session
-    {
-        if (PHP_SESSION_ACTIVE !== session_status()) {
-            throw new InvalidSessionException(
-                "Cannot destroy the session if the session does not exists"
-            );
-        }
-
-        Log::info('The session is destroyed.');
-        $params = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
-        );
-
-        session_unset();
-        session_destroy();
-
-        return new Session();
     }
 }

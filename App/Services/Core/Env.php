@@ -60,7 +60,9 @@ final class Env
      */
     public function __construct()
     {
-        $this->host = URI::getHost();
+        $request = new Request();
+
+        $this->host = $request->server(Request::SERVER_HTTP_HOST);
         Validate::var($this->host)->isDomain();
 
         $this->setEnv();

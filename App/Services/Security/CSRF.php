@@ -58,12 +58,14 @@ final class CSRF
      */
     public static function validate(): bool
     {
+        $session = new Session();
+
         new CSRF();
         if (self::$csrf->validateRequest()) {
             return true;
         }
 
-        Session::flash('error', Translation::get('failed_csrf_check_message'));
+        $session->flash('error', Translation::get('failed_csrf_check_message'));
         return false;
     }
 }

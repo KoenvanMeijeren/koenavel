@@ -26,6 +26,20 @@ class Upload
     ];
 
     /**
+     * The logger.
+     *
+     * @var Log
+     */
+    private $log;
+
+    /**
+     * The session.
+     *
+     * @var Session
+     */
+    private $session;
+
+    /**
      * The file.
      *
      * @var array
@@ -56,15 +70,20 @@ class Upload
     /**
      * Prepare the file.
      *
-     * @param string[] $file        the file
-     * @param string   $path        the path to store the file in
-     * @param string   $stripedPath the striped path to store the file in
+     * @param string[] $file the file
+     * @param string $path the path to store the file in
+     * @param string $stripedPath the striped path to store the file in
+     *
+     * @throws Exception
      */
     public function __construct(
         array $file,
         string $path = STORAGE_PATH . '/media/',
         string $stripedPath = '/storage/media/'
     ) {
+        $this->log = new Log();
+        $this->session = new Session();
+
         $this->file = $file;
         $this->path = $path;
         $this->stripedPath = $stripedPath;
@@ -89,11 +108,13 @@ class Upload
      */
     public function getFileIfItExists(): string
     {
-        $fileLocation = $this->stripedPath . $this->file['name'];
+        $request = new Request();
 
-        return file_exists(
-            $_SERVER['DOCUMENT_ROOT'] . $fileLocation
-        ) ? $fileLocation : '';
+        $documentRoot = $request->server(Request::SERVER_DOCUMENT_ROOT);
+        $fileLocation = $this->stripedPath . $this->file['name'];
+        $file = $documentRoot.$fileLocation;
+
+        return file_exists($file) ? $fileLocation : '';
     }
 
     /**
@@ -132,7 +153,7 @@ class Upload
             } catch (Exception $exception) {
                 $result->clear();
 
-                Log::error($exception->getMessage());
+                $this->log->error($exception->getMessage());
                 throw new ErrorWhileUploadingFileException(
                     'There was an error while uploading the file',
                     114,
@@ -141,7 +162,9 @@ class Upload
             }
         }
 
-        Session::flash('error', Translation::get('error_while_uploading_file'));
+        $this->session->flash(
+            'error', Translation::get('error_while_uploading_file')
+        );
         return false;
     }
 
@@ -169,7 +192,9 @@ class Upload
         $type = isset($this->file['type'], $this->file['name']) ? $this->file['type'] : '' ;
 
         if (!key_exists($type, self::ALLOWED_FILE_TYPES)) {
-            Session::flash('error', Translation::get('not_allowed_file_upload'));
+            $this->session->flash(
+                'error', Translation::get('not_allowed_file_upload')
+            );
             return false;
         }
 

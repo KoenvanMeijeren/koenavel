@@ -9,19 +9,26 @@ use PHPUnit\Framework\TestCase;
 
 class LogTest extends TestCase
 {
+    /**
+     * The logger
+     *
+     * @var Log
+     */
+    private $log;
+
     public function setUp(): void
     {
         Config::set('appName', 'TestApp');
-        Log::info('Test that a log function is initialized');
+        $this->log = new Log();
     }
 
     public function test_that_we_can_log_info_data()
     {
         $chronos =  new Chronos();
 
-        $logDataBefore = Log::get($chronos->toDateString());
-        Log::info('Test that we can log info');
-        $logDataAfter = Log::get($chronos->toDateString());
+        $logDataBefore = $this->log->get($chronos->toDateString());
+        $this->log->info('Test that we can log info');
+        $logDataAfter = $this->log->get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
     }
@@ -30,9 +37,9 @@ class LogTest extends TestCase
     {
         $chronos =  new Chronos();
 
-        $logDataBefore = Log::get($chronos->toDateString());
-        Log::error('Test that we can log error info');
-        $logDataAfter = Log::get($chronos->toDateString());
+        $logDataBefore = $this->log->get($chronos->toDateString());
+        $this->log->error('Test that we can log error info');
+        $logDataAfter = $this->log->get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
     }
@@ -41,7 +48,7 @@ class LogTest extends TestCase
     {
         $chronos =  new Chronos();
 
-        $this->assertIsString(Log::get($chronos->toDateString()));
+        $this->assertIsString($this->log->get($chronos->toDateString()));
     }
 
     public function tearDown(): void

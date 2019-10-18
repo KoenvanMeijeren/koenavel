@@ -5,11 +5,34 @@ declare(strict_types=1);
 namespace App\Services\Session;
 
 use App\Services\Core\Log;
+use App\Services\Exceptions\Session\InvalidSessionException;
+use App\Services\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
 use Exception;
 
 class Builder
 {
+    /**
+     * The session class
+     *
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * The session security class
+     *
+     * @var SessionSecurity
+     */
+    private $security;
+
+    /**
+     * The log class
+     *
+     * @var Log
+     */
+    private $log;
+
     /**
      * The name of the session.
      *
@@ -78,12 +101,19 @@ class Builder
         $this->domain = $domain;
         $this->secure = $secure;
         $this->httpOnly = $httpOnly;
+
+        $this->session = new Session();
+        $this->security = new SessionSecurity();
+        $this->log = new Log();
+
+        $this->startSession();
+        $this->setSessionSecurity();
     }
 
     /**
      * Start the session.
      */
-    protected function startSession(): void
+    private function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
             session_name($this->name);
@@ -101,18 +131,31 @@ class Builder
     }
 
     /**
+     * Set some security options for the session.
+     *
+     * @throws Exception
+     */
+    private function setSessionSecurity()
+    {
+        $this->security->userAgentProtection();
+        $this->security->remoteIpProtection();
+        $this->setExpiringSession();
+        $this->setCanarySession();
+    }
+
+    /**
      * Set the expiring time for the session.
      *
      * @throws Exception
      */
-    protected function setExpiringSession(): void
+    private function setExpiringSession(): void
     {
         $now = new Chronos();
-        if (empty(Session::get('time'))) {
-            Session::save('time', $now->toDateTimeString());
+        if (empty($this->session->get('time'))) {
+            $this->session->save('time', $now->toDateTimeString());
         }
 
-        $sessionCreatedAt = Session::get('time');
+        $sessionCreatedAt = $this->session->get('time');
         $expired = new Chronos($sessionCreatedAt);
         $expired = $expired->addSeconds($this->expiringTime);
 
@@ -131,15 +174,15 @@ class Builder
             session_unset();
             session_destroy();
 
-            Log::info('The session is destroyed.');
-            new Session();
+            $this->log->info('The session is destroyed.');
+            $this->startSession();
         }
     }
 
     /**
      * Regenerate session ID every five minutes.
      */
-    protected function setCanarySession(): void
+    private function setCanarySession(): void
     {
         if (!isset($_SESSION['canary'])
             && PHP_SESSION_NONE !== session_status()
@@ -155,5 +198,37 @@ class Builder
             session_regenerate_id(true);
             $_SESSION['canary'] = time();
         }
+    }
+
+    /**
+     * Destroy the session.
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function destroy(): void
+    {
+        if (PHP_SESSION_ACTIVE !== session_status()) {
+            throw new InvalidSessionException(
+                "Cannot destroy the session if the session does not exists"
+            );
+        }
+
+        $this->log->info('The session is destroyed.');
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+
+        session_unset();
+        session_destroy();
+
+        $this->startSession();
     }
 }

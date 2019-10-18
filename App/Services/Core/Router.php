@@ -51,7 +51,7 @@ final class Router
      *
      * @throws FileNotExistingException
      */
-    public static function load(
+    public function load(
         string $file,
         string $directoryPath = ROUTES_PATH . '/'
     ): Router {
@@ -63,7 +63,7 @@ final class Router
 
         loadFile($directoryPath.$file);
 
-        return new static();
+        return new Router();
     }
 
     /**

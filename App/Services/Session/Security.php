@@ -5,23 +5,64 @@ declare(strict_types=1);
 namespace App\Services\Session;
 
 use App\Services\Core\Log;
-use App\Services\Core\URI;
+use App\Services\Core\Request;
 use Exception;
 
 final class Security
 {
     /**
+     * The request class
+     *
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * The logger
+     *
+     * @var Log
+     */
+    private $log;
+
+    /**
+     * The session class
+     *
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * The session builder class
+     *
+     * @var Builder
+     */
+    private $builder;
+
+    /**
+     * Construct the security
+     *
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        $this->request = new Request();
+        $this->log = new Log();
+        $this->session = new Session();
+    }
+
+    /**
      * Set the user agent in the session to prevent hijacking.
      *
      * @throws Exception
      */
-    public static function userAgentProtection(): void
+    public function userAgentProtection(): void
     {
-        Session::saveForced('user_agent', URI::getUserAgent());
+        $userAgent = $this->request->server(Request::SERVER_HTTP_USER_AGENT);
 
-        if (Session::get('user_agent') !== URI::getUserAgent()) {
-            Log::info('Session hijacking attack has declined');
-            Session::destroy();
+        $this->session->saveForced('user_agent', $userAgent);
+        if ($this->session->get('user_agent') !== $userAgent) {
+            $this->log->info('Session hijacking attack has declined');
+//  todo          $this->builder->destroy();
         }
     }
 
@@ -30,13 +71,14 @@ final class Security
      *
      * @throws Exception
      */
-    public static function remoteIpProtection(): void
+    public function remoteIpProtection(): void
     {
-        Session::saveForced('user_remote_ip', URI::getRemoteIp());
+        $userIP = $this->request->server(Request::SERVER_REMOTE_ADDR);
 
-        if (Session::get('user_remote_ip') !== URI::getRemoteIp()) {
-            Log::info('Session hijacking attack has declined');
-            Session::destroy();
+        $this->session->saveForced('user_remote_ip', $userIP);
+        if ($this->session->get('user_remote_ip') !== $userIP) {
+            $this->log->info('Session hijacking attack has declined');
+//     todo       $this->builder->destroy();
         }
     }
 }

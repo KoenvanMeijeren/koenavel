@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Core;
 
-use App\Services\Session\Session;
+use App\Services\Session\Builder as SessionBuilder;
 use App\Services\Translation\Builder as TranslationBuilder;
 use Exception;
 use App\Contract\Services\Core\AppContract;
@@ -37,7 +37,7 @@ final class App implements AppContract
         date_default_timezone_set('Europe/Amsterdam');
 
         new Env();
-        new Session(1 * 1 * 60 * 60);
+        new SessionBuilder('koenavel',1 * 1 * 60 * 60);
         new TranslationBuilder();
     }
 
@@ -48,9 +48,17 @@ final class App implements AppContract
      */
     public function run(): void
     {
-        Router::load($this->routesLocation)
-            ->direct(URI::getUrl(), URI::method(), 0);
+        $uri = new URI();
+        $log = new Log();
+        $router = new Router();
 
-        Log::appRequest();
+        dd(
+            Config::get('appName')
+        );
+
+        $router->load($this->routesLocation)
+            ->direct($uri->getUrl(), $uri->getMethod(), 0);
+
+        $log->appRequest();
     }
 }

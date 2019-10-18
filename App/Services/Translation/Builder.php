@@ -6,10 +6,20 @@ namespace App\Services\Translation;
 
 use App\Services\Core\Config;
 use App\Services\Core\URI;
+use App\Services\Exceptions\Basic\DuplicatedKeyException;
+use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\services\exceptions\file\FileNotExistingException;
 use Exception;
 
 final class Builder
 {
+    /**
+     * The uri class.
+     *
+     * @var URI
+     */
+    private $uri;
+
     /**
      * The dutch language options.
      */
@@ -29,37 +39,21 @@ final class Builder
     const ENGLISH_LANGUAGE_LC_MONETARY_CODE = 'en_US';
 
     /**
-     * The current application language.
+     * The current application language id.
      */
-    private static $language;
+    private $language;
 
     /**
-     * Set the language based on the domain extension.
+     * Construct the languages and the translations based on it.
      *
      * @throws Exception
      */
     public function __construct()
     {
+        $this->uri = new URI();
+
         $this->setLanguageID();
-        if (self::DUTCH_LANGUAGE_ID === self::$language) {
-            Config::set('languageID', self::DUTCH_LANGUAGE_ID);
-            Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
-            Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
-
-            setlocale(LC_ALL, self::DUTCH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY, self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
-
-            loadFile(RESOURCES_PATH.'/language/dutch/dutch_translations.php');
-        } elseif (self::ENGLISH_LANGUAGE_ID === self::$language) {
-            Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
-            Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
-            Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
-
-            setlocale(LC_ALL, self::ENGLISH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY, self::ENGLISH_LANGUAGE_LC_MONETARY_CODE);
-
-            loadFile(RESOURCES_PATH.'/language/english/english_translations.php');
-        }
+        $this->loadTranslations();
     }
 
     /**
@@ -67,12 +61,12 @@ final class Builder
      */
     private function setLanguageID(): void
     {
-        if (strstr(URI::getDomainExtension(), 'localhost')
-            || strstr(URI::getDomainExtension(), 'nl')
+        if (strstr($this->uri->getDomainExtension(), 'localhost')
+            || strstr($this->uri->getDomainExtension(), 'nl')
         ) {
-            self::$language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr(URI::getDomainExtension(), 'com')) {
-            self::$language = self::ENGLISH_LANGUAGE_ID;
+            $this->language = self::DUTCH_LANGUAGE_ID;
+        } elseif (strstr($this->uri->getDomainExtension(), 'com')) {
+            $this->language = self::ENGLISH_LANGUAGE_ID;
         }
     }
 
@@ -81,8 +75,47 @@ final class Builder
      *
      * @return int
      */
-    public static function getLanguageID(): int
+    public function getLanguageID(): int
     {
-        return self::$language;
+        return $this->language;
+    }
+
+    /**
+     * Load the translations based on the language id.
+     *
+     * @throws DuplicatedKeyException
+     * @throws FileNotExistingException
+     * @throws NoTranslationsForGivenLanguageID
+     */
+    private function loadTranslations()
+    {
+        if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
+            Config::set('languageID', self::DUTCH_LANGUAGE_ID);
+            Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
+            Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
+
+            setlocale(LC_ALL, self::DUTCH_LANGUAGE_LC_ALL_CODE);
+            setlocale(LC_MONETARY, self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
+
+            loadFile(RESOURCES_PATH.'/language/dutch/dutch_translations.php');
+
+            return;
+        } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
+            Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
+            Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
+            Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
+
+            setlocale(LC_ALL, self::ENGLISH_LANGUAGE_LC_ALL_CODE);
+            setlocale(LC_MONETARY, self::ENGLISH_LANGUAGE_LC_MONETARY_CODE);
+
+            loadFile(RESOURCES_PATH.'/language/english/english_translations.php');
+
+            return;
+        }
+
+        throw new NoTranslationsForGivenLanguageID(
+            'No translations where found for the given language id: '.
+            $this->getLanguageID()
+        );
     }
 }
