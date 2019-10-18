@@ -7,6 +7,21 @@ namespace App\Services\Core;
 class URI
 {
     /**
+     * The request
+     *
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * Construct the uri.
+     */
+    public function __construct()
+    {
+        $this->request = new Request();
+    }
+
+    /**
      * Get the url.
      *
      * @return string

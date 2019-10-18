@@ -27,12 +27,6 @@ class RequestTest extends TestCase
     {
         $this->assertEquals('test', $this->request->post('test'));
         $this->assertIsArray(json_decode($this->request->post('array')));
-
-        $this->assertIsArray(
-            $this->request->posts([
-                'test', 'array'
-            ])
-        );
     }
 
     public function test_that_we_cannot_get_a_post_item()
