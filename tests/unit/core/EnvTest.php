@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\services\Core\Config;
-use App\services\Core\Env;
+use App\Services\Core\Config;
+use App\Services\Core\Env;
 use PHPUnit\Framework\TestCase;
 
 class EnvTest extends TestCase

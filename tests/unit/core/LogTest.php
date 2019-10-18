@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\services\Core\Config;
-use App\services\Core\Log;
+use App\Services\Core\Config;
+use App\Services\Core\Log;
 use Cake\Chronos\Chronos;
 use PHPUnit\Framework\TestCase;
 

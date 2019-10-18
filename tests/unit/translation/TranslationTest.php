@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\translation\Translation;
+use App\Services\Translation\Translation;
 use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase

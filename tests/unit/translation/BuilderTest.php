@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\services\Core\Config;
-use App\services\translation\Builder;
+use App\Services\Core\Config;
+use App\Services\Translation\Builder;
 use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase

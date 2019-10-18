@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\services\Core\Config;
-use App\services\Core\Cookie;
+use App\Services\Core\Config;
+use App\Services\Core\Cookie;
 use PHPUnit\Framework\TestCase;
 
 class CookieTest extends TestCase
