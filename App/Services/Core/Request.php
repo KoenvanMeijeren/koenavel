@@ -11,20 +11,12 @@ final class Request
      *
      * @var string
      */
-    const SERVER_ADDR = 'SERVER_ADDR';// IP address of host server
-    const SERVER_NAME = 'SERVER_NAME';// name of the host server
     const SERVER_REQUEST_URI = 'REQUEST_URI';//used URI for page access
     const SERVER_REQUEST_METHOD = 'REQUEST_METHOD';//used method for page access
-    const SERVER_REQUEST_TIME = 'REQUEST_TIME';// timestamp of the start request
-    const SERVER_HTTP_ACCEPT = 'HTTP_ACCEPT';//AcceptHeader from current request
-    const SERVER_HTTP_ACCEPT_CHARSET = 'HTTP_ACCEPT_CHARSET';// charset header
     const SERVER_HTTP_HOST = 'HTTP_HOST';// host header from current request
     const SERVER_HTTP_REFERER = 'HTTP_REFERER';// complete URL of current page
     const SERVER_HTTP_USER_AGENT = 'HTTP_USER_AGENT';// the agent of the user
-    const SERVER_HTTPS = 'HTTPS';// is HTTP connection secure
     const SERVER_REMOTE_ADDR = 'REMOTE_ADDR';// IP address from the user his IP
-    const SERVER_REMOTE_HOST = 'REMOTE_HOST';// host name from where the user is
-    const SERVER_PORT = 'SERVER_PORT';// the port of the server communication
     const SERVER_DOCUMENT_ROOT = 'DOCUMENT_ROOT';// the root of the document
 
     /**
@@ -132,14 +124,15 @@ final class Request
             return '';
         }
 
-        if (is_array($superGlobal[$key])) {
+        $variable = $superGlobal[$key];
+        if (is_array($variable)) {
             return (string) json_encode(
                 $this->buildNewArray($superGlobal, $key),
                 JSON_THROW_ON_ERROR
             );
         }
 
-        return (string) (new Sanitize($superGlobal[$key]))->data();
+        return (string)(new Sanitize($variable))->data();
     }
 
     /**

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Services\Core;
+namespace App\Services\View;
 
 use Exception;
 use Whoops\Handler\Handler;

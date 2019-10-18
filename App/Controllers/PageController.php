@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Services\Core\View;
+use App\Services\View\View;
 
 class PageController
 {
