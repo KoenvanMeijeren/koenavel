@@ -106,16 +106,16 @@ final class Cookie
      *
      * @throws Exception
      */
-    public static function get(string $key): string
+    public function get(string $key): string
     {
-        if (isset($_COOKIE[$key])) {
-            $sanitize = new Sanitize($_COOKIE[$key]);
-            $data = new Encrypt((string) $sanitize->data());
-
-            return $data->decrypt();
+        if (!isset($_COOKIE[$key])) {
+            return '';
         }
 
-        return '';
+        $sanitize = new Sanitize($_COOKIE[$key]);
+        $data = new Encrypt((string)$sanitize->data());
+
+        return $data->decrypt();
     }
 
     /**
@@ -126,16 +126,18 @@ final class Cookie
      */
     public function unset(string $key, string $value): void
     {
-        if (isset($_COOKIE[$key])) {
-            setcookie(
-                $key,
-                $value,
-                time() - $this->expiringTime,
-                $this->path,
-                $this->domain,
-                $this->secure,
-                $this->httpOnly
-            );
+        if (!isset($_COOKIE[$key])) {
+            return;
         }
+
+        setcookie(
+            $key,
+            $value,
+            time() - $this->expiringTime,
+            $this->path,
+            $this->domain,
+            $this->secure,
+            $this->httpOnly
+        );
     }
 }

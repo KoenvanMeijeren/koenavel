@@ -36,7 +36,7 @@ final class Recaptcha
         $recaptcha = http_build_query([
             'secret' => Config::get('recaptcha_secret_key')->toString(),
             'response' => $request->post('g-recaptcha-response'),
-            'remoteip' => $request->server(Request::SERVER_REMOTE_ADDR),
+            'remoteip' => $request->server(Request::USER_IP_ADDRESS),
         ]);
 
         $this->query = [

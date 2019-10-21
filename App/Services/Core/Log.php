@@ -83,26 +83,23 @@ final class Log
     }
 
     /**
-     * Log the app request.
+     * Log the request from the user for the application.
      *
      * @param string $state specify the key if you want to add a state
      * @param string $value the message
+     * @param string $url the url which the user is viewing
+     * @param string $method the used method to access the uri
      *
      * @throws Exception
      */
     public function appRequest(
-        string $value = '',
-        string $state = 'successful'
+        string $value,
+        string $state,
+        string $url,
+        string $method
     ): void {
-        $uri = new URI();
+        $message = "{$method} request for page {$url} with message {$value}";
 
-        $message = $uri->getMethod();
-        $message .= ' request for page ';
-        $message .= $uri->getUrl();
-        $message .= ' with message "';
-        $message .= $value;
-        $message .= '"';
-
-        $this->info($state . " " . $message);
+        $this->logger->info($state . " " . $message);
     }
 }

@@ -8,6 +8,7 @@ use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\InvalidConfigException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
 use App\Services\Validate\Validate;
+use App\Services\View\ProductionErrorView;
 use Exception;
 use PDO;
 use Whoops\Handler\PrettyPageHandler;
@@ -62,7 +63,7 @@ final class Env
     {
         $request = new Request();
 
-        $this->host = $request->server(Request::SERVER_HTTP_HOST);
+        $this->host = $request->server(Request::HTTP_HOST);
         Validate::var($this->host)->isDomain();
 
         $this->setEnv();
@@ -106,7 +107,6 @@ final class Env
         } else {
             loadFile($this->configLocation);
         }
-
 
         if (!Config::isPrepared()) {
             throw new InvalidConfigException(

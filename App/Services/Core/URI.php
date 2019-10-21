@@ -29,7 +29,7 @@ class URI
     public function getUrl(): string
     {
         $sanitize = new Sanitize(
-            $this->request->server(Request::SERVER_REQUEST_URI),
+            $this->request->server(Request::URI),
             'url'
         );
 
@@ -43,7 +43,7 @@ class URI
      */
     public function getMethod(): string
     {
-        return $this->request->server(Request::SERVER_REQUEST_METHOD);
+        return $this->request->server(Request::METHOD);
     }
 
     /**
@@ -54,7 +54,7 @@ class URI
     public function getPreviousUrl(): string
     {
         $sanitize = new Sanitize(
-            $this->request->server(Request::SERVER_HTTP_REFERER),
+            $this->request->server(Request::HTTP_REFERER),
             'url'
         );
 
@@ -71,7 +71,7 @@ class URI
         $request = new Request();
 
         $hostExploded = explode(
-            '.', $request->server(Request::SERVER_HTTP_HOST)
+            '.', $request->server(Request::HTTP_HOST)
         );
         $arrayKeyLast = array_key_last($hostExploded);
 

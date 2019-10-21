@@ -57,7 +57,7 @@ final class Security
      */
     public function userAgentProtection(): void
     {
-        $userAgent = $this->request->server(Request::SERVER_HTTP_USER_AGENT);
+        $userAgent = $this->request->server(Request::HTTP_USER_AGENT);
 
         $this->session->saveForced('user_agent', $userAgent);
         if ($this->session->get('user_agent') !== $userAgent) {
@@ -73,7 +73,7 @@ final class Security
      */
     public function remoteIpProtection(): void
     {
-        $userIP = $this->request->server(Request::SERVER_REMOTE_ADDR);
+        $userIP = $this->request->server(Request::USER_IP_ADDRESS);
 
         $this->session->saveForced('user_remote_ip', $userIP);
         if ($this->session->get('user_remote_ip') !== $userIP) {

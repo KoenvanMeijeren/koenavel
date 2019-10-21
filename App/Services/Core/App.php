@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Core;
 
+use App\Contract\Services\Core\AppContract;
 use App\Services\Session\Builder as SessionBuilder;
 use App\Services\Translation\Builder as TranslationBuilder;
 use Exception;
-use App\Contract\Services\Core\AppContract;
 
 final class App implements AppContract
 {
@@ -53,9 +53,11 @@ final class App implements AppContract
         $router = new Router();
 
         $router->load($this->routesLocation)->direct(
-                $uri->getUrl(), $uri->getMethod(), 0
+            $uri->getUrl(), $uri->getMethod(), 0
         );
 
-        $log->appRequest();
+        $log->appRequest(
+            '', 'successful', $uri->getUrl(), $uri->getMethod()
+        );
     }
 }

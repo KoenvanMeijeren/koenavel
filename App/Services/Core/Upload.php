@@ -110,7 +110,7 @@ class Upload
     {
         $request = new Request();
 
-        $documentRoot = $request->server(Request::SERVER_DOCUMENT_ROOT);
+        $documentRoot = $request->server(Request::DOCUMENT_ROOT);
         $fileLocation = $this->stripedPath . $this->file['name'];
         $file = $documentRoot.$fileLocation;
 

@@ -5,27 +5,14 @@ declare(strict_types=1);
 namespace App\Services\Session;
 
 use App\Services\Core\Log;
+use App\Services\Core\Request;
 use App\Services\Core\Sanitize;
+use App\Services\Core\URI;
 use App\Services\Security\Encrypt;
 use Exception;
 
 final class Session
 {
-    /**
-     * The logger
-     *
-     * @var Log
-     */
-    private $log;
-
-    /**
-     * Construct the session.
-     */
-    public function __construct()
-    {
-        $this->log = new Log();
-    }
-
     /**
      * Save data in the session.
      *
@@ -91,23 +78,25 @@ final class Session
      */
     public function get(string $key, bool $unset = false): string
     {
-        if (isset($_SESSION[$key])) {
-            $sanitize = new Sanitize($_SESSION[$key]);
-            $data = new Encrypt((string)$sanitize->data());
-            $value = $data->decrypt();
+        $request = new Request();
+        $log = new Log();
+        $uri = new URI();
+        $sanitize = new Sanitize($request->session($key));
+        $data = new Encrypt((string)$sanitize->data());
+        $value = $data->decrypt();
 
-            if ($unset) {
-                $this->unset($key);
-            }
-
-            if ($key === 'error' || $key === 'success') {
-                $this->log->appRequest($value,
-                    $key === 'success' ? 'Successful' : 'Failed'
-                );
-            }
+        if ($unset) {
+            $this->unset($key);
         }
 
-        return $value ?? '';
+        if ($key === 'error' || $key === 'success') {
+            $log->appRequest($value,
+                $key === 'success' ? 'Successful' : 'Failed',
+                $uri->getUrl(), $uri->getMethod()
+            );
+        }
+
+        return $value;
     }
 
     /**
@@ -123,8 +112,10 @@ final class Session
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

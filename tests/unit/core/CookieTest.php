@@ -23,7 +23,7 @@ class CookieTest extends TestCase
             $cookie = new Cookie();
             $cookie->save('test', 'test');
 
-            $this->assertEquals('test', Cookie::get('test'));
+            $this->assertEquals('test', $cookie->get('test'));
         }
 
         $_COOKIE['test'] = 'test';
