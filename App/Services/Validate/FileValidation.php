@@ -20,13 +20,13 @@ trait FileValidation
      */
     public function fileExists(): Validate
     {
-        if (!file_exists(self::$var)) {
-            throw new FileNotExistingException(
-                'Could not load the given file ' . self::$var
-            );
+        if (file_exists(self::$var)) {
+            return new Validate();
         }
 
-        return new Validate();
+        throw new FileNotExistingException(
+            'Could not load the given file ' . self::$var
+        );
     }
 
     /**

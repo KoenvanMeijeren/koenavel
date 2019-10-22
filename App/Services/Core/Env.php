@@ -99,16 +99,10 @@ final class Env
         Config::set('env', $this->env);
 
         // temporary fix for scrutinizer-ci.com
-        if (!file_exists($this->configLocation)) {
-            $this->setDevelopmentConfig();
-        } else {
+        if (!strstr($this->host, 'scrutinizer-ci.com')) {
             loadFile($this->configLocation);
-        }
-
-        if (!Config::isPrepared()) {
-            throw new InvalidConfigException(
-                'The config must be prepared before setting the error handling.'
-            );
+        } else {
+            $this->setDevelopmentConfig();
         }
     }
 

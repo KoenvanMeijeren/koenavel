@@ -107,11 +107,9 @@ final class Session
     {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
