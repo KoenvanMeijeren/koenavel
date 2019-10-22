@@ -21,7 +21,8 @@
             <directory suffix=".php">App</directory>
             <exclude>
                 <directory suffix=".php">App/Services/Exceptions</directory>
-                <directory suffix=".php">App/functions</directory>
+                <directory suffix=".php">App/Functions</directory>
+                <directory suffix=".php">App/Controllers</directory>
 
                 <file>App/Services/Core/App.php</file>
                 <file>App/Services/Core/Upload.php</file>
