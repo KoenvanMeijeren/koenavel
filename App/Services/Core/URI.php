@@ -82,6 +82,7 @@ class URI
      * Redirect to a specific url.
      *
      * @param string $url the url to redirect
+     * @codeCoverageIgnore
      */
     public function redirect(string $url): void
     {
@@ -93,6 +94,7 @@ class URI
      *
      * @param string $url         the url to refresh
      * @param int    $refreshTime the refresh time
+     * @codeCoverageIgnore
      */
     public function refresh(string $url, int $refreshTime): void
     {

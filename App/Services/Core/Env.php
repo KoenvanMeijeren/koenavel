@@ -102,7 +102,9 @@ final class Env
         if (!strstr($this->host, 'scrutinizer-ci.com')) {
             loadFile($this->configLocation);
         } else {
+            // @codeCoverageIgnoreStart
             $this->setDevelopmentConfig();
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -140,6 +142,7 @@ final class Env
      *
      * @return void
      * @throws DuplicatedKeyException
+     * @codeCoverageIgnore
      */
     private function setDevelopmentConfig(): void
     {
