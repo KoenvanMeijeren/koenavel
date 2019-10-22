@@ -89,7 +89,7 @@ class Builder
      */
     public function __construct(
         string $sessionName = 'app',
-        int $expiringTime = 1 * 1 * 60 * 60,
+        int $expiringTime = 1 * 1 * 1 * 5,
         string $path = '/',
         string $domain = '',
         bool $secure = false,
@@ -152,31 +152,18 @@ class Builder
     private function setExpiringSession(): void
     {
         $now = new Chronos();
-        if (empty($this->session->get('time'))) {
-            $this->session->save('time', $now->toDateTimeString());
+        if (empty($this->session->get('createdAt'))) {
+            $this->session->saveForced('createdAt', $now->toDateTimeString());
         }
 
-        $sessionCreatedAt = $this->session->get('time');
+        $sessionCreatedAt = $this->session->get('createdAt');
         $expired = new Chronos($sessionCreatedAt);
         $expired = $expired->addSeconds($this->expiringTime);
 
         if ($expired->lte($now) && !headers_sent()) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
-            );
+            $this->logger->debug('Session has been expired.');
 
-            session_unset();
-            session_destroy();
-
-            $this->logger->debug('The session is destroyed.');
-            $this->startSession();
+            $this->destroy();
         }
     }
 
@@ -220,7 +207,8 @@ class Builder
             );
         }
 
-        $this->logger->debug('The session is destroyed.');
+        $this->logger->debug('The session has been destroyed.');
+
         $params = session_get_cookie_params();
         setcookie(
             session_name(),

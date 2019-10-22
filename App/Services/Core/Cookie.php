@@ -55,7 +55,7 @@ final class Cookie
      * @param bool   $httpOnly     Determine if the cookie must be http only
      */
     public function __construct(
-        int $expiringTime = 365 * 24 * 60 * 60,
+        int $expiringTime = 1 * 24 * 60 * 60,
         string $path = '/',
         string $domain = '',
         bool $secure = false,
@@ -110,6 +110,7 @@ final class Cookie
     {
         $request = new Request();
         $sanitize = new Sanitize($request->cookie($key));
+
         if (empty($sanitize->data())) {
             return '';
         }
