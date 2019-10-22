@@ -47,6 +47,8 @@ final class App implements AppContract
         $sessionBuilder->setSessionSecurity();
 
         $translationBuilder = new TranslationBuilder();
+        $translationBuilder->setLanguageID();
+        $translationBuilder->loadTranslations();
     }
 
     /**

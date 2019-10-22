@@ -32,22 +32,9 @@ final class Builder
     private $language = 0;
 
     /**
-     * Construct the languages and the translations based on it.
-     *
-     * @throws DuplicatedKeyException
-     * @throws FileNotExistingException
-     * @throws NoTranslationsForGivenLanguageID
-     */
-    public function __construct()
-    {
-        $this->setLanguageID();
-        $this->loadTranslations();
-    }
-
-    /**
      * Set the language id.
      */
-    private function setLanguageID(): void
+    public function setLanguageID(): void
     {
         $uri = new URI();
 
@@ -77,7 +64,7 @@ final class Builder
      * @throws FileNotExistingException
      * @throws NoTranslationsForGivenLanguageID
      */
-    private function loadTranslations()
+    public function loadTranslations()
     {
         if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
             Config::set('languageID', self::DUTCH_LANGUAGE_ID);
