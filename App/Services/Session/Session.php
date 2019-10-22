@@ -33,7 +33,7 @@ final class Session
     }
 
     /**
-     * Force to save data in the session.
+     * Forced save of data in the session.
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
@@ -50,9 +50,7 @@ final class Session
     /**
      * Flash data in the session.
      *
-     * TODO: flash data automatically into the session.
-     * TODO: If you do this then the name makes sense
-     * TODO: otherwise you can better remove the function
+     * TODO: Actually flash data into the session -> store it and after using it, destroy the data
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
@@ -79,9 +77,12 @@ final class Session
     public function get(string $key, bool $unset = false): string
     {
         $request = new Request();
-        $log = new Log();
-        $uri = new URI();
         $sanitize = new Sanitize($request->session($key));
+
+        if (empty($sanitize->data())) {
+            return '';
+        }
+
         $data = new Encrypt((string)$sanitize->data());
         $value = $data->decrypt();
 
@@ -89,13 +90,7 @@ final class Session
             $this->unset($key);
         }
 
-        if ($key === 'error' || $key === 'success') {
-            $log->appRequest($value,
-                $key === 'success' ? 'Successful' : 'Failed',
-                $uri->getUrl(), $uri->getMethod()
-            );
-        }
-
+        $this->logRequest($key, $value);
         return $value;
     }
 
@@ -117,5 +112,25 @@ final class Session
         }
 
         return false;
+    }
+
+    /**
+     * Log the session request.
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @throws Exception
+     */
+    private function logRequest(string $key, string $value): void
+    {
+        $log = new Log();
+        $uri = new URI();
+        if ($key === 'error' || $key === 'success') {
+            $log->appRequest($value,
+                $key === 'success' ? 'Successful' : 'Failed',
+                $uri->getUrl(), $uri->getMethod()
+            );
+        }
     }
 }
