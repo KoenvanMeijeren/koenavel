@@ -108,11 +108,12 @@ final class Cookie
      */
     public function get(string $key): string
     {
-        if (!isset($_COOKIE[$key])) {
+        $request = new Request();
+        $sanitize = new Sanitize($request->cookie($key));
+        if (empty($sanitize->data())) {
             return '';
         }
 
-        $sanitize = new Sanitize($_COOKIE[$key]);
         $data = new Encrypt((string)$sanitize->data());
 
         return $data->decrypt();
