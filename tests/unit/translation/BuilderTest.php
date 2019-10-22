@@ -20,6 +20,8 @@ class BuilderTest extends TestCase
     public function test_that_we_can_build_the_dutch_translator()
     {
         $builder = new Builder();
+        $builder->setLanguageID();
+        $builder->loadTranslations();
 
         $this->assertEquals(
             Builder::DUTCH_LANGUAGE_ID,
@@ -31,6 +33,8 @@ class BuilderTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $builder = new Builder();
+        $builder->setLanguageID();
+        $builder->loadTranslations();
 
         $this->assertEquals(
             Builder::ENGLISH_LANGUAGE_ID,
@@ -38,12 +42,12 @@ class BuilderTest extends TestCase
         );
     }
 
-    public function test_that_we_cannot_build_the_french_translator()
+    public function test_that_we_cannot_build_the_translator()
     {
-        $_SERVER['HTTP_HOST'] = 'www.test.fr';
         $this->expectException(Exception::class);
 
-        new Builder();
+        $builder = new Builder();
+        $builder->loadTranslations();
     }
 
     public function tearDown(): void
