@@ -183,19 +183,22 @@ class Builder
      */
     private function setCanarySession(): void
     {
-        if (!isset($_SESSION['canary'])
+        if (empty($this->session->get('canary'))
             && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
-            $_SESSION['canary'] = time();
+            $this->session->saveForced('canary', (string) time());
+
+            $this->log->info('Session id has been regenerated');
         }
 
-        if (isset($_SESSION['canary'])
-            && $_SESSION['canary'] < time() - 300
+        if ((int) $this->session->get('canary') < time() - 300
             && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
-            $_SESSION['canary'] = time();
+            $this->session->saveForced('canary', (string) time());
+
+            $this->log->info('Session id has been regenerated');
         }
     }
 

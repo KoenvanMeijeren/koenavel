@@ -60,6 +60,8 @@ final class App implements AppContract
         $log = new Log();
         $router = new Router();
 
+        dd($_SESSION);
+
         $router->load($this->routesLocation)->direct(
             $uri->getUrl(), $uri->getMethod(), 0
         );
