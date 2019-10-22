@@ -5,6 +5,8 @@ parameters:
         - "#Constant .* not found.#"
         - "#Internal error#"
         - "#function .* expects .*, .*|false given.#"
+        # find out how i can avoid it to use this
+        - "#In method .*, parameter .* can be type-hinted to .*.#"
 services:
   -
     class: TheCodingMachine\PHPStan\Rules\Exceptions\ThrowMustBundlePreviousExceptionRule

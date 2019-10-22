@@ -75,11 +75,13 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return array
+     * @return mixed[]
      */
     public function fetchAll(int $fetchMethod): array
     {
-        return $this->statement->fetchAll($fetchMethod);
+        $result = $this->statement->fetchAll($fetchMethod);
+
+        return is_array($result) ? $result : [];
     }
 
     /**
@@ -97,7 +99,7 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an object.
      *
-     * @return array
+     * @return mixed[]
      */
     public function all(): array
     {
@@ -109,7 +111,7 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an array.
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray(): array
     {

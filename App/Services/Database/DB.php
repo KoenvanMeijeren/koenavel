@@ -38,7 +38,7 @@ class DB
     /**
      * The values to bind to the query.
      *
-     * @var array
+     * @var mixed[]
      */
     private $values = [];
 
@@ -73,7 +73,7 @@ class DB
      * @throws EmptyVarException
      * @throws InvalidTypeException
      */
-    public function select(... $columns): DB
+    public function select(...$columns): DB
     {
         $columns = implode(', ', $columns);
         $hooks = '';
@@ -90,8 +90,8 @@ class DB
     /**
      * Execute self written queries.
      *
-     * @param string $query  The query to execute.
-     * @param array  $values The values to bind to the query.
+     * @param string    $query  The query to execute.
+     * @param mixed[]   $values The values to bind to the query.
      *
      * @return DB
      * @throws InvalidTypeException
@@ -123,7 +123,7 @@ class DB
     /**
      * Get the prepared values.
      *
-     * @return array
+     * @return mixed[]
      */
     public function getValues(): array
     {
