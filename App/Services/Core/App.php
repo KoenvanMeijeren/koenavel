@@ -40,8 +40,13 @@ final class App implements AppContract
         $env->setEnv();
         $env->setErrorHandling();
 
-        new SessionBuilder('koenavel',1 * 1 * 60 * 60);
-        new TranslationBuilder();
+        $sessionBuilder = new SessionBuilder(
+            'koenavel', 1 * 1 * 60 * 60
+        );
+        $sessionBuilder->startSession();
+        $sessionBuilder->setSessionSecurity();
+
+        $translationBuilder = new TranslationBuilder();
     }
 
     /**

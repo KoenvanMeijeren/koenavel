@@ -105,15 +105,12 @@ class Builder
         $this->session = new Session();
         $this->security = new SessionSecurity();
         $this->log = new Log();
-
-        $this->startSession();
-        $this->setSessionSecurity();
     }
 
     /**
      * Start the session.
      */
-    private function startSession(): void
+    public function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
             session_name($this->name);
@@ -135,7 +132,7 @@ class Builder
      *
      * @throws Exception
      */
-    private function setSessionSecurity()
+    public function setSessionSecurity()
     {
         $this->security->userAgentProtection();
         $this->security->remoteIpProtection();
