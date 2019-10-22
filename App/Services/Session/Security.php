@@ -32,13 +32,6 @@ final class Security
     private $session;
 
     /**
-     * The session builder class
-     *
-     * @var Builder
-     */
-    private $builder;
-
-    /**
      * Construct the security
      *
      * @throws Exception
@@ -62,7 +55,8 @@ final class Security
         $this->session->saveForced('user_agent', $userAgent);
         if ($this->session->get('user_agent') !== $userAgent) {
             $this->log->info('Session hijacking attack has declined');
-//  todo          $this->builder->destroy();
+            $session = new Builder();
+            $session->destroy();
         }
     }
 
@@ -78,7 +72,8 @@ final class Security
         $this->session->saveForced('user_remote_ip', $userIP);
         if ($this->session->get('user_remote_ip') !== $userIP) {
             $this->log->info('Session hijacking attack has declined');
-//     todo       $this->builder->destroy();
+            $session = new Builder();
+            $session->destroy();
         }
     }
 }

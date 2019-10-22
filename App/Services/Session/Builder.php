@@ -88,8 +88,8 @@ class Builder
      * @throws Exception
      */
     public function __construct(
-        string $sessionName,
-        int $expiringTime,
+        string $sessionName = 'app',
+        int $expiringTime = 1 * 1 * 60 * 60,
         string $path = '/',
         string $domain = '',
         bool $secure = false,
