@@ -36,7 +36,10 @@ final class App implements AppContract
         $this->routesLocation = $routesLocation;
         date_default_timezone_set('Europe/Amsterdam');
 
-        new Env();
+        $env = new Env();
+        $env->setEnv();
+        $env->setErrorHandling();
+
         new SessionBuilder('koenavel',1 * 1 * 60 * 60);
         new TranslationBuilder();
     }

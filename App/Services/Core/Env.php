@@ -65,9 +65,6 @@ final class Env
 
         $this->host = $request->server(Request::HTTP_HOST);
         Validate::var($this->host)->isDomain();
-
-        $this->setEnv();
-        $this->setErrorHandling();
     }
 
     /**
@@ -87,7 +84,7 @@ final class Env
      * @throws InvalidEnvException
      * @throws InvalidConfigException
      */
-    private function setEnv(): void
+    public function setEnv(): void
     {
         $this->env = self::PRODUCTION;
         $this->configLocation = CONFIG_PATH . '/production_config.php';
@@ -120,7 +117,7 @@ final class Env
      *
      * @return void
      */
-    private function setErrorHandling(): void
+    public function setErrorHandling(): void
     {
         ini_set(
             'display_errors',
