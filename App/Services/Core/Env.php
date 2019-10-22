@@ -17,7 +17,7 @@ use Whoops\Run as Whoops;
 /**
  * Class Env
  *
- * @package App\services\core
+ * @package App\Services\Core
  *
  * TODO: rewrite sensitive config data to .env files
  */
