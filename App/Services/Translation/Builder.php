@@ -9,29 +9,17 @@ use App\Services\Core\URI;
 use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\services\exceptions\file\FileNotExistingException;
-use Exception;
 
 final class Builder
 {
     /**
-     * The uri class.
-     *
-     * @var URI
-     */
-    private $uri;
-
-    /**
-     * The dutch language options.
+     * The language options.
      */
     const DUTCH_LANGUAGE_ID = 1;
     const DUTCH_LANGUAGE_CODE = 'nl';
     const DUTCH_LANGUAGE_NAME = 'Dutch';
     const DUTCH_LANGUAGE_LC_ALL_CODE = 'nl_NL';
     const DUTCH_LANGUAGE_LC_MONETARY_CODE = 'de_DE';
-
-    /**
-     * The english language options.
-     */
     const ENGLISH_LANGUAGE_ID = 2;
     const ENGLISH_LANGUAGE_CODE = 'en';
     const ENGLISH_LANGUAGE_NAME = 'English';
@@ -46,12 +34,12 @@ final class Builder
     /**
      * Construct the languages and the translations based on it.
      *
-     * @throws Exception
+     * @throws DuplicatedKeyException
+     * @throws FileNotExistingException
+     * @throws NoTranslationsForGivenLanguageID
      */
     public function __construct()
     {
-        $this->uri = new URI();
-
         $this->setLanguageID();
         $this->loadTranslations();
     }
@@ -61,11 +49,13 @@ final class Builder
      */
     private function setLanguageID(): void
     {
-        if (strstr($this->uri->getDomainExtension(), 'localhost')
-            || strstr($this->uri->getDomainExtension(), 'nl')
+        $uri = new URI();
+
+        if (strstr($uri->getDomainExtension(), 'localhost')
+            || strstr($uri->getDomainExtension(), 'nl')
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr($this->uri->getDomainExtension(), 'com')) {
+        } elseif (strstr($uri->getDomainExtension(), 'com')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
         }
     }
