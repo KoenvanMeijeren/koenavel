@@ -48,7 +48,6 @@
             "phploc app",
             "phpmnd app",
             "phpstan analyse app -c phpstan.neon --level=7",
-            "churn app",
             "phpunit"
         ],
         "inspect-fix": [
