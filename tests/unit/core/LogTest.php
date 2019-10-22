@@ -19,6 +19,8 @@ class LogTest extends TestCase
     public function setUp(): void
     {
         Config::set('appName', 'TestApp');
+        Config::set('env', \App\Services\Core\Env::DEVELOPMENT);
+
         $this->log = new Log();
     }
 
@@ -54,5 +56,6 @@ class LogTest extends TestCase
     public function tearDown(): void
     {
         Config::unset('appName');
+        Config::unset('env');
     }
 }

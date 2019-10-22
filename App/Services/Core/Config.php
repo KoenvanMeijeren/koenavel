@@ -28,7 +28,7 @@ final class Config
     /**
      * Set a new config item.
      *
-     * @param string                      $key   the key to save the value in
+     * @param string                      $key   the key of the value
      * @param string|int|float|array|bool $value the value of the key
      *
      * @throws DuplicatedKeyException
@@ -83,6 +83,7 @@ final class Config
         }
 
         unset(self::$config[$key]);
+
         return true;
     }
 
