@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Services\Translation;
 
 use App\Services\Core\Config;
+use App\Services\Core\Log;
 use App\Services\Core\URI;
 use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\services\exceptions\file\FileNotExistingException;
+use Exception;
 
 final class Builder
 {
@@ -63,6 +65,7 @@ final class Builder
      * @throws DuplicatedKeyException
      * @throws FileNotExistingException
      * @throws NoTranslationsForGivenLanguageID
+     * @throws Exception
      */
     public function loadTranslations()
     {
@@ -76,6 +79,8 @@ final class Builder
 
             loadFile(RESOURCES_PATH.'/language/dutch/dutch_translations.php');
 
+            $logger = new Log();
+            $logger->debug('Dutch translations are loaded.');
             return;
         } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
             Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
@@ -87,6 +92,8 @@ final class Builder
 
             loadFile(RESOURCES_PATH.'/language/english/english_translations.php');
 
+            $logger = new Log();
+            $logger->debug('English translations are loaded.');
             return;
         }
 

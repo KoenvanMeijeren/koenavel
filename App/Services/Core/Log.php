@@ -42,9 +42,11 @@ final class Log
         $formatter = new LineFormatter($format, $timeFormat);
         $formatter->ignoreEmptyContextAndExtra();
 
+        $level = Config::get('env')->toString() === Env::DEVELOPMENT ?
+            Logger::DEBUG : Logger::INFO;
         $defaultHandler = new RotatingFileHandler(
             START_PATH . '/storage/logs/app.log',
-            365, Logger::DEBUG
+            365, $level
         );
         $defaultHandler->setFormatter($formatter);
 
@@ -68,6 +70,19 @@ final class Log
             START_PATH . '/storage/logs/app-' .
             $date . '.log'
         );
+    }
+
+    /**
+     * Log debug info.
+     *
+     * @param string  $message the log message
+     * @param mixed[] $context the log context
+     *
+     * @throws Exception
+     */
+    public function debug(string $message, array $context = []): void
+    {
+        $this->logger->debug($message, $context);
     }
 
     /**
@@ -99,10 +114,10 @@ final class Log
     /**
      * Log the request from the user for the application.
      *
-     * @param string $state specify the key if you want to add a state
-     * @param string $value the message
-     * @param string $url the url which the user is viewing
-     * @param string $method the used method to access the uri
+     * @param string $state     specify the key if you want to add a state
+     * @param string $value     the message
+     * @param string $url       the url which the user is viewing
+     * @param string $method    the used method to access the uri
      *
      * @throws Exception
      */

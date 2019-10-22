@@ -10,13 +10,6 @@ build:
           -
             command: phpcs-run
             use_website_config: true
-    coverage:
-      tests:
-        override:
-          - command: ./vendor/bin/phpunit
-            coverage:
-              file: /tmp/coverage.xml
-              format: clover
 filter:
   excluded_paths:
     - 'resources/*'

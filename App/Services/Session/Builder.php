@@ -31,7 +31,7 @@ class Builder
      *
      * @var Log
      */
-    private $log;
+    private $logger;
 
     /**
      * The name of the session.
@@ -104,11 +104,13 @@ class Builder
 
         $this->session = new Session();
         $this->security = new SessionSecurity();
-        $this->log = new Log();
+        $this->logger = new Log();
     }
 
     /**
      * Start the session.
+     *
+     * @throws Exception
      */
     public function startSession(): void
     {
@@ -125,7 +127,7 @@ class Builder
 
             session_start();
 
-            $this->log->info('New session has been started');
+            $this->logger->debug('Session has been started');
         }
     }
 
@@ -173,13 +175,15 @@ class Builder
             session_unset();
             session_destroy();
 
-            $this->log->info('The session is destroyed.');
+            $this->logger->debug('The session is destroyed.');
             $this->startSession();
         }
     }
 
     /**
      * Regenerate session ID every five minutes.
+     *
+     * @throws Exception
      */
     private function setCanarySession(): void
     {
@@ -189,7 +193,7 @@ class Builder
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
 
-            $this->log->info('Session id has been regenerated');
+            $this->logger->debug('Session id has been regenerated');
         }
 
         if ((int) $this->session->get('canary') < time() - 300
@@ -198,7 +202,7 @@ class Builder
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
 
-            $this->log->info('Session id has been regenerated');
+            $this->logger->debug('Session id has been regenerated');
         }
     }
 
@@ -216,7 +220,7 @@ class Builder
             );
         }
 
-        $this->log->info('The session is destroyed.');
+        $this->logger->debug('The session is destroyed.');
         $params = session_get_cookie_params();
         setcookie(
             session_name(),
