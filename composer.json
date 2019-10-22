@@ -26,26 +26,30 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8.3",
-        "friendsofphp/php-cs-fixer": "^2.15",
-        "phpstan/phpstan": "^0.11.7",
-        "squizlabs/php_codesniffer": "^3.2",
         "php-coveralls/php-coveralls": "^2.1",
         "thecodingmachine/phpstan-strict-rules": "^0.11.2",
         "nunomaduro/phpinsights": "^1.9",
         "phploc/phploc": "^5.0",
         "sebastian/phpcpd": "^4.1",
-        "povils/phpmnd": "^2.1",
         "bmitch/churn-php": "^1.0",
         "daniel-werner/php-quality-tools": "^1.0"
     },
     "scripts": {
         "phpunit": "phpunit",
-        "refactor-code-check": "churn directory/",
         "inspect": [
             "phpcs app",
             "phpcpd app",
             "phpmnd app",
             "phpstan analyse app -c phpstan.neon --level=7"
+        ],
+        "inspect-deep": [
+            "phpcs app",
+            "phpcpd app",
+            "phploc app",
+            "phpmnd app",
+            "phpstan analyse app -c phpstan.neon --level=7",
+            "churn app",
+            "phpunit"
         ],
         "inspect-fix": [
             "php-cs-fixer fix app",
@@ -55,5 +59,8 @@
             "phploc app",
             "phpmd app codesize,unusedcode,naming"
         ]
+    },
+    "config": {
+        "sort-packages": true
     }
 }

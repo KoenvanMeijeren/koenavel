@@ -25,11 +25,9 @@ final class Recaptcha
     /**
      * Build the recaptcha http request.
      *
-     * @param Request $request the request for the post item
-     *
      * @throws Exception
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         $request = new Request();
 
