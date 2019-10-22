@@ -54,9 +54,14 @@ final class Security
 
         $this->session->saveForced('user_agent', $userAgent);
         if ($this->session->get('user_agent') !== $userAgent) {
-            $this->log->info('Session hijacking attack has declined');
+            $this->log->info(
+                'Session hijacking attack has been declined'
+            );
+
             $session = new Builder();
             $session->destroy();
+
+            $this->session->saveForced('user_agent', $userAgent);
         }
     }
 
@@ -71,9 +76,14 @@ final class Security
 
         $this->session->saveForced('user_remote_ip', $userIP);
         if ($this->session->get('user_remote_ip') !== $userIP) {
-            $this->log->info('Session hijacking attack has declined');
+            $this->log->info(
+                'Session hijacking attack has been declined'
+            );
+
             $session = new Builder();
             $session->destroy();
+
+            $this->session->saveForced('user_remote_ip', $userIP);
         }
     }
 }

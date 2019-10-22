@@ -124,6 +124,8 @@ class Builder
             );
 
             session_start();
+
+            $this->log->info('New session has been started');
         }
     }
 
