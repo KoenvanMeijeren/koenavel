@@ -9,6 +9,7 @@ use App\Services\Exceptions\File\FileNotExistingException;
 use App\Services\Exceptions\Object\InvalidMethodCalledException;
 use App\Services\Exceptions\Object\InvalidObjectException;
 use App\Services\Validate\Validate;
+use App\Services\View\View;
 
 final class Router
 {
@@ -52,17 +53,12 @@ final class Router
      * @throws FileNotExistingException
      */
     public function load(
-        string $file,
+        string $file = 'web.php',
         string $directoryPath = ROUTES_PATH . '/'
     ): Router {
-        self::$routes = [
-            'GET' => [],
-            'POST' => [],
-        ];
-        self::$availableRoutes = [];
+        $this->resetRoutes();
 
         loadFile($directoryPath.$file);
-
         return new Router();
     }
 
@@ -70,9 +66,11 @@ final class Router
      * Define the get routes.
      *
      * @param string $route      the get route
-     * @param string $controller the controller to execute when the route is called
+     * @param string $controller the controller to execute when
+     *                           the route is called
      * @param string $method     a specific method from the controller
-     * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
+     * @param int    $rights     the rights of the user to be able to
+     *                           visit routes based on the given rights
      */
     public static function get(
         string $route,
@@ -87,9 +85,11 @@ final class Router
      * Define the post routes.
      *
      * @param string $route      the post route
-     * @param string $controller the controller to execute when the route is called
+     * @param string $controller the controller to execute when
+     *                           the route is called
      * @param string $method     a specific method from the controller
-     * @param int    $rights     the rights of the user to be able to visit routes based on the given rights
+     * @param int    $rights     the rights of the user to be able to
+     *                           visit routes based on the given rights
      */
     public static function post(
         string $route,
@@ -113,7 +113,8 @@ final class Router
     /**
      * Direct an url to a controller.
      *
-     * @param string $url         the current url to search for the corresponding route in the routes
+     * @param string $url         the current url to search for the
+     *                            corresponding route in the routes
      * @param string $requestType the request type
      * @param int    $rights      the rights of the user
      *
@@ -144,7 +145,8 @@ final class Router
     /**
      * Execute the route and call the controller.
      *
-     * @param string $url the current url to search for the corresponding route in the routes
+     * @param string $url the current url to search for the
+     *                    corresponding route in the routes
      *
      * @return View|string
      *
@@ -166,8 +168,8 @@ final class Router
     /**
      * Set the available routes based on the current rights of the user.
      *
-     * @param string $requestType the request type
-     * @param int    $rights      the current rights of the user of the app
+     * @param string $requestType the request type to access the page
+     * @param int    $rights      the rights of the user of the app
      */
     private function setAvailableRoutes(string $requestType, int $rights): void
     {
@@ -176,8 +178,7 @@ final class Router
         for ($i = 0; $i <= $rights; ++$i) {
             if (isset(self::$routes[$requestType][$i])) {
                 self::$availableRoutes = array_merge(
-                    self::$availableRoutes,
-                    self::$routes[$requestType][$i]
+                    self::$availableRoutes, self::$routes[$requestType][$i]
                 );
             }
         }
@@ -237,5 +238,17 @@ final class Router
         }
 
         return;
+    }
+
+    /**
+     * Reset all the current stored routes.
+     */
+    private function resetRoutes(): void
+    {
+        self::$routes = [
+            'GET' => [],
+            'POST' => [],
+        ];
+        self::$availableRoutes = [];
     }
 }
