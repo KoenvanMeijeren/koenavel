@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use App\Services\Exceptions\Basic\DuplicatedKeyException;
-use App\Services\Exceptions\Basic\InvalidConfigException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
 use App\Services\Validate\Validate;
 use App\Services\View\ProductionErrorView;
@@ -82,7 +81,6 @@ final class Env
      *
      * @throws Exception
      * @throws InvalidEnvException
-     * @throws InvalidConfigException
      */
     public function setEnv(): void
     {
@@ -115,12 +113,10 @@ final class Env
      */
     public function setErrorHandling(): void
     {
-        ini_set(
-            'display_errors',
+        ini_set('display_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
         );
-        ini_set(
-            'display_startup_errors',
+        ini_set('display_startup_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
         );
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use Exception;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Monolog\Processor\ProcessIdProcessor;
 use Monolog\Processor\WebProcessor;
 
 final class Log
@@ -26,15 +29,26 @@ final class Log
      */
     public function __construct()
     {
-        $this->logger = new Logger(Config::get('appName')->toString());
-        $this->logger->pushHandler(
-            new RotatingFileHandler(
-                START_PATH . '/storage/logs/app.log',
-                365,
-                Logger::DEBUG
-            )
-        );
+        $format = "[%datetime%] %level_name% %message% %context% %extra%\n";
+        $timeFormat = "Y-m-d H:i:s";
+        $dateTimeZone = new \DateTimeZone('Europe/Amsterdam');
 
+        $this->logger = new Logger(Config::get('appName')->toString());
+        $this->logger->setTimezone($dateTimeZone);
+
+        $this->logger->pushProcessor(new IntrospectionProcessor());
+        $this->logger->pushProcessor(new ProcessIdProcessor());
+
+        $formatter = new LineFormatter($format, $timeFormat);
+        $formatter->ignoreEmptyContextAndExtra();
+
+        $defaultHandler = new RotatingFileHandler(
+            START_PATH . '/storage/logs/app.log',
+            365, Logger::DEBUG
+        );
+        $defaultHandler->setFormatter($formatter);
+
+        $this->logger->pushHandler($defaultHandler);
         $this->logger->pushHandler(new FirePHPHandler());
         $this->logger->pushProcessor(new WebProcessor());
     }
