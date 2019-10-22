@@ -41,7 +41,7 @@ final class Builder
     /**
      * The current application language id.
      */
-    private $language;
+    private $language = 0;
 
     /**
      * Construct the languages and the translations based on it.

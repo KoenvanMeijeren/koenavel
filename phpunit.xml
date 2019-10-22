@@ -18,24 +18,23 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">app</directory>
+            <directory suffix=".php">App</directory>
             <exclude>
-                <directory suffix=".php">app/services/exceptions</directory>
-                <directory suffix=".php">app/functions</directory>
-                <directory suffix=".php">app/controllers</directory>
+                <directory suffix=".php">App/Services/Exceptions</directory>
+                <directory suffix=".php">App/functions</directory>
 
-                <file>app/services/core/App.php</file>
-                <file>app/services/core/Upload.php</file>
-                <file>app/services/core/Mail.php</file>
-                <file>app/services/core/Cookie.php</file>
+                <file>App/Services/Core/App.php</file>
+                <file>App/Services/Core/Upload.php</file>
+                <file>App/Services/Core/Mail.php</file>
+                <file>App/Services/Core/Cookie.php</file>
 
-                <file>app/services/security/CSRF.php</file>
-                <file>app/services/security/Recaptcha.php</file>
+                <file>App/Services/Security/CSRF.php</file>
+                <file>App/Services/Security/Recaptcha.php</file>
 
-                <file>app/services/session/Builder.php</file>
-                <file>app/services/session/Security.php</file>
+                <file>App/Services/Session/Builder.php</file>
+                <file>App/Services/Session/Security.php</file>
 
-                <file>app/services/response/Redirect.php</file>
+                <file>App/Services/Response/Redirect.php</file>
             </exclude>
         </whitelist>
     </filter>

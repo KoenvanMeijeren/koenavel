@@ -38,6 +38,14 @@ class BuilderTest extends TestCase
         );
     }
 
+    public function test_that_we_cannot_build_the_french_translator()
+    {
+        $_SERVER['HTTP_HOST'] = 'www.test.fr';
+        $this->expectException(Exception::class);
+
+        new Builder();
+    }
+
     public function tearDown(): void
     {
         Config::unsetAll();

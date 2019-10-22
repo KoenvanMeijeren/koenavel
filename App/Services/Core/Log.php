@@ -100,6 +100,6 @@ final class Log
     ): void {
         $message = "{$method} request for page {$url} with message {$value}";
 
-        $this->logger->info($state . " " . $message);
+        $this->info($state . " " . $message);
     }
 }
