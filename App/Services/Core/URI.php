@@ -69,7 +69,8 @@ class URI
     public function getDomainExtension(): string
     {
         $hostExploded = explode(
-            '.', $this->request->server(Request::HTTP_HOST)
+            '.',
+            $this->request->server(Request::HTTP_HOST)
         );
         $arrayKeyLast = array_key_last($hostExploded);
 

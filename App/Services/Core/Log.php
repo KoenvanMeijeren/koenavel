@@ -46,7 +46,8 @@ final class Log
             Logger::DEBUG : Logger::INFO;
         $defaultHandler = new RotatingFileHandler(
             START_PATH . '/storage/logs/app.log',
-            365, $level
+            365,
+            $level
         );
         $defaultHandler->setFormatter($formatter);
 

@@ -163,7 +163,8 @@ class Upload
         }
 
         $this->session->flash(
-            'error', Translation::get('error_while_uploading_file')
+            'error',
+            Translation::get('error_while_uploading_file')
         );
         return false;
     }
@@ -193,7 +194,8 @@ class Upload
 
         if (!key_exists($type, self::ALLOWED_FILE_TYPES)) {
             $this->session->flash(
-                'error', Translation::get('not_allowed_file_upload')
+                'error',
+                Translation::get('not_allowed_file_upload')
             );
             return false;
         }

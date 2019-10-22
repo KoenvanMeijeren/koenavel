@@ -8,5 +8,4 @@ use Exception;
 
 class InvalidDomainException extends Exception
 {
-
 }

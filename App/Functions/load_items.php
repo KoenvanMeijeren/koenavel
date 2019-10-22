@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\services\exceptions\file\FileNotExistingException;
-use App\services\validate\Validate;
+use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Validate\Validate;
 
 /**
  * Load a file and return it.
@@ -35,13 +35,13 @@ function loadFile(string $filename, $vars = null)
  */
 function loadImage(string $name, string $fallback)
 {
-    if (!empty($name) 
+    if (!empty($name)
         && file_exists($_SERVER['DOCUMENT_ROOT'].$name)
     ) {
         return $name;
     }
 
-    if (!empty($fallback) 
+    if (!empty($fallback)
         && file_exists($_SERVER['DOCUMENT_ROOT'].$fallback)
     ) {
         return $fallback;

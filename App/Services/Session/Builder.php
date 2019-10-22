@@ -136,7 +136,7 @@ class Builder
      *
      * @throws Exception
      */
-    public function setSessionSecurity()
+    public function setSessionSecurity(): void
     {
         $this->security->userAgentProtection();
         $this->security->remoteIpProtection();

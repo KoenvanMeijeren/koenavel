@@ -63,13 +63,18 @@ final class Recaptcha
             $context
         );
 
-        $recaptchaResult = json_decode($response, false, 512,
-            JSON_THROW_ON_ERROR);
+        $recaptchaResult = json_decode(
+            $response,
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
         if ($recaptchaResult->success) {
             return true;
         }
 
-        Session::flash(
+        $session = new Session();
+        $session->flash(
             'error',
             Translation::get('failed_recaptcha_check_message')
         );

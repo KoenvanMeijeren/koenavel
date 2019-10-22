@@ -119,7 +119,8 @@ final class Request
      *
      * @return string the data from the super global
      */
-    private function request(array $superGlobal, string $key): string {
+    private function request(array $superGlobal, string $key): string
+    {
         if (!isset($superGlobal[$key])) {
             return '';
         }

@@ -40,6 +40,7 @@ final class App implements AppContract
         $env->setEnv();
         $env->setErrorHandling();
 
+        // todo: add random generated session id
         $sessionBuilder = new SessionBuilder();
         $sessionBuilder->startSession();
         $sessionBuilder->setSessionSecurity();
@@ -61,11 +62,16 @@ final class App implements AppContract
         $router = new Router();
 
         $router->load($this->routesLocation)->direct(
-            $uri->getUrl(), $uri->getMethod(), 0
+            $uri->getUrl(),
+            $uri->getMethod(),
+            0
         );
 
         $log->appRequest(
-            '', 'successful', $uri->getUrl(), $uri->getMethod()
+            '',
+            'successful',
+            $uri->getUrl(),
+            $uri->getMethod()
         );
     }
 }

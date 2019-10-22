@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Security;
 
-use App\services\Session\Session;
+use App\Services\Session\Session;
 use App\Services\Translation\Translation;
 use Exception;
 use ParagonIE\AntiCSRF\AntiCSRF;

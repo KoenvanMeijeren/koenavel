@@ -108,10 +108,12 @@ final class Env
      */
     public function setErrorHandling(): void
     {
-        ini_set('display_errors',
+        ini_set(
+            'display_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
         );
-        ini_set('display_startup_errors',
+        ini_set(
+            'display_startup_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
         );
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));

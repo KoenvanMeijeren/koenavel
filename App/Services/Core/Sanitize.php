@@ -89,30 +89,30 @@ final class Sanitize
     private function filterData($data)
     {
         switch ($this->type) {
-        case self::TYPE_STRING:
-            $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
-            $data = trim($data);
+            case self::TYPE_STRING:
+                $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
+                $data = trim($data);
 
-            break;
-        case self::TYPE_INT:
-            $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+                break;
+            case self::TYPE_INT:
+                $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
 
-            break;
-        case self::TYPE_DOUBLE:
-        case self::TYPE_FLOAT:
-            $data = (double) filter_var($data);
+                break;
+            case self::TYPE_DOUBLE:
+            case self::TYPE_FLOAT:
+                $data = (double) filter_var($data);
 
-            break;
-        case self::TYPE_URL:
-            $data = parse_url((string) $data, PHP_URL_PATH);
-            $data = trim((string) $data, '/');
-            $data = filter_var($data, FILTER_SANITIZE_URL);
+                break;
+            case self::TYPE_URL:
+                $data = parse_url((string) $data, PHP_URL_PATH);
+                $data = trim((string) $data, '/');
+                $data = filter_var($data, FILTER_SANITIZE_URL);
 
-            break;
-        default:
-            $data = filter_var($data);
+                break;
+            default:
+                $data = filter_var($data);
 
-            break;
+                break;
         }
 
         return $data;

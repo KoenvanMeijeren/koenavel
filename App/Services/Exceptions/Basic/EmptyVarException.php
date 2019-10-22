@@ -8,5 +8,4 @@ use Exception;
 
 class EmptyVarException extends Exception
 {
-
 }

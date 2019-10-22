@@ -9,7 +9,7 @@ use App\Services\Core\Log;
 use App\Services\Core\URI;
 use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\services\exceptions\file\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotExistingException;
 use Exception;
 
 final class Builder
@@ -67,7 +67,7 @@ final class Builder
      * @throws NoTranslationsForGivenLanguageID
      * @throws Exception
      */
-    public function loadTranslations()
+    public function loadTranslations(): void
     {
         if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
             Config::set('languageID', self::DUTCH_LANGUAGE_ID);
