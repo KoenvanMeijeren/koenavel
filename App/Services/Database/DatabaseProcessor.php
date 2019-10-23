@@ -121,15 +121,27 @@ class DatabaseProcessor extends DatabaseConnection
     }
 
     /**
-     * Fetch the first record found in the database to an object.
+     * Fetch the first record found in the database into an object.
      *
-     * @return object
+     * @return stdClass
      */
-    public function first(): object
+    public function first(): stdClass
     {
         $result = $this->statement->fetch(PDO::FETCH_OBJ);
 
         return is_object($result) ? $result : new stdClass();
+    }
+
+    /**
+     * Fetch the first record found in the database into an array.
+     *
+     * @return mixed[]
+     */
+    public function firstToArray(): array
+    {
+        $result = $this->statement->fetch(PDO::FETCH_NAMED);
+
+        return is_array($result) ? $result : [];
     }
 
     /**
