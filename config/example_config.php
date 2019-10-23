@@ -1,16 +1,15 @@
 <?php
 
 declare(strict_types=1);
-use PDO;
 
 use App\services\Core\Config;
+use App\Services\Translation\Builder as Translation;
 
 // APP NAME
-Config::set('appName', 'CC Westeinde');
+Config::set('appName', '');
 
 // SET LOCALE DATE
-setlocale(LC_TIME, 'NL_nl');
-setlocale(LC_ALL, 'nl_NL');
+setlocale(LC_TIME, Translation::DUTCH_TIME);
 date_default_timezone_set('Europe/Amsterdam');
 
 // DATABASE

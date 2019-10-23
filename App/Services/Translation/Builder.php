@@ -16,15 +16,19 @@ final class Builder
 {
     /**
      * The language options.
+     * Dutch:
      */
     const DUTCH_LANGUAGE_ID = 1;
     const DUTCH_LANGUAGE_CODE = 'nl';
     const DUTCH_LANGUAGE_NAME = 'Dutch';
+    const DUTCH_TIME = 'NL_nl';
     const DUTCH_LANGUAGE_LC_ALL_CODE = 'nl_NL';
     const DUTCH_LANGUAGE_LC_MONETARY_CODE = 'de_DE';
+    /** English: */
     const ENGLISH_LANGUAGE_ID = 2;
     const ENGLISH_LANGUAGE_CODE = 'en';
     const ENGLISH_LANGUAGE_NAME = 'English';
+    const ENGLISH_TIME = '';
     const ENGLISH_LANGUAGE_LC_ALL_CODE = 'en_US.UTF-8';
     const ENGLISH_LANGUAGE_LC_MONETARY_CODE = 'en_US';
 
