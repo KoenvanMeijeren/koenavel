@@ -55,11 +55,6 @@ final class App implements AppContract
      */
     public function run(): void
     {
-        dd(
-            locale_get_default(),
-            date_default_timezone_get()
-        );
-
         $uri = new URI();
         $log = new Log();
         $router = new Router();
