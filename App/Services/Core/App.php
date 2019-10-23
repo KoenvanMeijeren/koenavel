@@ -22,7 +22,6 @@ final class App implements AppContract
      * Construct the app.
      *
      * Set the env based on the current environment (development - production)
-     * Set a default date timezone
      * Start the session and set some basic security protection.
      * Set the language and load all the corresponding translations.
      * Set the user for the application.
@@ -34,7 +33,6 @@ final class App implements AppContract
     public function __construct(string $routesLocation = 'web.php')
     {
         $this->routesLocation = $routesLocation;
-        date_default_timezone_set('Europe/Amsterdam');
 
         $env = new Env();
         $env->setEnv();
@@ -46,7 +44,7 @@ final class App implements AppContract
         $sessionBuilder->setSessionSecurity();
 
         $translationBuilder = new TranslationBuilder();
-        $translationBuilder->setLanguageID();
+        $translationBuilder->setLanguageSettings();
         $translationBuilder->loadTranslations();
     }
 
@@ -57,6 +55,11 @@ final class App implements AppContract
      */
     public function run(): void
     {
+        dd(
+            locale_get_default(),
+            date_default_timezone_get()
+        );
+
         $uri = new URI();
         $log = new Log();
         $router = new Router();

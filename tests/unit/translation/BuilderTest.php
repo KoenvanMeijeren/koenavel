@@ -21,7 +21,7 @@ class BuilderTest extends TestCase
     public function test_that_we_can_build_the_dutch_translator()
     {
         $builder = new Builder();
-        $builder->setLanguageID();
+        $builder->setLanguageSettings();
         $builder->loadTranslations();
 
         $this->assertEquals(
@@ -34,7 +34,7 @@ class BuilderTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $builder = new Builder();
-        $builder->setLanguageID();
+        $builder->setLanguageSettings();
         $builder->loadTranslations();
 
         $this->assertEquals(

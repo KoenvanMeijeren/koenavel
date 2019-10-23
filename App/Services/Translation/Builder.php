@@ -39,17 +39,37 @@ final class Builder
 
     /**
      * Set the language id.
+     *
+     * @throws DuplicatedKeyException
      */
-    public function setLanguageID(): void
+    public function setLanguageSettings(): void
     {
         $uri = new URI();
 
-        if (strstr($uri->getDomainExtension(), 'localhost')
+        if (strstr($uri->getDomainExtension(), 'fad')
             || strstr($uri->getDomainExtension(), 'nl')
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr($uri->getDomainExtension(), 'com')) {
+
+            Config::set('languageID', self::DUTCH_LANGUAGE_ID);
+            Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
+            Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
+
+            setlocale(LC_ALL,
+                self::DUTCH_LANGUAGE_LC_ALL_CODE);
+            setlocale(LC_MONETARY,
+                self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
+        } elseif (strstr($uri->getDomainExtension(), 'localhost')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
+
+            Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
+            Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
+            Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
+
+            setlocale(LC_ALL,
+                self::ENGLISH_LANGUAGE_LC_ALL_CODE);
+            setlocale(LC_MONETARY,
+                self::ENGLISH_LANGUAGE_LC_MONETARY_CODE);
         }
     }
 
@@ -66,7 +86,6 @@ final class Builder
     /**
      * Load the translations based on the language id.
      *
-     * @throws DuplicatedKeyException
      * @throws FileNotExistingException
      * @throws NoTranslationsForGivenLanguageID
      * @throws Exception
@@ -74,26 +93,12 @@ final class Builder
     public function loadTranslations(): void
     {
         if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
-            Config::set('languageID', self::DUTCH_LANGUAGE_ID);
-            Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
-            Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
-
-            setlocale(LC_ALL, self::DUTCH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY, self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
-
             loadFile(RESOURCES_PATH.'/language/dutch/dutch_translations.php');
 
             $logger = new Log();
             $logger->debug('Dutch translations are loaded.');
             return;
         } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
-            Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
-            Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
-            Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
-
-            setlocale(LC_ALL, self::ENGLISH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY, self::ENGLISH_LANGUAGE_LC_MONETARY_CODE);
-
             loadFile(RESOURCES_PATH.'/language/english/english_translations.php');
 
             $logger = new Log();
