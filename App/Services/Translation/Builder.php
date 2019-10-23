@@ -46,7 +46,7 @@ final class Builder
     {
         $uri = new URI();
 
-        if (strstr($uri->getDomainExtension(), 'fad')
+        if (strstr($uri->getDomainExtension(), 'localhost')
             || strstr($uri->getDomainExtension(), 'nl')
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
@@ -59,7 +59,7 @@ final class Builder
                 self::DUTCH_LANGUAGE_LC_ALL_CODE);
             setlocale(LC_MONETARY,
                 self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
-        } elseif (strstr($uri->getDomainExtension(), 'localhost')) {
+        } elseif (strstr($uri->getDomainExtension(), 'com')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
 
             Config::set('languageID', self::ENGLISH_LANGUAGE_ID);

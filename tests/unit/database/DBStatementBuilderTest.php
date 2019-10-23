@@ -11,7 +11,6 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
             \App\Services\Database\DB::table('test')
                 ->query("SELECT * FROM test")->getQuery()
         );
-
     }
 
     public function test_that_we_can_build_the_select_statement()
