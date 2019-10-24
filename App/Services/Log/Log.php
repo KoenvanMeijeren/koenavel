@@ -83,7 +83,7 @@ final class Log
      *
      * @throws Exception
      */
-    public function debug(string $message, array $context = []): void
+    public function addDebug(string $message, array $context = []): void
     {
         $this->logger->debug($message, $context);
     }
@@ -96,7 +96,7 @@ final class Log
      *
      * @throws Exception
      */
-    public function info(string $message, array $context = []): void
+    public function addInfo(string $message, array $context = []): void
     {
         $this->logger->info($message, $context);
     }
@@ -109,7 +109,7 @@ final class Log
      *
      * @throws Exception
      */
-    public function error(string $message, array $context = []): void
+    public function addError(string $message, array $context = []): void
     {
         $this->logger->error($message, $context);
     }
@@ -124,7 +124,7 @@ final class Log
      *
      * @throws Exception
      */
-    public function appRequest(
+    public function addAppRequest(
         string $value,
         string $state,
         string $url,
@@ -132,6 +132,6 @@ final class Log
     ): void {
         $message = "{$method} request for page {$url} with message {$value}";
 
-        $this->info($state . " " . $message);
+        $this->addInfo($state . " " . $message);
     }
 }

@@ -65,7 +65,7 @@ final class App implements AppContract
             0
         );
 
-        $log->appRequest(
+        $log->addAppRequest(
             '',
             'successful',
             $uri->getUrl(),

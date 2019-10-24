@@ -54,7 +54,7 @@ final class Security
 
         $this->session->saveForced('user_agent', $userAgent);
         if ($this->session->get('user_agent') !== $userAgent) {
-            $this->log->info(
+            $this->log->addInfo(
                 'Session hijacking attack has been declined'
             );
 
@@ -76,7 +76,7 @@ final class Security
 
         $this->session->saveForced('user_remote_ip', $userIP);
         if ($this->session->get('user_remote_ip') !== $userIP) {
-            $this->log->info(
+            $this->log->addInfo(
                 'Session hijacking attack has been declined'
             );
 

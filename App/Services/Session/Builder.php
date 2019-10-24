@@ -127,7 +127,7 @@ class Builder
 
             session_start();
 
-            $this->logger->debug('Session has been started');
+            $this->logger->addDebug('Session has been started');
         }
     }
 
@@ -161,7 +161,7 @@ class Builder
         $expired = $expired->addSeconds($this->expiringTime);
 
         if ($expired->lte($now) && !headers_sent()) {
-            $this->logger->debug('Session has been expired.');
+            $this->logger->addDebug('Session has been expired.');
 
             $this->destroy();
         }
@@ -180,7 +180,7 @@ class Builder
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
 
-            $this->logger->debug('Session id has been regenerated');
+            $this->logger->addDebug('Session id has been regenerated');
         }
 
         if ((int) $this->session->get('canary') < time() - 300
@@ -189,7 +189,7 @@ class Builder
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
 
-            $this->logger->debug('Session id has been regenerated');
+            $this->logger->addDebug('Session id has been regenerated');
         }
     }
 
@@ -207,7 +207,7 @@ class Builder
             );
         }
 
-        $this->logger->debug('The session has been destroyed.');
+        $this->logger->addDebug('The session has been destroyed.');
 
         $params = session_get_cookie_params();
         setcookie(

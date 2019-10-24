@@ -151,7 +151,7 @@ class Upload
             } catch (Exception $exception) {
                 $result->clear();
 
-                $this->log->error($exception->getMessage());
+                $this->log->addError($exception->getMessage());
                 throw new ErrorWhileUploadingFileException(
                     'There was an error while uploading the file',
                     114,

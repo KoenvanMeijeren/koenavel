@@ -124,7 +124,7 @@ final class Session
         $uri = new URI();
 
         if ($key === 'error' || $key === 'success') {
-            $log->appRequest(
+            $log->addAppRequest(
                 $value,
                 $key === 'success' ? 'Successful' : 'Failed',
                 $uri->getUrl(),

@@ -96,13 +96,13 @@ final class Builder
             loadFile(RESOURCES_PATH.'/language/dutch/dutch_translations.php');
 
             $logger = new Log();
-            $logger->debug('Dutch translations are loaded.');
+            $logger->addDebug('Dutch translations are loaded.');
             return;
         } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
             loadFile(RESOURCES_PATH.'/language/english/english_translations.php');
 
             $logger = new Log();
-            $logger->debug('English translations are loaded.');
+            $logger->addDebug('English translations are loaded.');
             return;
         }
 

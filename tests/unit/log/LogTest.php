@@ -29,7 +29,7 @@ class LogTest extends TestCase
         $chronos =  new Chronos();
 
         $logDataBefore = $this->log->get($chronos->toDateString());
-        $this->log->info('Test that we can log info');
+        $this->log->addInfo('Test that we can log info');
         $logDataAfter = $this->log->get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
@@ -40,7 +40,7 @@ class LogTest extends TestCase
         $chronos =  new Chronos();
 
         $logDataBefore = $this->log->get($chronos->toDateString());
-        $this->log->error('Test that we can log error info');
+        $this->log->addError('Test that we can log error info');
         $logDataAfter = $this->log->get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);

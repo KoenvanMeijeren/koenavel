@@ -13,7 +13,7 @@ class LogErrorAndExceptionsHandler extends Handler
     public function handle()
     {
         $log = new Log();
-        $log->error($this->buildStringException($this->getException()));
+        $log->addError($this->buildStringException($this->getException()));
 
         return Handler::DONE;
     }
