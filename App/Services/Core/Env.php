@@ -6,7 +6,7 @@ namespace App\Services\Core;
 
 use App\Services\Exceptions\Basic\AppIsNotConfiguredException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
-use App\Services\Log\LogErrorAndExceptionsHandler;
+use App\Services\Log\LoggerHandler;
 use App\Services\Validate\Validate;
 use App\Services\View\ProductionErrorView;
 use Exception;
@@ -138,7 +138,7 @@ final class Env
             $whoops->register();
         }
 
-        $whoops->prependHandler(new LogErrorAndExceptionsHandler());
+        $whoops->prependHandler(new LoggerHandler());
         $whoops->register();
     }
 }

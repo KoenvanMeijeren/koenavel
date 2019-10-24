@@ -8,7 +8,7 @@ namespace App\Services\Log;
 use Throwable;
 use Whoops\Handler\Handler;
 
-class LogErrorAndExceptionsHandler extends Handler
+class LoggerHandler extends Handler
 {
     public function handle()
     {
