@@ -125,15 +125,14 @@ final class Request
             return '';
         }
 
-        $variable = $superGlobal[$key];
-        if (is_array($variable)) {
+        if (is_array($superGlobal[$key])) {
             return (string) json_encode(
                 $this->buildNewArray($superGlobal, $key),
                 JSON_THROW_ON_ERROR
             );
         }
 
-        return (string)(new Sanitize($variable))->data();
+        return (string) (new Sanitize($superGlobal[$key]))->data();
     }
 
     /**
