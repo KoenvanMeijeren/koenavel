@@ -6,8 +6,6 @@ namespace App\Services\Database;
 
 use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\Basic\InvalidTypeException;
-use App\Services\Validate\Validate;
 use PDOException;
 
 final class DB
@@ -47,14 +45,9 @@ final class DB
      * @param int $quantityInnerJoins The quantity inner joins in the query.
      *
      * @return DB
-     * @throws InvalidTypeException
-     * @throws EmptyVarException
      */
     public static function table(string $table, int $quantityInnerJoins = 0): DB
     {
-        Validate::var($table)->isString()->isNotEmpty();
-        Validate::var($quantityInnerJoins)->isInt()->isNotEmpty();
-
         self::$table = $table;
         self::$quantityInnerJoins = $quantityInnerJoins;
 
@@ -68,8 +61,6 @@ final class DB
      * @param string[] ...$columns The columns to select from the database.
      *
      * @return DB
-     * @throws EmptyVarException
-     * @throws InvalidTypeException
      */
     public function select(...$columns): DB
     {
@@ -79,9 +70,38 @@ final class DB
             $hooks .= '(';
         }
 
-        Validate::var($columns)->isString()->isNotEmpty();
         $this->addStatement(
             "SELECT {$columns} FROM {$hooks}" . self::$table . ' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The UNION operator is used to combine the result-set of
+     * two or more SELECT statements.
+     * - Each SELECT statement within UNION must have the same number of columns
+     * - The columns must also have similar data types
+     * - The columns in each SELECT statement must also be in the same order
+     *
+     * The UNION operator selects only distinct values by default.
+     * To allow duplicate values, use UNION ALL:
+     *
+     * @param string       $table      The table to union select the records
+     * @param string[]  ...$columns    The columns to be union selected.
+     *
+     * @return DB
+     */
+    public function selectUnion(string $table, ...$columns)
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "UNION SELECT {$columns} FROM {$hooks} {$table}"
         );
 
         return $this;
@@ -99,7 +119,8 @@ final class DB
      * @throws InvalidKeyException
      */
     public static function query(
-        string $query, array $values = []
+        string $query,
+        array $values = []
     ): DatabaseProcessor {
         return new DatabaseProcessor($query, $values);
     }
@@ -142,7 +163,7 @@ final class DB
      * Add values. These values will be used when
      *             the query is going to be executed
      *
-     * @param array $values The values to be added
+     * @param mixed[] $values The values to be added
      */
     private function addValues(array $values): void
     {
