@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-
 use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Validate\Validate;
@@ -55,7 +54,9 @@ class DatabaseProcessor extends DatabaseConnection
             Validate::var($value)->isNotEmpty();
 
             $this->statement->bindValue(
-                ":{$column}", $values, PDO::PARAM_STR
+                ":{$column}",
+                $values,
+                PDO::PARAM_STR
             );
         }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Log;
 
-
 use Throwable;
 use Whoops\Handler\Handler;
 

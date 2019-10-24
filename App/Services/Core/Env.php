@@ -127,7 +127,10 @@ final class Env
         $this->initializeWhoops();
     }
 
-    private function initializeWhoops()
+    /**
+     * Initialize the whoops error and exception handler.
+     */
+    private function initializeWhoops(): void
     {
         $whoops = new Whoops();
         if (self::DEVELOPMENT === $this->env) {

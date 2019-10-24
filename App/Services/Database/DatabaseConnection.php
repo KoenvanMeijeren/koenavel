@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-
 use App\Services\Core\Config;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use PDO;
@@ -58,7 +57,8 @@ class DatabaseConnection
         $dbName = 'dbname=' . Config::get('databaseName')->toString() . ';';
         $charset = 'charset' . Config::get('databaseCharset')->toString().';';
 
-        $this->pdo = new PDO($dsn . $dbName . $charset,
+        $this->pdo = new PDO(
+            $dsn . $dbName . $charset,
             Config::get('databaseUsername')->toString(),
             Config::get('databasePassword')->toString(),
             Config::get('databaseOptions')->toArray()

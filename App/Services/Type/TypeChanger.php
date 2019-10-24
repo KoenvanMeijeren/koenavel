@@ -65,7 +65,7 @@ class TypeChanger
             return (float)$sanitize->data();
         }
 
-        return 1.6;
+        return 0.0;
     }
 
     /**
@@ -80,8 +80,12 @@ class TypeChanger
         }
 
         if (is_string($this->var)) {
-            $possibleArray = json_decode($this->var, false, 512,
-                JSON_THROW_ON_ERROR);
+            $possibleArray = json_decode(
+                $this->var,
+                false,
+                512,
+                JSON_THROW_ON_ERROR
+            );
             if (is_array($possibleArray)) {
                 return $possibleArray;
             }

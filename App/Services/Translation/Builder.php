@@ -55,10 +55,14 @@ final class Builder
             Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
             Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
 
-            setlocale(LC_ALL,
-                self::DUTCH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY,
-                self::DUTCH_LANGUAGE_LC_MONETARY_CODE);
+            setlocale(
+                LC_ALL,
+                self::DUTCH_LANGUAGE_LC_ALL_CODE
+            );
+            setlocale(
+                LC_MONETARY,
+                self::DUTCH_LANGUAGE_LC_MONETARY_CODE
+            );
         } elseif (strstr($uri->getDomainExtension(), 'com')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
 
@@ -66,10 +70,14 @@ final class Builder
             Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
             Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
 
-            setlocale(LC_ALL,
-                self::ENGLISH_LANGUAGE_LC_ALL_CODE);
-            setlocale(LC_MONETARY,
-                self::ENGLISH_LANGUAGE_LC_MONETARY_CODE);
+            setlocale(
+                LC_ALL,
+                self::ENGLISH_LANGUAGE_LC_ALL_CODE
+            );
+            setlocale(
+                LC_MONETARY,
+                self::ENGLISH_LANGUAGE_LC_MONETARY_CODE
+            );
         }
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-
 use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Exceptions\Basic\InvalidTypeException;
