@@ -49,10 +49,9 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_get_a_result_from_a_self_written_query()
     {
-        $result = \App\Services\Database\DB::table('not_necessary')
-            ->query('SELECT * FROM city')
-            ->execute()
-            ->all();
+        $result = \App\Services\Database\DB::query(
+            'SELECT * FROM city'
+        )->all();
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);

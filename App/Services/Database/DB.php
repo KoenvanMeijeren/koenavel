@@ -10,7 +10,7 @@ use App\Services\Exceptions\Basic\InvalidTypeException;
 use App\Services\Validate\Validate;
 use PDOException;
 
-class DB
+final class DB
 {
     /**
      * The table to execute the query on.
@@ -80,32 +80,52 @@ class DB
         }
 
         Validate::var($columns)->isString()->isNotEmpty();
-        $this->query .= "SELECT {$columns} FROM {$hooks}" . self::$table . ' ';
+        $this->addStatement(
+            "SELECT {$columns} FROM {$hooks}" . self::$table . ' '
+        );
 
         return $this;
     }
 
     /**
-     * Execute self written queries.
+     * Execute a self written query.
      *
-     * @param string    $query  The query to execute.
+     * @param string    $query  The query to be executed.
      * @param mixed[]   $values The values to bind to the query.
      *
-     * @return DB
-     * @throws InvalidTypeException
+     * @return DatabaseProcessor
+     *
+     * @throws EmptyVarException
+     * @throws InvalidKeyException
+     */
+    public static function query(
+        string $query, array $values = []
+    ): DatabaseProcessor {
+        return new DatabaseProcessor($query, $values);
+    }
+
+    /**
+     * Execute the prepared query.
+     *
+     * @return DatabaseProcessor
+     *
+     * @throws InvalidKeyException
+     * @throws PDOException
      * @throws EmptyVarException
      */
-    public function query(string $query, array $values = []): DB
+    public function execute(): DatabaseProcessor
     {
-        Validate::var($query)->isString()->isNotEmpty();
-        Validate::var($values)->isArray();
+        return new DatabaseProcessor($this->query, $this->values);
+    }
 
-        $this->query = $query;
-        if (!empty($this->values) && is_array($values)) {
-            $this->values += $values;
-        }
-
-        return $this;
+    /**
+     * Add a statement to the query.
+     *
+     * @param string $statement the statement to be added to the query
+     */
+    private function addStatement(string $statement): void
+    {
+        $this->query .= $statement;
     }
 
     /**
@@ -119,6 +139,19 @@ class DB
     }
 
     /**
+     * Add values. These values will be used when
+     *             the query is going to be executed
+     *
+     * @param array $values The values to be added
+     */
+    private function addValues(array $values): void
+    {
+        if (!empty($values)) {
+            $this->values += $values;
+        }
+    }
+
+    /**
      * Get the prepared values.
      *
      * @return mixed[]
@@ -126,18 +159,5 @@ class DB
     public function getValues(): array
     {
         return $this->values;
-    }
-
-    /**
-     * Execute the query if the query is prepared.
-     *
-     * @return DatabaseProcessor
-     * @throws InvalidKeyException
-     * @throws PDOException
-     * @throws EmptyVarException
-     */
-    public function execute(): DatabaseProcessor
-    {
-        return new DatabaseProcessor($this->query, $this->values);
     }
 }

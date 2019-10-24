@@ -2,11 +2,11 @@
 
 namespace App\Services\Validate;
 
-use Exception;
 use App\Services\Core\Env;
 use App\Services\Exceptions\Uri\InvalidDomainException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
 use App\Services\Exceptions\Uri\InvalidUriException;
+use Exception;
 
 trait UriValidation
 {
@@ -46,7 +46,7 @@ trait UriValidation
     }
 
     /**
-     * Check if the variable is an env.
+     * Check if the variable is of the type of an env.
      *
      * @return Validate
      *
@@ -54,7 +54,9 @@ trait UriValidation
      */
     public function isEnv(): Validate
     {
-        if (Env::DEVELOPMENT !== self::$var && Env::PRODUCTION !== self::$var) {
+        if (Env::DEVELOPMENT !== self::$var
+            && Env::PRODUCTION !== self::$var
+        ) {
             throw new InvalidEnvException('Invalid environment given.');
         }
 

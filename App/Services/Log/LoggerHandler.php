@@ -11,8 +11,8 @@ class LoggerHandler extends Handler
 {
     public function handle()
     {
-        $log = new Log();
-        $log->addError($this->buildStringException($this->getException()));
+        $logger = new Log();
+        $logger->addError($this->buildStringException($this->getException()));
 
         return Handler::DONE;
     }
@@ -48,19 +48,19 @@ class LoggerHandler extends Handler
         $error = '';
 
         foreach ($exception->getTrace() as $singleTrace) {
-            if (isset($singleTrace['line']) && !empty($singleTrace['line'])) {
+            if (isset($singleTrace['line'])) {
                 $error .= " on line {$singleTrace['line']}";
             }
 
-            if (isset($singleTrace['file']) && !empty($singleTrace['file'])) {
+            if (isset($singleTrace['file'])) {
                 $error .= " in file {$singleTrace['file']}";
             }
 
-            if (isset($singleTrace['function']) && !empty($singleTrace['function'])) {
+            if (isset($singleTrace['function'])) {
                 $error .= " in function {$singleTrace['function']} ";
             }
 
-            if (isset($singleTrace['class']) && !empty($singleTrace['class'])) {
+            if (isset($singleTrace['class'])) {
                 $error .= " in class {$singleTrace['class']} ";
             }
 
