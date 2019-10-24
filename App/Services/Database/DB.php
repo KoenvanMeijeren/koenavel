@@ -87,12 +87,12 @@ final class DB
      * The UNION operator selects only distinct values by default.
      * To allow duplicate values, use UNION ALL:
      *
-     * @param string       $table      The table to union select the records
+     * @param string    $table         The table to union select from
      * @param string[]  ...$columns    The columns to be union selected.
      *
      * @return DB
      */
-    public function selectUnion(string $table, ...$columns)
+    public function selectUnion(string $table, ...$columns): DB
     {
         $columns = implode(', ', $columns);
         $hooks = '';
@@ -102,6 +102,58 @@ final class DB
 
         $this->addStatement(
             "UNION SELECT {$columns} FROM {$hooks} {$table}"
+        );
+
+        return $this;
+    }
+
+    /**
+     * The UNION operator is used to combine the result-set of
+     * two or more SELECT statements.
+     * - Each SELECT statement within UNION must have the same number of columns
+     * - The columns must also have similar data types
+     * - The columns in each SELECT statement must also be in the same order
+     *
+     * The UNION operator selects only distinct values by default.
+     * To allow duplicate values, use UNION ALL:
+     *
+     * @param string    $table      The table to union all select from
+     * @param string[]  ...$columns The columns to be union all selected.
+     *
+     * @return DB
+     */
+    public function selectUnionAll(string $table, ...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "UNION ALL SELECT {$columns} FROM {$hooks} {$table}"
+        );
+
+        return $this;
+    }
+
+    /**
+     * The SELECT DISTINCT statement is used to return only distinct (different) values.
+     *
+     * @param mixed ...$columns The columns to select distinct from the database.
+     *
+     * @return DB
+     */
+    public function selectDistinct(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT DISTINCT {$columns} FROM {$hooks}".self::$table.' '
         );
 
         return $this;

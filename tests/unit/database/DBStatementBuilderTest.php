@@ -31,4 +31,25 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
                 ->getQuery()
         );
     }
+
+    public function test_that_we_can_build_the_union_all_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT Code FROM country UNION ALL SELECT CountryCode FROM  countrylanguage',
+            DB::table('country')
+                ->select('Code')
+                ->selectUnionAll('countrylanguage', 'CountryCode')
+                ->getQuery()
+        );
+    }
+
+    public function test_that_we_can_build_the_distinct_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT DISTINCT Code FROM country ',
+            DB::table('country')
+                ->selectDistinct('Code')
+                ->getQuery()
+        );
+    }
 }
