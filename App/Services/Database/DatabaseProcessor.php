@@ -74,7 +74,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll($fetchMethod);
 
-        return is_array($result) ? $result : [];
+        return !empty($result) ? $result : [];
     }
 
     /**
@@ -98,7 +98,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll(PDO::FETCH_OBJ);
 
-        return is_array($result) ? $result : [];
+        return !empty($result) ? $result : [];
     }
 
     /**
@@ -110,7 +110,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll(PDO::FETCH_NAMED);
 
-        return is_array($result) ? $result : [];
+        return !empty($result) ? $result : [];
     }
 
     /**
@@ -122,7 +122,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetch(PDO::FETCH_OBJ);
 
-        return is_object($result) ? $result : new stdClass();
+        return !empty($result) ? $result : new stdClass();
     }
 
     /**
@@ -134,7 +134,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetch(PDO::FETCH_NAMED);
 
-        return is_array($result) ? $result : [];
+        return !empty($result) ? $result : [];
     }
 
     /**
