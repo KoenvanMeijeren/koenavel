@@ -146,16 +146,4 @@ class DatabaseProcessor extends DatabaseConnection
     {
         return $this->lastInsertedId;
     }
-
-    /**
-     * Count all records that are selected from the database.
-     *
-     * @return int
-     */
-    public function getNumberOfItems(): int
-    {
-        $items = $this->statement->fetchAll(PDO::FETCH_NAMED);
-
-        return is_countable($items) ? count($items) : 0;
-    }
 }

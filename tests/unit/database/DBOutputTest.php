@@ -20,18 +20,6 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-
-    public function test_that_we_can_count_the_items_which_are_selected()
-    {
-        $result = \App\Services\Database\DB::table('city')
-            ->select('*')
-            ->execute()
-            ->getNumberOfItems();
-
-        $this->assertIsInt($result);
-        $this->assertNotEquals(0, $result);
-    }
-
     public function test_that_we_can_get_one_result()
     {
         $result = \App\Services\Database\DB::table('testtable')
