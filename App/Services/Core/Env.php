@@ -47,7 +47,7 @@ final class Env
     /**
      * Determine if the app is configured.
      *
-     * @var string
+     * @var bool
      */
     private $isConfigured = false;
 
@@ -124,10 +124,10 @@ final class Env
         );
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
 
-        $this->setWhoops();
+        $this->initializeWhoops();
     }
 
-    private function setWhoops()
+    private function initializeWhoops()
     {
         $whoops = new Whoops();
         if (self::DEVELOPMENT === $this->env) {
