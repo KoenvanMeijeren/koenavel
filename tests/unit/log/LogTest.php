@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 
 use App\Services\Core\Config;
-use App\Services\Core\Log;
+use App\Services\Log\Log;
 use Cake\Chronos\Chronos;
 use PHPUnit\Framework\TestCase;
 
