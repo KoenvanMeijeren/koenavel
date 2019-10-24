@@ -11,7 +11,6 @@ $app = new App();
 $app->run();
 
 // todo rewrite sensitive config data into .env files
-// todo make error logging work
 // todo add random generated session id
 // todo try to rewrite all the static methods into non-static
 // todo make local settings work
