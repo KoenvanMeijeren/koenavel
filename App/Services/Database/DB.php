@@ -138,9 +138,10 @@ final class DB
     }
 
     /**
-     * The SELECT DISTINCT statement is used to return only distinct (different) values.
+     * The SELECT DISTINCT statement is used to
+     * return only distinct (different) values.
      *
-     * @param mixed ...$columns The columns to select distinct from the database.
+     * @param string[] ...$columns The columns to select distinct.
      *
      * @return DB
      */
@@ -154,6 +155,28 @@ final class DB
 
         $this->addStatement(
             "SELECT DISTINCT {$columns} FROM {$hooks}".self::$table.' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The MIN() function returns the smallest value of the selected column.
+     *
+     * @param string[] ...$columns The columns to select min.
+     *
+     * @return DB
+     */
+    public function selectMin(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT MIN({$columns}) FROM {$hooks}" . self::$table . ' '
         );
 
         return $this;

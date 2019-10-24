@@ -52,4 +52,14 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
                 ->getQuery()
         );
     }
+
+    public function test_that_we_can_build_the_min_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT MIN(population) FROM country ',
+            DB::table('country')
+                ->selectMin('population')
+                ->getQuery()
+        );
+    }
 }
