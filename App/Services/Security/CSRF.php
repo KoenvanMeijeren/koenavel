@@ -9,9 +9,6 @@ use App\Services\Translation\Translation;
 use Exception;
 use ParagonIE\AntiCSRF\AntiCSRF;
 
-/**
- * TODO: find out how this class can be tested automatically
- */
 final class CSRF
 {
     /**

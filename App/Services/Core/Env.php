@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace App\Services\Core;
 
+use App\Services\Exceptions\Basic\AppIsNotConfiguredException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
+use App\Services\Log\LogErrorAndExceptionsHandler;
 use App\Services\Validate\Validate;
 use App\Services\View\ProductionErrorView;
 use Exception;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as Whoops;
 
-/**
- * Class Env
- *
- * @package App\Services\Core
- *
- * TODO: rewrite sensitive config data to .env files
- */
 final class Env
 {
     /**
@@ -48,6 +43,13 @@ final class Env
      * @var string
      */
     private $configLocation;
+
+    /**
+     * Determine if the app is configured.
+     *
+     * @var string
+     */
+    private $isConfigured = false;
 
     /**
      * Construct the env.
@@ -95,9 +97,7 @@ final class Env
         Config::set('env', $this->env);
 
         loadFile($this->configLocation);
-
-        $logger = new Log();
-        $logger->debug("$this->env env has been set.");
+        $this->isConfigured = true;
     }
 
     /**
@@ -108,6 +108,12 @@ final class Env
      */
     public function setErrorHandling(): void
     {
+        if (!$this->isConfigured) {
+            throw new AppIsNotConfiguredException(
+                'The app must be configured if you want to set the error handling.'
+            );
+        }
+
         ini_set(
             'display_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
@@ -118,18 +124,21 @@ final class Env
         );
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
 
+        $this->setWhoops();
+    }
+
+    private function setWhoops()
+    {
         $whoops = new Whoops();
         if (self::DEVELOPMENT === $this->env) {
             $whoops->prependHandler(new PrettyPageHandler());
             $whoops->register();
-
-            return;
+        } elseif (self::PRODUCTION === $this->env) {
+            $whoops->prependHandler(new ProductionErrorView());
+            $whoops->register();
         }
 
-        $whoops->prependHandler(new ProductionErrorView());
+        $whoops->prependHandler(new LogErrorAndExceptionsHandler());
         $whoops->register();
-
-        $logger = new Log();
-        $logger->debug('Error handling has been set.');
     }
 }

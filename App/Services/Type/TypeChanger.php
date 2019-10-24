@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Type;
 
 use App\Services\Core\Sanitize;
-use App\Services\Exceptions\Basic\InvalidTypeException;
 
 class TypeChanger
 {
@@ -28,7 +27,6 @@ class TypeChanger
      * Convert a variable to string.
      *
      * @return string
-     * @throws InvalidTypeException
      */
     public function toString(): string
     {
@@ -37,16 +35,13 @@ class TypeChanger
             return (string)$sanitize->data();
         }
 
-        throw new InvalidTypeException(
-            "Cannot convert a non scalar variable to string."
-        );
+        return (string)'';
     }
 
     /**
      * Convert a variable to int.
      *
      * @return int
-     * @throws InvalidTypeException
      */
     public function toInt(): int
     {
@@ -55,16 +50,13 @@ class TypeChanger
             return (int)$sanitize->data();
         }
 
-        throw new InvalidTypeException(
-            "Cannot convert a non scalar variable to int."
-        );
+        return 0;
     }
 
     /**
      * Convert a variable to float.
      *
      * @return float
-     * @throws InvalidTypeException
      */
     public function toFloat(): float
     {
@@ -73,16 +65,13 @@ class TypeChanger
             return (float)$sanitize->data();
         }
 
-        throw new InvalidTypeException(
-            "Cannot convert a non scalar variable to float."
-        );
+        return 1.6;
     }
 
     /**
      * Convert a variable to an array.
      *
      * @return mixed[]
-     * @throws InvalidTypeException
      */
     public function toArray(): array
     {
@@ -91,32 +80,24 @@ class TypeChanger
         }
 
         if (is_string($this->var)) {
-            $possibleArray = json_decode($this->var, false, 512, JSON_THROW_ON_ERROR);
+            $possibleArray = json_decode($this->var, false, 512,
+                JSON_THROW_ON_ERROR);
             if (is_array($possibleArray)) {
                 return $possibleArray;
             }
         }
 
-        throw new InvalidTypeException(
-            "Cannot convert the variable to an array."
-        );
+        return [];
     }
 
     /**
      * Convert a variable to json
      *
      * @return string
-     * @throws InvalidTypeException
      */
     public function toJson(): string
     {
-        if (is_scalar($this->var)) {
-            return (string) json_encode($this->var, JSON_THROW_ON_ERROR);
-        }
-
-        throw new InvalidTypeException(
-            "Cannot convert the variable to json"
-        );
+        return (string)json_encode($this->var, JSON_THROW_ON_ERROR);
     }
 
     /**

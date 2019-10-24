@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use App\Services\Exceptions\File\ErrorWhileUploadingFileException;
+use App\Services\Log\Log;
 use App\Services\Session\Session;
 use App\Services\Translation\Translation;
 use Exception;
 use Sirius\Upload\Handler as UploadHandler;
 
-/**
- * TODO: find out how this class can be tested automatically
- */
 class Upload
 {
     /**

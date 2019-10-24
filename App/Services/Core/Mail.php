@@ -7,13 +7,6 @@ namespace App\Services\Core;
 use App\Services\Validate\Validate;
 use Exception;
 
-/**
- * Class Mail
- *
- * @package App\services\core
- *
- * TODO: find a way to test this class automatically
- */
 final class Mail
 {
     /**

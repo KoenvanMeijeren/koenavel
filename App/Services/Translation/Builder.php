@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Services\Translation;
 
 use App\Services\Core\Config;
-use App\Services\Core\Log;
 use App\Services\Core\URI;
 use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Log\Log;
 use Exception;
 
 final class Builder

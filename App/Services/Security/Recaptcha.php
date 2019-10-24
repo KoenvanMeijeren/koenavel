@@ -10,9 +10,6 @@ use App\Services\Session\Session;
 use App\Services\Translation\Translation;
 use Exception;
 
-/**
- * TODO: find out how this class can be tested automatically
- */
 final class Recaptcha
 {
     /**

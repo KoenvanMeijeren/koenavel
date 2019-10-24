@@ -2,8 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Services\Core;
+namespace App\Services\Log;
 
+use App\Services\Core\Config;
+use App\Services\Core\Env;
 use Exception;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\FirePHPHandler;

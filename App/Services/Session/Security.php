@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Session;
 
-use App\Services\Core\Log;
 use App\Services\Core\Request;
+use App\Services\Log\Log;
 use Exception;
 
 final class Security

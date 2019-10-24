@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Session;
 
-use App\Services\Core\Log;
 use App\Services\Core\Request;
 use App\Services\Core\Sanitize;
 use App\Services\Core\URI;
+use App\Services\Log\Log;
 use App\Services\Security\Encrypt;
 use Exception;
 
@@ -49,8 +49,6 @@ final class Session
 
     /**
      * Flash data in the session.
-     *
-     * TODO: Actually flash data into the session -> store it and after using it, destroy the data
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
@@ -124,6 +122,7 @@ final class Session
     {
         $log = new Log();
         $uri = new URI();
+
         if ($key === 'error' || $key === 'success') {
             $log->appRequest(
                 $value,

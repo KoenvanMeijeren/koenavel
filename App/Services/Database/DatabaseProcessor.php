@@ -7,8 +7,6 @@ namespace App\Services\Database;
 
 use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\Basic\InvalidTypeException;
-use App\Services\Exceptions\Object\InvalidObjectException;
 use App\Services\Validate\Validate;
 use PDO;
 use PDOException;
@@ -20,18 +18,17 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Construct the data processor.
      *
-     * @param string    $query  The query to execute on the database.
-     * @param string[]  $values The values to bind to the query.
+     * @param string $query The query to execute on the database.
+     * @param string[] $values The values to bind to the query.
      *
-     * @throws InvalidKeyException
      * @throws PDOException
-     * @throws InvalidTypeException
+     * @throws InvalidKeyException
      * @throws EmptyVarException
-     * @throws InvalidObjectException
      */
     public function __construct(string $query, array $values)
     {
         parent::__construct();
+        Validate::var($query)->isNotEmpty();
 
         $this->statement = $this->pdo->prepare($query);
         $this->values = $values;
@@ -39,8 +36,7 @@ class DatabaseProcessor extends DatabaseConnection
         $this->bindValues($values);
         $this->statement->execute();
 
-        $this->lastInsertedId = (int) $this->pdo->lastInsertId();
-        $this->successful = true;
+        $this->lastInsertedId = (int)$this->pdo->lastInsertId();
     }
 
     /**
@@ -50,16 +46,13 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @return PDOStatement
      * @throws PDOException
-     * @throws InvalidTypeException
      * @throws EmptyVarException
      */
     private function bindValues(array $values): PDOStatement
     {
-        Validate::var($values)->isArray();
-
         foreach ($values as $column => $value) {
-            Validate::var($column)->isScalar()->isNotEmpty();
-            Validate::var($value)->isScalar()->isNotEmpty();
+            Validate::var($column)->isNotEmpty();
+            Validate::var($value)->isNotEmpty();
 
             $this->statement->bindValue(
                 ":{$column}", $values, PDO::PARAM_STR
@@ -164,15 +157,5 @@ class DatabaseProcessor extends DatabaseConnection
         $items = $this->statement->fetchAll(PDO::FETCH_NAMED);
 
         return is_countable($items) ? count($items) : 0;
-    }
-
-    /**
-     * Get the successful state.
-     *
-     * @return bool
-     */
-    public function isSuccessful(): bool
-    {
-        return $this->successful;
     }
 }

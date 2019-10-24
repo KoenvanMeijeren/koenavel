@@ -7,9 +7,6 @@ namespace App\Services\Database;
 
 use App\Services\Core\Config;
 use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\Basic\InvalidTypeException;
-use App\Services\Exceptions\Object\InvalidObjectException;
-use App\Services\Validate\Validate;
 use PDO;
 use PDOStatement;
 
@@ -51,18 +48,9 @@ class DatabaseConnection
     protected $message = '';
 
     /**
-     * Determine if the executing of the query successfully has been done.
-     *
-     * @var bool
-     */
-    protected $successful = false;
-
-    /**
      * Construct the database connection.
      *
-     * @throws InvalidObjectException
      * @throws InvalidKeyException
-     * @throws InvalidTypeException
      */
     protected function __construct()
     {
@@ -70,13 +58,10 @@ class DatabaseConnection
         $dbName = 'dbname=' . Config::get('databaseName')->toString() . ';';
         $charset = 'charset' . Config::get('databaseCharset')->toString().';';
 
-        $pdo = new PDO($dsn . $dbName . $charset,
+        $this->pdo = new PDO($dsn . $dbName . $charset,
             Config::get('databaseUsername')->toString(),
             Config::get('databasePassword')->toString(),
             Config::get('databaseOptions')->toArray()
         );
-        Validate::var($pdo)->isObject();
-
-        $this->pdo = $pdo;
     }
 }

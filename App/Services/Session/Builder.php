@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Session;
 
-use App\Services\Core\Log;
 use App\Services\Exceptions\Session\InvalidSessionException;
+use App\Services\Log\Log;
 use App\Services\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
 use Exception;

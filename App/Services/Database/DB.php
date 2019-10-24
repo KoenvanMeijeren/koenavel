@@ -8,7 +8,6 @@ namespace App\Services\Database;
 use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Exceptions\Basic\InvalidTypeException;
-use App\Services\Exceptions\Object\InvalidObjectException;
 use App\Services\Validate\Validate;
 use PDOException;
 
@@ -134,17 +133,12 @@ class DB
      * Execute the query if the query is prepared.
      *
      * @return DatabaseProcessor
-     * @throws EmptyVarException
-     * @throws InvalidTypeException
      * @throws InvalidKeyException
-     * @throws InvalidObjectException
      * @throws PDOException
+     * @throws EmptyVarException
      */
     public function execute(): DatabaseProcessor
     {
-        Validate::var($this->query)->isString()->isNotEmpty();
-        Validate::var($this->values)->isArray();
-
         return new DatabaseProcessor($this->query, $this->values);
     }
 }

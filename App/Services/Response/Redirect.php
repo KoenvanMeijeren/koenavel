@@ -6,9 +6,6 @@ namespace App\Services\Response;
 
 use App\Services\Core\URI;
 
-/**
- * TODO: find out how this class can be tested automatically
- */
 class Redirect
 {
     /**
