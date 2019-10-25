@@ -83,5 +83,23 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function test_that_we_can_build_the_avg_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT AVG(population) FROM country ',
+            DB::table('country')
+                ->selectAvg('population')
+                ->getQuery()
+        );
+    }
 
+    public function test_that_we_can_build_the_sum_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT SUM(population) FROM country ',
+            DB::table('country')
+                ->selectSum('population')
+                ->getQuery()
+        );
+    }
 }

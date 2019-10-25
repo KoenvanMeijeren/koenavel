@@ -207,7 +207,7 @@ final class DB
     /**
      * The COUNT() function returns the number of rows that matches a specified criteria.
      *
-     * @param mixed ...$columns The columns to be selected.
+     * @param string[] ...$columns The columns to be selected.
      *
      * @return DB
      */
@@ -221,6 +221,50 @@ final class DB
 
         $this->addStatement(
             "SELECT COUNT({$columns}) FROM {$hooks}".self::$table.' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The AVG() function returns the average value of a numeric column.
+     *
+     * @param string[] ...$columns The columns to be selected.
+     *
+     * @return DB
+     */
+    public function selectAvg(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT AVG({$columns}) FROM {$hooks}" . self::$table . ' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The SUM() function returns the total sum of a numeric column.
+     *
+     * @param string[] ...$columns The columns to be selected.
+     *
+     * @return DB
+     */
+    public function selectSum(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT SUM({$columns}) FROM {$hooks}" . self::$table . ' '
         );
 
         return $this;
