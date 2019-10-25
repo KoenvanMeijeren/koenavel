@@ -62,4 +62,26 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
                 ->getQuery()
         );
     }
+
+    public function test_that_we_can_build_the_max_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT MAX(population) FROM country ',
+            DB::table('country')
+                ->selectMax('population')
+                ->getQuery()
+        );
+    }
+
+    public function test_that_we_can_build_the_count_select_statement()
+    {
+        $this->assertEquals(
+            'SELECT COUNT(population) FROM country ',
+            DB::table('country')
+                ->selectCount('population')
+                ->getQuery()
+        );
+    }
+
+
 }

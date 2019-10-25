@@ -163,7 +163,7 @@ final class DB
     /**
      * The MIN() function returns the smallest value of the selected column.
      *
-     * @param string[] ...$columns The columns to select min.
+     * @param string[] ...$columns The columns to be selected.
      *
      * @return DB
      */
@@ -177,6 +177,50 @@ final class DB
 
         $this->addStatement(
             "SELECT MIN({$columns}) FROM {$hooks}" . self::$table . ' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The MAX() function returns the largest value of the selected column.
+     *
+     * @param string[] ...$columns The columns to be selected.
+     *
+     * @return DB
+     */
+    public function selectMax(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT MAX({$columns}) FROM {$hooks}".self::$table.' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The COUNT() function returns the number of rows that matches a specified criteria.
+     *
+     * @param mixed ...$columns The columns to be selected.
+     *
+     * @return DB
+     */
+    public function selectCount(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+        $hooks = '';
+        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
+            $hooks .= '(';
+        }
+
+        $this->addStatement(
+            "SELECT COUNT({$columns}) FROM {$hooks}".self::$table.' '
         );
 
         return $this;
