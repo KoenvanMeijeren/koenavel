@@ -18,13 +18,6 @@ final class DB
     private static $table = '';
 
     /**
-     * The quantity of inner joins in the query.
-     *
-     * @var int
-     */
-    private static $quantityInnerJoins = 0;
-
-    /**
      * The query.
      *
      * @var string
@@ -42,14 +35,12 @@ final class DB
      * Set the table.
      *
      * @param string $table The table to execute the query on.
-     * @param int $quantityInnerJoins The quantity inner joins in the query.
      *
      * @return DB
      */
-    public static function table(string $table, int $quantityInnerJoins = 0): DB
+    public static function table(string $table): DB
     {
         self::$table = $table;
-        self::$quantityInnerJoins = $quantityInnerJoins;
 
         return new self;
     }
@@ -65,13 +56,9 @@ final class DB
     public function select(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT {$columns} FROM {$hooks}" . self::$table . ' '
+            "SELECT {$columns} FROM " . self::$table . ' '
         );
 
         return $this;
@@ -95,13 +82,9 @@ final class DB
     public function selectUnion(string $table, ...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "UNION SELECT {$columns} FROM {$hooks} {$table}"
+            "UNION SELECT {$columns} FROM {$table}"
         );
 
         return $this;
@@ -125,13 +108,9 @@ final class DB
     public function selectUnionAll(string $table, ...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "UNION ALL SELECT {$columns} FROM {$hooks} {$table}"
+            "UNION ALL SELECT {$columns} FROM {$table}"
         );
 
         return $this;
@@ -148,13 +127,9 @@ final class DB
     public function selectDistinct(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT DISTINCT {$columns} FROM {$hooks}".self::$table.' '
+            "SELECT DISTINCT {$columns} FROM ".self::$table.' '
         );
 
         return $this;
@@ -170,13 +145,9 @@ final class DB
     public function selectMin(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT MIN({$columns}) FROM {$hooks}" . self::$table . ' '
+            "SELECT MIN({$columns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -192,13 +163,9 @@ final class DB
     public function selectMax(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT MAX({$columns}) FROM {$hooks}".self::$table.' '
+            "SELECT MAX({$columns}) FROM ".self::$table.' '
         );
 
         return $this;
@@ -214,13 +181,9 @@ final class DB
     public function selectCount(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT COUNT({$columns}) FROM {$hooks}".self::$table.' '
+            "SELECT COUNT({$columns}) FROM ".self::$table.' '
         );
 
         return $this;
@@ -236,13 +199,9 @@ final class DB
     public function selectAvg(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT AVG({$columns}) FROM {$hooks}" . self::$table . ' '
+            "SELECT AVG({$columns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -258,13 +217,97 @@ final class DB
     public function selectSum(...$columns): DB
     {
         $columns = implode(', ', $columns);
-        $hooks = '';
-        for ($x = 0; $x < self::$quantityInnerJoins; $x++) {
-            $hooks .= '(';
-        }
 
         $this->addStatement(
-            "SELECT SUM({$columns}) FROM {$hooks}" . self::$table . ' '
+            "SELECT SUM({$columns}) FROM " . self::$table . ' '
+        );
+
+        return $this;
+    }
+
+    /**
+     * The INNER JOIN keyword selects records that have
+     * matching values in both tables.
+     *
+     * @param string $table          The table to inner join on.
+     * @param string $tableOneColumn The first table column to inner join on.
+     * @param string $tableTwoColumn The second table column to inner join on.
+     *
+     * @return DB
+     */
+    public function innerJoin(
+        string $table, string $tableOneColumn, string $tableTwoColumn
+    ): DB {
+        $this->addStatement(
+            "INNER JOIN {$table} " .
+            "ON {$tableOneColumn} = {$tableTwoColumn}) "
+        );
+
+        return $this;
+    }
+
+    /**
+     * The LEFT JOIN keyword returns all records from the left table (table1),
+     * and the matched records from the right table (table2).
+     * The result is NULL from the right side, if there is no match.
+     *
+     * @param string $table          The table to left join on.
+     * @param string $tableOneColumn The first table column to left join on.
+     * @param string $tableTwoColumn The second table column to left join on.
+     *
+     * @return DB
+     */
+    public function leftJoin(
+        string $table, string $tableOneColumn, string $tableTwoColumn
+    ): DB {
+        $this->addStatement(
+            "LEFT JOIN {$table} " .
+            "ON {$tableOneColumn} = {$tableTwoColumn}) "
+        );
+
+        return $this;
+    }
+
+    /**
+     * The RIGHT JOIN keyword returns all records from the right table (table2),
+     * and the matched records from the left table (table1).
+     * The result is NULL from the left side, when there is no match.
+     *
+     * @param string $table          The table to right join on.
+     * @param string $tableOneColumn The first table column to right join on.
+     * @param string $tableTwoColumn The second table column to right join on.
+     *
+     * @return DB
+     */
+    public function rightJoin(
+        string $table, string $tableOneColumn, string $tableTwoColumn
+    ): DB {
+        $this->addStatement(
+            "RIGHT JOIN {$table} ON ".
+            "{$tableOneColumn} = {$tableTwoColumn}) "
+        );
+
+        return $this;
+    }
+
+    /**
+     * The FULL OUTER JOIN keyword return all records when
+     * there is a match in either left (table1) or right (table2) table records.
+     *
+     * @param string $table             The table to full outer join on.
+     * @param string $tableOneColumn    The first table column to
+     *                                  full outer join on.
+     * @param string $tableTwoColumn    The second table column to
+     *                                  full outer join on.
+     *
+     * @return DB
+     */
+    public function fullOuterJoin(
+        string $table, string $tableOneColumn, string $tableTwoColumn
+    ): DB {
+        $this->addStatement(
+            "FULL OUTER JOIN {$table} " .
+            "ON {$tableOneColumn} = {$tableTwoColumn}) "
         );
 
         return $this;
@@ -299,6 +342,8 @@ final class DB
      */
     public function execute(): DatabaseProcessor
     {
+        $this->addHooksForInnerJoins();
+
         return new DatabaseProcessor($this->query, $this->values);
     }
 
@@ -319,6 +364,8 @@ final class DB
      */
     public function getQuery(): string
     {
+        $this->addHooksForInnerJoins();
+
         return $this->query;
     }
 
@@ -343,5 +390,45 @@ final class DB
     public function getValues(): array
     {
         return $this->values;
+    }
+
+    /**
+     * Count the inner joins in the query.
+     *
+     * @return int the number of full pattern matches (which might be zero)
+     */
+    private function countInnerJoinsInQuery(): int
+    {
+        return preg_match_all('/\b(JOIN)\b/', $this->query);
+    }
+
+    /**
+     * Add hooks for inner joins to the query. The hooks will only be added
+     * when there are inner joins used.
+     *
+     * This function should be called when
+     * the query is going to be executed or
+     * you want to get the query.
+     */
+    private function addHooksForInnerJoins(): void
+    {
+        if ($this->countInnerJoinsInQuery() === 0) {
+            return;
+        }
+
+        $hooks = '';
+        for ($x = 0; $x < $this->countInnerJoinsInQuery(); $x++) {
+            $hooks .= '(';
+        }
+
+        $this->query = preg_replace(
+            '/\b(FROM)\b/', "FROM {$hooks}", $this->query
+        );
+
+        if ($this->countInnerJoinsInQuery() === 1) {
+            $this->query = preg_replace(
+                '/[()]/', '', $this->query
+            );
+        }
     }
 }

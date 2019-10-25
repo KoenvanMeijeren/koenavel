@@ -35,6 +35,7 @@
         "daniel-werner/php-quality-tools": "^1.0"
     },
     "scripts": {
+        "start": "php -S localhost:8002",
         "phpunit": "phpunit",
         "inspect": [
             "phpcs app",
