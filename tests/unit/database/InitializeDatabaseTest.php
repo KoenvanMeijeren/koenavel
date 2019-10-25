@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 
 use App\Services\Database\DatabaseProcessor;
-use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 
 class InitializeDatabaseTest extends \PHPUnit\Framework\TestCase
@@ -21,23 +20,6 @@ class InitializeDatabaseTest extends \PHPUnit\Framework\TestCase
 
         \App\Services\Core\Config::unsetAll();
         new DatabaseProcessor('test', []);
-    }
-
-    public function test_that_we_cannot_execute_an_empty_query_via_processor()
-    {
-        $this->expectException(EmptyVarException::class);
-
-        new DatabaseProcessor('', []);
-    }
-
-    public function test_that_we_cannot_execute_an_empty_query_via_builder()
-    {
-        $this->expectException(EmptyVarException::class);
-
-        \App\Services\Database\DB::table('test')
-            ->query('')
-            ->execute()
-            ->all();
     }
 
     public function test_that_we_cannot_execute_an_invalid_self_written_query()

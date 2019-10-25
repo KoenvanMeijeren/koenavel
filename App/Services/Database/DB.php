@@ -74,8 +74,8 @@ final class DB
      * The UNION operator selects only distinct values by default.
      * To allow duplicate values, use UNION ALL:
      *
-     * @param string    $table         The table to union select from
-     * @param string[]  ...$columns    The columns to be union selected.
+     * @param string $table The table to union select from
+     * @param string[] ...$columns The columns to be union selected.
      *
      * @return DB
      */
@@ -100,8 +100,8 @@ final class DB
      * The UNION operator selects only distinct values by default.
      * To allow duplicate values, use UNION ALL:
      *
-     * @param string    $table      The table to union all select from
-     * @param string[]  ...$columns The columns to be union all selected.
+     * @param string $table The table to union all select from
+     * @param string[] ...$columns The columns to be union all selected.
      *
      * @return DB
      */
@@ -129,7 +129,7 @@ final class DB
         $columns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT DISTINCT {$columns} FROM ".self::$table.' '
+            "SELECT DISTINCT {$columns} FROM " . self::$table . ' '
         );
 
         return $this;
@@ -165,7 +165,7 @@ final class DB
         $columns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT MAX({$columns}) FROM ".self::$table.' '
+            "SELECT MAX({$columns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -183,7 +183,7 @@ final class DB
         $columns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT COUNT({$columns}) FROM ".self::$table.' '
+            "SELECT COUNT({$columns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -229,14 +229,16 @@ final class DB
      * The INNER JOIN keyword selects records that have
      * matching values in both tables.
      *
-     * @param string $table          The table to inner join on.
+     * @param string $table The table to inner join on.
      * @param string $tableOneColumn The first table column to inner join on.
      * @param string $tableTwoColumn The second table column to inner join on.
      *
      * @return DB
      */
     public function innerJoin(
-        string $table, string $tableOneColumn, string $tableTwoColumn
+        string $table,
+        string $tableOneColumn,
+        string $tableTwoColumn
     ): DB {
         $this->addStatement(
             "INNER JOIN {$table} " .
@@ -251,14 +253,16 @@ final class DB
      * and the matched records from the right table (table2).
      * The result is NULL from the right side, if there is no match.
      *
-     * @param string $table          The table to left join on.
+     * @param string $table The table to left join on.
      * @param string $tableOneColumn The first table column to left join on.
      * @param string $tableTwoColumn The second table column to left join on.
      *
      * @return DB
      */
     public function leftJoin(
-        string $table, string $tableOneColumn, string $tableTwoColumn
+        string $table,
+        string $tableOneColumn,
+        string $tableTwoColumn
     ): DB {
         $this->addStatement(
             "LEFT JOIN {$table} " .
@@ -273,17 +277,19 @@ final class DB
      * and the matched records from the left table (table1).
      * The result is NULL from the left side, when there is no match.
      *
-     * @param string $table          The table to right join on.
+     * @param string $table The table to right join on.
      * @param string $tableOneColumn The first table column to right join on.
      * @param string $tableTwoColumn The second table column to right join on.
      *
      * @return DB
      */
     public function rightJoin(
-        string $table, string $tableOneColumn, string $tableTwoColumn
+        string $table,
+        string $tableOneColumn,
+        string $tableTwoColumn
     ): DB {
         $this->addStatement(
-            "RIGHT JOIN {$table} ON ".
+            "RIGHT JOIN {$table} ON " .
             "{$tableOneColumn} = {$tableTwoColumn}) "
         );
 
@@ -294,16 +300,18 @@ final class DB
      * The FULL OUTER JOIN keyword return all records when
      * there is a match in either left (table1) or right (table2) table records.
      *
-     * @param string $table             The table to full outer join on.
-     * @param string $tableOneColumn    The first table column to
+     * @param string $table The table to full outer join on.
+     * @param string $tableOneColumn The first table column to
      *                                  full outer join on.
-     * @param string $tableTwoColumn    The second table column to
+     * @param string $tableTwoColumn The second table column to
      *                                  full outer join on.
      *
      * @return DB
      */
     public function fullOuterJoin(
-        string $table, string $tableOneColumn, string $tableTwoColumn
+        string $table,
+        string $tableOneColumn,
+        string $tableTwoColumn
     ): DB {
         $this->addStatement(
             "FULL OUTER JOIN {$table} " .
@@ -314,10 +322,43 @@ final class DB
     }
 
     /**
+     * The WHERE clause is used to filter records.
+     * The WHERE clause is used to extract only
+     * those records that fulfill a specified condition.
+     *
+     * @param string $column The column to specify the filter on.
+     * @param string $operator The operator to be used in the where statement.
+     * @param string $condition The condition to be used in the where statement.
+     *
+     * @return DB
+     */
+    public function where(
+        string $column,
+        string $operator,
+        string $condition
+    ): DB {
+        $bindColumn = str_replace('.', '', $column);
+
+        if (!strpos($this->query, 'WHERE')) {
+            $this->addStatement(
+                "WHERE {$column} {$operator} :{$bindColumn} "
+            );
+        } else {
+            $this->addStatement(
+                "AND {$column} {$operator} :{$bindColumn}"
+            );
+        }
+
+        $this->addValues([$bindColumn => $condition]);
+
+        return $this;
+    }
+
+    /**
      * Execute a self written query.
      *
-     * @param string    $query  The query to be executed.
-     * @param mixed[]   $values The values to bind to the query.
+     * @param string $query The query to be executed.
+     * @param mixed[] $values The values to bind to the query.
      *
      * @return DatabaseProcessor
      *
@@ -338,7 +379,6 @@ final class DB
      *
      * @throws InvalidKeyException
      * @throws PDOException
-     * @throws EmptyVarException
      */
     public function execute(): DatabaseProcessor
     {
@@ -377,9 +417,7 @@ final class DB
      */
     private function addValues(array $values): void
     {
-        if (!empty($values)) {
-            $this->values += $values;
-        }
+        $this->values += $values;
     }
 
     /**

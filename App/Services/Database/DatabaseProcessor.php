@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Validate\Validate;
 use PDO;
 use PDOException;
-use PDOStatement;
 use stdClass;
 
 class DatabaseProcessor extends DatabaseConnection
@@ -22,12 +19,10 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @throws PDOException
      * @throws InvalidKeyException
-     * @throws EmptyVarException
      */
     public function __construct(string $query, array $values)
     {
         parent::__construct();
-        Validate::var($query)->isNotEmpty();
 
         $this->statement = $this->pdo->prepare($query);
         $this->values = $values;
@@ -35,7 +30,7 @@ class DatabaseProcessor extends DatabaseConnection
         $this->bindValues($values);
         $this->statement->execute();
 
-        $this->lastInsertedId = (int)$this->pdo->lastInsertId();
+        $this->lastInsertedId = (int) $this->pdo->lastInsertId();
     }
 
     /**
@@ -43,24 +38,17 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @param string[] $values The values to bind to the query.
      *
-     * @return PDOStatement
      * @throws PDOException
-     * @throws EmptyVarException
      */
-    private function bindValues(array $values): PDOStatement
+    private function bindValues(array $values): void
     {
         foreach ($values as $column => $value) {
-            Validate::var($column)->isNotEmpty();
-            Validate::var($value)->isNotEmpty();
-
             $this->statement->bindValue(
                 ":{$column}",
-                $values,
+                $value,
                 PDO::PARAM_STR
             );
         }
-
-        return $this->statement;
     }
 
 

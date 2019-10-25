@@ -219,4 +219,16 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
                 ->getQuery()
         );
     }
+
+    public function test_that_we_can_add_the_where_statement()
+    {
+        $this->assertEquals(
+            'SELECT * FROM city WHERE CountryCode = :CountryCode ',
+            DB::table('city')
+                ->select('*')
+                ->where('CountryCode', '=', 'NLD')
+                ->where('CountryCode', '=', 'GBR')
+                ->getQuery()
+        );
+    }
 }
