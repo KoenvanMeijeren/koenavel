@@ -82,6 +82,40 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
             'Population', $resultB);
     }
 
+    public function test_that_we_can_fetch_a_result_in_your_own_way()
+    {
+        $result = \App\Services\Database\DB::table('city')
+            ->select('*')
+            ->execute()
+            ->fetch(PDO::FETCH_NAMED);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertArrayHasKey('ID', $result);
+    }
+
+    public function test_that_we_can_fetch_all_a_result_in_your_own_way()
+    {
+        $result = \App\Services\Database\DB::table('city')
+            ->select('*')
+            ->execute()
+            ->fetchAll(PDO::FETCH_NAMED);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertArrayHasKey('ID', $result[0]);
+    }
+
+    public function test_that_we_can_get_the_last_inserted_id()
+    {
+        $processor = new \App\Services\Database\DatabaseProcessor(
+            'SELECT * FROM city', []
+        );
+        $id = $processor->getLastInsertedId();
+
+        $this->assertIsInt($id);
+    }
+
     public function tearDown(): void
     {
         parent::tearDown();

@@ -39,6 +39,7 @@ class DatabaseProcessor extends DatabaseConnection
      * @param string[] $values The values to bind to the query.
      *
      * @throws PDOException
+     * @codeCoverageIgnore
      */
     private function bindValues(array $values): void
     {
