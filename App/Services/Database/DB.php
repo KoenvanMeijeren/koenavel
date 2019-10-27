@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-use App\Services\Exceptions\Basic\EmptyVarException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use PDOException;
 
@@ -326,8 +325,8 @@ final class DB
      * The WHERE clause is used to extract only
      * those records that fulfill a specified condition.
      *
-     * @param string $column The column to specify the filter on.
-     * @param string $operator The operator to be used in the where statement.
+     * @param string $column    The column to specify the filter on.
+     * @param string $operator  The operator to be used in the where statement.
      * @param string $condition The condition to be used in the where statement.
      *
      * @return DB
@@ -338,6 +337,11 @@ final class DB
         string $condition
     ): DB {
         $bindColumn = str_replace('.', '', $column);
+
+        // make sure that the bind column is unique
+        if (array_key_exists($bindColumn, $this->values)) {
+            $bindColumn = $bindColumn . count($this->values);
+        }
 
         if (!strpos($this->query, 'WHERE')) {
             $this->addStatement(
@@ -357,12 +361,11 @@ final class DB
     /**
      * Execute a self written query.
      *
-     * @param string $query The query to be executed.
-     * @param mixed[] $values The values to bind to the query.
+     * @param string   $query  The query to be executed.
+     * @param string[] $values The values to bind to the query.
      *
      * @return DatabaseProcessor
      *
-     * @throws EmptyVarException
      * @throws InvalidKeyException
      */
     public static function query(
@@ -413,7 +416,7 @@ final class DB
      * Add values. These values will be used when
      *             the query is going to be executed
      *
-     * @param mixed[] $values The values to be added
+     * @param string[] $values The values to be added
      */
     private function addValues(array $values): void
     {
@@ -423,7 +426,7 @@ final class DB
     /**
      * Get the prepared values.
      *
-     * @return mixed[]
+     * @return string[]
      */
     public function getValues(): array
     {
