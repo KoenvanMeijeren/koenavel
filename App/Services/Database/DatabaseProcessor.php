@@ -14,8 +14,8 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Construct the data processor.
      *
-     * @param string $query The query to execute on the database.
-     * @param string[] $values The values to bind to the query.
+     * @param string    $query  The query to execute on the database.
+     * @param string[]  $values The values to bind to the query.
      *
      * @throws PDOException
      * @throws InvalidKeyException
@@ -44,9 +44,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         foreach ($values as $column => $value) {
             $this->statement->bindValue(
-                ":{$column}",
-                $value,
-                PDO::PARAM_STR
+                ":{$column}", $value, PDO::PARAM_STR
             );
         }
     }
@@ -57,7 +55,7 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return mixed[]
+     * @return string[]|object
      */
     public function fetchAll(int $fetchMethod): array
     {
@@ -71,7 +69,7 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return mixed
+     * @return string[]|object
      */
     public function fetch(int $fetchMethod)
     {
@@ -81,7 +79,7 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an object.
      *
-     * @return mixed[]
+     * @return object[]
      */
     public function all(): array
     {
@@ -93,7 +91,7 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an array.
      *
-     * @return mixed[]
+     * @return string[]
      */
     public function toArray(): array
     {
@@ -117,7 +115,7 @@ class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch the first record found in the database into an array.
      *
-     * @return mixed[]
+     * @return string[]
      */
     public function firstToArray(): array
     {
