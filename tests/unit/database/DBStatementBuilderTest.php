@@ -220,6 +220,19 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function test_that_we_can_get_the_values()
+    {
+        $values = DB::table('city')
+            ->select('*')
+            ->where('CountryCode', '=', 'NLD')
+            ->getValues();
+
+        $this->assertIsArray($values);
+        $this->assertNotEmpty($values);
+        $this->assertArrayHasKey('CountryCode', $values);
+        $this->assertEquals('NLD', $values['CountryCode']);
+    }
+
     public function test_that_we_can_add_the_where_statement()
     {
         $this->assertEquals(
