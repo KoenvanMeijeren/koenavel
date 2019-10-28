@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use App\Contract\Services\Core\AppContract;
-use App\Services\Database\DB;
 use App\Services\Log\Log;
 use App\Services\Session\Builder as SessionBuilder;
 use App\Services\Translation\Builder as TranslationBuilder;
@@ -59,20 +58,6 @@ final class App implements AppContract
         $uri = new URI();
         $logger = new Log();
         $router = new Router();
-
-        dd(
-            DB::table('city')
-                ->select('*')
-                ->where('CountryCode', '=', 'NLD')
-                ->where('Population', '>', '122000')
-                ->getQuery(),
-            DB::table('city')
-                ->select('*')
-                ->where('CountryCode', '=', 'NLD')
-                ->where('Population', '>', '122000')
-                ->execute()
-                ->all()
-        );
 
         $router->load($this->routesLocation)->direct(
             $uri->getUrl(),
