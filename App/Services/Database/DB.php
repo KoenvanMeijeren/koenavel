@@ -756,7 +756,7 @@ final class DB
     public function permanentDelete(): DB
     {
         $this->addStatement(
-            "DELETE FROM " . self::$_table . " "
+            "DELETE FROM " . self::$table . " "
         );
 
         return $this;
