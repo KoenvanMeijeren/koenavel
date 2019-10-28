@@ -73,8 +73,8 @@ final class DB
      * The UNION operator selects only distinct values by default.
      * To allow duplicate values, use UNION ALL:
      *
-     * @param string $table The table to union select from
-     * @param string[] ...$columns The columns to be union selected.
+     * @param string $table         The table to union select from
+     * @param string[] ...$columns  The columns to be union selected.
      *
      * @return DB
      */
@@ -99,8 +99,8 @@ final class DB
      * The UNION operator selects only distinct values by default.
      * To allow duplicate values, use UNION ALL:
      *
-     * @param string $table The table to union all select from
-     * @param string[] ...$columns The columns to be union all selected.
+     * @param string $table         The table to union all select from
+     * @param string[] ...$columns  The columns to be union all selected.
      *
      * @return DB
      */
@@ -171,7 +171,8 @@ final class DB
     }
 
     /**
-     * The COUNT() function returns the number of rows that matches a specified criteria.
+     * The COUNT() function returns the number of
+     * rows that matches the specified criteria.
      *
      * @param string[] ...$columns The columns to be selected.
      *
@@ -228,7 +229,7 @@ final class DB
      * The INNER JOIN keyword selects records that have
      * matching values in both tables.
      *
-     * @param string $table The table to inner join on.
+     * @param string $table          The table to inner join on.
      * @param string $tableOneColumn The first table column to inner join on.
      * @param string $tableTwoColumn The second table column to inner join on.
      *
@@ -252,7 +253,7 @@ final class DB
      * and the matched records from the right table (table2).
      * The result is NULL from the right side, if there is no match.
      *
-     * @param string $table The table to left join on.
+     * @param string $table           The table to left join on.
      * @param string $tableOneColumn The first table column to left join on.
      * @param string $tableTwoColumn The second table column to left join on.
      *
@@ -276,9 +277,9 @@ final class DB
      * and the matched records from the left table (table1).
      * The result is NULL from the left side, when there is no match.
      *
-     * @param string $table The table to right join on.
-     * @param string $tableOneColumn The first table column to right join on.
-     * @param string $tableTwoColumn The second table column to right join on.
+     * @param string $table           The table to right join on.
+     * @param string $tableOneColumn  The first table column to right join on.
+     * @param string $tableTwoColumn  The second table column to right join on.
      *
      * @return DB
      */
@@ -299,10 +300,10 @@ final class DB
      * The FULL OUTER JOIN keyword return all records when
      * there is a match in either left (table1) or right (table2) table records.
      *
-     * @param string $table The table to full outer join on.
-     * @param string $tableOneColumn The first table column to
+     * @param string $table             The table to full outer join on.
+     * @param string $tableOneColumn    The first table column to
      *                                  full outer join on.
-     * @param string $tableTwoColumn The second table column to
+     * @param string $tableTwoColumn    The second table column to
      *                                  full outer join on.
      *
      * @return DB
@@ -338,22 +339,321 @@ final class DB
     ): DB {
         $bindColumn = str_replace('.', '', $column);
 
-        // make sure that the bind column is unique
-        if (array_key_exists($bindColumn, $this->values)) {
-            $bindColumn = $bindColumn . count($this->values);
-        }
-
-        if (!strpos($this->query, 'WHERE')) {
-            $this->addStatement(
-                "WHERE {$column} {$operator} :{$bindColumn} "
-            );
-        } else {
-            $this->addStatement(
-                "AND {$column} {$operator} :{$bindColumn}"
-            );
-        }
-
+        $this->addStatement(
+            "WHERE {$column} {$operator} :{$bindColumn} "
+        );
         $this->addValues([$bindColumn => $condition]);
+
+        return $this;
+    }
+
+    /**
+     * The EXISTS operator is used to test for
+     * the existence of any record in a sub query.
+     * The EXISTS operator returns true if the sub
+     * query returns one or more records.
+     *
+     * @param string    $query  The query to test if any record exists.
+     * @param string[]  $values The values to bind to the query.
+     *
+     * @return $this
+     */
+    public function whereExists(string $query, array $values): DB
+    {
+        $this->addStatement(
+            "WHERE EXISTS ({$query}) "
+        );
+
+        foreach ($values as $column => $value) {
+            $this->addValues([$column => $value]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * The ANY and ALL operators are used with a WHERE or HAVING clause.
+     *
+     * The ANY operator returns true if any of
+     * the sub query values meet the condition.
+     *
+     * The ALL operator returns true if all of
+     * the sub query values meet the condition.
+     *
+     * @param string    $column   The column to be filtered.
+     * @param string    $operator The operator.
+     * @param string    $query    The query which checks if all of the values
+     *                            meet the condition.
+     * @param string[]  $values   The values to bind to the query.
+     *
+     * @return DB
+     */
+    public function whereAny(
+        string $column,
+        string $operator,
+        string $query,
+        array $values
+    ): DB {
+        $this->addStatement(
+            "WHERE {$column} {$operator} ANY ({$query}) "
+        );
+
+        foreach ($values as $column => $value) {
+            $this->addValues([$column => $value]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * The ANY and ALL operators are used with a WHERE or HAVING clause.
+     *
+     * The ANY operator returns true if any of
+     * the sub query values meet the condition.
+     *
+     * The ALL operator returns true if all of
+     * the sub query values meet the condition.
+     *
+     * @param string    $column   The column to be filtered.
+     * @param string    $operator The operator.
+     * @param string    $query    The query which checks if all of the
+     *                            sub query values meet the condition.
+     * @param string[]  $values   The values to bind to the query.
+     *
+     * @return $this
+     */
+    public function whereAll(
+        string $column,
+        string $operator,
+        string $query,
+        array $values
+    ): DB {
+        $this->addStatement(
+            "WHERE {$column} {$operator} ALL ({$query}) "
+        );
+
+        foreach ($values as $column => $value) {
+            $this->addValues([$column => $value]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add where not statement to the query.
+     *
+     * @param string $column    The column to be filtered.
+     * @param string $operator  The operator.
+     * @param string $condition The condition of the filter.
+     *
+     * @return DB
+     */
+    public function whereNot(
+        string $column,
+        string $operator,
+        string $condition
+    ): DB {
+        $this->addStatement(
+            "WHERE NOT {$column} {$operator} :{$column} "
+        );
+
+        $this->addValues([$column => $condition]);
+
+        return $this;
+    }
+
+    /**
+     * The IS NULL operator is used to test for empty values (NULL values).
+     *
+     * @param string[] ...$columns The columns to be filtered.
+     *
+     * @return DB
+     */
+    public function whereIsNull(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+
+        $this->addStatement(
+            "WHERE {$columns} IS NULL "
+        );
+
+        return $this;
+    }
+
+    /**
+     * The IS NOT NULL operator is used to test for empty values (NULL values).
+     *
+     * @param string[] ...$columns The columns to be filtered.
+     *
+     * @return DB
+     */
+    public function whereIsNotNull(...$columns): DB
+    {
+        $columns = implode(', ', $columns);
+
+        $this->addStatement(
+            "WHERE {$columns} IS NOT NULL "
+        );
+
+        return $this;
+    }
+
+    /**
+     * The IN operator allows you to specify multiple values in a WHERE clause.
+     *
+     * @param string    $column       The column to be filtered.
+     * @param string[]  ...$condition The condition of the filter.
+     *
+     * @return DB
+     */
+    public function whereInValue(string $column, ...$condition): DB
+    {
+        $this->addStatement(
+            "WHERE {$column} IN (:{$column}) "
+        );
+
+        $this->addValues([$column => $condition]);
+
+        return $this;
+    }
+
+    /**
+     * The NOT IN operator allows you to specify
+     * multiple values in a WHERE clause.
+     *
+     * @param string    $column       The column to be filtered.
+     * @param string[]  ...$condition The condition of the filter.
+     *
+     * @return DB
+     */
+    public function whereNotInValue(string $column, ...$condition): DB
+    {
+        $this->addStatement(
+            "WHERE {$column} NOT IN (:{$column}) "
+        );
+
+        $this->addValues([$column => $condition]);
+
+        return $this;
+    }
+
+    /**
+     * Add where or statement to the query.
+     *
+     * @param string    $column    The column to be filtered.
+     * @param string[]  ...$values The values of the filter.
+     *
+     * @return DB
+     */
+    public function whereOr(string $column, ...$values): DB
+    {
+        $query = '';
+        foreach ($values as $key => $value) {
+            if (!strpos($this->query, 'WHERE')) {
+                if (!strpos($query, 'OR')) {
+                    $query .= "WHERE ({$column} = :" . $column . $key . " ";
+                } else {
+                    $query .= " OR {$column} = :" . $column . $key . " ";
+                }
+            }
+
+            if (!strpos($query, 'OR')) {
+                $query .= "AND ({$column} = :" . $column . $key . " OR ";
+            } else {
+                $query .= "{$column} = :" . $column . $key . " ";
+            }
+
+            $this->addValues([$column . $key => $value]);
+        }
+        $query .= ') ';
+
+        $this->addStatement($query);
+
+        return $this;
+    }
+
+    /**
+     * The IN operator allows you to specify multiple values in a WHERE clause.
+     *
+     * @param string    $column The column to be filtered.
+     * @param string    $query  The query to be used as a filter.
+     * @param string[]  $values The values of the sub query.
+     *
+     * @return DB
+     */
+    public function whereInQuery(
+        string $column,
+        string $query,
+        array $values
+    ): DB {
+        $this->addStatement(
+            "WHERE {$column} IN ({$query}) "
+        );
+
+        foreach ($values as $key => $value) {
+            $this->addValues([$key => $value]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * The BETWEEN operator selects values within a given range.
+     * The values can be numbers, text, or dates.
+     * The BETWEEN operator is inclusive: begin and end values are included.
+     *
+     * @param string $column        The column to be filtered.
+     * @param string $start         The start range of the filter.
+     * @param string $end           The end range of the filter.
+     * @param bool   $orStatement   Determine if there must be a
+     *                              hook added to the query.
+     *
+     * @return $this
+     */
+    public function whereBetween(
+        string $column,
+        string $start,
+        string $end,
+        bool $orStatement = false
+    ): DB {
+        $hook = $orStatement ? '(' : '';
+
+        $this->addStatement(
+            "WHERE {$hook} {$column} BETWEEN :{$column}start AND :{$column}end "
+        );
+
+        $this->addValues([
+            $column . 'start' => $start,
+            $column . 'end' => $end
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * The BETWEEN operator selects values within a given range.
+     * The values can be numbers, text, or dates.
+     * The BETWEEN operator is inclusive: begin and end values are included.
+     *
+     * @param string $column    The columns to be filtered.
+     * @param string $start     The start range of the filter.
+     * @param string $end       The end range of the filter.
+     *
+     * @return DB
+     */
+    public function whereOrBetween(
+        string $column,
+        string $start,
+        string $end
+    ): DB {
+        $this->addStatement(
+            "OR {$column} BETWEEN :{$column}start AND :{$column}end )"
+        );
+
+        $this->addValues([
+            $column . 'start' => $start,
+            $column . 'end' => $end
+        ]);
 
         return $this;
     }
@@ -397,6 +697,12 @@ final class DB
      */
     private function addStatement(string $statement): void
     {
+        if (strpos($this->query, 'WHERE')) {
+            $statement = preg_replace(
+                '/\b(WHERE)\b/', "AND", $statement
+            );
+        }
+
         $this->query .= $statement;
     }
 

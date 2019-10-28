@@ -247,11 +247,11 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
     public function test_that_we_can_add_multiple_where_statements()
     {
         $this->assertEquals(
-            'SELECT * FROM city WHERE CountryCode = :CountryCode AND CountryCode = :CountryCode1',
+            'SELECT * FROM city WHERE CountryCode = :CountryCode AND Population > :Population ',
             DB::table('city')
                 ->select('*')
                 ->where('CountryCode', '=', 'NLD')
-                ->where('CountryCode', '=', 'GBR')
+                ->where('Population', '>', '122000')
                 ->getQuery()
         );
     }
