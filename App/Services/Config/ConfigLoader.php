@@ -45,7 +45,7 @@ class ConfigLoader
     }
 
     /**
-     * Check if the config is configured.
+     * Make sure that the config is loaded and configured.
      *
      * @return void
      * @throws AppIsNotConfiguredException
