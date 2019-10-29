@@ -29,6 +29,8 @@
                 <file>App/Services/Core/Mail.php</file>
                 <file>App/Services/Core/Cookie.php</file>
 
+                <file>App/Services/Log/LoggerHandler.php</file>
+
                 <file>App/Services/Security/CSRF.php</file>
                 <file>App/Services/Security/Recaptcha.php</file>
 
