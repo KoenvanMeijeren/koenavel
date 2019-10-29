@@ -36,6 +36,3 @@ Config::set('encryptionToken', '');
 
 // SECRET KEY
 Config::set('secretKey', '');
-
-// APP IS PREPARED
-Config::setPreparedState();

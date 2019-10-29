@@ -178,8 +178,7 @@ final class Router
         for ($i = 0; $i <= $rights; ++$i) {
             if (isset(self::$routes[$requestType][$i])) {
                 self::$availableRoutes = array_merge(
-                    self::$availableRoutes,
-                    self::$routes[$requestType][$i]
+                    self::$availableRoutes, self::$routes[$requestType][$i]
                 );
             }
         }
@@ -223,18 +222,15 @@ final class Router
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
         foreach ($routeExploded as $key => $routePart) {
-            if (isset($urlExploded[$key])
-                && preg_match('/{[a-zA-Z]+}/', $routePart)
+            if (isset($urlExploded[$key]) &&
+                preg_match('/{[a-zA-Z]+}/', $routePart)
             ) {
                 $newRoute = preg_replace(
-                    '/{[a-zA-Z]+}/',
-                    $urlExploded[$key],
-                    $route
+                    '/{[a-zA-Z]+}/', $urlExploded[$key], $route
                 );
                 self::$wildcard = $urlExploded[$key];
                 self::$availableRoutes = array_replace_keys(
-                    self::$availableRoutes,
-                    [$route => $newRoute]
+                    self::$availableRoutes, [$route => $newRoute]
                 );
 
                 break;

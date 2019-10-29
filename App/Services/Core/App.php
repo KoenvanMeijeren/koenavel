@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use App\Contract\Services\Core\AppContract;
+use App\Services\Config\ConfigLoader;
 use App\Services\Log\Log;
 use App\Services\Session\Builder as SessionBuilder;
 use App\Services\Translation\Builder as TranslationBuilder;
@@ -36,8 +37,11 @@ final class App implements AppContract
         $this->routesLocation = $routesLocation;
 
         $env = new Env();
-        $env->setEnv();
         $env->setErrorHandling();
+
+        $config = new ConfigLoader($env->getEnv());
+        $config->load();
+        $config->checkConfigState();
 
         $sessionBuilder = new SessionBuilder();
         $sessionBuilder->startSession();

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Core;
 
-use App\Services\Exceptions\Basic\AppIsNotConfiguredException;
 use App\Services\Exceptions\Uri\InvalidEnvException;
 use App\Services\Log\LoggerHandler;
 use App\Services\Validate\Validate;
@@ -38,20 +37,6 @@ final class Env
     private $env = '';
 
     /**
-     * The config file location of the app.
-     *
-     * @var string
-     */
-    private $configLocation;
-
-    /**
-     * Determine if the app is configured.
-     *
-     * @var bool
-     */
-    private $isConfigured = false;
-
-    /**
      * Construct the env.
      *
      * Set the live url, host and set the env.
@@ -64,6 +49,8 @@ final class Env
 
         $this->host = $request->server(Request::HTTP_HOST);
         Validate::var($this->host)->isDomain();
+
+        $this->setEnv();
     }
 
     /**
@@ -77,30 +64,6 @@ final class Env
     }
 
     /**
-     * Set the current env based on the uri.
-     *
-     * @throws Exception
-     * @throws InvalidEnvException
-     */
-    public function setEnv(): void
-    {
-        $this->env = self::PRODUCTION;
-        $this->configLocation = CONFIG_PATH . '/production_config.php';
-        if (strstr($this->host, 'localhost')
-            || strstr($this->host, '127.0.0.1')
-        ) {
-            $this->env = self::DEVELOPMENT;
-            $this->configLocation = CONFIG_PATH . '/dev_config.php';
-        }
-
-        Validate::var($this->env)->isEnv();
-        Config::set('env', $this->env);
-
-        loadFile($this->configLocation);
-        $this->isConfigured = true;
-    }
-
-    /**
      * Set the error handling
      *
      * @return void
@@ -108,12 +71,6 @@ final class Env
      */
     public function setErrorHandling(): void
     {
-        if (!$this->isConfigured) {
-            throw new AppIsNotConfiguredException(
-                'The app must be configured if you want to set the error handling.'
-            );
-        }
-
         ini_set(
             'display_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
@@ -125,6 +82,24 @@ final class Env
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
 
         $this->initializeWhoops();
+    }
+
+    /**
+     * Set the current env based on the uri.
+     *
+     * @throws Exception
+     * @throws InvalidEnvException
+     */
+    private function setEnv(): void
+    {
+        $this->env = self::PRODUCTION;
+        if (strstr($this->host, 'localhost') ||
+            strstr($this->host, '127.0.0.1')
+        ) {
+            $this->env = self::DEVELOPMENT;
+        }
+
+        Validate::var($this->env)->isEnv();
     }
 
     /**

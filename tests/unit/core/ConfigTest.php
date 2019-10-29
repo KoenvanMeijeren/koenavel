@@ -58,15 +58,6 @@ class ConfigTest extends TestCase
         Config::set('duplicate', 'test');
     }
 
-    public function test_that_we_can_change_the_config_state_into_prepared()
-    {
-        $this->assertFalse(Config::isPrepared());
-
-        Config::setPreparedState();
-
-        $this->assertTrue(Config::isPrepared());
-    }
-
     public function test_that_we_can_sanitize_a_config_item()
     {
         Config::set('sanitize', '<script>');

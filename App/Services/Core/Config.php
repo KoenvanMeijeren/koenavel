@@ -18,13 +18,6 @@ final class Config
     private static $config = [];
 
     /**
-     * Determine if the config is set up.
-     *
-     * @var bool
-     */
-    private static $isPrepared = false;
-
-    /**
      * Set a new config item.
      *
      * @param string                      $key   the key of the value
@@ -92,25 +85,5 @@ final class Config
     public static function unsetAll(): void
     {
         self::$config = [];
-    }
-
-    /**
-     * Change the state into set up.
-     *
-     * @param bool $state The prepare state of the config
-     */
-    public static function setPreparedState(bool $state = true): void
-    {
-        self::$isPrepared = $state;
-    }
-
-    /**
-     * Get the config state.
-     *
-     * @return bool
-     */
-    public static function isPrepared(): bool
-    {
-        return self::$isPrepared;
     }
 }

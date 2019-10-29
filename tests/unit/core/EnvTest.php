@@ -14,7 +14,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->assertEquals('1', ini_get('display_errors'));
@@ -25,7 +24,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->assertEquals('0', ini_get('display_errors'));
@@ -36,7 +34,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->expectException(ErrorException::class);
@@ -47,7 +44,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->expectException(ErrorException::class);
@@ -58,7 +54,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->assertEquals(Env::DEVELOPMENT, $this->env->getEnv());
@@ -68,7 +63,6 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
-        $this->env->setEnv();
         $this->env->setErrorHandling();
 
         $this->assertEquals(Env::PRODUCTION, $this->env->getEnv());

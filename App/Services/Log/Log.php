@@ -44,7 +44,8 @@ final class Log
         $formatter = new LineFormatter($format, $timeFormat);
         $formatter->ignoreEmptyContextAndExtra();
 
-        $level = Config::get('env')->toString() === Env::DEVELOPMENT ?
+        $env = new Env();
+        $level = $env->getEnv() === Env::DEVELOPMENT ?
             Logger::DEBUG : Logger::INFO;
         $defaultHandler = new RotatingFileHandler(
             START_PATH . '/storage/logs/app.log',
