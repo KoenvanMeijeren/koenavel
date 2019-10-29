@@ -45,7 +45,9 @@ class DatabaseProcessor extends DatabaseConnection
     {
         foreach ($values as $column => $value) {
             $this->statement->bindValue(
-                ":{$column}", $value, PDO::PARAM_STR
+                ":{$column}",
+                $value,
+                PDO::PARAM_STR
             );
         }
     }
@@ -56,7 +58,7 @@ class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object
+     * @return string[]|object[]
      */
     public function fetchAll(int $fetchMethod): array
     {

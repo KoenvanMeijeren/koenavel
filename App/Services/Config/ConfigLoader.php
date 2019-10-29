@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Config;
 
-
 use App\Services\Core\Config;
 use App\Services\Core\Env;
 use App\Services\Exceptions\Basic\AppIsNotConfiguredException;

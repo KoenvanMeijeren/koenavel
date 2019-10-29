@@ -356,7 +356,7 @@ final class DB
      * @param string    $query  The query to test if any record exists.
      * @param string[]  $values The values to bind to the query.
      *
-     * @return $this
+     * @return DB
      */
     public function whereExists(string $query, array $values): DB
     {
@@ -420,7 +420,7 @@ final class DB
      *                            sub query values meet the condition.
      * @param string[]  $values   The values to bind to the query.
      *
-     * @return $this
+     * @return DB
      */
     public function whereAll(
         string $column,
@@ -577,7 +577,9 @@ final class DB
         // add hooks to the query if there is already a where statement added
         if (strstr($this->query, 'WHERE')) {
             $query = preg_replace(
-                '/\b(WHERE)\b/', "WHERE (", $query
+                '/\b(WHERE)\b/',
+                "WHERE (",
+                $query
             );
             $query .= ')';
         }
@@ -623,7 +625,7 @@ final class DB
      * @param bool   $orStatement   Determine if there must be a
      *                              hook added to the query.
      *
-     * @return $this
+     * @return DB
      */
     public function whereBetween(
         string $column,
@@ -656,7 +658,7 @@ final class DB
      * @param bool   $orStatement   Determine if there must be a
      *                              hook added to the query.
      *
-     * @return $this
+     * @return DB
      */
     public function whereNotBetween(
         string $column,
@@ -779,11 +781,11 @@ final class DB
      * @param string $column The column to be updated.
      *                       This value will be used to determine
      *                       if the record has been deleted
-     * @param int    $value  The value -> 1 is deleted 0 -> is available
+     * @param string $value  The value -> 1 is deleted 0 -> is available
      *
      * @return DB
      */
-    public function delete(string $column, int $value = 1): DB
+    public function delete(string $column, string $value = '1'): DB
     {
         $this->update([$column => $value]);
 
@@ -900,7 +902,9 @@ final class DB
     {
         if (strpos($this->query, 'WHERE')) {
             $statement = preg_replace(
-                '/\b(WHERE)\b/', "AND", $statement
+                '/\b(WHERE)\b/',
+                "AND",
+                $statement
             );
         }
 
@@ -947,7 +951,7 @@ final class DB
      */
     private function countInnerJoinsInQuery(): int
     {
-        return preg_match_all('/\b(JOIN)\b/', $this->query);
+        return (int) preg_match_all('/\b(JOIN)\b/', $this->query);
     }
 
     /**
@@ -969,13 +973,17 @@ final class DB
             $hooks .= '(';
         }
 
-        $this->query = preg_replace(
-            '/\b(FROM)\b/', "FROM {$hooks}", $this->query
+        $this->query = (string) preg_replace(
+            '/\b(FROM)\b/',
+            "FROM {$hooks}",
+            $this->query
         );
 
         if ($this->countInnerJoinsInQuery() === 1) {
-            $this->query = preg_replace(
-                '/[()]/', '', $this->query
+            $this->query = (string) preg_replace(
+                '/[()]/',
+                '',
+                $this->query
             );
         }
     }
