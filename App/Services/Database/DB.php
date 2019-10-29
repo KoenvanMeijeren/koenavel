@@ -502,17 +502,24 @@ final class DB
      * The IN operator allows you to specify multiple values in a WHERE clause.
      *
      * @param string    $column       The column to be filtered.
-     * @param string[]  ...$condition The condition of the filter.
+     * @param string[]  ...$condition The conditions of the filter.
      *
      * @return DB
      */
     public function whereInValue(string $column, ...$condition): DB
     {
-        $this->addStatement(
-            "WHERE {$column} IN (:{$column}) "
-        );
+        $bindColumns = [];
+        foreach ($condition as $key => $value) {
+            array_push($bindColumns, $column.$key);
 
-        $this->addValues([$column => $condition]);
+            $this->addValues([$column.$key => $value]);
+        }
+
+        $bindColumns = ':' . implode(', :', $bindColumns);
+
+        $this->addStatement(
+            "WHERE {$column} IN ({$bindColumns}) "
+        );
 
         return $this;
     }
@@ -522,17 +529,24 @@ final class DB
      * multiple values in a WHERE clause.
      *
      * @param string    $column       The column to be filtered.
-     * @param string[]  ...$condition The condition of the filter.
+     * @param string[]  ...$condition The conditions of the filter.
      *
      * @return DB
      */
     public function whereNotInValue(string $column, ...$condition): DB
     {
-        $this->addStatement(
-            "WHERE {$column} NOT IN (:{$column}) "
-        );
+        $bindColumns = [];
+        foreach ($condition as $key => $value) {
+            array_push($bindColumns, $column.$key);
 
-        $this->addValues([$column => $condition]);
+            $this->addValues([$column.$key => $value]);
+        }
+
+        $bindColumns = ':' . implode(', :', $bindColumns);
+
+        $this->addStatement(
+            "WHERE {$column} NOT IN ({$bindColumns}) "
+        );
 
         return $this;
     }
@@ -549,23 +563,24 @@ final class DB
     {
         $query = '';
         foreach ($values as $key => $value) {
-            if (!strpos($this->query, 'WHERE')) {
-                if (!strpos($query, 'OR')) {
-                    $query .= "WHERE ({$column} = :" . $column . $key . " ";
-                } else {
-                    $query .= " OR {$column} = :" . $column . $key . " ";
-                }
-            }
+            $bindColumn = $column.$key;
 
-            if (!strpos($query, 'OR')) {
-                $query .= "AND ({$column} = :" . $column . $key . " OR ";
+            $this->addValues([$bindColumn => $value]);
+
+            if (strstr($query, 'WHERE')) {
+                $query .= "OR {$column} = :{$bindColumn} ";
             } else {
-                $query .= "{$column} = :" . $column . $key . " ";
+                $query .= "WHERE {$column} = :{$bindColumn} ";
             }
-
-            $this->addValues([$column . $key => $value]);
         }
-        $query .= ') ';
+
+        // add hooks to the query if there is already a where statement added
+        if (strstr($this->query, 'WHERE')) {
+            $query = preg_replace(
+                '/\b(WHERE)\b/', "WHERE (", $query
+            );
+            $query .= ')';
+        }
 
         $this->addStatement($query);
 
@@ -619,12 +634,45 @@ final class DB
         $hook = $orStatement ? '(' : '';
 
         $this->addStatement(
-            "WHERE {$hook} {$column} BETWEEN :{$column}start AND :{$column}end "
+            "WHERE {$hook} {$column} BETWEEN :{$column}Start AND :{$column}End "
         );
 
         $this->addValues([
-            $column . 'start' => $start,
-            $column . 'end' => $end
+            $column . 'Start' => $start,
+            $column . 'End' => $end
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * The BETWEEN operator selects values within a given range.
+     * The values can be numbers, text, or dates.
+     * The BETWEEN operator is inclusive: begin and end values are included.
+     *
+     * @param string $column        The column to be filtered.
+     * @param string $start         The start range of the filter.
+     * @param string $end           The end range of the filter.
+     * @param bool   $orStatement   Determine if there must be a
+     *                              hook added to the query.
+     *
+     * @return $this
+     */
+    public function whereNotBetween(
+        string $column,
+        string $start,
+        string $end,
+        bool $orStatement = false
+    ): DB {
+        $hook = $orStatement ? '(' : '';
+
+        $this->addStatement(
+            "WHERE {$hook} {$column} NOT BETWEEN :{$column}Start AND :{$column}End "
+        );
+
+        $this->addValues([
+            $column . 'Start' => $start,
+            $column . 'End' => $end
         ]);
 
         return $this;
@@ -647,12 +695,12 @@ final class DB
         string $end
     ): DB {
         $this->addStatement(
-            "OR {$column} BETWEEN :{$column}start AND :{$column}end )"
+            "OR {$column} BETWEEN :{$column}Start AND :{$column}End "
         );
 
         $this->addValues([
-            $column . 'start' => $start,
-            $column . 'end' => $end
+            $column . 'Start' => $start,
+            $column . 'End' => $end
         ]);
 
         return $this;
@@ -671,7 +719,7 @@ final class DB
         $conditions = implode(', ', $conditions);
 
         $this->addStatement(
-            "HAVING {$conditions}"
+            "HAVING {$conditions} "
         );
 
         return $this;
@@ -686,11 +734,12 @@ final class DB
      */
     public function insert(array $values): DB
     {
-        $columns = array_keys($values);
+        $columns = implode(', ', array_keys($values));
+        $bindColumns = ':' . implode(', :', array_keys($values));
+
         $this->addStatement(
             "INSERT INTO " . self::$table .
-            " (`" . implode('`, `', $columns) . "`)" .
-            " VALUES (:" . implode(', :', $columns) . ") "
+            " ({$columns}) VALUES ({$bindColumns}) "
         );
 
         $this->addValues($values);
@@ -707,23 +756,16 @@ final class DB
      */
     public function update(array $values): DB
     {
-        $columns = array_keys($values);
-        $lastColumn = array_key_last($values);
-
         $this->addStatement(
             "UPDATE " . self::$table . " SET "
         );
 
-        foreach ($columns as $column) {
-            if ($lastColumn !== $column) {
-                $this->addStatement(
-                    "{$column} = :{$column}, "
-                );
-            } else {
-                $this->addStatement(
-                    "{$column} = :{$column} "
-                );
-            }
+        foreach (array_keys($values) as $column) {
+            $comma = array_key_last($values) !== $column ? ',' : '';
+
+            $this->addStatement(
+                "{$column} = :{$column}{$comma} "
+            );
         }
 
         $this->addValues($values);
