@@ -46,13 +46,13 @@ class ConfigLoader
     /**
      * Make sure that the config is loaded and configured.
      *
-     * @return void
+     * @return bool
      * @throws AppIsNotConfiguredException
      */
-    public function checkConfigState(): void
+    public function checkConfigState(): bool
     {
         if ($this->isConfigured()) {
-            return;
+            return true;
         }
 
         throw new AppIsNotConfiguredException(
