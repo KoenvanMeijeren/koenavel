@@ -17,5 +17,3 @@ $app->run();
 // todo find a way to test classes which are sending headers
 // todo: Actually flash data into the session ->
 // todo store it and after using it, destroy the data
-// todo make load the config items from the config class instead of the env
-
