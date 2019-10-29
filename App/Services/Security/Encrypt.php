@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Security;
 
-use App\Services\Core\Config;
+use App\Services\Config\Config;
 use App\Services\Validate\Validate;
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Key;
@@ -65,8 +65,10 @@ class Encrypt
      */
     private function loadKeyFromConfig(): Key
     {
+        $config = new Config();
+
         return Key::loadFromAsciiSafeString(
-            Config::get('encryptionToken')->toString()
+            $config->get('encryptionToken')->toString()
         );
     }
 }

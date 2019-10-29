@@ -47,7 +47,8 @@ final class Env
     {
         $request = new Request();
 
-        $this->host = $request->server(Request::HTTP_HOST);
+        $host = $request->server(Request::HTTP_HOST);
+        $this->host = !empty($host) ? $host : 'localhost';
         Validate::var($this->host)->isDomain();
 
         $this->setEnv();

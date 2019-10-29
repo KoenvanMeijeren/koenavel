@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Security;
 
-use App\Services\Core\Config;
+use App\Services\Config\Config;
 use App\Services\Core\Request;
 use App\Services\Session\Session;
 use App\Services\Translation\Translation;
@@ -27,9 +27,10 @@ final class Recaptcha
     public function __construct()
     {
         $request = new Request();
+        $config = new Config();
 
         $recaptcha = http_build_query([
-            'secret' => Config::get('recaptcha_secret_key')->toString(),
+            'secret' => $config->get('recaptcha_secret_key')->toString(),
             'response' => $request->post('g-recaptcha-response'),
             'remoteip' => $request->server(Request::USER_IP_ADDRESS),
         ]);

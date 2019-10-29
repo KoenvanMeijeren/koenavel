@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 
 
-use App\Services\Core\Config;
 use App\Services\Session\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -16,12 +15,6 @@ class SessionTest extends TestCase
 
     public function setUp(): void
     {
-        Config::set('encryptionToken',
-            'def00000bf6a79439be74b32d34b4c00dcb528a02f654b34472d1ca02383fc0284804eaa8404d6d0af3c41f7651d7f5d424af236f0daee2eea3704d00af9b1f68b31317b'
-        );
-        Config::set('appName', 'TestApp');
-        Config::set('env', \App\Services\Core\Env::DEVELOPMENT);
-
         $this->session = new Session();
     }
 
@@ -104,10 +97,5 @@ class SessionTest extends TestCase
         );
 
         $this->session->unset('test');
-    }
-
-    public function tearDown(): void
-    {
-        Config::unsetAll();
     }
 }

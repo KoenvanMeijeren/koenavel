@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-use App\Services\Core\Config;
+use App\Services\Config\Config;
 use App\Services\Exceptions\Basic\InvalidKeyException;
+use App\Services\Exceptions\File\FileNotExistingException;
 use PDO;
 use PDOStatement;
 
@@ -50,18 +51,21 @@ class DatabaseConnection
      * Construct the database connection.
      *
      * @throws InvalidKeyException
+     * @throws FileNotExistingException
      */
     protected function __construct()
     {
-        $dsn = Config::get('databaseServer')->toString() . ';';
-        $dbName = 'dbname=' . Config::get('databaseName')->toString() . ';';
-        $charset = 'charset' . Config::get('databaseCharset')->toString().';';
+        $config = new Config();
+
+        $dsn = $config->get('databaseServer')->toString() . ';';
+        $dbName = 'dbname=' . $config->get('databaseName')->toString() . ';';
+        $charset = 'charset' . $config->get('databaseCharset')->toString().';';
 
         $this->pdo = new PDO(
             $dsn . $dbName . $charset,
-            Config::get('databaseUsername')->toString(),
-            Config::get('databasePassword')->toString(),
-            Config::get('databaseOptions')->toArray()
+            $config->get('databaseUsername')->toString(),
+            $config->get('databasePassword')->toString(),
+            $config->get('databaseOptions')->toArray()
         );
     }
 }

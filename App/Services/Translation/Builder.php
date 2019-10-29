@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Translation;
 
-use App\Services\Core\Config;
 use App\Services\Core\URI;
-use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Services\Exceptions\File\FileNotExistingException;
 use App\Services\Log\Log;
@@ -39,8 +37,6 @@ final class Builder
 
     /**
      * Set the language id.
-     *
-     * @throws DuplicatedKeyException
      */
     public function setLanguageSettings(): void
     {
@@ -50,10 +46,6 @@ final class Builder
             || strstr($uri->getDomainExtension(), 'nl')
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
-
-            Config::set('languageID', self::DUTCH_LANGUAGE_ID);
-            Config::set('languageCode', self::DUTCH_LANGUAGE_CODE);
-            Config::set('languageName', self::DUTCH_LANGUAGE_NAME);
 
             setlocale(
                 LC_ALL,
@@ -65,10 +57,6 @@ final class Builder
             );
         } elseif (strstr($uri->getDomainExtension(), 'com')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
-
-            Config::set('languageID', self::ENGLISH_LANGUAGE_ID);
-            Config::set('languageCode', self::ENGLISH_LANGUAGE_CODE);
-            Config::set('languageName', self::ENGLISH_LANGUAGE_NAME);
 
             setlocale(
                 LC_ALL,

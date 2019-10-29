@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Database;
 
 use App\Services\Exceptions\Basic\InvalidKeyException;
+use App\Services\Exceptions\File\FileNotExistingException;
 use PDOException;
 
 final class DB
@@ -864,12 +865,13 @@ final class DB
     /**
      * Execute a self written query.
      *
-     * @param string   $query  The query to be executed.
+     * @param string $query The query to be executed.
      * @param string[] $values The values to bind to the query.
      *
      * @return DatabaseProcessor
      *
      * @throws InvalidKeyException
+     * @throws FileNotExistingException
      */
     public static function query(
         string $query,
@@ -885,6 +887,7 @@ final class DB
      *
      * @throws InvalidKeyException
      * @throws PDOException
+     * @throws FileNotExistingException
      */
     public function execute(): DatabaseProcessor
     {

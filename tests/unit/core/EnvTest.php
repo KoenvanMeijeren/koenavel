@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 
-use App\Services\Core\Config;
 use App\Services\Core\Env;
 use PHPUnit\Framework\TestCase;
 
@@ -71,6 +70,5 @@ class EnvTest extends TestCase
     public function tearDown(): void
     {
         unset($this->env);
-        Config::unsetAll();
     }
 }

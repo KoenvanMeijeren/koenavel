@@ -1,25 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use App\Services\Core\Config;
 
 class DBOutputTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        Config::set('databaseName', 'test');
-        Config::set('databaseUsername', 'root');
-        Config::set('databasePassword', 'koenvanmeijeren');
-        Config::set('databaseServer', 'mysql:host=localhost');
-        Config::set('databasePort', '3306');
-        Config::set('databaseCharset', 'utf8');
-        Config::set('databaseOptions',
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    }
-
     public function test_that_we_can_get_one_result()
     {
         $result = \App\Services\Database\DB::table('testtable')
@@ -114,12 +98,5 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
         $id = $processor->getLastInsertedId();
 
         $this->assertIsInt($id);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        Config::unsetAll();
     }
 }

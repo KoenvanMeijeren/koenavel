@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 
-use App\Services\Core\Config;
 use App\Services\Log\Log;
 use Cake\Chronos\Chronos;
 use PHPUnit\Framework\TestCase;
@@ -18,9 +17,6 @@ class LogTest extends TestCase
 
     public function setUp(): void
     {
-        Config::set('appName', 'TestApp');
-        Config::set('env', \App\Services\Core\Env::DEVELOPMENT);
-
         $this->log = new Log();
     }
 
@@ -51,11 +47,5 @@ class LogTest extends TestCase
         $chronos =  new Chronos();
 
         $this->assertIsString($this->log->get($chronos->toDateString()));
-    }
-
-    public function tearDown(): void
-    {
-        Config::unset('appName');
-        Config::unset('env');
     }
 }

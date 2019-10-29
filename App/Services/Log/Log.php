@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Log;
 
-use App\Services\Core\Config;
+use App\Services\Config\Config;
 use App\Services\Core\Env;
 use Exception;
 use Monolog\Formatter\LineFormatter;
@@ -31,11 +31,14 @@ final class Log
      */
     public function __construct()
     {
+        $config = new Config();
+        $env = new Env();
+
         $format = "[%datetime%] %level_name% %message% %context% %extra%\n";
         $timeFormat = "Y-m-d H:i:s";
         $dateTimeZone = new \DateTimeZone('Europe/Amsterdam');
 
-        $this->logger = new Logger(Config::get('appName')->toString());
+        $this->logger = new Logger($config->get('appName')->toString());
         $this->logger->setTimezone($dateTimeZone);
 
         $this->logger->pushProcessor(new IntrospectionProcessor());
@@ -44,7 +47,6 @@ final class Log
         $formatter = new LineFormatter($format, $timeFormat);
         $formatter->ignoreEmptyContextAndExtra();
 
-        $env = new Env();
         $level = $env->getEnv() === Env::DEVELOPMENT ?
             Logger::DEBUG : Logger::INFO;
         $defaultHandler = new RotatingFileHandler(

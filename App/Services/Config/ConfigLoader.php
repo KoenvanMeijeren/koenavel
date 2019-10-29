@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Config;
 
-use App\Services\Core\Config;
 use App\Services\Core\Env;
-use App\Services\Exceptions\Basic\AppIsNotConfiguredException;
-use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Exceptions\File\FileNotExistingException;
 
 class ConfigLoader
@@ -25,7 +22,7 @@ class ConfigLoader
      * @param string $env the env which will be used to determine
      *                    which config items must be loaded
      */
-    public function __construct(string $env)
+    protected function __construct(string $env)
     {
         $this->configLocation = CONFIG_PATH . '/production_config.php';
         if (Env::DEVELOPMENT === $env) {
@@ -36,43 +33,11 @@ class ConfigLoader
     /**
      * Load the config items.
      *
+     * @return array
      * @throws FileNotExistingException
      */
-    public function load(): void
+    protected function loadConfig(): array
     {
-        loadFile($this->configLocation);
-    }
-
-    /**
-     * Make sure that the config is loaded and configured.
-     *
-     * @return bool
-     * @throws AppIsNotConfiguredException
-     */
-    public function checkConfigState(): bool
-    {
-        if ($this->isConfigured()) {
-            return true;
-        }
-
-        throw new AppIsNotConfiguredException(
-            'The app must be configured if you want to use it.'
-        );
-    }
-
-    /**
-     * Determine if the app has been configured.
-     *
-     * @return bool
-     */
-    private function isConfigured(): bool
-    {
-        try {
-            Config::get('appName');
-
-            return true;
-        } catch (InvalidKeyException $e) {
-            return false;
-        }
+        return loadFile($this->configLocation);
     }
 }
