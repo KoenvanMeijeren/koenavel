@@ -33,7 +33,7 @@ class Loader
     /**
      * Load the config items.
      *
-     * @return array
+     * @return string[]
      * @throws FileNotExistingException
      */
     protected function loadConfig(): array

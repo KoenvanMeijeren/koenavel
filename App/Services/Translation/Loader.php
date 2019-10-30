@@ -50,7 +50,7 @@ class Loader
     /**
      * Load the translations based on the language id.
      *
-     * @return array
+     * @return string[]
      * @throws NoTranslationsForGivenLanguageID
      * @throws FileNotExistingException
      */
