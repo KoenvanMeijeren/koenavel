@@ -9,7 +9,7 @@ use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Exceptions\File\FileNotExistingException;
 use App\Services\Type\TypeChanger;
 
-final class Config extends ConfigLoader
+final class Config extends Loader
 {
     /**
      * The config items.

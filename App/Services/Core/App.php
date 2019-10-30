@@ -7,7 +7,6 @@ namespace App\Services\Core;
 use App\Contract\Services\Core\AppContract;
 use App\Services\Log\Log;
 use App\Services\Session\Builder as SessionBuilder;
-use App\Services\Translation\Builder as TranslationBuilder;
 use Exception;
 
 final class App implements AppContract
@@ -36,7 +35,6 @@ final class App implements AppContract
         $this->routesLocation = $routesLocation;
 
         date_default_timezone_set('Europe/Amsterdam');
-        setlocale(LC_TIME, TranslationBuilder::DUTCH_TIME);
 
         $env = new Env();
         $env->setErrorHandling();
@@ -44,10 +42,6 @@ final class App implements AppContract
         $sessionBuilder = new SessionBuilder();
         $sessionBuilder->startSession();
         $sessionBuilder->setSessionSecurity();
-
-        $translationBuilder = new TranslationBuilder();
-        $translationBuilder->setLanguageSettings();
-        $translationBuilder->loadTranslations();
     }
 
     /**

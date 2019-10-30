@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Translation;
 
-use App\Services\Core\Sanitize;
-use App\Services\Exceptions\Basic\DuplicatedKeyException;
 use App\Services\Exceptions\Basic\InvalidKeyException;
+use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\Services\Exceptions\File\FileNotExistingException;
 
-final class Translation
+final class Translation extends Loader
 {
     /**
      * The translation items loaded based on the current language id.
@@ -18,41 +18,39 @@ final class Translation
     private static $translation = [];
 
     /**
-     * Set a new translation item.
+     * Construct the translations.
      *
-     * @param string $key   the key to save the value in
-     * @param string $value the value of the key
-     *
-     * @throws DuplicatedKeyException
+     * @throws FileNotExistingException
+     * @throws NoTranslationsForGivenLanguageID
      */
-    public static function set(string $key, string $value): void
+    private function __construct()
     {
-        if (isset(self::$translation[$key])) {
-            throw new DuplicatedKeyException(
-                "Other translation was found with the given key: {$key} and the value is: "
-                . self::$translation[$key]
-            );
-        }
+        parent::__construct();
 
-        self::$translation[$key] = (new Sanitize($value))->data();
+        self::$translation = $this->loadTranslations();
     }
 
     /**
      * Get a specific stored config item.
      *
-     * @param string $key the key to search for the corresponding value in the config array
+     * @param string $key the key to search for the
+     *                    corresponding value in the translations
      *
      * @return string
-     *
+     * @throws FileNotExistingException
      * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
     public static function get(string $key): string
     {
+        new self();
+
         if (!isset(self::$translation[$key])) {
-            throw new InvalidKeyException('No translation was found with the given key');
+            throw new InvalidKeyException(
+                "No translation was found with key: {$key}"
+            );
         }
 
-        $sanitize = new Sanitize(self::$translation[$key]);
-        return htmlspecialchars_decode((string) $sanitize->data());
+        return self::$translation[$key];
     }
 }

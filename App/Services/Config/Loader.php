@@ -7,7 +7,7 @@ namespace App\Services\Config;
 use App\Services\Core\Env;
 use App\Services\Exceptions\File\FileNotExistingException;
 
-class ConfigLoader
+class Loader
 {
     /**
      * The config file location of the app.
