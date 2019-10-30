@@ -20,6 +20,17 @@ class LogTest extends TestCase
         $this->log = new Log();
     }
 
+    public function test_that_we_can_log_debug_data()
+    {
+        $chronos =  new Chronos();
+
+        $logDataBefore = $this->log->get($chronos->toDateString());
+        $this->log->addDebug('Test that we can debug info');
+        $logDataAfter = $this->log->get($chronos->toDateString());
+
+        $this->assertNotEquals($logDataBefore, $logDataAfter);
+    }
+
     public function test_that_we_can_log_info_data()
     {
         $chronos =  new Chronos();
