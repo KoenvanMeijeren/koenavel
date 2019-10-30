@@ -100,7 +100,8 @@ final class Cookie
     /**
      * Get data from the cookie; unset it if specified.
      *
-     * @param string $key the key for searching to the corresponding cookie value
+     * @param string $key   the key for searching to the
+     *                      corresponding cookie value
      *
      * @return string
      *
@@ -109,13 +110,13 @@ final class Cookie
     public function get(string $key): string
     {
         $request = new Request();
-        $sanitize = new Sanitize($request->cookie($key));
 
-        if (empty($sanitize->data())) {
+        if (empty($request->cookie($key))) {
             return '';
         }
 
-        $data = new Encrypt((string)$sanitize->data());
+        $sanitize = new Sanitize($request->cookie($key));
+        $data = new Encrypt((string) $sanitize->data());
 
         return $data->decrypt();
     }
@@ -124,9 +125,8 @@ final class Cookie
      * Unset the cookie.
      *
      * @param string $key
-     * @param string $value
      */
-    public function unset(string $key, string $value): void
+    public function unset(string $key): void
     {
         if (!isset($_COOKIE[$key])) {
             return;
@@ -134,7 +134,7 @@ final class Cookie
 
         setcookie(
             $key,
-            $value,
+            '',
             time() - $this->expiringTime,
             $this->path,
             $this->domain,
