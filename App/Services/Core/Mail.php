@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Core;
 
+use App\Services\Config\Config;
 use App\Services\Validate\Validate;
 use Exception;
 
@@ -111,7 +112,9 @@ final class Mail
      */
     public function send(): void
     {
-        if (Env::PRODUCTION === Config::get('env')->toString()) {
+        $config = new Config();
+
+        if (Env::PRODUCTION === $config->get('env')->toString()) {
             mail($this->receivers, $this->subject, $this->body, $this->headers);
         }
     }
