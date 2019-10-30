@@ -8,10 +8,10 @@ use App\Services\Validate\Validate;
 /**
  * Load a file and return it.
  *
- * @param string  $filename the filename
- * @param mixed[] $vars     the vars to use in the loaded file file
+ * @param string    $filename the filename
+ * @param string[]  $vars     the vars to use in the loaded file file
  *
- * @return string
+ * @return mixed
  *
  * @throws FileNotExistingException
  */
