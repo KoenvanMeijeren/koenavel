@@ -57,13 +57,13 @@ class Loader
     protected function loadTranslations(): array
     {
         if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
-            return loadFile(
-                RESOURCES_PATH.'/language/dutch/dutch_translations.php'
-            );
+            $filename = '/language/dutch/dutch_translations.php';
+
+            return loadFile(RESOURCES_PATH . $filename);
         } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
-            return loadFile(
-                RESOURCES_PATH.'/language/english/english_translations.php'
-            );
+            $filename = '/language/english/english_translations.php';
+
+            return loadFile(RESOURCES_PATH . $filename);
         }
 
         throw new NoTranslationsForGivenLanguageID(
