@@ -7,17 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class URITest extends TestCase
 {
-    /**
-     * The uri class.
-     *
-     * @var URI
-     */
-    private $uri;
-
     public function setUp(): void
     {
-        $this->uri = new URI();
-
         $_SERVER['REQUEST_URI'] = '/home';
         $_SERVER['HTTP_REFERER'] = '/contact';
         $_SERVER['HTTP_HOST'] = 'localhost';
@@ -26,23 +17,47 @@ class URITest extends TestCase
 
     public function test_that_we_can_get_an_url()
     {
-        $this->assertEquals('home', $this->uri->getUrl());
+        $this->assertEquals('home', URI::getUrl());
     }
 
     public function test_that_we_can_get_a_http_referer()
     {
-        $this->assertEquals('contact', $this->uri->getPreviousUrl());
+        $this->assertEquals('contact', URI::getPreviousUrl());
     }
 
     public function test_that_we_can_get_a_http_host()
     {
         $this->assertEquals(
-            'localhost', $this->uri->getDomainExtension()
+            'localhost', URI::getDomainExtension()
         );
     }
 
     public function test_that_we_can_get_a_request_method()
     {
-        $this->assertEquals('GET', $this->uri->getMethod());
+        $this->assertEquals('GET', URI::getMethod());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function test_that_we_can_get_the_redirect_header()
+    {
+        URI::redirect('/test');
+
+        $this->assertContains(
+            'Location: /test', xdebug_get_headers()
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function test_that_we_can_get_the_refresh_header()
+    {
+        URI::refresh('/test', 3600);
+
+        $this->assertContains(
+            "Refresh: 3600; URL=/test", xdebug_get_headers()
+        );
     }
 }

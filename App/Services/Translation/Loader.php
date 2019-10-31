@@ -26,13 +26,11 @@ class Loader
      */
     protected function __construct()
     {
-        $uri = new URI();
-
-        if (strstr($uri->getDomainExtension(), 'localhost')
-            || strstr($uri->getDomainExtension(), 'nl')
+        if (strstr(URI::getDomainExtension(), 'localhost')
+            || strstr(URI::getDomainExtension(), 'nl')
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr($uri->getDomainExtension(), 'com')) {
+        } elseif (strstr(URI::getDomainExtension(), 'com')) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
         }
     }

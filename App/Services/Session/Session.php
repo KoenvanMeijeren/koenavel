@@ -121,14 +121,13 @@ final class Session
     private function logRequest(string $key, string $value): void
     {
         $log = new Log();
-        $uri = new URI();
 
         if ($key === 'error' || $key === 'success') {
             $log->addAppRequest(
                 $value,
                 $key === 'success' ? 'Successful' : 'Failed',
-                $uri->getUrl(),
-                $uri->getMethod()
+                URI::getUrl(),
+                URI::getMethod()
             );
         }
     }

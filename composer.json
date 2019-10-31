@@ -22,7 +22,8 @@
         "filp/whoops": "^2.5",
         "ext-intl": "*",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-xdebug": "*"
     },
     "require-dev": {
         "bmitch/churn-php": "^1.0",

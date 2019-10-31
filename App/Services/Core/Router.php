@@ -52,13 +52,13 @@ final class Router
      *
      * @throws FileNotExistingException
      */
-    public function load(
+    public static function load(
         string $file = 'web.php',
         string $directoryPath = ROUTES_PATH . '/'
     ): Router {
-        $this->resetRoutes();
-
+        self::resetRoutes();
         loadFile($directoryPath.$file);
+
         return new Router();
     }
 
@@ -247,7 +247,7 @@ final class Router
     /**
      * Reset all the current stored routes.
      */
-    private function resetRoutes(): void
+    private static function resetRoutes(): void
     {
         self::$routes = [
             'GET' => [],

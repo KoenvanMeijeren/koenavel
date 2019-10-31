@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Database;
 
 use App\Services\Config\Config;
-use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\File\FileNotExistingException;
 use PDO;
 use PDOStatement;
 
@@ -49,9 +47,6 @@ class DatabaseConnection
 
     /**
      * Construct the database connection.
-     *
-     * @throws InvalidKeyException
-     * @throws FileNotExistingException
      */
     protected function __construct()
     {

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\File\FileNotExistingException;
 use PDO;
 use PDOException;
 use stdClass;
@@ -19,8 +17,6 @@ class DatabaseProcessor extends DatabaseConnection
      * @param string[] $values The values to bind to the query.
      *
      * @throws PDOException
-     * @throws InvalidKeyException
-     * @throws FileNotExistingException
      */
     public function __construct(string $query, array $values)
     {

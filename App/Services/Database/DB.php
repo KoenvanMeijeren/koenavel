@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Database;
 
-use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\File\FileNotExistingException;
 use PDOException;
 
 final class DB
@@ -870,8 +868,7 @@ final class DB
      *
      * @return DatabaseProcessor
      *
-     * @throws InvalidKeyException
-     * @throws FileNotExistingException
+     * @throws PDOException
      */
     public static function query(
         string $query,
@@ -885,9 +882,7 @@ final class DB
      *
      * @return DatabaseProcessor
      *
-     * @throws InvalidKeyException
      * @throws PDOException
-     * @throws FileNotExistingException
      */
     public function execute(): DatabaseProcessor
     {
