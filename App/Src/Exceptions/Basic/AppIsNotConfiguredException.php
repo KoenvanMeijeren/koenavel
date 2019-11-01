@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class AppIsNotConfiguredException extends Exception
+final class AppIsNotConfiguredException extends Exception
 {
 }

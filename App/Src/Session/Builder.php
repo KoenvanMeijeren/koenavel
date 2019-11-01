@@ -9,7 +9,7 @@ use App\Src\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
 use Exception;
 
-class Builder
+final class Builder
 {
     /**
      * The session class
@@ -141,7 +141,7 @@ class Builder
     private function setExpiringSession(): void
     {
         $now = new Chronos();
-        if (empty($this->session->get('createdAt'))) {
+        if ($this->session->get('createdAt') === '') {
             $this->session->saveForced('createdAt', $now->toDateTimeString());
         }
 
@@ -161,7 +161,7 @@ class Builder
      */
     private function setCanarySession(): void
     {
-        if (empty($this->session->get('canary'))
+        if ($this->session->get('canary') === ''
             && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);

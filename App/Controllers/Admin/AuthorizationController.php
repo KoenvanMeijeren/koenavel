@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Src\Response\Redirect;
 use App\Src\View\View;
 
-class AuthorizationController
+final class AuthorizationController
 {
     /**
      * The user of the app.

@@ -68,7 +68,7 @@ final class Request
      */
     public function file(string $key): array
     {
-        return isset($_FILES[$key]) ? $_FILES[$key] : [];
+        return array_key_exists($key, $_FILES) ? $_FILES[$key] : [];
     }
 
     /**
@@ -121,12 +121,12 @@ final class Request
      */
     private function request(array $superGlobal, string $key): string
     {
-        if (!isset($superGlobal[$key])) {
+        if (!array_key_exists($key, $superGlobal)) {
             return '';
         }
 
         if (is_array($superGlobal[$key])) {
-            return (string) json_encode(
+            return json_encode(
                 $this->buildNewArray($superGlobal, $key),
                 JSON_THROW_ON_ERROR
             );

@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class EmptyVarException extends Exception
+final class EmptyVarException extends Exception
 {
 }

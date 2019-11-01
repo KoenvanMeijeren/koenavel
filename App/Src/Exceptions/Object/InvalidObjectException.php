@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Object;
 
 use Exception;
 
-class InvalidObjectException extends Exception
+final class InvalidObjectException extends Exception
 {
 }

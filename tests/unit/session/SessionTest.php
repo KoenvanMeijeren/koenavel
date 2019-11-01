@@ -16,6 +16,7 @@ class SessionTest extends TestCase
     public function setUp(): void
     {
         $this->session = new Session();
+        $_SESSION = [];
     }
 
     public function test_that_we_can_set_up_the_session()
@@ -29,16 +30,16 @@ class SessionTest extends TestCase
     public function test_that_we_can_get_data_from_the_session()
     {
         $this->session->save('test', 'test');
-        $this->session->save('error', 'test');
-        $this->session->save('success', 'test');
+        $this->session->save(\App\Src\State\State::FAILED, 'test');
+        $this->session->save(\App\Src\State\State::SUCCESSFUL, 'test');
 
         $this->assertEquals('test', $this->session->get('test'));
-        $this->assertEquals('test', $this->session->get('error'));
-        $this->assertEquals('test', $this->session->get('success'));
+        $this->assertEquals('test', $this->session->get(\App\Src\State\State::FAILED));
+        $this->assertEquals('test', $this->session->get(\App\Src\State\State::SUCCESSFUL));
 
         unset($_SESSION['test']);
-        unset($_SESSION['error']);
-        unset($_SESSION['success']);
+        unset($_SESSION[\App\Src\State\State::FAILED]);
+        unset($_SESSION[\App\Src\State\State::SUCCESSFUL]);
     }
 
     public function test_that_we_cannot_get_duplicated_data_from_the_session()

@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace App\Src\Config;
 
-use App\Src\Core\Env;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\File\FileNotFoundException;
+use App\Src\Type\TypeChanger;
 
-class Loader
+abstract class Loader
 {
     /**
      * The config file location of the app.
      *
      * @var string
      */
-    private $configLocation;
+    protected $configLocation;
 
     /**
      * Construct the config loader.
-     *
-     * @param string $env the env which will be used to determine
-     *                    which config items must be loaded
      */
-    protected function __construct(string $env)
-    {
-        $this->configLocation = CONFIG_PATH . '/production_config.php';
-        if (Env::DEVELOPMENT === $env) {
-            $this->configLocation = CONFIG_PATH . '/dev_config.php';
-        }
-    }
+    abstract public function __construct();
+
+    /**
+     * Get a config item.
+     *
+     * @param string $key the key to search for the corresponding value
+     *
+     * @return TypeChanger
+     * @throws InvalidKeyException
+     */
+    abstract public function get(string $key): TypeChanger;
 
     /**
      * Load the config items.
@@ -36,7 +38,7 @@ class Loader
      * @return string[]
      * @throws FileNotFoundException
      */
-    protected function loadConfig(): array
+    final protected function loadConfig(): array
     {
         return loadFile($this->configLocation);
     }

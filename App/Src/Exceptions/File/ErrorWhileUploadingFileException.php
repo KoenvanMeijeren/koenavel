@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\File;
 
 use Exception;
 
-class ErrorWhileUploadingFileException extends Exception
+final class ErrorWhileUploadingFileException extends Exception
 {
 }

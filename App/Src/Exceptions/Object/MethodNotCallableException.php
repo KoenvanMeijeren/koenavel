@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Object;
 
 use Exception;
 
-class MethodNotCallableException extends Exception
+final class MethodNotCallableException extends Exception
 {
 }

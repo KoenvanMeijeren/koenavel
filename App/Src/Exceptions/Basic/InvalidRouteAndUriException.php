@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class InvalidRouteAndUriException extends Exception
+final class InvalidRouteAndUriException extends Exception
 {
 }

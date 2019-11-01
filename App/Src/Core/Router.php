@@ -105,7 +105,7 @@ final class Router
      *
      * @return string
      */
-    public static function getWildcard()
+    public static function getWildcard(): string
     {
         return self::$wildcard;
     }
@@ -157,7 +157,7 @@ final class Router
     {
         $route = self::$availableRoutes[$url];
         $controller = new $route[0]();
-        $methodName = $route[1];
+        $methodName = (string) $route[1];
 
         Validate::var($controller)->isObject();
         Validate::var($controller)->methodExists($methodName);
@@ -175,12 +175,14 @@ final class Router
     {
         self::$availableRoutes = [];
 
-        for ($i = 0; $i <= $rights; ++$i) {
-            if (isset(self::$routes[$requestType][$i])) {
+        for ($maximumRights = 0; $maximumRights <= $rights; ++$maximumRights) {
+            if (array_key_exists($requestType, self::$routes)
+                && array_key_exists($maximumRights, self::$routes[$requestType])
+            ) {
                 // @codeCoverageIgnoreStart
                 self::$availableRoutes = array_merge(
                     self::$availableRoutes,
-                    self::$routes[$requestType][$i]
+                    self::$routes[$requestType][$maximumRights]
                 );
                 // @codeCoverageIgnoreEnd
             }
@@ -198,6 +200,7 @@ final class Router
         foreach (array_keys(self::$availableRoutes) as $route) {
             $routeExploded = explode('/', $route);
             $urlExploded = explode('/', $url);
+
             if (preg_match('/{[a-zA-Z]+}/', $route)) {
                 $this->updateRoute($routeExploded, $urlExploded, $route);
             }
@@ -225,8 +228,8 @@ final class Router
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
         foreach ($routeExploded as $key => $routePart) {
-            if (isset($urlExploded[$key]) &&
-                preg_match('/{[a-zA-Z]+}/', $routePart)
+            if (array_key_exists($key, $urlExploded)
+                && preg_match('/{[a-zA-Z]+}/', $routePart)
             ) {
                 $newRoute = preg_replace(
                     '/{[a-zA-Z]+}/',

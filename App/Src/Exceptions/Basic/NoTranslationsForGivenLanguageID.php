@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class NoTranslationsForGivenLanguageID extends Exception
+final class NoTranslationsForGivenLanguageID extends Exception
 {
 }

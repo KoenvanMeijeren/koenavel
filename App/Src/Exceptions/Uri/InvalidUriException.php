@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Uri;
 
 use Exception;
 
-class InvalidUriException extends Exception
+final class InvalidUriException extends Exception
 {
 }

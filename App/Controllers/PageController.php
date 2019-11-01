@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Src\Database\DB;
 use App\Src\Exceptions\File\FileNotFoundException;
 use App\Src\View\View;
 
-class PageController
+final class PageController
 {
     /**
      * Show the index page.
@@ -17,6 +18,10 @@ class PageController
      */
     public function index(): View
     {
+        dd(
+            DB::table('account')
+                ->select('*')->execute()->all()
+        );
         return new View('index');
     }
 

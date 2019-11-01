@@ -7,10 +7,15 @@ parameters:
         - "#function .* expects .*, .*|false given.#"
         # find out how i can avoid it to use this
         - "#In method .*, parameter .* can be type-hinted to .*.#"
+        - "#Constructor .* has parameter .* with default value.#"
+        - "#Class .* is not allowed to extend .*#"
+        - "#Foreach overwrites .* with its key variable.#"
+        - "#Variable method call on mixed.#"
 includes:
-    - vendor/localheinz/phpstan-rules/rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/localheinz/phpstan-rules/rules.neon
 services:
   -
     class: TheCodingMachine\PHPStan\Rules\Exceptions\ThrowMustBundlePreviousExceptionRule

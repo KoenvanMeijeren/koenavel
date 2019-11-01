@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class DuplicatedKeyException extends Exception
+final class DuplicatedKeyException extends Exception
 {
 }

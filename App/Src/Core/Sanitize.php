@@ -60,7 +60,7 @@ final class Sanitize
         string $encoding = 'UTF-8'
     ) {
         $this->data = $data;
-        $this->type = empty($type) ? gettype($data) : $type;
+        $this->type = $type === '' ? gettype($data) : $type;
         $this->flags = $flags;
         $this->encoding = $encoding;
     }
@@ -88,33 +88,20 @@ final class Sanitize
      */
     private function filterData($data)
     {
-        switch ($this->type) {
-            case self::TYPE_STRING:
-                $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
-                $data = trim($data);
-
-                break;
-            case self::TYPE_INT:
-                $data = (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
-
-                break;
-            case self::TYPE_DOUBLE:
-            case self::TYPE_FLOAT:
-                $data = (double) filter_var($data);
-
-                break;
-            case self::TYPE_URL:
-                $data = parse_url((string) $data, PHP_URL_PATH);
-                $data = trim((string) $data, '/');
-                $data = filter_var($data, FILTER_SANITIZE_URL);
-
-                break;
-            default:
-                $data = filter_var($data);
-
-                break;
+        if ($this->type === self::TYPE_STRING) {
+            $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
+            return trim($data);
+        } elseif ($this->type === self::TYPE_INT) {
+            return (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+        } elseif ($this->type === self::TYPE_DOUBLE
+            || $this->type === self::TYPE_FLOAT) {
+            return (double) filter_var($data);
+        } elseif ($this->type === self::TYPE_URL) {
+            $data = parse_url((string) $data, PHP_URL_PATH);
+            $data = trim((string) $data, '/');
+            return filter_var($data, FILTER_SANITIZE_URL);
         }
 
-        return $data;
+        return filter_var($data);
     }
 }

@@ -7,7 +7,7 @@ namespace App\Src\Log;
 use Throwable;
 use Whoops\Handler\Handler;
 
-class LoggerHandler extends Handler
+final class LoggerHandler extends Handler
 {
     public function handle()
     {
@@ -47,19 +47,19 @@ class LoggerHandler extends Handler
         $error = '';
 
         foreach ($exception->getTrace() as $singleTrace) {
-            if (isset($singleTrace['line'])) {
+            if (array_key_exists('line', $singleTrace)) {
                 $error .= " on line {$singleTrace['line']}";
             }
 
-            if (isset($singleTrace['file'])) {
+            if (array_key_exists('file', $singleTrace)) {
                 $error .= " in file {$singleTrace['file']}";
             }
 
-            if (isset($singleTrace['function'])) {
+            if (array_key_exists('function', $singleTrace)) {
                 $error .= " in function {$singleTrace['function']} ";
             }
 
-            if (isset($singleTrace['class'])) {
+            if (array_key_exists('class', $singleTrace)) {
                 $error .= " in class {$singleTrace['class']} ";
             }
 

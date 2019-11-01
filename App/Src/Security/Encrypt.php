@@ -10,7 +10,7 @@ use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Key;
 use Exception;
 
-class Encrypt
+final class Encrypt
 {
     /**
      * The data to be encrypted or decrypted.

@@ -6,7 +6,7 @@ namespace App\Src\Response;
 
 use App\Src\Core\URI;
 
-class Redirect
+final class Redirect
 {
     /**
      * The path to redirect to.

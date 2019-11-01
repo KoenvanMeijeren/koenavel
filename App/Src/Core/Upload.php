@@ -11,7 +11,7 @@ use App\Src\Translation\Translation;
 use Exception;
 use Sirius\Upload\Handler as UploadHandler;
 
-class Upload
+final class Upload
 {
     /**
      * The various allowed file options
@@ -180,7 +180,10 @@ class Upload
     {
         $randomBytes = bin2hex($this->file['name']);
         $randomBytes .= bin2hex(random_bytes(40));
-        $type = isset($this->file['type'], $this->file['name']) ? $this->file['type'] : '' ;
+
+        $type = array_key_exists('type', $this->file) &&
+            array_key_exists('name', $this->file) ?
+            $this->file['type'] : '';
 
         if (!key_exists($type, self::ALLOWED_FILE_TYPES)) {
             $this->session->flash(

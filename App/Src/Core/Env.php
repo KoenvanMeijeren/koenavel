@@ -55,7 +55,7 @@ final class Env
         $request = new Request();
 
         $host = $request->server(Request::HTTP_HOST);
-        $this->host = !empty($host) ? $host : 'localhost';
+        $this->host = $host !== '' ? $host : 'localhost';
         Validate::var($this->host)->isDomain();
 
         $this->setEnv();
@@ -87,7 +87,7 @@ final class Env
             'display_startup_errors',
             (self::DEVELOPMENT === $this->env ? '1' : '0')
         );
-        error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : (int)-1));
+        error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : -1));
 
         $this->initializeWhoops();
     }

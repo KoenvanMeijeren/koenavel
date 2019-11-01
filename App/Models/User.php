@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Src\Core\Router;
 use App\Src\Model\BaseModel;
 
-class User extends BaseModel
+final class User extends BaseModel
 {
     /**
      * Construct the model.

@@ -4,46 +4,44 @@ declare(strict_types=1);
 
 namespace App\Src\Translation;
 
-use App\Src\Core\URI;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Exceptions\File\FileNotFoundException;
 
-class Loader
+abstract class Loader
 {
     /**
      * The language options.
+     *
+     * @var int
      */
     const DUTCH_LANGUAGE_ID = 1;
     const ENGLISH_LANGUAGE_ID = 2;
 
     /**
      * The current application language id.
+     *
+     * @var int
      */
-    private $language = 0;
+    protected $language = 0;
 
     /**
      * Construct the language.
      */
-    protected function __construct()
-    {
-        if (strstr(URI::getDomainExtension(), 'localhost')
-            || strstr(URI::getDomainExtension(), 'nl')
-        ) {
-            $this->language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr(URI::getDomainExtension(), 'com')) {
-            $this->language = self::ENGLISH_LANGUAGE_ID;
-        }
-    }
+    abstract protected function __construct();
 
     /**
-     * Get the language id.
+     * Get a specific stored config item.
      *
-     * @return int
+     * @param string $key the key to search for the
+     *                    corresponding value in the translations
+     *
+     * @return string
+     * @throws FileNotFoundException
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
-    protected function getLanguageID(): int
-    {
-        return $this->language;
-    }
+    abstract public static function get(string $key): string;
 
     /**
      * Load the translations based on the language id.
@@ -52,13 +50,13 @@ class Loader
      * @throws NoTranslationsForGivenLanguageID
      * @throws FileNotFoundException
      */
-    protected function loadTranslations(): array
+    final protected function loadTranslations(): array
     {
-        if (self::DUTCH_LANGUAGE_ID === $this->getLanguageID()) {
+        if (self::DUTCH_LANGUAGE_ID === $this->language) {
             $filename = '/language/dutch/dutch_translations.php';
 
             return loadFile(RESOURCES_PATH . $filename);
-        } elseif (self::ENGLISH_LANGUAGE_ID === $this->getLanguageID()) {
+        } elseif (self::ENGLISH_LANGUAGE_ID === $this->language) {
             $filename = '/language/english/english_translations.php';
 
             return loadFile(RESOURCES_PATH . $filename);
@@ -66,7 +64,7 @@ class Loader
 
         throw new NoTranslationsForGivenLanguageID(
             'No translations where found for the given language id: '.
-            $this->getLanguageID()
+            $this->language
         );
     }
 }

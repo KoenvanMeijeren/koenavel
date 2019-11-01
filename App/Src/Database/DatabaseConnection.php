@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Src\Database;
 
 use App\Src\Config\Config;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 use PDO;
+use PDOException;
 use PDOStatement;
 
-class DatabaseConnection
+abstract class DatabaseConnection
 {
     /**
      * The PDO class.
@@ -47,8 +49,14 @@ class DatabaseConnection
 
     /**
      * Construct the database connection.
+     *
+     * @param string $query The query to execute on the database.
+     * @param string[] $values The values to bind to the query.
+     *
+     * @throws PDOException
+     * @throws InvalidKeyException
      */
-    protected function __construct()
+    final public function __construct(string $query, array $values)
     {
         $config = new Config();
 
@@ -62,5 +70,41 @@ class DatabaseConnection
             $config->get('databasePassword')->toString(),
             $config->get('databaseOptions')->toArray()
         );
+
+        $this->statement = $this->pdo->prepare($query);
+        $this->values = $values;
+
+        $this->bindValues($values);
+        $this->statement->execute();
+
+        $this->lastInsertedId = (int) $this->pdo->lastInsertId();
     }
+
+    /**
+     * Bind each value to the specified column in the query.
+     *
+     * @param string[] $values The values to bind to the query.
+     *
+     * @throws PDOException
+     * @codeCoverageIgnore
+     */
+    abstract protected function bindValues(array $values): void;
+
+    /**
+     * Fetch all records from the database with the given fetch method.
+     *
+     * @param int $fetchMethod The used method to fetch the database records.
+     *
+     * @return string[]|object[]
+     */
+    abstract public function fetchAll(int $fetchMethod): array;
+
+    /**
+     * Fetch one record from the database with the given fetch method.
+     *
+     * @param int $fetchMethod The used method to fetch the database record.
+     *
+     * @return string[]|object
+     */
+    abstract public function fetch(int $fetchMethod);
 }

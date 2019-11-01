@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Uri;
 
 use Exception;
 
-class InvalidEnvException extends Exception
+final class InvalidEnvException extends Exception
 {
 }

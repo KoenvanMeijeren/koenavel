@@ -71,17 +71,18 @@ final class Mail
     /**
      * Set the mail body.
      *
-     * @param string $subject  the subject of the mail
-     * @param string $htmlBody the html body of the mail
-     * @param mixed  $vars     the vars to use in the mail
+     * @param string    $subject  the subject of the mail
+     * @param string    $htmlBody the html body of the mail
+     * @param mixed[]   $vars     the vars to use in the mail
      *
      * @throws Exception
      */
-    public function setBody(string $subject, string $htmlBody, $vars = null): void
-    {
-        if (!empty($vars)) {
-            extract($vars);
-        }
+    public function setBody(
+        string $subject,
+        string $htmlBody,
+        array $vars = []
+    ): void {
+        extract($vars);
 
         $this->subject = $subject;
 
@@ -102,7 +103,7 @@ final class Mail
         $htmlBody = str_replace('{location}', $location ?? '', $htmlBody);
 
         // save the html body
-        $this->body = (string) $htmlBody;
+        $this->body = $htmlBody;
     }
 
     /**

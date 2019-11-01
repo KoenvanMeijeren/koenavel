@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\File;
 
 use Exception;
 
-class FileNotReadableException extends Exception
+final class FileNotReadableException extends Exception
 {
 }

@@ -6,7 +6,7 @@ namespace App\Src\Type;
 
 use App\Src\Core\Sanitize;
 
-class TypeChanger
+final class TypeChanger
 {
     /**
      * Change the type of the var.
@@ -32,10 +32,10 @@ class TypeChanger
     {
         if (is_scalar($this->var)) {
             $sanitize = new Sanitize($this->var);
-            return (string)$sanitize->data();
+            return (string) $sanitize->data();
         }
 
-        return (string)'';
+        return '';
     }
 
     /**
@@ -76,7 +76,7 @@ class TypeChanger
     public function toArray(): array
     {
         if (is_array($this->var)) {
-            return (array)$this->var;
+            return $this->var;
         }
 
         if (is_string($this->var)) {
@@ -86,6 +86,7 @@ class TypeChanger
                 512,
                 JSON_THROW_ON_ERROR
             );
+
             if (is_array($possibleArray)) {
                 return $possibleArray;
             }
@@ -101,7 +102,7 @@ class TypeChanger
      */
     public function toJson(): string
     {
-        return (string)json_encode($this->var, JSON_THROW_ON_ERROR);
+        return json_encode($this->var, JSON_THROW_ON_ERROR);
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Translation;
 
+use App\Src\Core\URI;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Exceptions\File\FileNotFoundException;
@@ -15,7 +16,7 @@ final class Translation extends Loader
      *
      * @var array
      */
-    private static $translation = [];
+    private static $translations = [];
 
     /**
      * Construct the translations.
@@ -23,11 +24,17 @@ final class Translation extends Loader
      * @throws FileNotFoundException
      * @throws NoTranslationsForGivenLanguageID
      */
-    private function __construct()
+    protected function __construct()
     {
-        parent::__construct();
+        if (strstr(URI::getDomainExtension(), 'localhost')
+            || strstr(URI::getDomainExtension(), 'nl')
+        ) {
+            $this->language = self::DUTCH_LANGUAGE_ID;
+        } elseif (strstr(URI::getDomainExtension(), 'com')) {
+            $this->language = self::ENGLISH_LANGUAGE_ID;
+        }
 
-        self::$translation = $this->loadTranslations();
+        self::$translations = $this->loadTranslations();
     }
 
     /**
@@ -45,12 +52,12 @@ final class Translation extends Loader
     {
         new self();
 
-        if (!isset(self::$translation[$key])) {
-            throw new InvalidKeyException(
-                "No translation was found with key: {$key}"
-            );
+        if (array_key_exists($key, self::$translations)) {
+            return self::$translations[$key];
         }
 
-        return self::$translation[$key];
+        throw new InvalidKeyException(
+            "No translation was found with key: {$key}"
+        );
     }
 }

@@ -9,6 +9,7 @@ use App\Src\Core\Sanitize;
 use App\Src\Core\URI;
 use App\Src\Log\Log;
 use App\Src\Security\Encrypt;
+use App\Src\State\State;
 use Exception;
 
 final class Session
@@ -23,7 +24,7 @@ final class Session
      */
     public function save(string $key, string $value): void
     {
-        if (isset($_SESSION[$key])) {
+        if (array_key_exists($key, $_SESSION)) {
             return;
         }
 
@@ -76,12 +77,13 @@ final class Session
     {
         $request = new Request();
         $sanitize = new Sanitize($request->session($key));
+        $data = (string) $sanitize->data();
 
-        if (empty($sanitize->data())) {
+        if ($data === '') {
             return '';
         }
 
-        $data = new Encrypt((string)$sanitize->data());
+        $data = new Encrypt($data);
         $value = $data->decrypt();
 
         if ($unset) {
@@ -103,7 +105,7 @@ final class Session
      */
     public function unset(string $key): bool
     {
-        if (isset($_SESSION[$key])) {
+        if (array_key_exists($key, $_SESSION)) {
             unset($_SESSION[$key]);
         }
 
@@ -120,10 +122,11 @@ final class Session
      */
     private function logRequest(string $key, string $value): void
     {
-        if ($key === 'error' || $key === 'success') {
+        if ($key === State::FAILED || $key === State::SUCCESSFUL) {
             Log::appRequest(
                 $value,
-                $key === 'success' ? 'Successful' : 'Failed',
+                $key === State::SUCCESSFUL ?
+                    State::SUCCESSFUL : State::FAILED,
                 URI::getUrl(),
                 URI::getMethod()
             );

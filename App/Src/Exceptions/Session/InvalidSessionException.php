@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Session;
 
 use Exception;
 
-class InvalidSessionException extends Exception
+final class InvalidSessionException extends Exception
 {
 }

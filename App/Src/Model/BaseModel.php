@@ -61,7 +61,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    public function get(): stdClass
+    final public function get(): stdClass
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -77,7 +77,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    public function getBy(): stdClass
+    final public function getBy(): stdClass
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -96,7 +96,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    public function getAll(): array
+    final public function getAll(): array
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -111,7 +111,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    public function getAllBy(): array
+    final public function getAllBy(): array
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -130,7 +130,7 @@ abstract class BaseModel
      *
      * @param string[] ...$columns the columns to be selected.
      */
-    protected function setColumns(...$columns): void
+    final protected function setColumns(...$columns): void
     {
         $this->columns = implode(', ', $columns);
     }
@@ -142,7 +142,7 @@ abstract class BaseModel
      * @param string $operator  the column to be filtered
      * @param string $value     the value of the filter
      */
-    protected function setFilters(
+    final protected function setFilters(
         string $column,
         string $operator,
         string $value

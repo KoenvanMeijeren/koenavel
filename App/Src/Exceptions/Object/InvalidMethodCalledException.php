@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Object;
 
 use Exception;
 
-class InvalidMethodCalledException extends Exception
+final class InvalidMethodCalledException extends Exception
 {
 }

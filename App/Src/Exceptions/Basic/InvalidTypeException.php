@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class InvalidTypeException extends Exception
+final class InvalidTypeException extends Exception
 {
 }

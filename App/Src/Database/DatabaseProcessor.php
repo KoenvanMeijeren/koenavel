@@ -8,29 +8,8 @@ use PDO;
 use PDOException;
 use stdClass;
 
-class DatabaseProcessor extends DatabaseConnection
+final class DatabaseProcessor extends DatabaseConnection
 {
-    /**
-     * Construct the data processor.
-     *
-     * @param string $query The query to execute on the database.
-     * @param string[] $values The values to bind to the query.
-     *
-     * @throws PDOException
-     */
-    public function __construct(string $query, array $values)
-    {
-        parent::__construct();
-
-        $this->statement = $this->pdo->prepare($query);
-        $this->values = $values;
-
-        $this->bindValues($values);
-        $this->statement->execute();
-
-        $this->lastInsertedId = (int) $this->pdo->lastInsertId();
-    }
-
     /**
      * Bind each value to the specified column in the query.
      *
@@ -39,7 +18,7 @@ class DatabaseProcessor extends DatabaseConnection
      * @throws PDOException
      * @codeCoverageIgnore
      */
-    private function bindValues(array $values): void
+    protected function bindValues(array $values): void
     {
         foreach ($values as $column => $value) {
             $this->statement->bindValue(
@@ -49,7 +28,6 @@ class DatabaseProcessor extends DatabaseConnection
             );
         }
     }
-
 
     /**
      * Fetch all records from the database with the given fetch method.
@@ -62,7 +40,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll($fetchMethod);
 
-        return !empty($result) ? $result : [];
+        return (array) $result;
     }
 
     /**
@@ -86,7 +64,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll(PDO::FETCH_OBJ);
 
-        return !empty($result) ? $result : [];
+        return (array) $result;
     }
 
     /**
@@ -98,7 +76,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetchAll(PDO::FETCH_NAMED);
 
-        return !empty($result) ? $result : [];
+        return (array) $result;
     }
 
     /**
@@ -110,7 +88,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetch(PDO::FETCH_OBJ);
 
-        return !empty($result) ? $result : new stdClass();
+        return $result !== false ? $result : new stdClass();
     }
 
     /**
@@ -122,7 +100,7 @@ class DatabaseProcessor extends DatabaseConnection
     {
         $result = $this->statement->fetch(PDO::FETCH_NAMED);
 
-        return !empty($result) ? $result : [];
+        return (array) $result;
     }
 
     /**

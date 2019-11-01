@@ -8,7 +8,7 @@ use App\Src\Core\Env;
 use Exception;
 use Whoops\Handler\Handler;
 
-class ProductionErrorView extends Handler
+final class ProductionErrorView extends Handler
 {
     /**
      * Show the error page when the app is in production mode

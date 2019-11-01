@@ -7,6 +7,7 @@ namespace App\Src\Core;
 use App\Contract\Src\Core\AppContract;
 use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
+use App\Src\State\State;
 use Exception;
 
 final class App implements AppContract
@@ -56,7 +57,7 @@ final class App implements AppContract
 
         Log::appRequest(
             '',
-            'successful',
+            State::SUCCESSFUL,
             URI::getUrl(),
             URI::getMethod()
         );

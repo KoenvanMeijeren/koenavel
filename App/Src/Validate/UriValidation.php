@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Src\Validate;
 
@@ -37,7 +38,11 @@ trait UriValidation
     {
         if (!strstr(self::$var, 'localhost')
             && !strstr(self::$var, '127.0.0.1')
-            && !preg_match('^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.){1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^', self::$var)
+            && !preg_match(
+                '^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.)'.
+                '{1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^',
+                (string) self::$var
+            )
         ) {
             throw new InvalidDomainException('Invalid domain given.');
         }

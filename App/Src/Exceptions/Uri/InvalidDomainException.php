@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Uri;
 
 use Exception;
 
-class InvalidDomainException extends Exception
+final class InvalidDomainException extends Exception
 {
 }

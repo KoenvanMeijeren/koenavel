@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\Core;
 
 use App\Src\Security\Encrypt;
-use App\Src\Validate\Validate;
 use Exception;
 
 final class Cookie
@@ -78,8 +77,7 @@ final class Cookie
      */
     public function save(string $key, string $value): void
     {
-        Validate::var($value)->isString()->isNotEmpty();
-        if (isset($_COOKIE[$key])) {
+        if (array_key_exists($key, $_COOKIE)) {
             return;
         }
 
@@ -111,7 +109,7 @@ final class Cookie
     {
         $request = new Request();
 
-        if (empty($request->cookie($key))) {
+        if ($request->cookie($key) === '') {
             return '';
         }
 
@@ -128,7 +126,7 @@ final class Cookie
      */
     public function unset(string $key): void
     {
-        if (!isset($_COOKIE[$key])) {
+        if (!array_key_exists($key, $_COOKIE)) {
             return;
         }
 

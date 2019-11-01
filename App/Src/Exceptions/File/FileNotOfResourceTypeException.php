@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\File;
 
 use Exception;
 
-class FileNotOfResourceTypeException extends Exception
+final class FileNotOfResourceTypeException extends Exception
 {
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
-class URI
+final class URI
 {
     /**
      * Get the url.

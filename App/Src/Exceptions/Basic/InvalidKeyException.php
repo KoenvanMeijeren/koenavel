@@ -6,6 +6,6 @@ namespace App\Src\Exceptions\Basic;
 
 use Exception;
 
-class InvalidKeyException extends Exception
+final class InvalidKeyException extends Exception
 {
 }
