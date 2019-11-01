@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\Session;
 
 use App\Src\Exceptions\Session\InvalidSessionException;
-use App\Src\Log\Log;
 use App\Src\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
 use Exception;
@@ -25,13 +24,6 @@ class Builder
      * @var SessionSecurity
      */
     private $security;
-
-    /**
-     * The log class
-     *
-     * @var Log
-     */
-    private $logger;
 
     /**
      * The name of the session.
@@ -104,7 +96,6 @@ class Builder
 
         $this->session = new Session();
         $this->security = new SessionSecurity();
-        $this->logger = new Log();
     }
 
     /**
@@ -126,8 +117,6 @@ class Builder
             );
 
             session_start();
-
-            $this->logger->addDebug('Session has been started');
         }
     }
 
@@ -161,8 +150,6 @@ class Builder
         $expired = $expired->addSeconds($this->expiringTime);
 
         if ($expired->lte($now) && !headers_sent()) {
-            $this->logger->addDebug('Session has been expired.');
-
             $this->destroy();
         }
     }
@@ -179,8 +166,6 @@ class Builder
         ) {
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
-
-            $this->logger->addDebug('Session id has been regenerated');
         }
 
         if ((int) $this->session->get('canary') < time() - 300
@@ -188,8 +173,6 @@ class Builder
         ) {
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string) time());
-
-            $this->logger->addDebug('Session id has been regenerated');
         }
     }
 
@@ -206,8 +189,6 @@ class Builder
                 "Cannot destroy the session if the session does not exists"
             );
         }
-
-        $this->logger->addDebug('The session has been destroyed.');
 
         $params = session_get_cookie_params();
         setcookie(

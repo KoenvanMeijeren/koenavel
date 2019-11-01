@@ -23,6 +23,13 @@ final class Env
     const PRODUCTION = 'production';
 
     /**
+     * The default error page.
+     *
+     * @var string
+     */
+    const ERROR_PAGE = 'http/500-error';
+
+    /**
      * The host of the app.
      *
      * @var string
@@ -99,6 +106,8 @@ final class Env
         ) {
             $this->env = self::DEVELOPMENT;
         }
+
+        $this->env = self::PRODUCTION;
 
         Validate::var($this->env)->isEnv();
     }
