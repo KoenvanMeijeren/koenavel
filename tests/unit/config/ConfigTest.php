@@ -2,13 +2,13 @@
 declare(strict_types=1);
 
 
-use App\Services\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     public function test_that_we_can_get_an_item()
     {
-        $config = new App\Services\Config\Config();
+        $config = new App\Src\Config\Config();
 
         $this->assertNotEmpty($config->get('appName')->toString());
         $this->assertIsString($config->get('appName')->toString());
@@ -18,7 +18,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(InvalidKeyException::class);
 
-        $config = new App\Services\Config\Config();
+        $config = new App\Src\Config\Config();
 
         $config->get('non_existing_item');
     }

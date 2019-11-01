@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\Core\Env;
+use App\Src\Core\Env;
 use PHPUnit\Framework\TestCase;
 
 class EnvTest extends TestCase

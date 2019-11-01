@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 
 use App\Controllers\PageController;
-use App\Services\Core\Router;
+use App\Src\Core\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

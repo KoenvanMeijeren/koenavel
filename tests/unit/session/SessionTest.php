@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 
-use App\Services\Session\Session;
+use App\Src\Session\Session;
 use PHPUnit\Framework\TestCase;
 
 class SessionTest extends TestCase

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\services\Core\Router;
+use App\Src\Core\Router;
 
 require_once __DIR__ . '/TestController.php';
 

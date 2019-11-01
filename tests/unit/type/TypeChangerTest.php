@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\Type\TypeChanger;
+use App\Src\Type\TypeChanger;
 use PHPUnit\Framework\TestCase;
 
 class TypeChangerTest extends TestCase

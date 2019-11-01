@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\Core\URI;
+use App\Src\Core\URI;
 use PHPUnit\Framework\TestCase;
 
 class URITest extends TestCase

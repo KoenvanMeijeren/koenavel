@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\validate\Validate;
+use App\Src\validate\Validate;
 use PHPUnit\Framework\TestCase;
 
 class ValidateTest extends TestCase

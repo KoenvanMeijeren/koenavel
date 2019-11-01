@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 
-use App\Services\View\ProductionErrorView;
-use App\Services\View\View;
+use App\Src\View\ProductionErrorView;
+use App\Src\View\View;
 use PHPUnit\Framework\TestCase;
 
 class ViewTest extends TestCase

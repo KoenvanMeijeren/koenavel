@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\Log\Log;
+use App\Src\Log\Log;
 use Cake\Chronos\Chronos;
 use PHPUnit\Framework\TestCase;
 

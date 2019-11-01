@@ -6,7 +6,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 {
     public function test_that_we_can_get_one_result()
     {
-        $result = \App\Services\Database\DB::table('account')
+        $result = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
             ->firstToArray();
@@ -16,7 +16,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_get_multiple_result()
     {
-        $result = \App\Services\Database\DB::table('account')
+        $result = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
             ->toArray();
@@ -32,7 +32,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_get_a_result_from_a_self_written_query()
     {
-        $result = \App\Services\Database\DB::query(
+        $result = \App\Src\Database\DB::query(
             'SELECT * FROM account'
         )->all();
 
@@ -42,7 +42,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_get_a_result_from_a_select_query()
     {
-        $resultA = \App\Services\Database\DB::table('account')
+        $resultA = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
             ->first();
@@ -51,7 +51,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($resultA);
         $this->assertObjectHasAttribute('account_ID', $resultA);
 
-        $resultB = \App\Services\Database\DB::table('account')
+        $resultB = \App\Src\Database\DB::table('account')
             ->select('account_ID', 'account_name')
             ->execute()
             ->first();
@@ -67,7 +67,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_fetch_a_result_in_your_own_way()
     {
-        $result = \App\Services\Database\DB::table('account')
+        $result = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
             ->fetch(PDO::FETCH_NAMED);
@@ -79,7 +79,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_fetch_all_a_result_in_your_own_way()
     {
-        $result = \App\Services\Database\DB::table('account')
+        $result = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
             ->fetchAll(PDO::FETCH_NAMED);
@@ -91,7 +91,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
 
     public function test_that_we_can_get_the_last_inserted_id()
     {
-        $processor = new \App\Services\Database\DatabaseProcessor(
+        $processor = new \App\Src\Database\DatabaseProcessor(
             'SELECT * FROM account', []
         );
         $id = $processor->getLastInsertedId();

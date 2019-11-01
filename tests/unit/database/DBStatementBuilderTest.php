@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\Services\Database\DB;
+use App\Src\Database\DB;
 
 class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
 {

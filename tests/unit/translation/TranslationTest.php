@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 
-use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Services\Translation\Translation;
+use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\Src\Translation\Translation;
 use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase
