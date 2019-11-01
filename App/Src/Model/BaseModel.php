@@ -82,7 +82,8 @@ abstract class BaseModel
         $data = DB::table($this->table)
             ->select($this->columns)
             ->addStatementWithValues(
-                $this->convertFiltersToStatement(), $this->filterValues
+                $this->convertFiltersToStatement(),
+                $this->filterValues
             )
             ->execute()
             ->first();
@@ -115,7 +116,8 @@ abstract class BaseModel
         $data = DB::table($this->table)
             ->select($this->columns)
             ->addStatementWithValues(
-                $this->convertFiltersToStatement(), $this->filterValues
+                $this->convertFiltersToStatement(),
+                $this->filterValues
             )
             ->execute()
             ->all();

@@ -16,10 +16,6 @@ use App\Src\Core\Router;
 // Pages.
 Router::get('', PageController::class,
     'index', 0);
-Router::get('account', PageController::class,
-    'all', 0);
-Router::get('account/{slug}', PageController::class,
-    'show', 0);
 
 // Page not found.
 Router::get('fourNullFour', PageController::class,

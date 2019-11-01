@@ -28,6 +28,6 @@ class PageController
      */
     public function notFound(): View
     {
-        return new View('404');
+        return new View('http/404');
     }
 }

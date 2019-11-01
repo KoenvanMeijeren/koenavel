@@ -21,6 +21,6 @@ class User extends BaseModel
         $this->id = Router::getWildcard();
 
         $this->setFilters('account_education', '=', 'ICT');
-        $this->setFilters('account_rights','=', '1');
+        $this->setFilters('account_rights', '=', '1');
     }
 }

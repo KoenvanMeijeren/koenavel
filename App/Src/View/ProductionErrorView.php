@@ -18,7 +18,7 @@ class ProductionErrorView extends Handler
      *
      * @throws Exception
      */
-    public function handle(string $viewName = '500-error'): int
+    public function handle(string $viewName = 'http/500-error'): int
     {
         new View($viewName);
 
