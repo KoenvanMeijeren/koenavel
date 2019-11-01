@@ -24,13 +24,6 @@ class Upload
     ];
 
     /**
-     * The logger.
-     *
-     * @var Log
-     */
-    private $log;
-
-    /**
      * The session.
      *
      * @var Session
@@ -79,7 +72,6 @@ class Upload
         string $path = STORAGE_PATH . '/media/',
         string $stripedPath = '/storage/media/'
     ) {
-        $this->log = new Log();
         $this->session = new Session();
 
         $this->file = $file;
@@ -151,7 +143,7 @@ class Upload
             } catch (Exception $exception) {
                 $result->clear();
 
-                $this->log->addError($exception->getMessage());
+                Log::error($exception->getMessage());
                 throw new ErrorWhileUploadingFileException(
                     'There was an error while uploading the file',
                     114,

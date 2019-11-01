@@ -177,10 +177,12 @@ final class Router
 
         for ($i = 0; $i <= $rights; ++$i) {
             if (isset(self::$routes[$requestType][$i])) {
+                // @codeCoverageIgnoreStart
                 self::$availableRoutes = array_merge(
                     self::$availableRoutes,
                     self::$routes[$requestType][$i]
                 );
+                // @codeCoverageIgnoreEnd
             }
         }
     }
@@ -232,10 +234,12 @@ final class Router
                     $route
                 );
                 self::$wildcard = $urlExploded[$key];
+                // @codeCoverageIgnoreStart
                 self::$availableRoutes = array_replace_keys(
                     self::$availableRoutes,
                     [$route => $newRoute]
                 );
+                // @codeCoverageIgnoreEnd
 
                 break;
             }

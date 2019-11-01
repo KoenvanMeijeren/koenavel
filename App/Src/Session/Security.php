@@ -18,13 +18,6 @@ final class Security
     private $request;
 
     /**
-     * The logger
-     *
-     * @var Log
-     */
-    private $log;
-
-    /**
      * The session class
      *
      * @var Session
@@ -39,7 +32,6 @@ final class Security
     public function __construct()
     {
         $this->request = new Request();
-        $this->log = new Log();
         $this->session = new Session();
     }
 
@@ -54,7 +46,7 @@ final class Security
 
         $this->session->saveForced('user_agent', $userAgent);
         if ($this->session->get('user_agent') !== $userAgent) {
-            $this->log->addInfo(
+            Log::warning(
                 'Session hijacking attack has been declined'
             );
 
@@ -76,7 +68,7 @@ final class Security
 
         $this->session->saveForced('user_remote_ip', $userIP);
         if ($this->session->get('user_remote_ip') !== $userIP) {
-            $this->log->addInfo(
+            log::warning(
                 'Session hijacking attack has been declined'
             );
 

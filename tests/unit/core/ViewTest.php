@@ -32,16 +32,8 @@ class ViewTest extends TestCase
         ob_start();
 
         $test = new ProductionErrorView();
-        $this->assertIsInt($test->handle('500-error'));
+        $this->assertIsInt($test->handle());
 
         ob_end_clean();
-    }
-
-    public function test_that_we_cannot_load_a_production_error_view()
-    {
-        $this->expectException(Exception::class);
-
-        $test = new ProductionErrorView();
-        $test->handle('non_existing_view');
     }
 }

@@ -120,10 +120,8 @@ final class Session
      */
     private function logRequest(string $key, string $value): void
     {
-        $log = new Log();
-
         if ($key === 'error' || $key === 'success') {
-            $log->addAppRequest(
+            Log::appRequest(
                 $value,
                 $key === 'success' ? 'Successful' : 'Failed',
                 URI::getUrl(),

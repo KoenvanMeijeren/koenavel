@@ -8,25 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class LogTest extends TestCase
 {
-    /**
-     * The logger
-     *
-     * @var Log
-     */
-    private $log;
-
-    public function setUp(): void
-    {
-        $this->log = new Log();
-    }
-
     public function test_that_we_can_log_debug_data()
     {
         $chronos =  new Chronos();
 
-        $logDataBefore = $this->log->get($chronos->toDateString());
-        $this->log->addDebug('Test that we can debug info');
-        $logDataAfter = $this->log->get($chronos->toDateString());
+        $logDataBefore = Log::get($chronos->toDateString());
+        Log::debug('Test that we can debug info');
+        $logDataAfter = Log::get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
     }
@@ -35,9 +23,20 @@ class LogTest extends TestCase
     {
         $chronos =  new Chronos();
 
-        $logDataBefore = $this->log->get($chronos->toDateString());
-        $this->log->addInfo('Test that we can log info');
-        $logDataAfter = $this->log->get($chronos->toDateString());
+        $logDataBefore = Log::get($chronos->toDateString());
+        Log::info('Test that we can log info');
+        $logDataAfter = Log::get($chronos->toDateString());
+
+        $this->assertNotEquals($logDataBefore, $logDataAfter);
+    }
+
+    public function test_that_we_can_log_warning_data()
+    {
+        $chronos =  new Chronos();
+
+        $logDataBefore = Log::get($chronos->toDateString());
+        Log::warning('Test that we can log info');
+        $logDataAfter = Log::get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
     }
@@ -46,9 +45,9 @@ class LogTest extends TestCase
     {
         $chronos =  new Chronos();
 
-        $logDataBefore = $this->log->get($chronos->toDateString());
-        $this->log->addError('Test that we can log error info');
-        $logDataAfter = $this->log->get($chronos->toDateString());
+        $logDataBefore = Log::get($chronos->toDateString());
+        Log::error('Test that we can log error info');
+        $logDataAfter = Log::get($chronos->toDateString());
 
         $this->assertNotEquals($logDataBefore, $logDataAfter);
     }
@@ -57,6 +56,6 @@ class LogTest extends TestCase
     {
         $chronos =  new Chronos();
 
-        $this->assertIsString($this->log->get($chronos->toDateString()));
+        $this->assertIsString(Log::get($chronos->toDateString()));
     }
 }

@@ -612,4 +612,54 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
                 ->getQuery()
         );
     }
+
+    public function test_that_we_can_add_a_self_written_statement_with_values()
+    {
+        $this->assertEquals(
+            'SELECT * FROM test WHERE test = :test',
+            DB::table('test')
+                ->select('*')
+                ->addStatementWithValues(
+                    'WHERE test = :test', ['test' => 1]
+                )
+                ->getQuery()
+        );
+
+        $values = DB::table('test')
+            ->select('*')
+            ->addStatementWithValues(
+                'WHERE test = :test', ['test' => 1]
+            )
+            ->getValues();
+
+        $this->assertArrayHasKey('test', $values);
+        $this->assertContains(1, $values);
+    }
+
+    public function test_that_we_can_add_a_self_written_statement_with_values_when_the_statement_already_contains_a_where_statement()
+    {
+        $this->assertEquals(
+            'SELECT * FROM test WHERE city = :city AND test = :test',
+            DB::table('test')
+                ->select('*')
+                ->where('city', '=', '2')
+                ->addStatementWithValues(
+                    'WHERE test = :test', ['test' => 1]
+                )
+                ->getQuery()
+        );
+
+        $values = DB::table('test')
+            ->select('*')
+            ->where('city', '=', '2')
+            ->addStatementWithValues(
+                'WHERE test = :test', ['test' => 1]
+            )
+            ->getValues();
+
+        $this->assertArrayHasKey('test', $values);
+        $this->assertArrayHasKey('city', $values);
+        $this->assertContains(1, $values);
+        $this->assertContains(2, $values);
+    }
 }

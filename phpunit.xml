@@ -23,17 +23,17 @@
                 <directory suffix=".php">App/Functions</directory>
                 <directory suffix=".php">App/Controllers</directory>
 
-                <file>App/Services/Core/App.php</file>
-                <file>App/Services/Core/Upload.php</file>
-                <file>App/Services/Core/Mail.php</file>
+                <file>App/Src/Core/App.php</file>
+                <file>App/Src/Core/Upload.php</file>
+                <file>App/Src/Core/Mail.php</file>
 
-                <file>App/Services/Log/LoggerHandler.php</file>
+                <file>App/Src/Log/LoggerHandler.php</file>
 
-                <file>App/Services/Security/CSRF.php</file>
-                <file>App/Services/Security/Recaptcha.php</file>
+                <file>App/Src/Security/CSRF.php</file>
+                <file>App/Src/Security/Recaptcha.php</file>
 
-                <file>App/Services/Session/Builder.php</file>
-                <file>App/Services/Session/Security.php</file>
+                <file>App/Src/Session/Builder.php</file>
+                <file>App/Src/Session/Security.php</file>
             </exclude>
         </whitelist>
     </filter>

@@ -51,12 +51,10 @@ final class App implements AppContract
      */
     public function run(): void
     {
-        $logger = new Log();
-
         Router::load($this->routesLocation)
             ->direct(URI::getUrl(), URI::getMethod(), 0);
 
-        $logger->addAppRequest(
+        Log::appRequest(
             '',
             'successful',
             URI::getUrl(),

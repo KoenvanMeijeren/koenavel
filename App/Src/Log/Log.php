@@ -22,14 +22,14 @@ final class Log
      *
      * @var Logger
      */
-    private $logger;
+    private static $logger;
 
     /**
      * Construct the logger.
      *
      * @throws Exception
      */
-    public function __construct()
+    private function __construct()
     {
         $config = new Config();
         $env = new Env();
@@ -38,11 +38,11 @@ final class Log
         $timeFormat = "Y-m-d H:i:s";
         $dateTimeZone = new \DateTimeZone('Europe/Amsterdam');
 
-        $this->logger = new Logger($config->get('appName')->toString());
-        $this->logger->setTimezone($dateTimeZone);
+        self::$logger = new Logger($config->get('appName')->toString());
+        self::$logger->setTimezone($dateTimeZone);
 
-        $this->logger->pushProcessor(new IntrospectionProcessor());
-        $this->logger->pushProcessor(new ProcessIdProcessor());
+        self::$logger->pushProcessor(new IntrospectionProcessor());
+        self::$logger->pushProcessor(new ProcessIdProcessor());
 
         $formatter = new LineFormatter($format, $timeFormat);
         $formatter->ignoreEmptyContextAndExtra();
@@ -56,9 +56,9 @@ final class Log
         );
         $defaultHandler->setFormatter($formatter);
 
-        $this->logger->pushHandler($defaultHandler);
-        $this->logger->pushHandler(new FirePHPHandler());
-        $this->logger->pushProcessor(new WebProcessor());
+        self::$logger->pushHandler($defaultHandler);
+        self::$logger->pushHandler(new FirePHPHandler());
+        self::$logger->pushProcessor(new WebProcessor());
     }
 
     /**
@@ -70,8 +70,10 @@ final class Log
      *
      * @throws Exception
      */
-    public function get(string $date): string
+    public static function get(string $date): string
     {
+        new self();
+
         return (string) file_get_contents(
             START_PATH . '/storage/logs/app-' .
             $date . '.log'
@@ -86,9 +88,11 @@ final class Log
      *
      * @throws Exception
      */
-    public function addDebug(string $message, array $context = []): void
+    public static function debug(string $message, array $context = []): void
     {
-        $this->logger->debug($message, $context);
+        new self();
+
+        self::$logger->debug($message, $context);
     }
 
     /**
@@ -99,9 +103,26 @@ final class Log
      *
      * @throws Exception
      */
-    public function addInfo(string $message, array $context = []): void
+    public static function info(string $message, array $context = []): void
     {
-        $this->logger->info($message, $context);
+        new self();
+
+        self::$logger->info($message, $context);
+    }
+
+    /**
+     * Log warning info.
+     *
+     * @param string  $message the log message
+     * @param mixed[] $context the log context
+     *
+     * @throws Exception
+     */
+    public static function warning(string $message, array $context = []): void
+    {
+        new self();
+
+        self::$logger->warning($message, $context);
     }
 
     /**
@@ -112,9 +133,11 @@ final class Log
      *
      * @throws Exception
      */
-    public function addError(string $message, array $context = []): void
+    public static function error(string $message, array $context = []): void
     {
-        $this->logger->error($message, $context);
+        new self();
+
+        self::$logger->error($message, $context);
     }
 
     /**
@@ -127,14 +150,16 @@ final class Log
      *
      * @throws Exception
      */
-    public function addAppRequest(
+    public static function appRequest(
         string $value,
         string $state,
         string $url,
         string $method
     ): void {
+        new self();
+
         $message = "{$method} request for page {$url} with message {$value}";
 
-        $this->addInfo($state . " " . $message);
+        self::info($state . " " . $message);
     }
 }

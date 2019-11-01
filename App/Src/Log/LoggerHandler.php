@@ -11,8 +11,7 @@ class LoggerHandler extends Handler
 {
     public function handle()
     {
-        $logger = new Log();
-        $logger->addError($this->buildStringException($this->getException()));
+        Log::error($this->buildStringException($this->getException()));
 
         return Handler::DONE;
     }

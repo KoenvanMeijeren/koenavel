@@ -107,8 +107,6 @@ final class Env
             $this->env = self::DEVELOPMENT;
         }
 
-        $this->env = self::PRODUCTION;
-
         Validate::var($this->env)->isEnv();
     }
 
