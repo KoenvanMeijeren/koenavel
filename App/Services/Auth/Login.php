@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Services\auth;
+namespace App\Services\Auth;
 
 
 class Login
