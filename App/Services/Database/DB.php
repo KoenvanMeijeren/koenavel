@@ -895,8 +895,10 @@ final class DB
      * Add a statement to the query.
      *
      * @param string $statement the statement to be added to the query
+     *
+     * @return DB
      */
-    private function addStatement(string $statement): void
+    public function addStatement(string $statement): DB
     {
         if (strpos($this->query, 'WHERE')) {
             $statement = preg_replace(
@@ -907,6 +909,43 @@ final class DB
         }
 
         $this->query .= $statement;
+
+        return $this;
+    }
+
+    /**
+     * Add a statement to the query.
+     *
+     * @param string    $statement the statement to be added to the query
+     * @param string[]  $values    the values to bind to the query
+     *
+     * @return DB
+     */
+    public function addStatementWithValues(string $statement, array $values): DB
+    {
+        if (strpos($this->query, 'WHERE')) {
+            $statement = replaceString(
+                'WHERE',
+                'AND',
+                $statement
+            );
+        } elseif (preg_match_all('/\b(WHERE)\b/', $statement)) {
+            $statement = replaceString(
+                'AND',
+                'WHERE',
+                replaceString(
+                    'WHERE',
+                    'AND',
+                    $statement
+                ),
+                1
+            );
+        }
+
+        $this->query .= $statement;
+        $this->addValues($values);
+
+        return $this;
     }
 
     /**

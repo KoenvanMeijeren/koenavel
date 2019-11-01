@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Validate;
 
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 use App\Services\Exceptions\File\FileNotOfResourceTypeException;
 use App\Services\Exceptions\File\FileNotReadableException;
 use App\Services\Exceptions\File\FileNotWritableException;
@@ -16,7 +16,7 @@ trait FileValidation
      *
      * @return Validate
      *
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      */
     public function fileExists(): Validate
     {
@@ -24,7 +24,7 @@ trait FileValidation
             return new Validate();
         }
 
-        throw new FileNotExistingException(
+        throw new FileNotFoundException(
             'Could not load the given file ' . self::$var
         );
     }

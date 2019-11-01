@@ -6,7 +6,7 @@ namespace App\Services\Translation;
 
 use App\Services\Exceptions\Basic\InvalidKeyException;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 
 final class Translation extends Loader
 {
@@ -20,7 +20,7 @@ final class Translation extends Loader
     /**
      * Construct the translations.
      *
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      * @throws NoTranslationsForGivenLanguageID
      */
     private function __construct()
@@ -37,7 +37,7 @@ final class Translation extends Loader
      *                    corresponding value in the translations
      *
      * @return string
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */

@@ -33,8 +33,7 @@
                 <file>App/Services/Security/Recaptcha.php</file>
 
                 <file>App/Services/Session/Builder.php</file>
-
-                <file>App/Services/Response/Redirect.php</file>
+                <file>App/Services/Session/Security.php</file>
             </exclude>
         </whitelist>
     </filter>

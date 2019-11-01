@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Config;
 
 use App\Services\Core\Env;
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 
 class Loader
 {
@@ -34,7 +34,7 @@ class Loader
      * Load the config items.
      *
      * @return string[]
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      */
     protected function loadConfig(): array
     {

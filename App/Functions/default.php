@@ -54,3 +54,30 @@ if (!function_exists('parseHTMLEntities')) {
         return html_entity_decode(htmlspecialchars_decode($data));
     }
 }
+
+if (!function_exists('replaceString')) {
+    /**
+     * Replace all found strings in a string.
+     *
+     * @param string $toRemove  the string to be replaced
+     * @param string $toReplace the new value of the string
+     *                          which is going to be replaced
+     * @param string $string    the string to search in
+     * @param int    $limit     limit the number of matches
+     *
+     * @return string
+     */
+    function replaceString(
+        string $toRemove,
+        string $toReplace,
+        string $string,
+        int $limit = -1
+    ) {
+        return (string) preg_replace(
+            '/\b('.$toRemove.')\b/',
+            $toReplace,
+            $string,
+            $limit
+        );
+    }
+}

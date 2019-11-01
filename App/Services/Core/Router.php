@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Core;
 
 use App\Services\Exceptions\Basic\InvalidRouteAndUriException;
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 use App\Services\Exceptions\Object\InvalidMethodCalledException;
 use App\Services\Exceptions\Object\InvalidObjectException;
 use App\Services\Validate\Validate;
@@ -38,7 +38,7 @@ final class Router
     /**
      * The current used wildcard.
      *
-     * @var int|string
+     * @var string
      */
     private static $wildcard;
 
@@ -50,7 +50,7 @@ final class Router
      *
      * @return Router
      *
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      */
     public static function load(
         string $file = 'web.php',
@@ -103,7 +103,7 @@ final class Router
     /**
      * Return the current used wildcard.
      *
-     * @return int|string
+     * @return string
      */
     public static function getWildcard()
     {

@@ -6,7 +6,7 @@ namespace App\Services\Config;
 
 use App\Services\Core\Env;
 use App\Services\Exceptions\Basic\InvalidKeyException;
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 use App\Services\Type\TypeChanger;
 
 final class Config extends Loader
@@ -21,7 +21,7 @@ final class Config extends Loader
     /**
      * Construct the config items.
      *
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      */
     public function __construct()
     {

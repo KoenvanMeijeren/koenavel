@@ -6,7 +6,7 @@ namespace App\Services\Translation;
 
 use App\Services\Core\URI;
 use App\Services\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Services\Exceptions\File\FileNotExistingException;
+use App\Services\Exceptions\File\FileNotFoundException;
 
 class Loader
 {
@@ -50,7 +50,7 @@ class Loader
      *
      * @return string[]
      * @throws NoTranslationsForGivenLanguageID
-     * @throws FileNotExistingException
+     * @throws FileNotFoundException
      */
     protected function loadTranslations(): array
     {

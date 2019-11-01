@@ -8,7 +8,7 @@ class InitializeDatabaseTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(PDOException::class);
 
-        \App\Services\Database\DB::table('test')
+        \App\Services\Database\DB::table('account')
             ->query('test')
             ->execute()
             ->all();
