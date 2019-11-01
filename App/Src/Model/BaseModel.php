@@ -75,11 +75,9 @@ abstract class BaseModel
     /**
      * Get a record by a specified filter.
      *
-     * @param string $operator the operator
-     *
      * @return stdClass
      */
-    public function getBy(string $operator = '='): stdClass
+    public function getBy(): stdClass
     {
         $data = DB::table($this->table)
             ->select($this->columns)
