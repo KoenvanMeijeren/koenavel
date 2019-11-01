@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Services\Exceptions\File\FileNotFoundException;
-use App\Services\Validate\Validate;
+use App\Src\Exceptions\File\FileNotFoundException;
+use App\Src\Validate\Validate;
 
 /**
  * Load a file and return it.

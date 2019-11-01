@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\Core\Router;
-use App\Services\Model\BaseModel;
+use App\Src\Core\Router;
+use App\Src\Model\BaseModel;
 
 class User extends BaseModel
 {

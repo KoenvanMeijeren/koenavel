@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use App\Controllers\PageController;
-use App\services\Core\Router;
+use App\Src\Core\Router;
 
 // Pages.
 Router::get('', PageController::class,

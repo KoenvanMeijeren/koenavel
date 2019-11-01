@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\User;
-use App\Services\Exceptions\File\FileNotFoundException;
-use App\Services\View\View;
+use App\Src\Exceptions\File\FileNotFoundException;
+use App\Src\View\View;
 
 class PageController
 {
