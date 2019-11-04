@@ -34,6 +34,9 @@
 
                 <file>App/Src/Session/Builder.php</file>
                 <file>App/Src/Session/Security.php</file>
+
+                <file>App/Src/View/ProductionErrorView.php</file>
+                <file>App/Src/View/View.php</file>
             </exclude>
         </whitelist>
     </filter>

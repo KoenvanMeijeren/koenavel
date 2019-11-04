@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Src\Database\DB;
-use App\Src\Exceptions\File\FileNotFoundException;
 use App\Src\View\View;
 
 final class PageController
@@ -14,25 +13,24 @@ final class PageController
      * Show the index page.
      *
      * @return View
-     * @throws FileNotFoundException
      */
     public function index(): View
     {
-        dd(
-            DB::table('account')
-                ->select('*')->execute()->all()
-        );
-        return new View('index');
+        $accounts = DB::table('account')
+                ->select('*')->execute()->all();
+
+        return new View('index/index', compact('accounts'));
     }
 
     /**
      * Route not found.
      *
      * @return View
-     * @throws FileNotFoundException
      */
     public function notFound(): View
     {
-        return new View('http/404');
+        $title = '404 page';
+
+        return new View('http/404', compact('title'));
     }
 }

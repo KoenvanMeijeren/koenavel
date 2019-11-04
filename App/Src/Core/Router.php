@@ -40,7 +40,7 @@ final class Router
      *
      * @var string
      */
-    private static $wildcard;
+    private static $wildcard = '';
 
     /**
      * Load the routes.

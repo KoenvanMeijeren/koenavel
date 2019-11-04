@@ -12,18 +12,20 @@
         }
     },
     "require": {
-        "defuse/php-encryption": "^2.2",
-        "paragonie/anti-csrf": "^2.2",
-        "monolog/monolog": "^2.0",
-        "siriusphp/upload": "^2.1",
         "php": "^7.3",
-        "cakephp/chronos": "^1.2",
-        "kminek/email-obfuscator": "^1.0",
-        "filp/whoops": "^2.5",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "ext-xdebug": "*"
+        "ext-xdebug": "*",
+        "cakephp/chronos": "^1.2",
+        "defuse/php-encryption": "^2.2",
+        "filp/whoops": "^2.5",
+        "kminek/email-obfuscator": "^1.0",
+        "monolog/monolog": "^2.0",
+        "paragonie/anti-csrf": "^2.2",
+        "siriusphp/upload": "^2.1",
+        "symfony/templating": "^4.3",
+        "twbs/bootstrap": "4.3.1"
     },
     "require-dev": {
         "bmitch/churn-php": "^1.0",

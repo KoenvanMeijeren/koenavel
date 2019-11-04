@@ -4,20 +4,52 @@ declare(strict_types=1);
 
 namespace App\Src\View;
 
-use App\Src\Exceptions\File\FileNotFoundException;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
 
 final class View
 {
     /**
-     * Load a view and return it.
-     *
-     * @param string    $name the name of the view
-     * @param mixed[]   $data the data to be used in the view
-     *
-     * @throws FileNotFoundException
+     * @param string    $name      the name of the partial view
+     * @param mixed[]   $content   the content of the partial view
      */
-    public function __construct(string $name, array $data = [])
+    public function __construct(string $name, array $content = [])
     {
-        loadFile(RESOURCES_PATH."/views/{$name}.view.php", $data);
+        $filesystemLoader = new FilesystemLoader(
+            RESOURCES_PATH.'/views/%name%'
+        );
+
+        $templating = new PhpEngine(
+            new TemplateNameParser(),
+            $filesystemLoader
+        );
+
+        echo $templating->render(
+            'layout.view.php',
+            [
+                'title' => 'test',
+                'content' => $this->renderContent($name, $content)
+            ]
+        );
+    }
+
+    /**
+     * Render a partial view into the layout view.
+     *
+     * @param string    $name      the name of the partial view
+     * @param mixed[]   $content   the content of the partial view
+     *
+     * @return string
+     */
+    private function renderContent(string $name, array $content = []): string
+    {
+        ob_start();
+
+        loadFile(RESOURCES_PATH."/views/{$name}.view.php", $content);
+
+        $content = ob_get_clean();
+
+        return (string) $content;
     }
 }

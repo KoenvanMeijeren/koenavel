@@ -16,7 +16,9 @@ abstract class Loader
      * @var int
      */
     const DUTCH_LANGUAGE_ID = 1;
+    const DUTCH_LANGUAGE_CODE = 'nl';
     const ENGLISH_LANGUAGE_ID = 2;
+    const ENGLISH_LANGUAGE_CODE = 'en';
 
     /**
      * The current application language id.

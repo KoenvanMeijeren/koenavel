@@ -10,6 +10,27 @@ use App\Src\Model\BaseModel;
 final class User extends BaseModel
 {
     /**
+     * Accessible for everyone rights.
+     *
+     * @var int
+     */
+    const PUBLIC = 0;
+
+    /**
+     * Admin rights
+     *
+     * @var int
+     */
+    const ADMIN = 1;
+
+    /**
+     * Super admin rights.
+     *
+     * @var int
+     */
+    const SUPER_ADMIN = 2;
+
+    /**
      * Construct the model.
      */
     public function __construct()

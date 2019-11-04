@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\View;
 
 use App\Src\Core\Env;
-use Exception;
 use Whoops\Handler\Handler;
 
 final class ProductionErrorView extends Handler
@@ -15,8 +14,6 @@ final class ProductionErrorView extends Handler
      *
      * @return int A handler may return nothing,
      * or a Handler::HANDLE_* constant
-     *
-     * @throws Exception
      */
     public function handle(): int
     {

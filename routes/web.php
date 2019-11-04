@@ -10,13 +10,24 @@ declare(strict_types=1);
  * 4 = Super admin.
  */
 
+use App\Controllers\Admin\DashboardController;
 use App\Controllers\PageController;
+use App\Models\User;
+use App\Services\Auth\AuthRoutes;
 use App\Src\Core\Router;
 
 // Pages.
 Router::get('', PageController::class,
-    'index', 0);
+    'index', User::PUBLIC);
+
+/**
+ * Authorization routes.
+ */
+AuthRoutes::get();
+
+Router::get('admin/dashboard', DashboardController::class,
+    'index', User::ADMIN);
 
 // Page not found.
 Router::get('fourNullFour', PageController::class,
-    'notFound', 0);
+    'notFound', User::PUBLIC);

@@ -12,8 +12,6 @@ use App\Src\Validate\Validate;
  * @param string[]  $vars     the vars to use in the loaded file file
  *
  * @return mixed
- *
- * @throws FileNotFoundException
  */
 function loadFile(string $filename, $vars = null)
 {
