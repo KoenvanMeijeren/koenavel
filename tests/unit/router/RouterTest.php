@@ -50,6 +50,16 @@ class RouterTest extends TestCase
         );
     }
 
+    public function test_that_we_can_set_and_group_routes_with_a_prefix()
+    {
+        $this->assertNull(
+            Router::prefix('admin')->group(function () {
+                Router::get('test', PageController::class);
+                Router::post('test', PageController::class);
+            })
+        );
+    }
+
     public function test_that_we_can_direct_an_url_to_a_route()
     {
         $this->assertEquals("index",

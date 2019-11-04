@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace App\Src\Core;
 
 use App\Src\Exceptions\Basic\InvalidRouteAndUriException;
-use App\Src\Exceptions\File\FileNotFoundException;
 use App\Src\Exceptions\Object\InvalidMethodCalledException;
 use App\Src\Exceptions\Object\InvalidObjectException;
 use App\Src\Validate\Validate;
 use App\Src\View\View;
+use Closure;
 
 final class Router
 {
     /**
      * All the routes, stored based on the request type -> rights -> url.
      * Rights:
-     * 1 = Student
-     * 2 = Teacher
-     * 3 = Maintainer
-     * 4 = Super maintainer
+     * 0 = Public
+     * 1 = Maintainer
+     * 2 = Super maintainer
      *
      * @var array
      */
@@ -36,6 +35,13 @@ final class Router
     private static $availableRoutes = [];
 
     /**
+     * Add a prefix to the routes.
+     *
+     * @var string
+     */
+    private static $prefix = '';
+
+    /**
      * The current used wildcard.
      *
      * @var string
@@ -49,8 +55,6 @@ final class Router
      * @param string $directoryPath the directory location of the routes
      *
      * @return Router
-     *
-     * @throws FileNotFoundException
      */
     public static function load(
         string $file = 'web.php',
@@ -78,6 +82,10 @@ final class Router
         string $method = 'index',
         int $rights = 0
     ): void {
+        if (self::$prefix !== '') {
+            $route = self::$prefix . '/' . $route;
+        }
+
         self::$routes['GET'][$rights][$route] = [$controller, $method];
     }
 
@@ -97,7 +105,37 @@ final class Router
         string $method = 'index',
         int $rights = 0
     ): void {
+        if (self::$prefix !== '') {
+            $route = self::$prefix . '/' . $route;
+        }
+
         self::$routes['POST'][$rights][$route] = [$controller, $method];
+    }
+
+    /**
+     * Store the prefix.
+     *
+     * @param string $prefix
+     *
+     * @return Router
+     */
+    public static function prefix(string $prefix): Router
+    {
+        self::$prefix = $prefix;
+
+        return new static();
+    }
+
+    /**
+     * Group some routes.
+     *
+     * @param Closure $routes
+     */
+    public function group($routes): void
+    {
+        $routes($this);
+
+        self::$prefix = '';
     }
 
     /**
