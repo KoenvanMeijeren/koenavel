@@ -11,6 +11,7 @@ parameters:
         - "#Class .* is not allowed to extend .*#"
         - "#Foreach overwrites .* with its key variable.#"
         - "#Variable method call on mixed.#"
+        - "#Function .* should not be used.#"
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon

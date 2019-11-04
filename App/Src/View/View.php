@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\View;
 
+use App\Src\Core\URI;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;
@@ -25,13 +26,13 @@ final class View
             $filesystemLoader
         );
 
-        echo $templating->render(
-            'layout.view.php',
-            [
-                'title' => 'test',
-                'content' => $this->renderContent($name, $content)
-            ]
-        );
+        $layout = strstr(URI::getUrl(), 'admin') ?
+            'admin/layout.view.php' : 'layout.view.php';
+
+        echo $templating->render($layout, [
+                'content' => $this->renderContent($name, $content),
+                'data' => $content
+            ]);
     }
 
     /**

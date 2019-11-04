@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Models\User;
 use App\Services\Auth\AuthRoutes;
 use App\Src\Response\Redirect;
+use App\Src\Translation\Translation;
 use App\Src\View\View;
 
 final class AuthorizationController
@@ -25,16 +26,21 @@ final class AuthorizationController
 
     public function index(): View
     {
-        return new View('admin/authorization/login');
+        $title = Translation::get('login_page_title');
+
+        return new View(
+            'admin/authorization/login',
+            compact('title')
+        );
     }
 
     public function login(): Redirect
     {
-        return new Redirect(AuthRoutes::INDEX);
+        return new Redirect('/'.AuthRoutes::INDEX);
     }
 
     public function logout(): Redirect
     {
-        return new Redirect(AuthRoutes::LOGIN);
+        return new Redirect('/'.AuthRoutes::LOGIN);
     }
 }

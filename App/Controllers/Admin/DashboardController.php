@@ -10,5 +10,6 @@ final class DashboardController
 {
     public function index(): View
     {
+        dd('Ingelogd');
     }
 }

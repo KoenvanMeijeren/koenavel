@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\Auth\AuthRoutes;
+use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 
 ?>
@@ -15,10 +17,18 @@ use App\Src\Translation\Translation;
         <link rel="stylesheet"
               href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
-        <title><?= $title ?? 'Undefined' ?></title>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/resources/assets/admin/css/style.css">
+    <?php if (strstr(URI::getUrl(), AuthRoutes::LOGIN)) : ?>
+        <link rel="stylesheet" href="/resources/assets/admin/css/login.css">
+    <?php endif; ?>
+
+        <title><?= $data['title'] ?? 'Undefined' ?></title>
     </head>
     <body>
-        <?= $content ?? '' ?>
+        <div class="container-fluid">
+            <?= $content ?? '' ?>
+        </div>
     </body>
     <footer>
         <!-- Jquery -->
