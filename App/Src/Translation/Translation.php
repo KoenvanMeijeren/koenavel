@@ -7,7 +7,6 @@ namespace App\Src\Translation;
 use App\Src\Core\URI;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Src\Exceptions\File\FileNotFoundException;
 
 final class Translation extends Loader
 {
@@ -21,7 +20,6 @@ final class Translation extends Loader
     /**
      * Construct the translations.
      *
-     * @throws FileNotFoundException
      * @throws NoTranslationsForGivenLanguageID
      */
     protected function __construct()
@@ -44,7 +42,6 @@ final class Translation extends Loader
      *                    corresponding value in the translations
      *
      * @return string
-     * @throws FileNotFoundException
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */

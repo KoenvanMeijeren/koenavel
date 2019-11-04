@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\Config;
 
 use App\Src\Exceptions\Basic\InvalidKeyException;
-use App\Src\Exceptions\File\FileNotFoundException;
 use App\Src\Type\TypeChanger;
 
 abstract class Loader
@@ -36,7 +35,6 @@ abstract class Loader
      * Load the config items.
      *
      * @return string[]
-     * @throws FileNotFoundException
      */
     final protected function loadConfig(): array
     {

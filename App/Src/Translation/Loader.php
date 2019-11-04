@@ -6,7 +6,6 @@ namespace App\Src\Translation;
 
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Src\Exceptions\File\FileNotFoundException;
 
 abstract class Loader
 {
@@ -39,7 +38,6 @@ abstract class Loader
      *                    corresponding value in the translations
      *
      * @return string
-     * @throws FileNotFoundException
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
@@ -50,7 +48,6 @@ abstract class Loader
      *
      * @return string[]
      * @throws NoTranslationsForGivenLanguageID
-     * @throws FileNotFoundException
      */
     final protected function loadTranslations(): array
     {
