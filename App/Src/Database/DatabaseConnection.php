@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\Database;
 
 use App\Src\Config\Config;
-use App\Src\Exceptions\Basic\InvalidKeyException;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -47,15 +46,6 @@ abstract class DatabaseConnection
      */
     protected $message = '';
 
-    /**
-     * Construct the database connection.
-     *
-     * @param string $query The query to execute on the database.
-     * @param string[] $values The values to bind to the query.
-     *
-     * @throws PDOException
-     * @throws InvalidKeyException
-     */
     final public function __construct(string $query, array $values)
     {
         $config = new Config();
