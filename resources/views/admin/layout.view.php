@@ -17,9 +17,13 @@ use App\Src\Translation\Translation;
         <link rel="stylesheet"
               href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
+        <!-- Font awesome -->
+        <script src="https://kit.fontawesome.com/ec953a682d.js"
+                crossorigin="anonymous"></script>
+
         <!-- Custom CSS -->
         <link rel="stylesheet" href="/resources/assets/admin/css/style.css">
-    <?php if (strstr(URI::getUrl(), AuthRoutes::LOGIN)) : ?>
+    <?php if (strstr(URI::getUrl(), 'admin/inloggen')) : ?>
         <link rel="stylesheet" href="/resources/assets/admin/css/login.css">
     <?php endif; ?>
 

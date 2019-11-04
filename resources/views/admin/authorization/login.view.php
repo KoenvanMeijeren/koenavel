@@ -1,12 +1,11 @@
 <?php
 
-use App\Services\Auth\AuthRoutes;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 ?>
-<form class="form-signin" method="post" action="/<?= AuthRoutes::LOGIN ?>">
-    <?= CSRF::insertToken(AuthRoutes::LOGIN) ?>
+<form class="form-signin" method="post" action="/admin/inloggen">
+    <?= CSRF::insertToken('admin/inloggen') ?>
 
     <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">
@@ -42,5 +41,6 @@ use App\Src\Translation\Translation;
     <button class="btn btn-lg text-white border-0 bg-color-default btn-block"
             type="submit">
         <?= Translation::get('login_button') ?>
+        <i class="fas fa-sign-in-alt"></i>
     </button>
 </form>
