@@ -14,7 +14,7 @@ final class User extends BaseModel
      *
      * @var int
      */
-    const PUBLIC = 0;
+    const GUEST = 0;
 
     /**
      * Admin rights

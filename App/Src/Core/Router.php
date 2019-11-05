@@ -131,7 +131,7 @@ final class Router
      *
      * @param Closure $routes
      */
-    public function group($routes): void
+    public function group(Closure $routes): void
     {
         $routes($this);
 

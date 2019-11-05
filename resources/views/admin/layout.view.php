@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\Auth\AuthRoutes;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 

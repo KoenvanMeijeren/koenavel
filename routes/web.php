@@ -18,7 +18,7 @@ use App\Src\Core\Router;
 
 // Pages.
 Router::get('', PageController::class,
-    'index', User::PUBLIC);
+    'index', User::GUEST);
 
 /**
  * Authorization routes.
@@ -28,9 +28,9 @@ Router::prefix('admin')->group(function () {
      * Authorization routes.
      */
     Router::get('inloggen', AuthorizationController::class,
-        'index', User::PUBLIC);
+        'index', User::GUEST);
     Router::post('inloggen', AuthorizationController::class,
-        'login', User::PUBLIC);
+        'login', User::GUEST);
     Router::get('uitloggen', AuthorizationController::class,
         'logout', User::ADMIN);
 
@@ -43,4 +43,4 @@ Router::prefix('admin')->group(function () {
 
 // Page not found.
 Router::get('fourNullFour', PageController::class,
-    'notFound', User::PUBLIC);
+    'notFound', User::GUEST);
