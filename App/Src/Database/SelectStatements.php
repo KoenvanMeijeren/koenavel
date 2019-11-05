@@ -8,6 +8,23 @@ namespace App\Src\Database;
 trait SelectStatements
 {
     /**
+     * Add a statement to the query.
+     *
+     * @param string $statement the statement to be added to the query
+     *
+     * @return DB
+     */
+    public abstract function addStatement(string $statement): DB;
+
+    /**
+     * Add values. These values will be used when
+     *             the query is going to be executed
+     *
+     * @param string[] $values The values to be added
+     */
+    public abstract function addValues(array $values): void;
+
+    /**
      * The SELECT statement is used to select data from a database.
      * The data returned is stored in a result table, called the result-set.
      *

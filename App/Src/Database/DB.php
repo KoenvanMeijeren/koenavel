@@ -148,7 +148,7 @@ final class DB
      *
      * @param string[] $values The values to be added
      */
-    private function addValues(array $values): void
+    public function addValues(array $values): void
     {
         $this->values += $values;
     }

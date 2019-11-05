@@ -81,3 +81,32 @@ if (!function_exists('replaceString')) {
         );
     }
 }
+
+if (!function_exists('replaceAllExceptFirstString')) {
+    /**
+     * Replace all found strings in a string.
+     *
+     * @param string $toRemove  the string to be replaced
+     * @param string $toReplace the new value of the string
+     *                          which is going to be replaced
+     * @param string $string    the string to search in
+     *
+     * @return string
+     */
+    function replaceAllExceptFirstString(
+        string $toRemove,
+        string $toReplace,
+        string $string
+    ) {
+        return (string) replaceString(
+            $toReplace,
+            $toRemove,
+            replaceString(
+                $toRemove,
+                $toReplace,
+                $string
+            ),
+            1
+        );
+    }
+}
