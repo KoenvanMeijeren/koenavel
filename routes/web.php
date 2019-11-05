@@ -1,22 +1,15 @@
 <?php
 declare(strict_types=1);
 
-/*
- * Rights:
- * 0 = Accessible for everyone
- * 1 = student
- * 2 = teacher
- * 3 = Admin
- * 4 = Super admin.
- */
-
 use App\Controllers\Admin\AuthorizationController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\PageController;
 use App\Models\User;
 use App\Src\Core\Router;
 
-// Pages.
+/**
+ * Pages.
+ */
 Router::get('', PageController::class,
     'index', User::GUEST);
 
@@ -41,6 +34,8 @@ Router::prefix('admin')->group(function () {
         'index', User::ADMIN);
 });
 
-// Page not found.
+/**
+ * Page not found.
+ */
 Router::get('fourNullFour', PageController::class,
     'notFound', User::GUEST);
