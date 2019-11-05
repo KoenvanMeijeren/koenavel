@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
-use App\Src\Exceptions\Basic\InvalidRouteAndUriException;
+use App\Src\Exceptions\Basic\UndefinedRouteException;
 use App\Src\Exceptions\Object\InvalidMethodCalledException;
 use App\Src\Exceptions\Object\InvalidObjectException;
 use App\Src\Validate\Validate;
@@ -82,8 +82,10 @@ final class Router
         string $method = 'index',
         int $rights = 0
     ): void {
-        if (self::$prefix !== '') {
+        if (self::$prefix !== '' && $route !== '') {
             $route = self::$prefix . '/' . $route;
+        } elseif (self::$prefix !== '') {
+            $route = self::$prefix;
         }
 
         self::$routes['GET'][$rights][$route] = [$controller, $method];
@@ -105,8 +107,10 @@ final class Router
         string $method = 'index',
         int $rights = 0
     ): void {
-        if (self::$prefix !== '') {
+        if (self::$prefix !== '' && $route !== '') {
             $route = self::$prefix . '/' . $route;
+        } elseif (self::$prefix !== '') {
+            $route = self::$prefix;
         }
 
         self::$routes['POST'][$rights][$route] = [$controller, $method];
@@ -160,7 +164,7 @@ final class Router
      *
      * @throws InvalidObjectException
      * @throws InvalidMethodCalledException
-     * @throws InvalidRouteAndUriException
+     * @throws UndefinedRouteException
      */
     public function direct(string $url, string $requestType, int $rights)
     {
@@ -175,7 +179,7 @@ final class Router
             return $this->executeRoute('fourNullFour');
         }
 
-        throw new InvalidRouteAndUriException(
+        throw new UndefinedRouteException(
             'No route defined for this request'
         );
     }

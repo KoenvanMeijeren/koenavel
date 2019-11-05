@@ -27,7 +27,7 @@ Router::prefix('admin')->group(function () {
     /**
      * Authorization routes.
      */
-    Router::get('inloggen', AuthorizationController::class,
+    Router::get('', AuthorizationController::class,
         'index', User::GUEST);
     Router::post('inloggen', AuthorizationController::class,
         'login', User::GUEST);

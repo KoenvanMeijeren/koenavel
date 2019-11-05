@@ -22,7 +22,7 @@ use App\Src\Translation\Translation;
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="/resources/assets/admin/css/style.css">
-    <?php if (strstr(URI::getUrl(), 'admin/inloggen')) : ?>
+    <?php if (strstr(URI::getUrl(), 'admin')) : ?>
         <link rel="stylesheet" href="/resources/assets/admin/css/login.css">
     <?php endif; ?>
 
@@ -32,14 +32,15 @@ use App\Src\Translation\Translation;
         <div class="container-fluid">
             <?= $content ?? '' ?>
         </div>
-    </body>
-    <footer>
-        <!-- Jquery -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
 
-        <!-- Bootstrap -->
-        <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    </footer>
+        <footer>
+            <!-- Jquery -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                    crossorigin="anonymous"></script>
+
+            <!-- Bootstrap -->
+            <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        </footer>
+    </body>
 </html>
