@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
+use App\Models\User;
 use App\Src\Exceptions\Basic\UndefinedRouteException;
 use App\Src\Exceptions\Object\InvalidMethodCalledException;
 use App\Src\Exceptions\Object\InvalidObjectException;
@@ -80,7 +81,7 @@ final class Router
         string $route,
         string $controller,
         string $method = 'index',
-        int $rights = 0
+        int $rights = User::GUEST
     ): void {
         if (self::$prefix !== '' && $route !== '') {
             $route = self::$prefix . '/' . $route;
@@ -105,7 +106,7 @@ final class Router
         string $route,
         string $controller,
         string $method = 'index',
-        int $rights = 0
+        int $rights = User::GUEST
     ): void {
         if (self::$prefix !== '' && $route !== '') {
             $route = self::$prefix . '/' . $route;
