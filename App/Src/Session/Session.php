@@ -70,7 +70,6 @@ final class Session
      * @param bool   $unset Must the session value be destroyed?
      *
      * @return string
-     *
      * @throws Exception
      */
     public function get(string $key, bool $unset = false): string
@@ -92,6 +91,22 @@ final class Session
 
         $this->logRequest($key, $value);
         return $value;
+    }
+
+    /**
+     * Check if the given key exists in the super global array.
+     *
+     * @param string $key the key to be checked for if it exists.
+     *
+     * @return bool
+     */
+    public function exists(string $key): bool
+    {
+        if (array_key_exists($key, $_SESSION)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
