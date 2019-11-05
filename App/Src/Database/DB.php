@@ -117,15 +117,10 @@ final class DB
                 $statement
             );
         } elseif (preg_match_all('/\b(WHERE)\b/', $statement)) {
-            $statement = replaceString(
-                'AND',
+            $statement = replaceAllExceptFirstString(
                 'WHERE',
-                replaceString(
-                    'WHERE',
-                    'AND',
-                    $statement
-                ),
-                1
+                'AND',
+                $statement
             );
         }
 

@@ -261,7 +261,7 @@ trait WhereStatements
         }
 
         // add hooks to the query if there is already a where statement added
-        if (strstr(self::$query, 'WHERE')) {
+        if (strstr($this->query, 'WHERE')) {
             $query = preg_replace(
                 '/\b(WHERE)\b/',
                 "WHERE (",

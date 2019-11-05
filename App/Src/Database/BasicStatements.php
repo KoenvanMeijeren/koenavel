@@ -8,6 +8,23 @@ namespace App\Src\Database;
 trait BasicStatements
 {
     /**
+     * Add a statement to the query.
+     *
+     * @param string $statement the statement to be added to the query
+     *
+     * @return DB
+     */
+    public abstract function addStatement(string $statement): DB;
+
+    /**
+     * Add values. These values will be used when
+     *             the query is going to be executed
+     *
+     * @param string[] $values The values to be added
+     */
+    public abstract function addValues(array $values): void;
+
+    /**
      * The HAVING clause was added to SQL because
      * the WHERE keyword could not be used with aggregate functions.
      *
