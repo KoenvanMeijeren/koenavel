@@ -16,13 +16,13 @@ trait WhereStatements
      * @param string $operator  The operator to be used in the where statement.
      * @param string $condition The condition to be used in the where statement.
      *
-     * @return DB
+     * @return $this
      */
     public function where(
         string $column,
         string $operator,
         string $condition
-    ): DB {
+    ) {
         $bindColumn = str_replace('.', '', $column);
 
         $this->addStatement(
@@ -30,7 +30,7 @@ trait WhereStatements
         );
         $this->addValues([$bindColumn => $condition]);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -42,9 +42,9 @@ trait WhereStatements
      * @param string    $query  The query to test if any record exists.
      * @param string[]  $values The values to bind to the query.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereExists(string $query, array $values): DB
+    public function whereExists(string $query, array $values)
     {
         $this->addStatement(
             "WHERE EXISTS ({$query}) "
@@ -54,7 +54,7 @@ trait WhereStatements
             $this->addValues([$column => $value]);
         }
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -72,14 +72,14 @@ trait WhereStatements
      *                            meet the condition.
      * @param string[]  $values   The values to bind to the query.
      *
-     * @return DB
+     * @return $this
      */
     public function whereAny(
         string $column,
         string $operator,
         string $query,
         array $values
-    ): DB {
+    ) {
         $this->addStatement(
             "WHERE {$column} {$operator} ANY ({$query}) "
         );
@@ -88,7 +88,7 @@ trait WhereStatements
             $this->addValues([$column => $value]);
         }
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -106,14 +106,14 @@ trait WhereStatements
      *                            sub query values meet the condition.
      * @param string[]  $values   The values to bind to the query.
      *
-     * @return DB
+     * @return $this
      */
     public function whereAll(
         string $column,
         string $operator,
         string $query,
         array $values
-    ): DB {
+    ) {
         $this->addStatement(
             "WHERE {$column} {$operator} ALL ({$query}) "
         );
@@ -122,7 +122,7 @@ trait WhereStatements
             $this->addValues([$column => $value]);
         }
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -132,20 +132,20 @@ trait WhereStatements
      * @param string $operator  The operator.
      * @param string $condition The condition of the filter.
      *
-     * @return DB
+     * @return $this
      */
     public function whereNot(
         string $column,
         string $operator,
         string $condition
-    ): DB {
+    ) {
         $this->addStatement(
             "WHERE NOT {$column} {$operator} :{$column} "
         );
 
         $this->addValues([$column => $condition]);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -153,9 +153,9 @@ trait WhereStatements
      *
      * @param string[] ...$columns The columns to be filtered.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereIsNull(...$columns): DB
+    public function whereIsNull(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -163,7 +163,7 @@ trait WhereStatements
             "WHERE {$columns} IS NULL "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -171,9 +171,9 @@ trait WhereStatements
      *
      * @param string[] ...$columns The columns to be filtered.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereIsNotNull(...$columns): DB
+    public function whereIsNotNull(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -181,7 +181,7 @@ trait WhereStatements
             "WHERE {$columns} IS NOT NULL "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -190,9 +190,9 @@ trait WhereStatements
      * @param string    $column       The column to be filtered.
      * @param string[]  ...$condition The conditions of the filter.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereInValue(string $column, ...$condition): DB
+    public function whereInValue(string $column, ...$condition)
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
@@ -207,7 +207,7 @@ trait WhereStatements
             "WHERE {$column} IN ({$bindColumns}) "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -217,9 +217,9 @@ trait WhereStatements
      * @param string    $column       The column to be filtered.
      * @param string[]  ...$condition The conditions of the filter.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereNotInValue(string $column, ...$condition): DB
+    public function whereNotInValue(string $column, ...$condition)
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
@@ -234,7 +234,7 @@ trait WhereStatements
             "WHERE {$column} NOT IN ({$bindColumns}) "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -243,9 +243,9 @@ trait WhereStatements
      * @param string    $column    The column to be filtered.
      * @param string[]  ...$values The values of the filter.
      *
-     * @return DB
+     * @return $this
      */
-    public function whereOr(string $column, ...$values): DB
+    public function whereOr(string $column, ...$values)
     {
         $query = '';
         foreach ($values as $key => $value) {
@@ -272,7 +272,7 @@ trait WhereStatements
 
         $this->addStatement($query);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -282,13 +282,13 @@ trait WhereStatements
      * @param string    $query  The query to be used as a filter.
      * @param string[]  $values The values of the sub query.
      *
-     * @return DB
+     * @return $this
      */
     public function whereInQuery(
         string $column,
         string $query,
         array $values
-    ): DB {
+    ) {
         $this->addStatement(
             "WHERE {$column} IN ({$query}) "
         );
@@ -297,7 +297,7 @@ trait WhereStatements
             $this->addValues([$key => $value]);
         }
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -311,14 +311,14 @@ trait WhereStatements
      * @param bool   $orStatement   Determine if there must be a
      *                              hook added to the query.
      *
-     * @return DB
+     * @return $this
      */
     public function whereBetween(
         string $column,
         string $start,
         string $end,
         bool $orStatement = false
-    ): DB {
+    ) {
         $hook = $orStatement ? '(' : '';
 
         $this->addStatement(
@@ -330,7 +330,7 @@ trait WhereStatements
             $column . 'End' => $end
         ]);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -344,14 +344,14 @@ trait WhereStatements
      * @param bool   $orStatement   Determine if there must be a
      *                              hook added to the query.
      *
-     * @return DB
+     * @return $this
      */
     public function whereNotBetween(
         string $column,
         string $start,
         string $end,
         bool $orStatement = false
-    ): DB {
+    ) {
         $hook = $orStatement ? '(' : '';
 
         $this->addStatement(
@@ -363,7 +363,7 @@ trait WhereStatements
             $column . 'End' => $end
         ]);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -375,13 +375,13 @@ trait WhereStatements
      * @param string $start     The start range of the filter.
      * @param string $end       The end range of the filter.
      *
-     * @return DB
+     * @return $this
      */
     public function whereOrBetween(
         string $column,
         string $start,
         string $end
-    ): DB {
+    ) {
         $this->addStatement(
             "OR {$column} BETWEEN :{$column}Start AND :{$column}End "
         );
@@ -391,6 +391,6 @@ trait WhereStatements
             $column . 'End' => $end
         ]);
 
-        return new DB();
+        return $this;
     }
 }

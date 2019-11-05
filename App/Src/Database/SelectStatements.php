@@ -13,9 +13,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to select from the database.
      *
-     * @return DB
+     * @return $this
      */
-    public function select(...$columns): DB
+    public function select(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -23,7 +23,7 @@ trait SelectStatements
             "SELECT {$columns} FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -39,9 +39,9 @@ trait SelectStatements
      * @param string $table         The table to union select from
      * @param string[] ...$columns  The columns to be union selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectUnion(string $table, ...$columns): DB
+    public function selectUnion(string $table, ...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -49,7 +49,7 @@ trait SelectStatements
             "UNION SELECT {$columns} FROM {$table}"
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -65,9 +65,9 @@ trait SelectStatements
      * @param string $table         The table to union all select from
      * @param string[] ...$columns  The columns to be union all selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectUnionAll(string $table, ...$columns): DB
+    public function selectUnionAll(string $table, ...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -75,7 +75,7 @@ trait SelectStatements
             "UNION ALL SELECT {$columns} FROM {$table}"
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -84,9 +84,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to select distinct.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectDistinct(...$columns): DB
+    public function selectDistinct(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -94,7 +94,7 @@ trait SelectStatements
             "SELECT DISTINCT {$columns} FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -102,9 +102,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to be selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectMin(...$columns): DB
+    public function selectMin(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -112,7 +112,7 @@ trait SelectStatements
             "SELECT MIN({$columns}) FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -120,9 +120,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to be selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectMax(...$columns): DB
+    public function selectMax(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -130,7 +130,7 @@ trait SelectStatements
             "SELECT MAX({$columns}) FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -139,9 +139,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to be selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectCount(...$columns): DB
+    public function selectCount(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -149,7 +149,7 @@ trait SelectStatements
             "SELECT COUNT({$columns}) FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -157,9 +157,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to be selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectAvg(...$columns): DB
+    public function selectAvg(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -167,7 +167,7 @@ trait SelectStatements
             "SELECT AVG({$columns}) FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -175,9 +175,9 @@ trait SelectStatements
      *
      * @param string[] ...$columns The columns to be selected.
      *
-     * @return DB
+     * @return $this
      */
-    public function selectSum(...$columns): DB
+    public function selectSum(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -185,7 +185,7 @@ trait SelectStatements
             "SELECT SUM({$columns}) FROM " . self::$table . ' '
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -196,19 +196,19 @@ trait SelectStatements
      * @param string $tableOneColumn The first table column to inner join on.
      * @param string $tableTwoColumn The second table column to inner join on.
      *
-     * @return DB
+     * @return $this
      */
     public function innerJoin(
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ): DB {
+    ) {
         $this->addStatement(
             "INNER JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -220,19 +220,19 @@ trait SelectStatements
      * @param string $tableOneColumn The first table column to left join on.
      * @param string $tableTwoColumn The second table column to left join on.
      *
-     * @return DB
+     * @return $this
      */
     public function leftJoin(
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ): DB {
+    ) {
         $this->addStatement(
             "LEFT JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -244,19 +244,19 @@ trait SelectStatements
      * @param string $tableOneColumn  The first table column to right join on.
      * @param string $tableTwoColumn  The second table column to right join on.
      *
-     * @return DB
+     * @return $this
      */
     public function rightJoin(
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ): DB {
+    ) {
         $this->addStatement(
             "RIGHT JOIN {$table} ON " .
             "{$tableOneColumn} = {$tableTwoColumn}) "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -269,18 +269,18 @@ trait SelectStatements
      * @param string $tableTwoColumn    The second table column to
      *                                  full outer join on.
      *
-     * @return DB
+     * @return $this
      */
     public function fullOuterJoin(
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ): DB {
+    ) {
         $this->addStatement(
             "FULL OUTER JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "
         );
 
-        return new DB();
+        return $this;
     }
 }

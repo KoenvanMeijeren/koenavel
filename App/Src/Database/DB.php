@@ -24,14 +24,14 @@ final class DB
      *
      * @var string
      */
-    private static $query = '';
+    private $query = '';
 
     /**
      * The values to bind to the query.
      *
      * @var mixed[]
      */
-    private static $values = [];
+    private $values = [];
 
     /**
      * Set the table.
@@ -75,7 +75,7 @@ final class DB
     {
         $this->addHooksForInnerJoins();
 
-        return new DatabaseProcessor(self::$query, self::$values);
+        return new DatabaseProcessor($this->query, $this->values);
     }
 
     /**
@@ -87,7 +87,7 @@ final class DB
      */
     public function addStatement(string $statement): DB
     {
-        if (strpos(self::$query, 'WHERE')) {
+        if (strpos($this->query, 'WHERE')) {
             $statement = preg_replace(
                 '/\b(WHERE)\b/',
                 "AND",
@@ -95,7 +95,7 @@ final class DB
             );
         }
 
-        self::$query .= $statement;
+        $this->query .= $statement;
 
         return $this;
     }
@@ -110,7 +110,7 @@ final class DB
      */
     public function addStatementWithValues(string $statement, array $values): DB
     {
-        if (strpos(self::$query, 'WHERE')) {
+        if (strpos($this->query, 'WHERE')) {
             $statement = replaceString(
                 'WHERE',
                 'AND',
@@ -129,7 +129,7 @@ final class DB
             );
         }
 
-        self::$query .= $statement;
+        $this->query .= $statement;
         $this->addValues($values);
 
         return $this;
@@ -144,7 +144,7 @@ final class DB
     {
         $this->addHooksForInnerJoins();
 
-        return self::$query;
+        return $this->query;
     }
 
     /**
@@ -155,7 +155,7 @@ final class DB
      */
     private function addValues(array $values): void
     {
-        self::$values += $values;
+        $this->values += $values;
     }
 
     /**
@@ -165,7 +165,7 @@ final class DB
      */
     public function getValues(): array
     {
-        return self::$values;
+        return $this->values;
     }
 
     /**
@@ -175,7 +175,7 @@ final class DB
      */
     private function countInnerJoinsInQuery(): int
     {
-        return (int) preg_match_all('/\b(JOIN)\b/', self::$query);
+        return (int) preg_match_all('/\b(JOIN)\b/', $this->query);
     }
 
     /**
@@ -197,17 +197,17 @@ final class DB
             $hooks .= '(';
         }
 
-        self::$query = (string) preg_replace(
+        $this->query = (string) preg_replace(
             '/\b(FROM)\b/',
             "FROM {$hooks}",
-            self::$query
+            $this->query
         );
 
         if ($this->countInnerJoinsInQuery() === 1) {
-            self::$query = (string) preg_replace(
+            $this->query = (string) preg_replace(
                 '/[()]/',
                 '',
-                self::$query
+                $this->query
             );
         }
     }

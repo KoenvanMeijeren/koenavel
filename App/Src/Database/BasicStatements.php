@@ -13,9 +13,9 @@ trait BasicStatements
      *
      * @param string[] ...$conditions The condition(s) of the having clause.
      *
-     * @return DB
+     * @return $this
      */
-    public function having(...$conditions): DB
+    public function having(...$conditions)
     {
         $conditions = implode(', ', $conditions);
 
@@ -23,7 +23,7 @@ trait BasicStatements
             "HAVING {$conditions} "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -31,9 +31,9 @@ trait BasicStatements
      *
      * @param string[] $values The values to be inserted.
      *
-     * @return DB
+     * @return $this
      */
-    public function insert(array $values): DB
+    public function insert(array $values)
     {
         $columns = implode(', ', array_keys($values));
         $bindColumns = ':' . implode(', :', array_keys($values));
@@ -45,7 +45,7 @@ trait BasicStatements
 
         $this->addValues($values);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -53,9 +53,9 @@ trait BasicStatements
      *
      * @param string[] $values The values to be updated
      *
-     * @return DB
+     * @return $this
      */
-    public function update(array $values): DB
+    public function update(array $values)
     {
         $this->addStatement(
             "UPDATE " . self::$table . " SET "
@@ -71,7 +71,7 @@ trait BasicStatements
 
         $this->addValues($values);
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -82,27 +82,27 @@ trait BasicStatements
      *                       if the record has been deleted
      * @param string $value  The value -> 1 is deleted 0 -> is available
      *
-     * @return DB
+     * @return $this
      */
-    public function delete(string $column, string $value = '1'): DB
+    public function delete(string $column, string $value = '1')
     {
         $this->update([$column => $value]);
 
-        return new DB();
+        return $this;
     }
 
     /**
      * The DELETE statement is used to delete existing records in a table.
      *
-     * @return DB
+     * @return $this
      */
-    public function permanentDelete(): DB
+    public function permanentDelete()
     {
         $this->addStatement(
             "DELETE FROM " . self::$table . " "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -112,9 +112,9 @@ trait BasicStatements
      *                                  -> ascending (asc) or descending (desc).
      * @param string[]  ...$columns The columns to be ordered.
      *
-     * @return DB
+     * @return $this
      */
-    public function orderBy(string $filter, ...$columns): DB
+    public function orderBy(string $filter, ...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -122,7 +122,7 @@ trait BasicStatements
             "ORDER BY {$columns} {$filter} "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -131,9 +131,9 @@ trait BasicStatements
      *
      * @param string[] ...$columns The columns to be grouped into one record
      *
-     * @return DB
+     * @return $this
      */
-    public function groupBy(...$columns): DB
+    public function groupBy(...$columns)
     {
         $columns = implode(', ', $columns);
 
@@ -141,7 +141,7 @@ trait BasicStatements
             "GROUP BY {$columns} "
         );
 
-        return new DB();
+        return $this;
     }
 
     /**
@@ -149,14 +149,14 @@ trait BasicStatements
      *
      * @param int $number The maximum number of selected records.
      *
-     * @return DB
+     * @return $this
      */
-    public function limit(int $number = 1): DB
+    public function limit(int $number = 1)
     {
         $this->addStatement(
             "LIMIT {$number} "
         );
 
-        return new DB();
+        return $this;
     }
 }
