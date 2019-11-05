@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Src\Security;
 
 use App\Src\Config\Config;
-use App\Src\Validate\Validate;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Exception\BadFormatException;
+use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
+use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 use Defuse\Crypto\Key;
-use Exception;
 
 final class Encrypt
 {
@@ -23,45 +25,49 @@ final class Encrypt
      * Construct the data.
      *
      * @param string $data the data to be saved
-     *
-     * @throws Exception
      */
     public function __construct(string $data)
     {
-        Validate::var($data)->isString()->isNotEmpty();
         $this->data = $data;
     }
 
+
     /**
-     * Encrypt the data.
+     * Encrypt data.
      *
      * @return string
-     *
-     * @throws Exception
+     * @throws BadFormatException
+     * @throws EnvironmentIsBrokenException
+     * @throws InvalidKeyException
      */
     public function encrypt(): string
     {
         return Crypto::encrypt($this->data, $this->loadKeyFromConfig());
     }
 
+
     /**
-     * Decrypt the data.
+     * Decrypt encrypted data.
      *
      * @return string
-     *
-     * @throws Exception
+     * @throws BadFormatException
+     * @throws EnvironmentIsBrokenException
+     * @throws InvalidKeyException
+     * @throws WrongKeyOrModifiedCiphertextException
      */
     public function decrypt(): string
     {
         return Crypto::decrypt($this->data, $this->loadKeyFromConfig());
     }
 
+
     /**
      * Load the key from the config.
      *
      * @return Key
-     *
-     * @throws Exception
+     * @throws InvalidKeyException
+     * @throws BadFormatException
+     * @throws EnvironmentIsBrokenException
      */
     private function loadKeyFromConfig(): Key
     {
