@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Database;
 
-
 trait BasicStatements
 {
     /**
@@ -14,7 +13,7 @@ trait BasicStatements
      *
      * @return DB
      */
-    public abstract function addStatement(string $statement): DB;
+    abstract public function addStatement(string $statement): DB;
 
     /**
      * Add values. These values will be used when
@@ -22,7 +21,7 @@ trait BasicStatements
      *
      * @param string[] $values The values to be added
      */
-    public abstract function addValues(array $values): void;
+    abstract public function addValues(array $values): void;
 
     /**
      * The HAVING clause was added to SQL because

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Src\Database;
 
 use App\Src\Config\Config;
+use App\Src\Exceptions\Basic\InvalidKeyException;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -46,20 +47,30 @@ abstract class DatabaseConnection
      */
     protected $message = '';
 
+    /**
+     * Connect with the database and execute the query.
+     *
+     * @param string    $query  The query to execute
+     * @param string[]  $values The values to bind to the query
+     */
     final public function __construct(string $query, array $values)
     {
         $config = new Config();
 
-        $dsn = $config->get('databaseServer')->toString() . ';';
-        $dbName = 'dbname=' . $config->get('databaseName')->toString() . ';';
-        $charset = 'charset' . $config->get('databaseCharset')->toString().';';
+        try {
+            $dsn = $config->get('databaseServer')->toString() . ';';
+            $dbName = 'dbname=' . $config->get('databaseName')->toString() . ';';
+            $charset = 'charset' . $config->get('databaseCharset')->toString().';';
 
-        $this->pdo = new PDO(
-            $dsn . $dbName . $charset,
-            $config->get('databaseUsername')->toString(),
-            $config->get('databasePassword')->toString(),
-            $config->get('databaseOptions')->toArray()
-        );
+            $this->pdo = new PDO(
+                $dsn . $dbName . $charset,
+                $config->get('databaseUsername')->toString(),
+                $config->get('databasePassword')->toString(),
+                $config->get('databaseOptions')->toArray()
+            );
+        } catch (InvalidKeyException $e) {
+            throw new PDOException($e->getMessage(), $e->getCode(), $e);
+        }
 
         $this->statement = $this->pdo->prepare($query);
         $this->values = $values;

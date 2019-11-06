@@ -6,6 +6,8 @@ namespace App\Controllers\Admin;
 
 use App\Models\User;
 use App\Services\Auth\Login;
+use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
@@ -24,6 +26,14 @@ final class AuthorizationController
         $this->user = new User();
     }
 
+    /**
+     * Load the login page.
+     * If the user is already logged in redirect him to the dashboard.
+     *
+     * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
+     */
     public function index()
     {
         $title = Translation::get('login_page_title');

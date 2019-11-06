@@ -33,9 +33,9 @@ abstract class BaseModel
     /**
      * The id of a record.
      *
-     * @var string
+     * @var int
      */
-    protected $id = '0';
+    protected $id = 0;
 
     /**
      * The filter of the get and get all by method.

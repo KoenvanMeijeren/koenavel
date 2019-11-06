@@ -17,7 +17,7 @@ use App\Src\Translation\Translation;
 use Exception;
 use stdClass;
 
-class User extends BaseModel
+final class User extends BaseModel
 {
     /**
      * Accessible for everyone rights.
@@ -122,7 +122,9 @@ class User extends BaseModel
         $account = $this->get();
         if (empty((array) $account)) {
             $this->setFilters(
-                'account_email', '=', $this->email
+                'account_email',
+                '=',
+                $this->email
             );
 
             $account = $this->getBy();

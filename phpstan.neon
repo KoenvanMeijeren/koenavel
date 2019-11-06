@@ -9,7 +9,6 @@ parameters:
         - "#In method .*, parameter .* can be type-hinted to .*.#"
         - "#Constructor .* has parameter .* with default value.#"
         - "#Class .* is not allowed to extend .*#"
-        - "#Foreach overwrites .* with its key variable.#"
         - "#Variable method call on mixed.#"
         - "#Function .* should not be used.#"
 includes:

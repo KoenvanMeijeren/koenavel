@@ -40,21 +40,25 @@ final class Login
     {
         $session = new Session();
 
-        if (password_verify($this->user->getPassword(),
-            $this->user->getAccount()->account_password ?? '')
+        if (password_verify(
+            $this->user->getPassword(),
+            $this->user->getAccount()->account_password ?? ''
+        )
         ) {
             if ($session->exists('userID')) {
                 $session->unset('userID');
             }
 
             $session->save(
-                'userID', $this->user->getAccount()->account_ID ?? ''
+                'userID',
+                $this->user->getAccount()->account_ID ?? ''
             );
 
             // todo rehash password
             // todo reset failed log in tries
             $session->flash(
-                'success', Translation::get('login_successful_message')
+                'success',
+                Translation::get('login_successful_message')
             );
             return true;
         }
@@ -62,7 +66,8 @@ final class Login
         // todo update failed log in tries and if necessary block account
 
         $session->flash(
-            'error', Translation::get('login_failed_message')
+            'error',
+            Translation::get('login_failed_message')
         );
         return false;
     }

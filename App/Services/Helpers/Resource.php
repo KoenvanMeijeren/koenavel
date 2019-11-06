@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Helpers;
 
-
-class Resource
+abstract class Resource
 {
-    public static function loadFlashMessage(): void
+    final public static function loadFlashMessage(): void
     {
         loadFile(RESOURCES_PATH . '/partials/flash.view.php');
     }
