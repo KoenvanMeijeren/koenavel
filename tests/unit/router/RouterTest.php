@@ -58,6 +58,13 @@ class RouterTest extends TestCase
                 Router::post('test', PageController::class);
             })
         );
+
+        $this->assertNull(
+            Router::prefix('admin')->group(function () {
+                Router::get('', PageController::class);
+                Router::post('', PageController::class);
+            })
+        );
     }
 
     public function test_that_we_can_direct_an_url_to_a_route()

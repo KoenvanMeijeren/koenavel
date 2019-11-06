@@ -99,4 +99,17 @@ class SessionTest extends TestCase
 
         $this->session->unset('test');
     }
+
+    public function test_that_we_can_check_if_data_exists_in_the_session()
+    {
+        $this->assertFalse(
+            $this->session->exists('exists')
+        );
+
+        $this->session->saveForced('exists', 'test');
+
+        $this->assertTrue(
+            $this->session->exists('exists')
+        );
+    }
 }
