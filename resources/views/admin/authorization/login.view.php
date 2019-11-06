@@ -43,7 +43,7 @@ $session = new Session();
         </label>
     </div>
 
-    <button class="btn btn-lg text-white border-0 bg-color-default btn-block"
+    <button class="btn btn-default border-0 w-100"
             type="submit">
         <?= Translation::get('login_button') ?>
         <i class="fas fa-sign-in-alt"></i>

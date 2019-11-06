@@ -156,6 +156,16 @@ final class User extends BaseModel
     }
 
     /**
+     * Get the name of the user.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->account->account_name ?? '';
+    }
+
+    /**
      * Get the rights of the user.
      *
      * It does not matter if the user is logged in.

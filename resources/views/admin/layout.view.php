@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Helpers\Resource;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 
@@ -7,115 +8,124 @@ $user = new \App\Models\User();
 ?>
 <!DOCTYPE html>
 <html lang="<?= Translation::DUTCH_LANGUAGE_CODE ?>">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet"
-              href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
-        <!-- Font awesome -->
-        <script src="https://kit.fontawesome.com/ec953a682d.js"
-                crossorigin="anonymous"></script>
+    <!-- Data tables -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css">
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/resources/assets/admin/css/style.css">
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/vendor/cms-theme/css/light-bootstrap-dashboard.css">
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/css/style.css">
+
+    <!-- Custom CSS -->
     <?php if (!$user->isLoggedIn()) : ?>
-        <link rel="stylesheet" href="/resources/assets/admin/css/login.css">
+        <link rel="stylesheet" type="text/css"
+              href="/resources/assets/admin/css/login.css">
     <?php endif; ?>
 
-        <!-- Title -->
-        <title><?= $data['title'] ?? 'Undefined' ?></title>
+    <!-- Title -->
+    <title><?= $data['title'] ?? 'Undefined' ?></title>
 
-        <!-- Fav icon -->
-        <link rel="apple-touch-icon" sizes="57x57"
-              href="/resources/assets/admin/images/favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60"
-              href="/resources/assets/admin/images/favicon/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72"
-              href="/resources/assets/admin/images/favicon/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76"
-              href="/resources/assets/admin/images/favicon/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114"
-              href="/resources/assets/admin/images/favicon/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120"
-              href="/resources/assets/admin/images/favicon/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144"
-              href="/resources/assets/admin/images/favicon/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152"
-              href="/resources/assets/admin/images/favicon/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180"
-              href="/resources/assets/admin/images/favicon/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"
-              href="/resources/assets/admin/images/favicon/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32"
-              href="/resources/assets/admin/images/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96"
-              href="/resources/assets/admin/images/favicon/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16"
-              href="/resources/assets/admin/images/favicon/favicon-16x16.png">
-        <link rel="manifest" href="/resources/assets/admin/images/favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage"
-              content="/resources/assets/admin/images/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-    </head>
-    <body>
-        <div class="container-fluid">
-            <?php if ($user->isLoggedIn()) : ?>
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link <?= URI::getUrl() === 'admin/dashboard' ? 'active' : '' ?>"
-                                   href="/admin/dashboard">
-                                    <span data-feather="home"></span>
-                                    Dashboard
-                                    <?php if (URI::getUrl() === 'admin/dashboard') : ?>
-                                        <span class="sr-only">(current)</span>
-                                    <?php endif; ?>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link <?= URI::getUrl() === 'admin/account' ? 'active' : '' ?>"
-                                   href="/admin/account">
-                                    <span data-feather="user"></span>
-                                    Account
-                                    <?php if (URI::getUrl() === 'admin/dashboard') : ?>
-                                        <span class="sr-only">(current)</span>
-                                    <?php endif; ?>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link <?= URI::getUrl() === 'admin/logout' ? 'active' : '' ?>"
-                                   href="/admin/logout">
-                                    <span data-feather="log-out"></span>
-                                    Uitloggen
-                                    <?php if (URI::getUrl() === 'admin/dashboard') : ?>
-                                        <span class="sr-only">(current)</span>
-                                    <?php endif; ?>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+    <!-- Fav icon -->
+    <link rel="icon" type="image/png" sizes="96x96"
+          href="/resources/assets/admin/images/favicon/favicon-96x96.png">
+</head>
+<body>
+<?php if ($user->isLoggedIn()) : ?>
+<div class="wrapper">
+    <div class="sidebar" data-color="orange"
+         data-image="/resources/assets/admin/vendor/cms-theme/img/sidebar-5.jpg">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/admin/dashboard" class="simple-text">
+                    Koenavel
+                </a>
             </div>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2"><?= $data['title'] ?? '' ?></h1>
-                </div>
-
-                <?= $content ?? '' ?>
-            </main>
-            <?php else : ?>
-                <?= $content ?? '' ?>
-            <?php endif; ?>
+            <ul class="nav">
+                <li class="nav-item <?= strstr(URI::getUrl(), 'dashboard') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/admin/dashboard">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item <?= strstr(URI::getUrl(), 'pages') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/admin/pages">
+                        <i class="fas fa-pager"></i>
+                        <p>Pagina's</p>
+                    </a>
+                </li>
+                <li class="nav-item <?= strstr(URI::getUrl(), 'account') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/admin/account">
+                        <i class="fas fa-users"></i>
+                        <p>Accounts</p>
+                    </a>
+                </li>
+            </ul>
         </div>
+    </div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+            <div class="container-fluid">
+                <p class="navbar-brand">
+                    <?= $data['title'] ?? '' ?>
+                </p>
+                <!-- Mobile navbar toggle -->
+                <button class="navbar-toggler navbar-toggler-right"
+                        type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                </button>
+
+                <!-- Top right bar -->
+                <div class="collapse navbar-collapse justify-content-end"
+                     id="navigation">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/user/account">
+                                <span class="no-icon">
+                                    Welkom <?= $user->getName() ?>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/logout">
+                                <span class="no-icon">Uitloggen</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+                <?php Resource::loadFlashMessage(); ?>
+
+                <?= $content ?? '' ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php else : ?>
+    <?= $content ?? '' ?>
+<?php endif; ?>
 
         <footer>
             <!-- Jquery -->
@@ -124,13 +134,28 @@ $user = new \App\Models\User();
                     crossorigin="anonymous"></script>
 
             <!-- Bootstrap -->
-            <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script
+                src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Feather icons -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+            <!-- Popper js -->
+            <script src="/resources/assets/admin/js/popper.min.js"></script>
 
-            <!-- Default JS -->
-            <script src="/resources/assets/admin/js/default.js"></script>
+            <!-- Font awesome -->
+            <script src="https://kit.fontawesome.com/ec953a682d.js"
+                    crossorigin="anonymous"></script>
+
+            <!-- Data tables -->
+            <script type="text/javascript" charset="utf8"
+                    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+            <script type="text/javascript" charset="utf8"
+                    src="https://cdn.datatables.net/1.10.19/js/dataTables.semanticui.min.js"></script>
+            <script type="text/javascript" charset="utf8"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+            <script src="/resources/assets/admin/js/datatables.js"></script>
+
+            <!-- Theme js -->
+            <script type="text/javascript" charset="utf8"
+                    src="/resources/assets/admin/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
         </footer>
-    </body>
+</body>
 </html>

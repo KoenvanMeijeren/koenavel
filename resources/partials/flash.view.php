@@ -7,7 +7,7 @@ $session = new Session();
 $error = $session->get('error', true);
 if (!empty($error)) :
     ?>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger rounded" role="alert">
         <?= $error ?>
     </div>
 <?php endif; ?>
@@ -16,7 +16,7 @@ if (!empty($error)) :
 $message = $session->get('success', true);
 if (!empty($message)) :
     ?>
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success rounded" role="alert">
         <?= $message ?>
     </div>
 <?php endif; ?>
