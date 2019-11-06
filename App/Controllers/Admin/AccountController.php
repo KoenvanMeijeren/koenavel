@@ -22,7 +22,9 @@ final class AccountController
 
         $dataTable = new DataTable('dashboard');
         $dataTable->addHead(
-            'Naam', 'Email', 'Rechten'
+            'Naam',
+            'Email',
+            'Rechten'
         );
         foreach ($accounts as $account) {
             $rights = 'Beheerder';
@@ -37,11 +39,14 @@ final class AccountController
             );
         }
         $dataTable->addFooter(
-            'Naam', 'Email', 'Rechten'
+            'Naam',
+            'Email',
+            'Rechten'
         );
         $table = $dataTable->getTable();
 
-        return new View('partials/table',
+        return new View(
+            'partials/table',
             compact('title', 'table')
         );
     }

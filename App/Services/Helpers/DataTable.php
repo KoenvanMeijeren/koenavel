@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Helpers;
 
-
 use App\Src\Exceptions\Table\InvalidTableStructureException;
 
 final class DataTable
@@ -50,7 +49,7 @@ final class DataTable
     /**
      * Add a row to the table.
      *
-     * @param string[] $row the row to be added.
+     * @param string[] ...$row the row to be added.
      */
     public function addRow(...$row): void
     {
