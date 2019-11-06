@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Src\Core;
 
 use App\Contract\Src\Core\AppContract;
+use App\Models\User;
 use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
 use App\Src\State\State;
@@ -52,8 +53,10 @@ final class App implements AppContract
      */
     public function run(): void
     {
+        $user = new User();
+
         Router::load($this->routesLocation)
-            ->direct(URI::getUrl(), URI::getMethod(), 0);
+            ->direct(URI::getUrl(), URI::getMethod(), $user->getRights());
 
         Log::appRequest(
             '',

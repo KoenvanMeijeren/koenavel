@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Models\User;
+use App\Services\Auth\Login;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
@@ -23,9 +24,13 @@ final class AuthorizationController
         $this->user = new User();
     }
 
-    public function index(): View
+    public function index()
     {
         $title = Translation::get('login_page_title');
+
+        if ($this->user->isLoggedIn()) {
+            return new Redirect('/admin/dashboard');
+        }
 
         return new View(
             'admin/authorization/login',
@@ -35,11 +40,16 @@ final class AuthorizationController
 
     public function login(): Redirect
     {
-        return new Redirect('/admin/inloggen');
+        $login = new Login($this->user);
+        if ($login->execute()) {
+            return new Redirect('/admin/dashboard');
+        }
+
+        return new Redirect('/admin');
     }
 
     public function logout(): Redirect
     {
-        return new Redirect('/admin/uitloggen');
+        return $this->user->logout();
     }
 }

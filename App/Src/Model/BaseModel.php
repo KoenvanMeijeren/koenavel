@@ -65,7 +65,7 @@ abstract class BaseModel
     {
         $data = DB::table($this->table)
             ->select($this->columns)
-            ->where($this->idColumn, '=', $this->id)
+            ->where($this->idColumn, '=', (string) $this->id)
             ->execute()
             ->first();
 

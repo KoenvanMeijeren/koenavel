@@ -1,16 +1,21 @@
 <?php
 
+use App\Services\Helpers\Resource;
 use App\Src\Security\CSRF;
+use App\Src\Session\Session;
 use App\Src\Translation\Translation;
 
+$session = new Session();
 ?>
-<form class="form-signin" method="post" action="/admin/inloggen">
-    <?= CSRF::insertToken('admin/inloggen') ?>
+<form class="form-signin" method="post" action="/admin/login">
+    <?= CSRF::insertToken('/admin/login') ?>
 
     <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">
             <?= Translation::get('login_page_title') ?>
         </h1>
+
+        <?php Resource::loadFlashMessage(); ?>
     </div>
 
     <div class="form-label-group">

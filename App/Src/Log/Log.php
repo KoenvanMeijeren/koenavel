@@ -6,7 +6,6 @@ namespace App\Src\Log;
 
 use App\Src\Config\Config;
 use App\Src\Core\Env;
-use Exception;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\RotatingFileHandler;
@@ -24,11 +23,6 @@ final class Log
      */
     private static $logger;
 
-    /**
-     * Construct the logger.
-     *
-     * @throws Exception
-     */
     private function __construct()
     {
         $config = new Config();
@@ -67,8 +61,6 @@ final class Log
      * @param string $date the date to get log data from.
      *
      * @return string
-     *
-     * @throws Exception
      */
     public static function get(string $date): string
     {
@@ -85,8 +77,6 @@ final class Log
      *
      * @param string  $message the log message
      * @param mixed[] $context the log context
-     *
-     * @throws Exception
      */
     public static function debug(string $message, array $context = []): void
     {
@@ -100,8 +90,6 @@ final class Log
      *
      * @param string  $message the log message
      * @param mixed[] $context the log context
-     *
-     * @throws Exception
      */
     public static function info(string $message, array $context = []): void
     {
@@ -115,8 +103,6 @@ final class Log
      *
      * @param string  $message the log message
      * @param mixed[] $context the log context
-     *
-     * @throws Exception
      */
     public static function warning(string $message, array $context = []): void
     {
@@ -130,8 +116,6 @@ final class Log
      *
      * @param string  $message the log message
      * @param mixed[] $context the log context
-     *
-     * @throws Exception
      */
     public static function error(string $message, array $context = []): void
     {
@@ -147,8 +131,6 @@ final class Log
      * @param string $value     the message
      * @param string $url       the url which the user is viewing
      * @param string $method    the used method to access the uri
-     *
-     * @throws Exception
      */
     public static function appRequest(
         string $value,

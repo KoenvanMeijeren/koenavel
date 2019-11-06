@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Controllers\Admin\AccountController;
 use App\Controllers\Admin\AuthorizationController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\PageController;
@@ -22,15 +23,21 @@ Router::prefix('admin')->group(function () {
      */
     Router::get('', AuthorizationController::class,
         'index', User::GUEST);
-    Router::post('inloggen', AuthorizationController::class,
+    Router::post('login', AuthorizationController::class,
         'login', User::GUEST);
-    Router::get('uitloggen', AuthorizationController::class,
+    Router::get('logout', AuthorizationController::class,
         'logout', User::ADMIN);
 
     /**
      * The dashboard page.
      */
     Router::get('dashboard', DashboardController::class,
+        'index', User::ADMIN);
+
+    /**
+     * The account page.
+     */
+    Router::get('account', AccountController::class,
         'index', User::ADMIN);
 });
 

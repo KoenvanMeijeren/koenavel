@@ -1,1 +1,1 @@
-<h1>404 page</h1>
+<p>Deze pagina bestaat niet.</p>

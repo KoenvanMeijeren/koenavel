@@ -4,32 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Src\Database\DB;
+use App\Src\Translation\Translation;
 use App\Src\View\View;
 
 final class PageController
 {
-    /**
-     * Show the index page.
-     *
-     * @return View
-     */
     public function index(): View
     {
-        $accounts = DB::table('account')
-                ->select('*')->execute()->all();
+        $title = Translation::get('home_page_title');
 
-        return new View('index/index', compact('accounts'));
+        return new View('index/index', compact('title'));
     }
 
-    /**
-     * Route not found.
-     *
-     * @return View
-     */
     public function notFound(): View
     {
-        $title = '404 page';
+        $title = Translation::get('page_not_found_title');
 
         return new View('http/404', compact('title'));
     }

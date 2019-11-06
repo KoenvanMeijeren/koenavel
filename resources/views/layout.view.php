@@ -15,7 +15,7 @@ use App\Src\Translation\Translation;
         <link rel="stylesheet"
               href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
-        <title><?= $title ?? 'Undefined' ?></title>
+        <title><?= $data['title'] ?? 'Undefined' ?></title>
     </head>
     <body>
         <?= $content ?? '' ?>

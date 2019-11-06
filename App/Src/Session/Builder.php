@@ -81,7 +81,7 @@ final class Builder
      */
     public function __construct(
         string $sessionName = 'app',
-        int $expiringTime = 1 * 1 * 1 * 5,
+        int $expiringTime = 1 * 1 * 60 * 60, //day * hours * minutes * seconds
         string $path = '/',
         string $domain = '',
         bool $secure = false,
@@ -100,8 +100,6 @@ final class Builder
 
     /**
      * Start the session.
-     *
-     * @throws Exception
      */
     public function startSession(): void
     {
@@ -179,8 +177,7 @@ final class Builder
     /**
      * Destroy the session.
      *
-     * @return void
-     * @throws Exception
+     * @throws InvalidSessionException
      */
     public function destroy(): void
     {

@@ -23,6 +23,13 @@ function loadFile(string $filename, $vars = null)
     return include $filename;
 }
 
+function getFileContent(string $filename)
+{
+    Validate::var($filename)->fileExists();
+
+    return file_get_contents($filename);
+}
+
 /**
  * Load a picture and return it.
  *

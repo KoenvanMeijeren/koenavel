@@ -29,9 +29,10 @@ return [
     'login_failed_blocked_account_message', 'Dit account is geblokkeerd. Neem contact op met de beheerder van deze website.',
 
     /**
-     * Admin dashboard page translations.
+     * Admin page translations.
      */
     'admin_dashboard_title' => 'Dashboard',
+    'admin_account_title' => 'Account overzicht',
 
     /**
      * Admin pages maintenance translations.

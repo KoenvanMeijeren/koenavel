@@ -10,7 +10,6 @@ use App\Src\Core\URI;
 use App\Src\Log\Log;
 use App\Src\Security\Encrypt;
 use App\Src\State\State;
-use Exception;
 
 final class Session
 {
@@ -19,8 +18,6 @@ final class Session
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
-     *
-     * @throws Exception
      */
     public function save(string $key, string $value): void
     {
@@ -38,8 +35,6 @@ final class Session
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
-     *
-     * @throws Exception
      */
     public function saveForced(string $key, string $value): void
     {
@@ -53,8 +48,6 @@ final class Session
      *
      * @param string $key   the key of the session item
      * @param string $value the value of the key
-     *
-     * @throws Exception
      */
     public function flash(string $key, string $value): void
     {
@@ -70,7 +63,6 @@ final class Session
      * @param bool   $unset Must the session value be destroyed?
      *
      * @return string
-     * @throws Exception
      */
     public function get(string $key, bool $unset = false): string
     {
@@ -132,8 +124,6 @@ final class Session
      *
      * @param string $key
      * @param string $value
-     *
-     * @throws Exception
      */
     private function logRequest(string $key, string $value): void
     {
