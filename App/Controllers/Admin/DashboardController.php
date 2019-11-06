@@ -22,7 +22,7 @@ final class DashboardController
 
         $dataTable = new DataTable('dashboard');
         $dataTable->addHead(
-            'ID', 'Naam', 'Email', 'Rechten'
+            'Naam', 'Email', 'Rechten'
         );
         foreach ($accounts as $account) {
             $rights = 'Beheerder';
@@ -31,14 +31,13 @@ final class DashboardController
             }
 
             $dataTable->addRow(
-                $account->account_ID ?? '',
                 ucfirst($account->account_name ?? ''),
                 lcfirst($account->account_email ?? ''),
                 $rights
             );
         }
         $dataTable->addFooter(
-            'ID', 'Naam', 'Email', 'Rechten'
+            'Naam', 'Email', 'Rechten'
         );
         $table = $dataTable->getTable();
 
