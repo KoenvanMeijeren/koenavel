@@ -21,7 +21,7 @@ final class DataTable
     public function __construct(string $id)
     {
         $this->addTableContent(
-            "<table id='".$id."' class='ui table-hover celled table' style='width:100%'>"
+            "<table id='".$id."' class='ui table-hover table-striped celled table' style='width:100%'>"
         );
     }
 
