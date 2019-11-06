@@ -8,6 +8,6 @@ abstract class Resource
 {
     final public static function loadFlashMessage(): void
     {
-        loadFile(RESOURCES_PATH . '/partials/flash.view.php');
+        loadFile(RESOURCES_PATH . '/views/partials/flash.view.php');
     }
 }

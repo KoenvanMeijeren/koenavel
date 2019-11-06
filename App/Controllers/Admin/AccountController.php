@@ -41,7 +41,7 @@ final class AccountController
         );
         $table = $dataTable->getTable();
 
-        return new View('admin/account/account',
+        return new View('partials/table',
             compact('title', 'table')
         );
     }

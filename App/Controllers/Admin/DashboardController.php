@@ -41,7 +41,7 @@ final class DashboardController
         );
         $table = $dataTable->getTable();
 
-        return new View('admin/dashboard/index',
+        return new View('partials/table',
             compact('title', 'table')
         );
     }
