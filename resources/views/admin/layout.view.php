@@ -73,6 +73,12 @@ $user = new \App\Models\User();
                         <p>Accounts</p>
                     </a>
                 </li>
+                <li class="nav-item <?= strstr(URI::getUrl(), 'debug') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/admin/debug">
+                        <i class="fas fa-code"></i>
+                        <p>Debuggen</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
