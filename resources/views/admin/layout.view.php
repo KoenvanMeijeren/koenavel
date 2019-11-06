@@ -49,11 +49,6 @@ $user = new \App\Models\User();
     <div class="sidebar" data-color="orange"
          data-image="/resources/assets/admin/vendor/cms-theme/img/sidebar-5.jpg">
         <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="/admin/dashboard" class="simple-text">
-                    Koenavel
-                </a>
-            </div>
             <ul class="nav">
                 <li class="nav-item <?= strstr(URI::getUrl(), 'dashboard') ? 'active' : '' ?>">
                     <a class="nav-link" href="/admin/dashboard">
@@ -63,7 +58,7 @@ $user = new \App\Models\User();
                 </li>
                 <li class="nav-item <?= strstr(URI::getUrl(), 'pages') ? 'active' : '' ?>">
                     <a class="nav-link" href="/admin/pages">
-                        <i class="fas fa-pager"></i>
+                        <i class="fas fa-sitemap"></i>
                         <p>Pagina's</p>
                     </a>
                 </li>
@@ -86,17 +81,15 @@ $user = new \App\Models\User();
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg " color-on-scroll="500">
             <div class="container-fluid">
-                <p class="navbar-brand">
+                <p class="navbar-brand font-weight-bold">
                     <?= $data['title'] ?? '' ?>
                 </p>
                 <!-- Mobile navbar toggle -->
-                <button class="navbar-toggler navbar-toggler-right"
+                <button class="navbar-toggler navbar-toggler-right mr-3"
                         type="button" data-toggle="collapse"
                         aria-controls="navigation-index" aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <i class="fas fa-bars"></i>
                 </button>
 
                 <!-- Top right bar -->
@@ -104,14 +97,14 @@ $user = new \App\Models\User();
                      id="navigation">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/user/account">
+                            <a class="nav-link color-default" href="/admin/user/account">
                                 <span class="no-icon">
                                     Welkom <?= $user->getName() ?>
                                 </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/logout">
+                            <a class="nav-link color-default" href="/admin/logout">
                                 <span class="no-icon">Uitloggen</span>
                             </a>
                         </li>

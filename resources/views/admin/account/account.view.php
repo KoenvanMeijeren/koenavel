@@ -1,4 +1,4 @@
-<table id="accounts" class="ui celled table" style="width:100%">
+<table id="accounts" class="ui table-hover celled table" style="width:100%">
     <thead>
     <tr>
         <th>Name</th>
@@ -467,14 +467,4 @@
         <td>$112,000</td>
     </tr>
     </tbody>
-    <tfoot>
-    <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th>Office</th>
-        <th>Age</th>
-        <th>Start date</th>
-        <th>Salary</th>
-    </tr>
-    </tfoot>
 </table>

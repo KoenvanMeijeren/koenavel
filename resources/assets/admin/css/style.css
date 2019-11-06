@@ -4,16 +4,20 @@
 
 .btn-default {
     font-size: 1.75rem;
-    background-color: #E3AB1C;
+    background-color: #FFA534;
     color: #ffffff;
 }
 
 .btn-default:hover {
-    background-color: #E3AB1C;
+    background-color: #FFA534;
     color: #fefefe;
 }
 
 .btn-default:hover {
     transition: 0.3s;
     opacity: 0.7;
+}
+
+.color-default:hover {
+    color: #FFA534!important;
 }
