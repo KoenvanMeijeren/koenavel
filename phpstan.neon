@@ -1,16 +1,18 @@
 parameters:
     ignoreErrors:
-        # A lot of functions are in extensions so it is ok not to find those
         - "#Function .* not found.#"
         - "#Constant .* not found.#"
         - "#Internal error#"
         - "#function .* expects .*, .*|false given.#"
-        # find out how i can avoid it to use this
         - "#In method .*, parameter .* can be type-hinted to .*.#"
         - "#Constructor .* has parameter .* with default value.#"
         - "#Class .* is not allowed to extend .*#"
         - "#Variable method call on mixed.#"
         - "#Function .* should not be used.#"
+        - "#Language construct .* should not be used.#"
+        - "#Construct .* is not allowed. Use more strict comparison.#"
+        - "#Access to an undefined property .*#"
+        - "#Call to function .* with array will always evaluate to true.#"
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon

@@ -32,6 +32,7 @@ return [
      * Admin page translations.
      */
     'admin_dashboard_title' => 'Dashboard',
+    'admin_page_title' => 'Pagina\'s overzicht',
     'admin_account_title' => 'Account overzicht',
 
     /**

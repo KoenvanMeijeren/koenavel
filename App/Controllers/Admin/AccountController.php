@@ -6,19 +6,25 @@ namespace App\Controllers\Admin;
 
 use App\Models\User;
 use App\Services\Helpers\DataTable;
-use App\Src\Database\DB;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
 final class AccountController
 {
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
-        $accounts = DB::table('account')
-            ->select('*')
-            ->execute()
-            ->all();
+        $accounts = $this->user->getAll();
 
         $dataTable = new DataTable('dashboard');
         $dataTable->addHead(
@@ -43,7 +49,7 @@ final class AccountController
             'Email',
             'Rechten'
         );
-        $table = $dataTable->getTable();
+        $table = $dataTable->get();
 
         return new View(
             'partials/table',

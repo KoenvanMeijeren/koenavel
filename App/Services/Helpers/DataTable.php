@@ -20,7 +20,7 @@ final class DataTable
      */
     public function __construct(string $id)
     {
-        $this->addTableContent(
+        $this->addContent(
             "<table id='".$id."' class='ui table-hover table-striped celled table' style='width:100%'>"
         );
     }
@@ -41,7 +41,7 @@ final class DataTable
         }
 
         $heads = '<th>' . implode('</th><th>', $heads) . '</th>';
-        $this->addTableContent(
+        $this->addContent(
             "<thead><tr>{$heads}</tr></thead>"
         );
     }
@@ -54,11 +54,11 @@ final class DataTable
     public function addRow(...$row): void
     {
         if (!strstr($this->table, 'tbody')) {
-            $this->addTableContent('<tbody>');
+            $this->addContent('<tbody>');
         }
 
         $row = '<td>' . implode('</td><td>', $row) . '</td>';
-        $this->addTableContent(
+        $this->addContent(
             "<tr>{$row}</tr>"
         );
     }
@@ -79,7 +79,7 @@ final class DataTable
         }
 
         $heads = '<th>' . implode('</th><th>', $footer) . '</th>';
-        $this->addTableContent(
+        $this->addContent(
             "<tfoot><tr>{$heads}</tr></tfoot>"
         );
     }
@@ -89,16 +89,16 @@ final class DataTable
      *
      * @return string
      */
-    public function getTable(): string
+    public function get(): string
     {
-        $this->addTableContent(
+        $this->addContent(
             "</tbody></table>"
         );
 
         return $this->table;
     }
 
-    private function addTableContent(string $table): void
+    private function addContent(string $table): void
     {
         $this->table .= $table;
     }

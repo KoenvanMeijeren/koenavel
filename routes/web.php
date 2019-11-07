@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Controllers\Admin\AccountController;
 use App\Controllers\Admin\AuthorizationController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\PageController as AdminPageController;
 use App\Controllers\PageController;
 use App\Models\User;
 use App\Src\Core\Router;
@@ -32,6 +33,12 @@ Router::prefix('admin')->group(function () {
      * The dashboard page.
      */
     Router::get('dashboard', DashboardController::class,
+        'index', User::ADMIN);
+
+    /**
+     * The pages page.
+     */
+    Router::get('pages', AdminPageController::class,
         'index', User::ADMIN);
 
     /**
