@@ -34,6 +34,7 @@ return [
     'admin_dashboard_title' => 'Dashboard',
     'admin_page_title' => 'Pagina\'s overzicht',
     'admin_account_title' => 'Account overzicht',
+    'admin_debug_title' => 'Debug informatie',
 
     /**
      * Admin pages maintenance translations.

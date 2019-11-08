@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Controllers\Admin\AccountController;
 use App\Controllers\Admin\AuthorizationController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\DebugController;
 use App\Controllers\Admin\PageController as AdminPageController;
 use App\Controllers\PageController;
 use App\Models\User;
@@ -45,6 +46,12 @@ Router::prefix('admin')->group(function () {
      * The account page.
      */
     Router::get('account', AccountController::class,
+        'index', User::ADMIN);
+
+    /**
+     * The debug page.
+     */
+    Router::get('debug', DebugController::class,
         'index', User::ADMIN);
 });
 
