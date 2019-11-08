@@ -98,6 +98,11 @@ final class DataTable
         return $this->table;
     }
 
+    /**
+     * Add html content to the table.
+     *
+     * @param string $table
+     */
     private function addContent(string $table): void
     {
         $this->table .= $table;
