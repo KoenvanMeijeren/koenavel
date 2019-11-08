@@ -110,3 +110,27 @@ if (!function_exists('replaceAllExceptFirstString')) {
         );
     }
 }
+
+if (!function_exists('isJson')) {
+    /**
+     * Determine if the given data is of the type of json.
+     *
+     * @param string $data the data to be checked.
+     *
+     * @return bool
+     */
+    function isJson(string $data)
+    {
+        if ($data === '') {
+            return false;
+        }
+
+        \json_decode($data);
+
+        if (\json_last_error()) {
+            return false;
+        }
+
+        return true;
+    }
+}

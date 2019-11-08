@@ -67,19 +67,22 @@ final class Session
     public function get(string $key, bool $unset = false): string
     {
         $request = new Request();
-        $sanitize = new Sanitize($request->session($key));
-        $data = (string) $sanitize->data();
-
+        $data = $request->session($key);
         if ($data === '') {
             return '';
         }
 
-        $data = new Encrypt($data);
-        $value = $data->decrypt();
+        if (isJson($data)) {
+            return $data;
+        }
 
         if ($unset) {
             $this->unset($key);
         }
+
+        $sanitize = new Sanitize($data);
+        $data = new Encrypt((string) $sanitize->data());
+        $value = $data->decrypt();
 
         $this->logRequest($key, $value);
         return $value;
