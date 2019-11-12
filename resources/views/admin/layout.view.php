@@ -132,7 +132,7 @@ $user = new User();
         </div>
     </div>
 <?php else : ?>
-    <div class="container">
+    <div class="container-fluid">
         <?= $content ?? '' ?>
     </div>
 <?php endif; ?>
