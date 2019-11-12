@@ -112,7 +112,7 @@ final class Debug
 
     /**
      * Get information from the logs.
-     *
+     * 
      * @return string
      */
     public function getLogInformation(): string
