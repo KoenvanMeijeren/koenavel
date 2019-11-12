@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Session;
 
+use App\Src\Core\Cookie;
 use App\Src\Exceptions\Session\InvalidSessionException;
 use App\Src\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
@@ -70,24 +71,22 @@ final class Builder
     /**
      * Construct the session.
      *
-     * @param string $sessionName  the name of the session
-     * @param int    $expiringTime the expiring time of the session
-     * @param string $path         The path of the session
-     * @param string $domain       The domain of the session
-     * @param bool   $secure       Determine if the session must be secure
-     * @param bool   $httpOnly     Determine if the session must be http only
+     * @param int $expiringTime the expiring time of the session
+     * @param string $path The path of the session
+     * @param string $domain The domain of the session
+     * @param bool $secure Determine if the session must be secure
+     * @param bool $httpOnly Determine if the session must be http only
      *
      * @throws Exception
      */
     public function __construct(
-        string $sessionName = 'app',
         int $expiringTime = 1 * 1 * 60 * 60, //day * hours * minutes * seconds
         string $path = '/',
         string $domain = '',
         bool $secure = false,
         bool $httpOnly = true
     ) {
-        $this->name = $sessionName;
+        $this->name = random_string(64);
         $this->expiringTime = $expiringTime;
         $this->path = $path;
         $this->domain = $domain;
@@ -96,6 +95,8 @@ final class Builder
 
         $this->session = new Session();
         $this->security = new SessionSecurity();
+
+        $this->setSessionName();
     }
 
     /**
@@ -104,7 +105,7 @@ final class Builder
     public function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
-            session_name($this->name);
+            session_name($this->getSessionName());
 
             session_set_cookie_params(
                 $this->expiringTime,  // Lifetime -- 0 means erase when browser closes
@@ -129,6 +130,20 @@ final class Builder
         $this->security->remoteIpProtection();
         $this->setExpiringSession();
         $this->setCanarySession();
+    }
+
+    private function setSessionName(): void
+    {
+        $cookie = new Cookie(1 * 1 * 60 * 60);
+
+        $cookie->save('sessionName', $this->name);
+    }
+
+    private function getSessionName(): string
+    {
+        $cookie = new Cookie();
+
+        return $cookie->get('sessionName', $this->name);
     }
 
     /**
@@ -163,14 +178,14 @@ final class Builder
             && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
-            $this->session->saveForced('canary', (string) time());
+            $this->session->saveForced('canary', (string)time());
         }
 
-        if ((int) $this->session->get('canary') < time() - 300
+        if ((int)$this->session->get('canary') < time() - 300
             && PHP_SESSION_NONE !== session_status()
         ) {
             session_regenerate_id(true);
-            $this->session->saveForced('canary', (string) time());
+            $this->session->saveForced('canary', (string)time());
         }
     }
 

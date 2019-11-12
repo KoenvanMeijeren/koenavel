@@ -24,6 +24,7 @@
         "monolog/monolog": "^2.0",
         "paragonie/anti-csrf": "^2.2",
         "siriusphp/upload": "^2.1",
+        "symfony/filesystem": "^4.3",
         "symfony/templating": "^4.3",
         "twbs/bootstrap": "4.3.1"
     },
