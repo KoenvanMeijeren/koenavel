@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Src\Core;
 
 use App\Src\Security\Encrypt;
-use Exception;
 
 final class Cookie
 {
@@ -72,8 +71,6 @@ final class Cookie
      *
      * @param string $key   the key of the cookie item
      * @param string $value the value of the key
-     *
-     * @throws Exception
      */
     public function save(string $key, string $value): void
     {
@@ -98,19 +95,18 @@ final class Cookie
     /**
      * Get data from the cookie; unset it if specified.
      *
-     * @param string $key   the key for searching to the
-     *                      corresponding cookie value
+     * @param string $key       the key for searching to the
+     *                          corresponding cookie value
+     * @param string $default   the default value to be returned when
+     *                          the given key does not exists.
      *
      * @return string
-     *
-     * @throws Exception
      */
-    public function get(string $key): string
+    public function get(string $key, string $default = ''): string
     {
         $request = new Request();
-
         if ($request->cookie($key) === '') {
-            return '';
+            return $default;
         }
 
         $sanitize = new Sanitize($request->cookie($key));
