@@ -5,15 +5,7 @@ declare(strict_types=1);
 use App\Src\Exceptions\File\FileNotFoundException;
 use App\Src\Validate\Validate;
 
-/**
- * Load a file and return it.
- *
- * @param string    $filename the filename
- * @param string[]  $vars     the vars to use in the loaded file file
- *
- * @return mixed
- */
-function loadFile(string $filename, $vars = null)
+function includeFile(string $filename, $vars = null)
 {
     if (!empty($vars)) {
         extract($vars);
@@ -38,7 +30,7 @@ function getFileContent(string $filename)
  *
  * @return string the image or a fallback otherwise nothing
  */
-function loadImage(string $name, string $fallback)
+function includeImage(string $name, string $fallback)
 {
     if (!empty($name)
         && file_exists($_SERVER['DOCUMENT_ROOT'].$name)

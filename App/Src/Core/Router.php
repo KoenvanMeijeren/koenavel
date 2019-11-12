@@ -62,7 +62,7 @@ final class Router
         string $directoryPath = ROUTES_PATH . '/'
     ): Router {
         self::resetRoutes();
-        loadFile($directoryPath.$file);
+        includeFile($directoryPath.$file);
 
         return new Router();
     }

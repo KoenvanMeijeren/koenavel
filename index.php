@@ -9,8 +9,3 @@ require_once VENDOR_PATH . '/autoload.php';
 
 $app = new App();
 $app->run();
-
-// todo rewrite sensitive config data into .env files
-// todo add random generated session id
-// todo make local settings work
-// todo: Actually flash data into the session -> todo store it and after using it, destroy the data

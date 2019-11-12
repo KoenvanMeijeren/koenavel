@@ -47,7 +47,7 @@ final class View
     {
         ob_start();
 
-        loadFile(RESOURCES_PATH."/views/{$name}.view.php", $content);
+        includeFile(RESOURCES_PATH."/views/{$name}.view.php", $content);
 
         $content = ob_get_clean();
 

@@ -38,6 +38,6 @@ abstract class Loader
      */
     final protected function loadConfig(): array
     {
-        return loadFile($this->configLocation);
+        return includeFile($this->configLocation);
     }
 }
