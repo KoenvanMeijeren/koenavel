@@ -27,6 +27,8 @@ final class DebugController
         $env = $this->debug->getEnv();
         $sessionSettings = $this->debug->getSessionSettingsInformation();
         $sessionInformation = $this->debug->getSessionInformation();
+        $cookieInformation = $this->debug->getCookieInformation();
+        $logInformation = $this->debug->getLogInformation();
 
         return new View(
             'admin/debug/index',
@@ -34,7 +36,9 @@ final class DebugController
                 'title',
                 'env',
                 'sessionSettings',
-                'sessionInformation'
+                'sessionInformation',
+                'cookieInformation',
+                'logInformation'
             )
         );
     }

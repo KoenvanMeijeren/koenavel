@@ -21,3 +21,10 @@
 .color-default:hover {
     color: #FFA534!important;
 }
+
+.scrollbox {
+    height: 300px;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

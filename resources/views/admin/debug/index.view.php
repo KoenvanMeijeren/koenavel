@@ -20,4 +20,20 @@ use App\Src\Core\Env;
 
     <?= $sessionInformation ?? 'Geen sessie informatie gevonden' ?>
     <hr>
+
+    <h2 class="h4">
+        Cookie informatie
+    </h2>
+
+    <?= $cookieInformation ?? 'Geen cookie informatie gevonden' ?>
+    <hr>
+
+    <h2 class="h4">
+        Log informatie
+    </h2>
+
+    <div class="scrollbox">
+        <?= $logInformation ?? 'Geen log informatie gevonden' ?>
+    </div>
+    <hr>
 </div>

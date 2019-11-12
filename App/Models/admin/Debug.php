@@ -6,7 +6,9 @@ namespace App\Models\admin;
 
 use App\Services\Helpers\DataTable;
 use App\Services\Helpers\DateTime;
+use App\Src\Core\Cookie;
 use App\Src\Core\Env;
+use App\Src\Log\Log;
 use App\Src\Session\Session;
 use Cake\Chronos\Chronos;
 
@@ -77,5 +79,49 @@ final class Debug
         }
 
         return $table->get();
+    }
+
+    public function getCookieInformation(): string
+    {
+        $cookie = new Cookie();
+        $table = new DataTable('cookieInfo');
+
+        $table->addHead('Sleutel', 'Waarde');
+        foreach ($_COOKIE as $key => $data) {
+            if ($key === 'sessionName') {
+                continue;
+            }
+
+            if ($cookie->exists($cookie->get('sessionName'))
+                && $key === $cookie->get('sessionName')
+            ) {
+                $table->addRow(
+                    'sessie cookie',
+                    $_COOKIE[$cookie->get('sessionName')]
+                );
+            } else {
+                $table->addRow(
+                    $key,
+                    $cookie->get($key)
+                );
+            }
+        }
+
+        return $table->get();
+    }
+
+    /**
+     * Get information from the logs.
+     *
+     * @return string
+     */
+    public function getLogInformation(): string
+    {
+        //todo find a way to filter this data
+        $date = new Chronos();
+
+        $log = Log::get($date->toDateString());
+
+        return $log;
     }
 }

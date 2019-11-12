@@ -93,6 +93,22 @@ final class Cookie
     }
 
     /**
+     * Check if the given key exists in the super global array.
+     *
+     * @param string $key the key to be checked for if it exists.
+     *
+     * @return bool
+     */
+    public function exists(string $key): bool
+    {
+        if (array_key_exists($key, $_COOKIE)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get data from the cookie; unset it if specified.
      *
      * @param string $key       the key for searching to the
