@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
+use App\Src\Exceptions\Uri\InvalidDomainException;
 use App\Src\Exceptions\Uri\InvalidEnvException;
 use App\Src\Log\LoggerHandler;
 use App\Src\Validate\Validate;
 use App\Src\View\ProductionErrorView;
-use Exception;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as Whoops;
 
@@ -48,7 +48,8 @@ final class Env
      *
      * Set the live url, host and set the env.
      *
-     * @throws Exception
+     * @throws InvalidDomainException
+     * @throws InvalidEnvException
      */
     public function __construct()
     {
@@ -75,7 +76,6 @@ final class Env
      * Set the error handling
      *
      * @return void
-     * @throws Exception
      */
     public function setErrorHandling(): void
     {
@@ -95,7 +95,6 @@ final class Env
     /**
      * Set the current env based on the uri.
      *
-     * @throws Exception
      * @throws InvalidEnvException
      */
     private function setEnv(): void
