@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    flex-direction: column;
+    color: #666;
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7em;
+}
+
+h1, h2, h3, h4, h5, h6, .font-beyond {
+    font-family: 'satisfy', cursive;
+}
+
+a {
+    color: #000000;
+}
+
+a:hover {
+    color: #962a2a;
+}
+
+.active {
+    color: #962a2a;
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-weight: normal;
+    font-style: normal;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+
+.navbar-toggler {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    font-size: 3rem;
+}
+
+@media (min-width: 400px) {
+    .navbar-toggler {
+        right: 40px;
+    }
+}
+
+@media (min-width: 650px) {
+    .navbar-toggler {
+        right: 80px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-toggler {
+        right: 10%;
+    }
+}
+
+.logo {
+    max-width: 100px;
+}
+
+.page {
+    flex: 1;
+}
+
+.row-striped:nth-of-type(odd){
+    background-color: #efefef;
+    border-left: 4px #000000 solid;
+}
+
+.row-striped:nth-of-type(even){
+    background-color: #ffffff;
+    border-left: 4px #efefef solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}
+
+.event:hover {
+    border-left: 4px #962a2a solid;
+    transition: 0.7s;
+    background-color: #dddddd;
+}
