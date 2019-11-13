@@ -82,6 +82,31 @@ if (!function_exists('replaceString')) {
     }
 }
 
+if (!function_exists('replaceDot')) {
+    /**
+     * Replace all found strings in a string.
+     *
+     * @param string $toReplace the new value of the string
+     *                          which is going to be replaced
+     * @param string $string the string to search in
+     * @param int $limit limit the number of matches
+     *
+     * @return string
+     */
+    function replaceDot(
+        string $toReplace,
+        string $string,
+        int $limit = -1
+    ) {
+        return (string) preg_replace(
+            '/\./',
+            $toReplace,
+            $string,
+            $limit
+        );
+    }
+}
+
 if (!function_exists('replaceAllExceptFirstString')) {
     /**
      * Replace all found strings in a string.
