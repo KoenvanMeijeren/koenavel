@@ -88,7 +88,7 @@ final class Debug
 
         $table->addHead('Sleutel', 'Waarde');
         foreach ($_COOKIE as $key => $data) {
-            if ($key === 'sessionName') {
+            if ($key === 'sessionName' || $key === 'websiteID') {
                 continue;
             }
 
@@ -112,7 +112,7 @@ final class Debug
 
     /**
      * Get information from the logs.
-     * 
+     *
      * @return string
      */
     public function getLogInformation(): string
