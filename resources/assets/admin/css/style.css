@@ -22,7 +22,14 @@
     color: #FFA534!important;
 }
 
-.scrollbox {
+.scrollbox-horizontal {
+    width: 300px;
+    max-width: 300px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.scrollbox-vertical {
     height: 300px;
     max-height: 300px;
     overflow-x: hidden;

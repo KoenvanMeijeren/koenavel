@@ -21,7 +21,7 @@ use App\Src\Core\Env;
     <?= $sessionInformation ?? 'Geen sessie informatie gevonden' ?>
     <hr>
 
-    <h2 class="h4">
+    <h2 class="h4 scrollbox-horizontal">
         Cookie informatie
     </h2>
 
@@ -32,7 +32,7 @@ use App\Src\Core\Env;
         Log informatie
     </h2>
 
-    <div class="scrollbox">
+    <div class="scrollbox-vertical">
         <?= $logInformation ?? 'Geen log informatie gevonden' ?>
     </div>
     <hr>

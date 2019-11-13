@@ -1,11 +1,15 @@
-<div class="header mt-0 pt-0">
+<div class="image-mobile mt-0 pt-0">
+    <img src="https://via.placeholder.com/350x300" width="100%">
+</div>
+
+<div class="image-desktop mt-0 pt-0">
     <img src="/resources/assets/images/test_image.jpg" width="100%">
 </div>
 
 <div class="container page">
-    <div class="m-5 text-center">
-        <h1>Opgericht in 1953</h1>
-        <p>
+    <div class="mt-5 mb-5">
+        <h1 class="text-center">Opgericht in 1953</h1>
+        <p class="text-center">
             Het Christelijk gemend koor "Wijdt Hem Uw Kunst" uit Harderwijk werd
             opgericht in 1953 en heeft op dit moment 65 leden. Sinds 2018 staat
             het
@@ -22,22 +26,35 @@
     </div>
 </div>
 
-<div class="header m-0 p-0">
-    <img src="https://via.placeholder.com/1519x300"
+<div class="image-mobile m-0 p-0">
+    <img src="https://via.placeholder.com/350x300" width="100%">
+</div>
+
+<div class="image-desktop m-0 p-0">
+    <img src="https://via.placeholder.com/1519x300" width="100%">
 </div>
 
 <div class="container page">
-    <div class="m-5 text-center">
-        <h1>Komende concerten in november</h1>
+    <div class="mt-5 mb-5">
+        <h1 class="text-center">Komende concerten in november</h1>
 
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">23e</span>
-                </h1>
+        <?php
+        $date = new \App\Services\Helpers\DateTime(new \Cake\Chronos\Chronos());
+        for ($x = 8; $x < 15; $x++) : ?>
+        <div class="row event event-border rounded shadow">
+            <div class="col-1 pt-2 default-color">
+                <span class="h3 font-weight-bold">
+                    <?= $x ?>
+                </span>
+                <span class="text-uppercase">
+                    <?= $date->toShortMonth() ?>
+                </span>
             </div>
-            <div class="col-10">
-                <h3>Kerst</h3>
+            <div class="col-11 pt-2">
+                <h5 class="font-weight-bold text-uppercase">
+                    Concert in de grote kerk - Kaatsheuvel
+                </h5>
+
                 <ul class="list-inline">
                     <li class="list-inline-item">
                         <i class="fa fa-calendar-o" aria-hidden="true"></i>
@@ -45,134 +62,15 @@
                     </li>
                     <li class="list-inline-item">
                         <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 - 14:00 uur
+                        12:30 uur
                     </li>
                     <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                         Grote kerk
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">27e</span>
-                </h1>
-            </div>
-            <div class="col-10">
-                <h3>Pasen</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Zondag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 uur - 16:00 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                        Kleine kerk
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">23e</span>
-                </h1>
-            </div>
-            <div class="col-10">
-                <h3>Kerst</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Maandag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 - 14:00 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                        Grote kerk
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">27e</span>
-                </h1>
-            </div>
-            <div class="col-10">
-                <h3>Pasen</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Zondag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 uur - 16:00 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                        Kleine kerk
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">23e</span>
-                </h1>
-            </div>
-            <div class="col-10">
-                <h3>Kerst</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Maandag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 - 14:00 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                        Grote kerk
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row row-striped event">
-            <div class="col-2 text-right">
-                <h1 class="display-4">
-                    <span class="badge badge-secondary">27e</span>
-                </h1>
-            </div>
-            <div class="col-10">
-                <h3>Pasen</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Zondag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 uur - 16:00 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                        Kleine kerk
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <?php endfor; ?>
     </div>
 </div>

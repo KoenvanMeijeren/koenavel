@@ -28,9 +28,11 @@ use App\Src\Translation\Translation;
     <link rel="stylesheet" href="/resources/assets/css/theme.css">
 
     <title><?= $data['title'] ?? 'Undefined' ?></title>
+
+    <link rel="icon" href="/resources/assets/images/logo.png">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg mb-0 pb-0">
+<nav class="navbar navbar-expand-lg m-0 p-0">
     <div class="container">
         <div class="d-flex flex-grow-1">
             <a class="navbar-brand logo" href="#">
@@ -38,16 +40,19 @@ use App\Src\Translation\Translation;
                      alt="Wijdt Hem uw kunst logo" width="100%">
             </a>
 
-            <button class="navbar-toggler" type="button"
+            <button class="navbar-toggler button-unstyled"
+                    type="button" id="nav-icon"
                     data-toggle="collapse" data-target="#navbar"
                     aria-controls="navbar" aria-expanded="false"
                     aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
 
         <div class="collapse navbar-collapse flex-grow-1" id="navbar">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-3">
                 <li class="nav-item active">
                     <a class="nav-link active" href="#home">
                         Home
@@ -80,7 +85,7 @@ use App\Src\Translation\Translation;
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-2 mb-3">
-                <h5>Sociale media</h5>
+                <h5 class="font-beyond">Sociale media</h5>
 
                 <ul class="list-unstyled">
                     <li>
@@ -105,7 +110,7 @@ use App\Src\Translation\Translation;
             </div>
 
             <div class="col-sm-3 mb-3">
-                <h5>Secretariaat</h5>
+                <h5 class="font-beyond">Secretariaat</h5>
 
                 <ul class="list-unstyled">
                     <li>
@@ -124,7 +129,7 @@ use App\Src\Translation\Translation;
             </div>
 
             <div class="col-sm-2 mb-3">
-                <h5>Informatie</h5>
+                <h5 class="font-beyond">Informatie</h5>
 
                 <ul class="list-unstyled">
                     <li>
@@ -153,6 +158,9 @@ use App\Src\Translation\Translation;
     <!-- Bootstrap -->
     <script
         src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Site JS -->
+    <script src="/resources/assets/js/default.js"></script>
 </footer>
 </body>
 </html>
