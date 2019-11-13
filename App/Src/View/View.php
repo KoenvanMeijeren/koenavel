@@ -30,9 +30,9 @@ final class View
             'admin/layout.view.php' : 'layout.view.php';
 
         echo $templating->render($layout, [
-                'content' => $this->renderContent($name, $content),
-                'data' => $content
-            ]);
+            'content' => $this->renderContent($name, $content),
+            'data' => $content
+        ]);
     }
 
     /**
