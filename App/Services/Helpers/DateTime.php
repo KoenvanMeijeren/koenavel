@@ -12,7 +12,7 @@ final class DateTime
     /**
      * The datetime to be converted.
      *
-     * @var string
+     * @var Chronos
      */
     private $datetime;
 
@@ -23,10 +23,30 @@ final class DateTime
      */
     private $locale;
 
-    public function __construct(Chronos $datetime, string $locale = 'nl_NL')
-    {
-        $this->datetime = $datetime->toDateTimeString();
+    /**
+     * The timezone to convert the datetime to.
+     *
+     * @var string
+     */
+    private $timezone = 'Europe/Amsterdam';
+
+    /**
+     * The calendar which is going to be used for formatting the date.
+     *
+     * @var int
+     */
+    private $calendar = IntlDateFormatter::GREGORIAN;
+
+    public function __construct(
+        Chronos $datetime,
+        string $locale = 'nl_NL',
+        string $timezone = 'Europe/Amsterdam',
+        int $calendar = IntlDateFormatter::GREGORIAN
+    ) {
+        $this->datetime = $datetime;
         $this->locale = $locale;
+        $this->timezone = $timezone;
+        $this->calendar = $calendar;
     }
 
     /**
@@ -42,7 +62,7 @@ final class DateTime
             IntlDateFormatter::SHORT
         );
 
-        return $fmt->format(strtotime($this->datetime));
+        return $fmt->format(strtotime($this->datetime->toDateTimeString()));
     }
 
     /**
@@ -58,7 +78,7 @@ final class DateTime
             IntlDateFormatter::NONE
         );
 
-        return $fmt->format(strtotime($this->datetime));
+        return $fmt->format(strtotime($this->datetime->toDateTimeString()));
     }
 
     /**
@@ -74,6 +94,28 @@ final class DateTime
             IntlDateFormatter::SHORT
         );
 
-        return $fmt->format(strtotime($this->datetime));
+        return $fmt->format(strtotime($this->datetime->toDateTimeString()));
+    }
+
+    /**
+     * Convert the datetime to a short month notation of 3 chars.
+     *
+     * @return string
+     */
+    public function toShortMonth(): string
+    {
+        $fmt = new IntlDateFormatter(
+            $this->locale,
+            IntlDateFormatter::MEDIUM,
+            IntlDateFormatter::NONE,
+            $this->timezone,
+            $this->calendar,
+            'MMM'
+        );
+
+        return replaceDot(
+            '',
+            $fmt->format(strtotime($this->datetime->toDateTimeString()))
+        );
     }
 }
