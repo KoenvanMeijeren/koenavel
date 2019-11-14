@@ -26,7 +26,7 @@ final class AccountController
         $title = Translation::get('admin_account_title');
         $accounts = $this->user->getAll();
 
-        $dataTable = new DataTable('dashboard');
+        $dataTable = new DataTable('account');
         $dataTable->addHead(
             'Naam',
             'Email',
