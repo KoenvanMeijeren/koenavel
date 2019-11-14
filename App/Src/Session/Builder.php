@@ -164,6 +164,7 @@ final class Builder
 
         if ($expired->lte($now) && !headers_sent()) {
             $this->destroy();
+            $this->session->flash('error', 'The session has been expired.');
         }
     }
 
@@ -203,15 +204,16 @@ final class Builder
         }
 
         $params = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
+        $cookie = new Cookie(
+            42000,
+            $params['path'] ?? '',
+            $params['domain'] ?? '',
+            $params['secure'] ?? false,
+            $params['httponly'] ?? true
         );
+
+        $cookie->unset(session_name());
+        $cookie->unset('sessionName');
 
         session_unset();
         session_destroy();
