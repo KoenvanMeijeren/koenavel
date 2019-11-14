@@ -113,7 +113,7 @@ final class Debug
     /**
      * Get information from the logs.
      *
-     * @return array
+     * @return string[]
      */
     public function getLogInformation(): array
     {
