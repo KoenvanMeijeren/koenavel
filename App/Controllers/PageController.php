@@ -20,7 +20,7 @@ final class PageController
     {
         $title = Translation::get('page_expired_title');
 
-        return new View('http/416', compact('title'));
+        return new View('http/419', compact('title'));
     }
 
     public function notFound(): View
