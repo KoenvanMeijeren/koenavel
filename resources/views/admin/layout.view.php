@@ -133,6 +133,8 @@ $user = new User();
     </div>
 <?php else : ?>
     <div class="container-fluid">
+        <?php Resource::loadFlashMessage(); ?>
+
         <?= $content ?? '' ?>
     </div>
 <?php endif; ?>
@@ -162,6 +164,10 @@ $user = new User();
     <!-- Theme js -->
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/vendor/cms-theme/js/plugins/bootstrap-notify.js">
+
+    </script>
 </footer>
 </body>
 </html>
