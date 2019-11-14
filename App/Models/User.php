@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Src\Core\Cookie;
 use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
@@ -120,7 +119,7 @@ final class User extends BaseModel
     public function getAccount(): stdClass
     {
         $account = $this->get();
-        if (empty((array) $account)) {
+        if (empty((array)$account)) {
             $this->setFilters(
                 'account_email',
                 '=',
@@ -147,7 +146,7 @@ final class User extends BaseModel
     {
         $session = new Session();
 
-        $id = (int) $session->get('userID');
+        $id = (int)$session->get('userID');
         if ($id !== self::GUEST) {
             return $id;
         }
@@ -207,17 +206,11 @@ final class User extends BaseModel
     public function logout(string $redirectTo = '/admin'): Redirect
     {
         $session = new Session();
-        $cookie = new Cookie();
+        $builder = new Builder();
 
-        $session->unset('userID');
-        $cookie->unset('rememberMe');
-
-        if ($session->exists('userID')) {
-            $builder = new Builder();
-            $builder->destroy();
-        }
-
+        $builder->destroy();
         $session->flash('success', Translation::get('admin_logout_message'));
+
         return new Redirect($redirectTo);
     }
 
