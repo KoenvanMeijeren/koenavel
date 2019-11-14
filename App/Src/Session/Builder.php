@@ -6,6 +6,7 @@ namespace App\Src\Session;
 
 use App\Src\Core\Cookie;
 use App\Src\Exceptions\Session\InvalidSessionException;
+use App\Src\Response\Redirect;
 use App\Src\Session\Security as SessionSecurity;
 use Cake\Chronos\Chronos;
 use Exception;
@@ -80,7 +81,7 @@ final class Builder
      * @throws Exception
      */
     public function __construct(
-        int $expiringTime = 1 * 1 * 1 * 60, //day * hours * minutes * seconds
+        int $expiringTime = 1 * 1 * 1 * 10, //day * hours * minutes * seconds
         string $path = '/',
         string $domain = '',
         bool $secure = false,
@@ -149,9 +150,10 @@ final class Builder
     /**
      * Set the expiring time for the session.
      *
+     * @return Redirect|void
      * @throws Exception
      */
-    private function setExpiringSession(): void
+    private function setExpiringSession()
     {
         $now = new Chronos();
         if ($this->session->get('createdAt') === '') {
@@ -164,7 +166,8 @@ final class Builder
 
         if ($expired->lte($now) && !headers_sent()) {
             $this->destroy();
-            $this->session->flash('error', 'The session has been expired.');
+
+            return new Redirect('pageExpired');
         }
     }
 

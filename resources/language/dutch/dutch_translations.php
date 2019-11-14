@@ -6,6 +6,7 @@ return [
      * Page translations.
      */
     'home_page_title' => 'Home',
+    'page_expired_title' => 'De sessie is verlopen.',
     'page_not_found_title' => 'Pagina niet gevonden',
     'page_not_found_title_fallback' => 'Page not found',
     'page_not_found_description' => 'Ga terug naar waar je vandaan kwam',

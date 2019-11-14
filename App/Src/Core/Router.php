@@ -176,8 +176,8 @@ final class Router
         }
 
         $this->setAvailableRoutes('GET', $rights);
-        if (array_key_exists('fourNullFour', self::$availableRoutes)) {
-            return $this->executeRoute('fourNullFour');
+        if (array_key_exists('pageNotFound', self::$availableRoutes)) {
+            return $this->executeRoute('pageNotFound');
         }
 
         throw new UndefinedRouteException(

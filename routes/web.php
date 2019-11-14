@@ -53,10 +53,22 @@ Router::prefix('admin')->group(function () {
      */
     Router::get('debug', DebugController::class,
         'index', User::ADMIN);
+
+    /**
+     * Page expired.
+     */
+    Router::get('pageExpired', PageController::class,
+        'expiredSession', User::GUEST);
 });
+
+/**
+ * Page expired.
+ */
+Router::get('pageExpired', PageController::class,
+    'expiredSession', User::GUEST);
 
 /**
  * Page not found.
  */
-Router::get('fourNullFour', PageController::class,
+Router::get('pageNotFound', PageController::class,
     'notFound', User::GUEST);
