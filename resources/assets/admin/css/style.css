@@ -25,7 +25,7 @@
 .scrollbox-horizontal {
     width: 300px;
     max-width: 300px;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
 }
 
@@ -52,4 +52,17 @@
     top: 50%;
     margin-top: -13px;
     z-index: 1033;
+}
+
+.hover {
+    opacity: 0.7;
+}
+
+.hover:first-child {
+    opacity: 1;
+}
+
+.hover:hover {
+    opacity: 1;
+    transition: opacity;
 }

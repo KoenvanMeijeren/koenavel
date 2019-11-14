@@ -28,7 +28,7 @@ final class DebugController
         $sessionSettings = $this->debug->getSessionSettingsInformation();
         $sessionInformation = $this->debug->getSessionInformation();
         $cookieInformation = $this->debug->getCookieInformation();
-        $logInformation = $this->debug->getLogInformation();
+        $logs = $this->debug->getLogInformation();
 
         return new View(
             'admin/debug/index',
@@ -38,7 +38,7 @@ final class DebugController
                 'sessionSettings',
                 'sessionInformation',
                 'cookieInformation',
-                'logInformation'
+                'logs'
             )
         );
     }

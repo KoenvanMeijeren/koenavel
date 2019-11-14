@@ -32,8 +32,20 @@ use App\Src\Core\Env;
         Log informatie
     </h2>
 
-    <div class="scrollbox-vertical">
-        <?= $logInformation ?? 'Geen log informatie gevonden' ?>
+    <div class="row scrollbox-vertical">
+        <ul class="list-group list-group-flush w-100">
+            <?php foreach (($logs ?? []) as $log) : ?>
+                <?php if (strstr($log, 'INFO')) : ?>
+                    <li class="list-group-item list-group-item-success hover">
+                        <?= $log ?>
+                    </li>
+                <?php elseif (strstr($log, 'ERROR')) : ?>
+                    <li class="list-group-item list-group-item-danger hover">
+                        <?= $log ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
     </div>
     <hr>
 </div>

@@ -113,15 +113,20 @@ final class Debug
     /**
      * Get information from the logs.
      *
-     * @return string
+     * @return array
      */
-    public function getLogInformation(): string
+    public function getLogInformation(): array
     {
-        //todo find a way to filter this data
         $date = new Chronos();
+        $logs = preg_split(
+            '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/',
+            Log::get($date->toDateString())
+        );
 
-        $log = Log::get($date->toDateString());
+        unset($logs[array_key_first($logs)]);
 
-        return $log;
+        // todo filter the data from the log items into readable data
+
+        return array_reverse($logs);
     }
 }
