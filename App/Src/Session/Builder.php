@@ -80,7 +80,7 @@ final class Builder
      * @throws Exception
      */
     public function __construct(
-        int $expiringTime = 1 * 1 * 60 * 60, //day * hours * minutes * seconds
+        int $expiringTime = 1 * 1 * 1 * 60, //day * hours * minutes * seconds
         string $path = '/',
         string $domain = '',
         bool $secure = false,

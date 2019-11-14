@@ -151,5 +151,7 @@ final class Cookie
             $this->secure,
             $this->httpOnly
         );
+
+        unset($_COOKIE[$key]);
     }
 }
