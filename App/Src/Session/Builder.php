@@ -81,13 +81,13 @@ final class Builder
      * @throws Exception
      */
     public function __construct(
-        int $expiringTime = 1 * 1 * 60 * 60, //day * hours * minutes * seconds
+        int $expiringTime = 1 * 1 * 1 * 60, //day * hours * minutes * seconds
         string $path = '/',
         string $domain = '',
         bool $secure = false,
         bool $httpOnly = true
     ) {
-        $this->name = random_string(64);
+        $this->name = random_string(128);
         $this->expiringTime = $expiringTime;
         $this->path = $path;
         $this->domain = $domain;
@@ -139,10 +139,17 @@ final class Builder
     private function setSessionName(): void
     {
         $cookie = new Cookie($this->expiringTime);
-
-        if (!$cookie->exists('sessionName')) {
-            $cookie->save('sessionName', $this->name);
+        if ($cookie->exists('sessionName')) {
+            return;
         }
+
+        array_walk($_COOKIE, function (string $key) use ($cookie) {
+            if (strlen($key) === strlen($this->name)) {
+                $cookie->unset($key);
+            }
+        });
+
+        $cookie->save('sessionName', $this->name);
     }
 
     /**
@@ -176,8 +183,6 @@ final class Builder
 
         if ($expired->lte($now) && !headers_sent()) {
             $this->destroy();
-
-            return new Redirect('pageExpired');
         }
     }
 
