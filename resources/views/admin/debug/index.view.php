@@ -34,7 +34,7 @@ use App\Src\Core\Env;
 
     <div class="row">
         <div class="col-sm-4 scrollbox-vertical">
-            <div class="list-group" id="list-tab" role="tablist">
+            <div class="list-group overflow-hidden" id="list-tab" role="tablist">
                 <?php $active = 'active';
                 foreach (($logs ?? []) as $key => $log) : ?>
                     <a class="list-group-item list-group-item-action <?= $active ?>"

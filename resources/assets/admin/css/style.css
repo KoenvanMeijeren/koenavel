@@ -66,3 +66,8 @@
     opacity: 1;
     transition: opacity;
 }
+
+.list-group-item.active {
+    background-color: #FFA534;
+    border-color: #FFA534;
+}
