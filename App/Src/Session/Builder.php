@@ -133,13 +133,21 @@ final class Builder
         $this->setCanarySession();
     }
 
+    /**
+     * Set an unique unreadable session name.
+     */
     private function setSessionName(): void
     {
-        $cookie = new Cookie(1 * 1 * 60 * 60);
+        $cookie = new Cookie($this->expiringTime);
 
         $cookie->save('sessionName', $this->name);
     }
 
+    /**
+     * Get the session name.
+     *
+     * @return string
+     */
     private function getSessionName(): string
     {
         $cookie = new Cookie();
@@ -220,7 +228,5 @@ final class Builder
 
         session_unset();
         session_destroy();
-
-        $this->startSession();
     }
 }
