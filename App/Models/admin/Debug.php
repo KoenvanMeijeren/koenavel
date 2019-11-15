@@ -145,6 +145,7 @@ final class Debug
             ];
         });
 
+        // todo show the meta data
         return $logs !== false ? array_reverse($logs) : [];
     }
 }

@@ -55,24 +55,19 @@ final class App implements AppContract
     public function run(): void
     {
         $user = new User();
-        $session = new Session();
-
-        if ($session->exists(State::FAILED)) {
-            $state = State::FAILED;
-            $value = $session->get(State::FAILED);
-        } elseif ($session->exists(State::SUCCESSFUL)) {
-            $state = State::SUCCESSFUL;
-            $value = $session->get(State::SUCCESSFUL);
-        }
-
         Router::load($this->routesLocation)
             ->direct(URI::getUrl(), URI::getMethod(), $user->getRights());
 
-        Log::appRequest(
-            $value ?? '',
-            $state ?? State::SUCCESSFUL,
-            URI::getUrl(),
-            URI::getMethod()
-        );
+        $session = new Session();
+        if (!$session->exists(State::FAILED) &&
+            !$session->exists(State::SUCCESSFUL)
+        ) {
+            Log::appRequest(
+                $value ?? '',
+                $state ?? State::SUCCESSFUL,
+                URI::getUrl(),
+                URI::getMethod()
+            );
+        }
     }
 }

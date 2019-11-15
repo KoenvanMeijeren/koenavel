@@ -6,7 +6,10 @@ namespace App\Src\Session;
 
 use App\Src\Core\Request;
 use App\Src\Core\Sanitize;
+use App\Src\Core\URI;
+use App\Src\Log\Log;
 use App\Src\Security\Encrypt;
+use App\Src\State\State;
 
 final class Session
 {
@@ -49,6 +52,8 @@ final class Session
     public function flash(string $key, string $value): void
     {
         $this->saveForced($key, $value);
+
+        $this->logRequest($key, $value);
     }
 
     /**
@@ -116,5 +121,26 @@ final class Session
         }
 
         return true;
+    }
+
+    /**
+     * Log a session request when the key is of the type
+     * of state failed or state successful.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function logRequest(string $key, string $value): void
+    {
+        if ($key !== State::FAILED && $key !== State::SUCCESSFUL) {
+            return;
+        }
+
+        Log::appRequest(
+            $value,
+            $key,
+            URI::getUrl(),
+            URI::getMethod()
+        );
     }
 }
