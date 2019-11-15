@@ -143,7 +143,7 @@ final class Builder
             return;
         }
 
-        array_walk($_COOKIE, function (string $key) use ($cookie) {
+        array_walk($_COOKIE, function ($value, $key) use ($cookie) {
             if (strlen($key) === strlen($this->name)) {
                 $cookie->unset($key);
             }
