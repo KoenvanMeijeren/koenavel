@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Src\Security;
 
 use App\Src\Session\Session;
+use App\Src\State\State;
 use App\Src\Translation\Translation;
 use Exception;
 use ParagonIE\AntiCSRF\AntiCSRF;
@@ -62,7 +63,10 @@ final class CSRF
             return true;
         }
 
-        $session->flash('error', Translation::get('failed_csrf_check_message'));
+        $session->flash(
+            State::FAILED,
+            Translation::get('failed_csrf_check_message')
+        );
         return false;
     }
 }

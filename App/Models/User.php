@@ -12,6 +12,7 @@ use App\Src\Model\BaseModel;
 use App\Src\Response\Redirect;
 use App\Src\Session\Builder;
 use App\Src\Session\Session;
+use App\Src\State\State;
 use App\Src\Translation\Translation;
 use Exception;
 use stdClass;
@@ -205,11 +206,11 @@ final class User extends BaseModel
      */
     public function logout(string $redirectTo = '/admin'): Redirect
     {
-        $session = new Session();
         $builder = new Builder();
-
         $builder->destroy();
-        $session->flash('success', Translation::get('admin_logout_message'));
+
+        $session = new Session();
+        $session->flash(State::SUCCESSFUL, Translation::get('admin_logout_message'));
 
         return new Redirect($redirectTo);
     }

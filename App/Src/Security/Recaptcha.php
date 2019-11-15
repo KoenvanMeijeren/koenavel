@@ -7,6 +7,7 @@ namespace App\Src\Security;
 use App\Src\Config\Config;
 use App\Src\Core\Request;
 use App\Src\Session\Session;
+use App\Src\State\State;
 use App\Src\Translation\Translation;
 use Exception;
 
@@ -71,7 +72,7 @@ final class Recaptcha
 
         $session = new Session();
         $session->flash(
-            'error',
+            State::FAILED,
             Translation::get('failed_recaptcha_check_message')
         );
         return false;

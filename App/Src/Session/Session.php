@@ -6,10 +6,7 @@ namespace App\Src\Session;
 
 use App\Src\Core\Request;
 use App\Src\Core\Sanitize;
-use App\Src\Core\URI;
-use App\Src\Log\Log;
 use App\Src\Security\Encrypt;
-use App\Src\State\State;
 
 final class Session
 {
@@ -84,7 +81,6 @@ final class Session
         $data = new Encrypt((string) $sanitize->data());
         $value = $data->decrypt();
 
-        $this->logRequest($key, $value);
         return $value;
     }
 
@@ -120,24 +116,5 @@ final class Session
         }
 
         return true;
-    }
-
-    /**
-     * Log the session request.
-     *
-     * @param string $key
-     * @param string $value
-     */
-    private function logRequest(string $key, string $value): void
-    {
-        if ($key === State::FAILED || $key === State::SUCCESSFUL) {
-            Log::appRequest(
-                $value,
-                $key === State::SUCCESSFUL ?
-                    State::SUCCESSFUL : State::FAILED,
-                URI::getUrl(),
-                URI::getMethod()
-            );
-        }
     }
 }

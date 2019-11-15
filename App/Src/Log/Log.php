@@ -141,6 +141,9 @@ final class Log
         new self();
 
         $message = "{$method} request for page {$url} with message {$value}";
+        if ($value === '') {
+            $message = "{$method} request for page {$url}";
+        }
 
         self::info($state . " " . $message);
     }

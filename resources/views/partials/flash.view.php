@@ -1,10 +1,11 @@
 <?php
 
 use App\Src\Session\Session;
+use App\Src\State\State;
 
 $session = new Session();
 
-$error = $session->get('error', true);
+$error = $session->get(State::FAILED, true);
 if (!empty($error)) :
     ?>
     <div data-notify="container" role="alert"
@@ -21,7 +22,7 @@ if (!empty($error)) :
 <?php endif; ?>
 
 <?php
-$message = $session->get('success', true);
+$message = $session->get(State::SUCCESSFUL, true);
 if (!empty($message)) :
     ?>
     <div data-notify="container" role="alert"

@@ -7,6 +7,7 @@ namespace App\Src\Core;
 use App\Src\Exceptions\File\ErrorWhileUploadingFileException;
 use App\Src\Log\Log;
 use App\Src\Session\Session;
+use App\Src\State\State;
 use App\Src\Translation\Translation;
 use Exception;
 use Sirius\Upload\Handler as UploadHandler;
@@ -153,7 +154,7 @@ final class Upload
         }
 
         $this->session->flash(
-            'error',
+            State::FAILED,
             Translation::get('error_while_uploading_file')
         );
         return false;

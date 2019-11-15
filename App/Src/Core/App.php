@@ -8,6 +8,7 @@ use App\Contract\Src\Core\AppContract;
 use App\Models\User;
 use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
+use App\Src\Session\Session;
 use App\Src\State\State;
 use Exception;
 
@@ -54,13 +55,22 @@ final class App implements AppContract
     public function run(): void
     {
         $user = new User();
+        $session = new Session();
+
+        if ($session->exists(State::FAILED)) {
+            $state = State::FAILED;
+            $value = $session->get(State::FAILED);
+        } elseif ($session->exists(State::SUCCESSFUL)) {
+            $state = State::SUCCESSFUL;
+            $value = $session->get(State::SUCCESSFUL);
+        }
 
         Router::load($this->routesLocation)
             ->direct(URI::getUrl(), URI::getMethod(), $user->getRights());
 
         Log::appRequest(
-            '',
-            State::SUCCESSFUL,
+            $value ?? '',
+            $state ?? State::SUCCESSFUL,
             URI::getUrl(),
             URI::getMethod()
         );

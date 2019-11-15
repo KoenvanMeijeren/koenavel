@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Session\Session;
+use App\Src\State\State;
 use App\Src\Translation\Translation;
 
 final class Login
@@ -57,7 +58,7 @@ final class Login
             // todo rehash password
             // todo reset failed log in tries
             $session->flash(
-                'success',
+                State::SUCCESSFUL,
                 Translation::get('login_successful_message')
             );
             return true;
@@ -66,7 +67,7 @@ final class Login
         // todo update failed log in tries and if necessary block account
 
         $session->flash(
-            'error',
+            State::FAILED,
             Translation::get('login_failed_message')
         );
         return false;
