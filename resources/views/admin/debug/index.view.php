@@ -32,20 +32,34 @@ use App\Src\Core\Env;
         Log informatie
     </h2>
 
-    <div class="row scrollbox-vertical">
-        <ul class="list-group list-group-flush w-100">
-            <?php foreach (($logs ?? []) as $log) : ?>
-                <?php if (strstr($log, 'INFO')) : ?>
-                    <li class="list-group-item list-group-item-success hover">
-                        <?= $log ?>
-                    </li>
-                <?php elseif (strstr($log, 'ERROR')) : ?>
-                    <li class="list-group-item list-group-item-danger hover">
-                        <?= $log ?>
-                    </li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </ul>
+    <div class="row">
+        <div class="col-sm-4 scrollbox-vertical">
+            <div class="list-group" id="list-tab" role="tablist">
+                <?php $active = 'active';
+                foreach (($logs ?? []) as $key => $log) : ?>
+                    <a class="list-group-item list-group-item-action <?= $active ?>"
+                       id="list-<?= $key ?>-list" data-toggle="list"
+                       href="#list-<?= $key ?>" role="tab"
+                       aria-controls="<?= $key ?>">
+                        <?= $log['title'] ?? 'undefined' ?>
+                    </a>
+                    <?php $active = '';
+                endforeach; ?>
+            </div>
+        </div>
+        <div class="col-sm-8 scrollbox-vertical">
+            <div class="tab-content" id="nav-tabContent">
+                <?php $active = 'active';
+                foreach (($logs ?? []) as $key => $log) : ?>
+                    <div class="tab-pane fade show <?= $active ?>"
+                         id="list-<?= $key ?>" role="tabpanel"
+                         aria-labelledby="list-<?= $key ?>">
+                        <h3><?= $log['date'] ?? '' ?></h3>
+                        <?= $log['message'] ?? '' ?>
+                    </div>
+                    <?php $active = '';
+                endforeach; ?>
+            </div>
+        </div>
     </div>
-    <hr>
 </div>

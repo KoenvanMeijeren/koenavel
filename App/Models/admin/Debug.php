@@ -123,10 +123,28 @@ final class Debug
             Log::get($date->toDateString())
         );
 
-        unset($logs[array_key_first($logs)]);
+        if ($logs !== false) {
+            unset($logs[array_key_first($logs)]);
+        }
 
-        // todo filter the data from the log items into readable data
+        array_walk($logs, function (&$value, $key) {
+            if (preg_match_all('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|(?<=\]).*(?=\{)|{.*}/',
+                $value, $matches, PREG_PATTERN_ORDER)
+            ) {
+                $matches = $matches[0] ?? [];
+                $matches[2] = isJson($matches[2] ?? '') ? json_decode($matches[2]) : [];
+            }
 
-        return array_reverse($logs);
+            $date = new DateTime(new Chronos($matches[0] ?? ''));
+            $title = explode('on line', $matches[1] ?? '');
+            $value = [
+                'date' => ucfirst($date->toDateTime()),
+                'title' => $title[0] ?? 'undefined',
+                'message' => $matches[1] ?? 'undefined',
+                'meta' => $matches[2] ?? new \stdClass()
+            ];
+        });
+
+        return $logs !== false ? array_reverse($logs) : [];
     }
 }

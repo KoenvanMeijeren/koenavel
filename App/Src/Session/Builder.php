@@ -96,8 +96,6 @@ final class Builder
 
         $this->session = new Session();
         $this->security = new SessionSecurity();
-
-        $this->setSessionName();
     }
 
     /**
@@ -106,6 +104,8 @@ final class Builder
     public function startSession(): void
     {
         if (PHP_SESSION_NONE === session_status() && !headers_sent()) {
+            $this->setSessionName();
+
             session_name($this->getSessionName());
 
             session_set_cookie_params(
@@ -140,7 +140,9 @@ final class Builder
     {
         $cookie = new Cookie($this->expiringTime);
 
-        $cookie->save('sessionName', $this->name);
+        if (!$cookie->exists('sessionName')) {
+            $cookie->save('sessionName', $this->name);
+        }
     }
 
     /**

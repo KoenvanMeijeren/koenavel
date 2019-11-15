@@ -195,3 +195,15 @@ if (!function_exists('random_string')) {
         return implode('', $pieces);
     }
 }
+
+if (!function_exists('strip_whitespace')) {
+    /**
+     * Remove al the whitespaces from the string.
+     *
+     * @param string $string
+     * @return string
+     */
+    function strip_whitespace(string $string) {
+        return trim($string);
+    }
+}
