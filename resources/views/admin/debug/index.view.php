@@ -44,7 +44,7 @@ use App\Src\Core\Env;
                         $class = 'active-success';
                     }
                     ?>
-                    <a class="list-group-item list-group-item-action <?= $active . '' . $class ?>"
+                    <a class="list-group-item list-group-item-action <?= $active . ' ' . $class ?>"
                        id="list-<?= $key ?>-list" data-toggle="list"
                        href="#list-<?= $key ?>" role="tab"
                        aria-controls="<?= $key ?>">
