@@ -16,18 +16,22 @@ $user = new User();
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet"
-          href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/ec953a682d.js"
-            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ec953a682d.js" crossorigin="anonymous"></script>
 
     <!-- Data tables -->
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css">
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.standalone.css">
+    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.standalone.css">
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
@@ -146,8 +150,7 @@ $user = new User();
             crossorigin="anonymous"></script>
 
     <!-- Bootstrap -->
-    <script
-        src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Popper js -->
     <script src="/resources/assets/admin/js/popper.min.js"></script>
@@ -161,13 +164,21 @@ $user = new User();
             src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
     <script src="/resources/assets/admin/js/datatables.js"></script>
 
+    <!-- Date picker -->
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/vendor/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/vendor/datepicker/js/bootstrap-datepicker.nl.min.js"></script>
+
     <!-- Theme js -->
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/cms-theme/js/plugins/bootstrap-notify.js">
+            src="/resources/assets/admin/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
 
-    </script>
+    <!-- Default JS -->
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/js/default.js"></script>
 </footer>
 </body>
 </html>

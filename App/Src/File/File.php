@@ -69,6 +69,10 @@ final class File
      */
     public function get(): string
     {
+        if ($this->system->readlink($this->path, true) === null) {
+            return '';
+        }
+
         return (string) file_get_contents(
             $this->system->readlink($this->path, true)
         );

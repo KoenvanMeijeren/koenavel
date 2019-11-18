@@ -262,6 +262,7 @@ return [
     'signUp_button' => 'Aanmelden',
     'send_button' => 'Verzenden',
     'reset_button' => 'Reset',
+    'filter_button' => 'Filter',
     'edit_button' => 'Bewerken >',
     'upload_button' => 'Uploaden',
     'unblock_button' => 'Deblokkeren',

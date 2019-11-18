@@ -2,6 +2,7 @@
 
 use App\Src\Core\Env;
 
+$request = new \App\Src\Core\Request();
 ?>
 <div class="mb-3">
     <h2 class="h4">
@@ -33,6 +34,27 @@ use App\Src\Core\Env;
     </h2>
 
     <div class="row">
+        <div class="col">
+            <form class="form-inline" method="get">
+                <div class="form-group" id="datepicker">
+                    <input type="hidden" name="logDate"
+                           value="<?= $request->get('logDate') ?>">
+                </div>
+
+                <button class="btn btn-default-small border-0">
+                    Filter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <?php if (empty($logs ?? '')) : ?>
+            <div class="col-sm-12">
+                Er is geen log data gevonden op de gegeven datum.
+            </div>
+        <?php endif; ?>
+
         <div class="col-sm-4 scrollbox-vertical">
             <div class="list-group overflow-hidden" id="list-tab"
                  role="tablist">

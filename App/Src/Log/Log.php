@@ -6,6 +6,7 @@ namespace App\Src\Log;
 
 use App\Src\Config\Config;
 use App\Src\Core\Env;
+use App\Src\File\File;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\RotatingFileHandler;
@@ -66,10 +67,11 @@ final class Log
     {
         new self();
 
-        return (string) file_get_contents(
-            START_PATH . '/storage/logs/app-' .
-            $date . '.log'
+        $file = new File(
+            STORAGE_PATH . '/logs/', 'app-' . $date . '.log'
         );
+
+        return (string) $file->get();
     }
 
     /**

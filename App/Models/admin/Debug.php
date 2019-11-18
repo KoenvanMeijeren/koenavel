@@ -113,11 +113,13 @@ final class Debug
     /**
      * Get information from the logs.
      *
+     * @param string $date
+     *
      * @return string[]
      */
-    public function getLogInformation(): array
+    public function getLogInformation(string $date): array
     {
-        $date = new Chronos();
+        $date = new Chronos($date);
         $logs = preg_split(
             '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/',
             Log::get($date->toDateString())
