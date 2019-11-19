@@ -118,9 +118,11 @@ final class Session
     {
         if (array_key_exists($key, $_SESSION)) {
             unset($_SESSION[$key]);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
