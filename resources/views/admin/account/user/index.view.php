@@ -100,6 +100,8 @@ $request = new Request();
                                        value="<?= $request->post('newPassword') ?>"
                                        placeholder="<?= Translation::get('form_new_password') ?>"
                                        required>
+                                <meter max="4" id="password-strength-meter" value="0"></meter>
+                                <p id="password-strength-text"></p>
                             </div>
                         </div>
                     </div>

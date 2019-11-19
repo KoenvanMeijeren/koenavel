@@ -184,6 +184,12 @@ $user = new User();
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/vendor/datepicker/js/bootstrap-datepicker.nl.min.js"></script>
 
+    <!-- Password strength indicator -->
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/vendor/password-strength-indicator/zxcvbn.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/js/password-strength-indicator.js"></script>
+
     <!-- Theme js -->
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
