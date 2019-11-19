@@ -52,6 +52,13 @@ abstract class BaseModel
     private $filterValues = [];
 
     /**
+     * The fields to be inserted or updated.
+     *
+     * @var string[]
+     */
+    private $fields = [];
+
+    /**
      * Construct the model.
      */
     abstract public function __construct();
@@ -126,6 +133,30 @@ abstract class BaseModel
     }
 
     /**
+     * Create a new record.
+     */
+    final public function create(): void
+    {
+        DB::table($this->table)
+            ->insert($this->fields)
+            ->execute();
+    }
+
+    /**
+     * Save existing date in the database.
+     */
+    final public function save(): void
+    {
+        DB::table($this->table)
+            ->update($this->fields)
+            ->addStatementWithValues(
+                $this->convertFiltersToStatement(),
+                $this->filterValues
+            )
+            ->execute();
+    }
+
+    /**
      * Set the columns to be selected.
      *
      * @param string[] ...$columns the columns to be selected.
@@ -136,13 +167,23 @@ abstract class BaseModel
     }
 
     /**
+     * Set the fields who are going to be updated or inserted.
+     *
+     * @param array $fields
+     */
+    final protected function setFields(array $fields): void
+    {
+        $this->fields = $fields;
+    }
+
+    /**
      * Specify (multiple) filter(s) for the get and get all by methods.
      *
      * @param string $column    the column to be filtered
      * @param string $operator  the column to be filtered
      * @param string $value     the value of the filter
      */
-    final protected function setFilters(
+    final protected function setFilter(
         string $column,
         string $operator,
         string $value
@@ -161,6 +202,8 @@ abstract class BaseModel
     private function convertFiltersToStatement(): string
     {
         $statement = '';
+        $this->filterValues = [];
+
         foreach ($this->filters as $column => $filter) {
             $operator = $filter['operator'] ?? '';
             $condition = $filter['condition'] ?? '';
