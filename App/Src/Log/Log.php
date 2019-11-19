@@ -68,10 +68,11 @@ final class Log
         new self();
 
         $file = new File(
-            STORAGE_PATH . '/logs/', 'app-' . $date . '.log'
+            STORAGE_PATH . '/logs/',
+            'app-' . $date . '.log'
         );
 
-        return (string) $file->get();
+        return $file->get();
     }
 
     /**

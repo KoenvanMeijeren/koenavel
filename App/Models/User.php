@@ -246,7 +246,7 @@ final class User extends BaseModel
             return $this->logout();
         }
 
-        if (!$idEncryption->validate_hash(
+        if (!$idEncryption->validateHash(
             $this->getAccount()->account_login_token ?? '',
             $session->get('userID')
         )) {
@@ -262,7 +262,7 @@ final class User extends BaseModel
      *
      * @return void
      */
-    public function storeToken(string $id, string $token)
+    public function storeToken(string $id, string $token): void
     {
         $this->setFields([
             'account_login_token' => $token

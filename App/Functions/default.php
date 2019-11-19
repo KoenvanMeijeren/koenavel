@@ -203,7 +203,8 @@ if (!function_exists('strip_whitespace')) {
      * @param string $string
      * @return string
      */
-    function strip_whitespace(string $string) {
+    function strip_whitespace(string $string)
+    {
         return trim($string);
     }
 }

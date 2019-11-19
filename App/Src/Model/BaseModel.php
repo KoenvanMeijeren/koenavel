@@ -169,7 +169,7 @@ abstract class BaseModel
     /**
      * Set the fields who are going to be updated or inserted.
      *
-     * @param array $fields
+     * @param string[] $fields
      */
     final protected function setFields(array $fields): void
     {

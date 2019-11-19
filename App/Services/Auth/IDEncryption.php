@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Auth;
 
-
 use App\Src\Config\Config;
 use Exception;
 
-class IDEncryption
+final class IDEncryption
 {
     /**
      * The secret token.
@@ -91,7 +90,7 @@ class IDEncryption
      *
      * @return bool
      */
-    public function validate_hash(
+    public function validateHash(
         string $userToken,
         string $encryptedId
     ): bool {
