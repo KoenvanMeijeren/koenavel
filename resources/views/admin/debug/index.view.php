@@ -1,6 +1,7 @@
 <?php
 
 use App\Src\Core\Env;
+use App\Src\Translation\Translation;
 
 $request = new \App\Src\Core\Request();
 ?>
@@ -71,6 +72,14 @@ $request = new \App\Src\Core\Request();
     <?php endif; ?>
 
     <div class="col-sm-4 scrollbox-vertical h-500">
+        <div class="form-label-group has-search">
+            <input type="text" id="searchLog" class="form-control"
+                   placeholder="Search">
+            <label for="searchLog">
+                <b><?= Translation::get('form_search') ?></b>
+            </label>
+        </div>
+
         <div class="list-group overflow-hidden" id="list-tab"
              role="tablist">
             <?php $active = 'active';

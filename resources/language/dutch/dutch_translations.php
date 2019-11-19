@@ -225,6 +225,7 @@ return [
     'form_yes_in_footer' => 'Ja, in de footer',
     'form_yes_and_in_footer' => 'Ja, in menu én in footer',
     'form_no' => 'Nee',
+    'form_search' => 'Zoeken',
     'form_static' => 'Statisch',
     'form_unknown' => 'Onbekend',
     'filter_records' => 'Toon',
