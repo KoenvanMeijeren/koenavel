@@ -8,6 +8,7 @@ use App\Models\admin\Debug;
 use App\Src\Core\Request;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
+use Cake\Chronos\Chronos;
 
 final class DebugController
 {
@@ -24,13 +25,25 @@ final class DebugController
     public function index(): View
     {
         $request = new Request();
+
         $title = Translation::get('admin_debug_title');
 
         $env = $this->debug->getEnv();
         $sessionSettings = $this->debug->getSessionSettingsInformation();
         $sessionInformation = $this->debug->getSessionInformation();
         $cookieInformation = $this->debug->getCookieInformation();
-        $logs = $this->debug->getLogInformation($request->get('logDate'));
+
+        $date = $request->get('logDate');
+        $arrayDate = explode('-', $date);
+        if (!checkdate(
+                (int) ($arrayDate[1] ?? 0),
+                (int) ($arrayDate[0] ?? 0),
+                (int) ($arrayDate[2] ?? 0)
+        )) {
+            $date = new Chronos();
+            $date = $date->toDateString();
+        }
+        $logs = $this->debug->getLogInformation($date);
 
         return new View(
             'admin/debug/index',
