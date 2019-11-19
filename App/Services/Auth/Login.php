@@ -40,19 +40,24 @@ final class Login
     public function execute(): bool
     {
         $session = new Session();
+        $account = $this->user->getAccount();
 
         if (password_verify(
             $this->user->getPassword(),
-            $this->user->getAccount()->account_password ?? ''
-        )
-        ) {
-            if ($session->exists('userID')) {
-                $session->unset('userID');
-            }
+            $account->account_password ?? ''
+        )) {
+            $session->unset('userID');
 
-            $session->save(
-                'userID',
-                $this->user->getAccount()->account_ID ?? ''
+            $idEncryption = new IDEncryption();
+            $token = $idEncryption->generateToken();
+
+            $session->save('userID', $idEncryption->encrypt(
+                $account->account_ID ?? '0',
+                $token
+            ));
+            $this->user->storeToken(
+                $account->account_ID ?? '0',
+                $token
             );
 
             // todo rehash password

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\Auth\IDEncryption;
 use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
@@ -121,7 +122,7 @@ final class User extends BaseModel
     {
         $account = $this->get();
         if (empty((array)$account)) {
-            $this->setFilters(
+            $this->setFilter(
                 'account_email',
                 '=',
                 $this->email
@@ -146,8 +147,11 @@ final class User extends BaseModel
     public function getID(): int
     {
         $session = new Session();
+        $idEncryption = new IDEncryption();
 
-        $id = (int)$session->get('userID');
+        $id = $idEncryption->decrypt(
+            $session->get('userID')
+        );
         if ($id !== self::GUEST) {
             return $id;
         }
@@ -222,7 +226,8 @@ final class User extends BaseModel
      * Authorize the user.
      *
      * - Check if the rights are valid and if not log the user out.
-     * - todo check if the user is really the user which he says that he is
+     * - Check if the user is really the user which he says that he is
+     *   and if not log the user out.
      *
      * @return void|Redirect
      * @throws InvalidKeyException
@@ -231,11 +236,41 @@ final class User extends BaseModel
      */
     private function authorizeUser()
     {
+        $session = new Session();
+        $idEncryption = new IDEncryption();
+
         if ($this->getRights() !== self::GUEST
             && $this->getRights() !== self::ADMIN
             && $this->getRights() !== self::SUPER_ADMIN
         ) {
             return $this->logout();
         }
+
+        if (!$idEncryption->validate_hash(
+            $this->getAccount()->account_login_token ?? '',
+            $session->get('userID')
+        )) {
+            return $this->logout();
+        }
+    }
+
+    /**
+     * Store the login token for the user
+     *
+     * @param string $id    The id of the user.
+     * @param string $token The login token from the user.
+     *
+     * @return void
+     */
+    public function storeToken(string $id, string $token)
+    {
+        $this->setFields([
+            'account_login_token' => $token
+        ]);
+
+        $this->setFilter('account_ID', '=', $id);
+        $this->setFilter('account_is_deleted', '=', '0');
+
+        $this->save();
     }
 }
