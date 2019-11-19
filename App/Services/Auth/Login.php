@@ -138,10 +138,11 @@ final class Login extends BaseModel
     {
         if (password_needs_rehash(
             $this->account->account_password ?? '',
-            PASSWORD_BCRYPT)
+            PASSWORD_BCRYPT
+        )
         ) {
             $this->setFields([
-                'account_password' => password_hash(
+                'account_password' => (string) password_hash(
                     $this->account->account_password ?? '',
                     PASSWORD_BCRYPT
                 )
@@ -167,7 +168,7 @@ final class Login extends BaseModel
         $current = (int) $this->account->account_failed_login ?? 0;
 
         $this->setFields([
-            'account_failed_login' => $current + 1
+            'account_failed_login' => (string) ($current + 1)
         ]);
     }
 
@@ -177,7 +178,7 @@ final class Login extends BaseModel
      */
     private function blockAccount(): void
     {
-        $failedLogInAttempts = $this->account->account_failed_login ?? 0;
+        $failedLogInAttempts = $this->account->account_failed_login ?? '0';
         if ((int) $failedLogInAttempts >= self::MAXIMUM_LOGIN_ATTEMPTS) {
             $this->setFields([
                 'account_is_blocked' => '1'
@@ -214,9 +215,9 @@ final class Login extends BaseModel
      *
      * @return bool
      */
-    private function accountIsBlocked()
+    private function accountIsBlocked(): bool
     {
-        if ((int) ($this->account->account_is_blocked ?? 0) === 1) {
+        if ((int) ($this->account->account_is_blocked ?? '0') === 1) {
             return true;
         }
         return false;
