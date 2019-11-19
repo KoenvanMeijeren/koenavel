@@ -63,8 +63,8 @@ final class App implements AppContract
             !$session->exists(State::SUCCESSFUL)
         ) {
             Log::appRequest(
-                $value ?? '',
-                $state ?? State::SUCCESSFUL,
+                '',
+                State::SUCCESSFUL,
                 URI::getUrl(),
                 URI::getMethod()
             );
