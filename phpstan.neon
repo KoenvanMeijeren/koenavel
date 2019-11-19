@@ -13,6 +13,7 @@ parameters:
         - "#Construct .* is not allowed. Use more strict comparison.#"
         - "#Access to an undefined property .*#"
         - "#Call to function .* with array will always evaluate to true.#"
+        - "#Strict comparison using === between 0 and 1 will always evaluate to false.#"
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
