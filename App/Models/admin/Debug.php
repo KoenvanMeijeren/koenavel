@@ -129,7 +129,7 @@ final class Debug
             unset($logs[array_key_first($logs)]);
         }
 
-        array_walk($logs, function (&$value, $key) {
+        array_walk($logs, function (&$value) {
             if (preg_match_all(
                 '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|(?<=\]).*(?=\{)|{.*}/',
                 $value,
