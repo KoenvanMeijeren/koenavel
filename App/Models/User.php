@@ -42,6 +42,13 @@ final class User extends BaseModel
     const SUPER_ADMIN = 2;
 
     /**
+     * Developer rights.
+     *
+     * @var int
+     */
+    const DEVELOPER = 3;
+
+    /**
      * The account of the user.
      *
      * @var object
@@ -242,6 +249,7 @@ final class User extends BaseModel
         if ($this->getRights() !== self::GUEST
             && $this->getRights() !== self::ADMIN
             && $this->getRights() !== self::SUPER_ADMIN
+            && $this->getRights() !== self::DEVELOPER
         ) {
             return $this->logout();
         }

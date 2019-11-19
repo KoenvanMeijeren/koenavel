@@ -16,10 +16,12 @@ $user = new User();
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/ec953a682d.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ec953a682d.js"
+            crossorigin="anonymous"></script>
 
     <!-- Data tables -->
     <link rel="stylesheet" type="text/css"
@@ -28,10 +30,14 @@ $user = new User();
           href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css">
 
     <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.standalone.css">
-    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.css">
-    <link rel="stylesheet" type="text/css" href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.standalone.css">
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.standalone.css">
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.standalone.css">
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
@@ -59,34 +65,40 @@ $user = new User();
              data-image="/resources/assets/admin/vendor/cms-theme/img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item <?= strstr(URI::getUrl(),
-                        'dashboard') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/admin/dashboard">
-                            <i class="fas fa-home"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="nav-item <?= strstr(URI::getUrl(),
-                        'pages') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/admin/pages">
-                            <i class="fas fa-sitemap"></i>
-                            <p>Pagina's</p>
-                        </a>
-                    </li>
-                    <li class="nav-item <?= strstr(URI::getUrl(),
-                        'account') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/admin/account">
-                            <i class="fas fa-users"></i>
-                            <p>Accounts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item <?= strstr(URI::getUrl(),
-                        'debug') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/admin/debug">
-                            <i class="fas fa-code"></i>
-                            <p>Debuggen</p>
-                        </a>
-                    </li>
+                    <?php if ($user->getRights() >= User::ADMIN) : ?>
+                        <li class="nav-item <?= strstr(URI::getUrl(),
+                            'dashboard') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/dashboard">
+                                <i class="fas fa-home"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item <?= strstr(URI::getUrl(),
+                            'pages') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/pages">
+                                <i class="fas fa-sitemap"></i>
+                                <p>Pagina's</p>
+                            </a>
+                        </li>
+                    <?php endif;
+                    if ($user->getRights() >= User::SUPER_ADMIN) : ?>
+                        <li class="nav-item <?= strstr(URI::getUrl(),
+                            'account') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/account">
+                                <i class="fas fa-users"></i>
+                                <p>Accounts</p>
+                            </a>
+                        </li>
+                    <?php endif;
+                    if ($user->getRights() >= User::DEVELOPER) : ?>
+                        <li class="nav-item <?= strstr(URI::getUrl(),
+                            'debug') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/debug">
+                                <i class="fas fa-code"></i>
+                                <p>Debuggen</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
