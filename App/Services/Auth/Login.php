@@ -7,20 +7,34 @@ namespace App\Services\Auth;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\Src\Model\BaseModel;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class Login
+final class Login extends BaseModel
 {
+    /**
+     * @var int
+     */
+    const MAXIMUM_LOGIN_ATTEMPTS = 3;
+
     /**
      * @var User
      */
     private $user;
 
+    /**
+     * @var object
+     */
+    private $account;
+
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->account = $this->user->getAccount();
+
+        $this->table = 'account';
     }
 
     /**
@@ -40,11 +54,18 @@ final class Login
     public function execute(): bool
     {
         $session = new Session();
-        $account = $this->user->getAccount();
+        if ($this->accountIsBlocked()) {
+            $session->flash(
+                State::FAILED,
+                Translation::get('login_failed_blocked_account_message')
+            );
+
+            return false;
+        }
 
         if (password_verify(
             $this->user->getPassword(),
-            $account->account_password ?? ''
+            $this->account->account_password ?? ''
         )) {
             $session->unset('userID');
 
@@ -52,16 +73,18 @@ final class Login
             $token = $idEncryption->generateToken();
 
             $session->save('userID', $idEncryption->encrypt(
-                $account->account_ID ?? '0',
+                $this->account->account_ID ?? '0',
                 $token
             ));
-            $this->user->storeToken(
-                $account->account_ID ?? '0',
-                $token
-            );
 
-            // todo rehash password
-            // todo reset failed log in tries
+            // always executed
+            $this->storeToken($token);
+
+            // only be executed when the user is not a super admin
+            $this->rehashPassword();
+            $this->resetFailedLogInAttempts();
+            $this->store();
+
             $session->flash(
                 State::SUCCESSFUL,
                 Translation::get('login_successful_message')
@@ -69,12 +92,133 @@ final class Login
             return true;
         }
 
-        // todo update failed log in tries and if necessary block account
+        // only be executed when the user is not a super admin
+        $this->addFailedLogInAttempt();
+        $this->blockAccount();
+        $this->store();
 
         $session->flash(
             State::FAILED,
             Translation::get('login_failed_message')
         );
+        return false;
+    }
+
+    /**
+     * Store the login token for the user
+     *
+     * @param string $token The login token from the user.
+     *
+     * @return void
+     */
+    public function storeToken(string $token): void
+    {
+        $this->setFields([
+            'account_login_token' => $token
+        ]);
+
+        $this->setFilter(
+            'account_ID',
+            '=',
+            $this->account->account_ID ?? '0'
+        );
+        $this->setFilter(
+            'account_is_deleted',
+            '=',
+            '0'
+        );
+
+        $this->save();
+    }
+
+    /**
+     * Rehash the password if necessary.
+     */
+    private function rehashPassword(): void
+    {
+        if (password_needs_rehash(
+            $this->account->account_password ?? '',
+            PASSWORD_BCRYPT)
+        ) {
+            $this->setFields([
+                'account_password' => password_hash(
+                    $this->account->account_password ?? '',
+                    PASSWORD_BCRYPT
+                )
+            ]);
+        }
+    }
+
+    /**
+     * Reset the number of failed log in attempts.
+     */
+    private function resetFailedLogInAttempts(): void
+    {
+        $this->setFields([
+            'account_failed_login' => '0'
+        ]);
+    }
+
+    /**
+     * Add a failed log in attempt.
+     */
+    private function addFailedLogInAttempt(): void
+    {
+        $current = (int) $this->account->account_failed_login ?? 0;
+
+        $this->setFields([
+            'account_failed_login' => $current + 1
+        ]);
+    }
+
+    /**
+     * If the number of failed log in attempts is higher than
+     * the maximum number of failed log in attempts, block the account
+     */
+    private function blockAccount(): void
+    {
+        $failedLogInAttempts = $this->account->account_failed_login ?? 0;
+        if ((int) $failedLogInAttempts >= self::MAXIMUM_LOGIN_ATTEMPTS) {
+            $this->setFields([
+                'account_is_blocked' => '1'
+            ]);
+        }
+    }
+
+    /**
+     * Save the date into the database.
+     */
+    private function store(): void
+    {
+        $this->setFilter(
+            'account_ID',
+            '=',
+            $this->account->account_ID ?? '0'
+        );
+        $this->setFilter(
+            'account_is_deleted',
+            '=',
+            '0'
+        );
+        $this->setFilter(
+            'account_rights',
+            '<',
+            (string) User::SUPER_ADMIN
+        );
+
+        $this->save();
+    }
+
+    /**
+     * Determine if the account has been blocked.
+     *
+     * @return bool
+     */
+    private function accountIsBlocked()
+    {
+        if ((int) ($this->account->account_is_blocked ?? 0) === 1) {
+            return true;
+        }
         return false;
     }
 }

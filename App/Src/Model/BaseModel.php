@@ -59,11 +59,6 @@ abstract class BaseModel
     private $fields = [];
 
     /**
-     * Construct the model.
-     */
-    abstract public function __construct();
-
-    /**
      * Get data from the specified table.
      *
      * @return stdClass

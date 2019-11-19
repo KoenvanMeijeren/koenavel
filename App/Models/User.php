@@ -73,7 +73,7 @@ final class User extends BaseModel
     {
         $request = new Request();
 
-        $this->table = 'Account';
+        $this->table = 'account';
         $this->setColumns('*');
 
         $this->idColumn = 'account_ID';
@@ -121,11 +121,11 @@ final class User extends BaseModel
     public function getAccount(): stdClass
     {
         $account = $this->get();
-        if (empty((array)$account)) {
+        if (empty((array) $account)) {
             $this->setFilter(
                 'account_email',
                 '=',
-                $this->email
+                $this->getEmail()
             );
 
             $account = $this->getBy();
@@ -252,25 +252,5 @@ final class User extends BaseModel
         )) {
             return $this->logout();
         }
-    }
-
-    /**
-     * Store the login token for the user
-     *
-     * @param string $id    The id of the user.
-     * @param string $token The login token from the user.
-     *
-     * @return void
-     */
-    public function storeToken(string $id, string $token): void
-    {
-        $this->setFields([
-            'account_login_token' => $token
-        ]);
-
-        $this->setFilter('account_ID', '=', $id);
-        $this->setFilter('account_is_deleted', '=', '0');
-
-        $this->save();
     }
 }

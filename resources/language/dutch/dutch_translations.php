@@ -11,7 +11,7 @@ return [
     'page_not_found_title_fallback' => 'Page not found',
     'page_not_found_description' => 'Ga terug naar waar je vandaan kwam',
     'internal_server_error_title' => ' - Interne server error',
-    'internal_server_error_description', 'Deze website werkt niet meer =>neem contact op met de website beheerder.',
+    'internal_server_error_description' => 'Deze website werkt niet meer =>neem contact op met de website beheerder.',
 
     /**
      * Mail page translations.
@@ -27,7 +27,7 @@ return [
     'login_failed_message' => 'Gebruikersnaam en/of wachtwoord is onjuist.',
     'login_wrong_email_message' => 'Ongeldige email opgegeven.',
     'login_wrong_password_message' => 'Ongeldige wachtwoord opgegeven.',
-    'login_failed_blocked_account_message', 'Dit account is geblokkeerd. Neem contact op met de beheerder van deze website.',
+    'login_failed_blocked_account_message' => 'Dit account is geblokkeerd. Neem contact op met de beheerder van deze website.',
 
     /**
      * Admin page translations.
@@ -292,7 +292,7 @@ return [
     /**
      * Upload translations.
      */
-    'not_allowed_file_upload', 'Je probeerde een niet toegestaan bestand te uploaden. Alleen bestanden met .svg =>.jpg =>.jpeg en .png zijn toegestaan.',
+    'not_allowed_file_upload' => 'Je probeerde een niet toegestaan bestand te uploaden. Alleen bestanden met .svg =>.jpg =>.jpeg en .png zijn toegestaan.',
     'error_while_uploading_file' => 'Het bestand kon niet worden geüpload.',
 
     /**
