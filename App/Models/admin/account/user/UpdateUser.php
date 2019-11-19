@@ -140,6 +140,16 @@ class UpdateUser extends BaseModel
             return false;
         }
 
+        if (!password_verify($this->currentPassword,
+            $this->user->getAccount()->account_password ?? '')) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('admin_edit_account_wrong_current_password_message')
+            );
+
+            return false;
+        }
+
         if ($this->newPassword !== $this->confirmationPassword) {
             $this->session->flash(
                 State::FAILED,
@@ -149,13 +159,9 @@ class UpdateUser extends BaseModel
             return false;
         }
 
-        if (!password_verify($this->currentPassword,
-            $this->user->getAccount()->account_password ?? '')) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_edit_account_wrong_current_password_message')
-            );
-
+        if (strlen($this->newPassword) < 8) {
+            $this->session->flash(State::FAILED,
+                'Het nieuwe wachtwoord moet minimaal 8 tekens bevatten.');
             return false;
         }
 
