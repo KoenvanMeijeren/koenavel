@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\admin\account\user;
 
-
 use App\Models\User;
 use App\Src\Core\Request;
 use App\Src\Model\BaseModel;
@@ -12,8 +11,14 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class UpdateUser extends BaseModel
+final class UpdateUser extends BaseModel
 {
+    /**
+     * @var int
+     */
+    const MINIMUM_PASSWORD_LENGTH = 8;
+    const MAXIMUM_NAME_LENGTH = 255;
+
     /**
      * @var User
      */
@@ -82,21 +87,27 @@ class UpdateUser extends BaseModel
     private function validateData(): bool
     {
         if (empty($this->name)) {
-            $this->session->flash(State::FAILED,
-                Translation::get('form_message_for_required_fields'));
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('form_message_for_required_fields')
+            );
             return false;
         }
 
         if (strlen($this->name) <= 1) {
-            $this->session->flash(State::FAILED,
-                'Naam moet minimaal 1 teken bevatten.');
+            $this->session->flash(
+                State::FAILED,
+                'Naam moet minimaal 1 teken bevatten.'
+            );
 
             return false;
         }
 
-        if (strlen($this->name) > 255) {
-            $this->session->flash(State::FAILED,
-                'Naam mag maximaal 255 teken bevatten.');
+        if (strlen($this->name) > self::MAXIMUM_NAME_LENGTH) {
+            $this->session->flash(
+                State::FAILED,
+                'Naam mag maximaal 255 teken bevatten.'
+            );
 
             return false;
         }
@@ -108,7 +119,7 @@ class UpdateUser extends BaseModel
     {
         if ($this->validatePassword()) {
             $this->setFields([
-                'account_password' => password_hash(
+                'account_password' => (string) password_hash(
                     $this->newPassword,
                     PASSWORD_BCRYPT
                 )
@@ -140,8 +151,10 @@ class UpdateUser extends BaseModel
             return false;
         }
 
-        if (!password_verify($this->currentPassword,
-            $this->user->getAccount()->account_password ?? '')) {
+        if (!password_verify(
+            $this->currentPassword,
+            $this->user->getAccount()->account_password ?? ''
+        )) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('admin_edit_account_wrong_current_password_message')
@@ -159,9 +172,11 @@ class UpdateUser extends BaseModel
             return false;
         }
 
-        if (strlen($this->newPassword) < 8) {
-            $this->session->flash(State::FAILED,
-                'Het nieuwe wachtwoord moet minimaal 8 tekens bevatten.');
+        if (strlen($this->newPassword) < self::MINIMUM_PASSWORD_LENGTH) {
+            $this->session->flash(
+                State::FAILED,
+                'Het nieuwe wachtwoord moet minimaal 8 tekens bevatten.'
+            );
             return false;
         }
 

@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
-
 use App\Models\admin\account\user\UpdateUser;
 use App\Models\User;
+use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
-class UserAccountController
+final class UserAccountController
 {
     /**
      * @var User
@@ -29,6 +30,13 @@ class UserAccountController
         $this->account = $this->user->getAccount();
     }
 
+    /**
+     * Show the edit page for the user.
+     *
+     * @return View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
+     */
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
@@ -40,6 +48,13 @@ class UserAccountController
         );
     }
 
+    /**
+     * Store the data of the user.
+     *
+     * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
+     */
     public function storeData()
     {
         $title = Translation::get('admin_account_title');
@@ -56,6 +71,13 @@ class UserAccountController
         );
     }
 
+    /**
+     * Store the new password of the user.
+     *
+     * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
+     */
     public function storePassword()
     {
         $title = Translation::get('admin_account_title');
