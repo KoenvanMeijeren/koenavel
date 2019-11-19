@@ -36,9 +36,9 @@ final class DebugController
         $date = $request->get('logDate');
         $arrayDate = explode('-', $date);
         if (!checkdate(
-                (int) ($arrayDate[1] ?? 0),
-                (int) ($arrayDate[0] ?? 0),
-                (int) ($arrayDate[2] ?? 0)
+            (int) ($arrayDate[1] ?? 0),
+            (int) ($arrayDate[0] ?? 0),
+            (int) ($arrayDate[2] ?? 0)
         )) {
             $date = new Chronos();
             $date = $date->toDateString();
