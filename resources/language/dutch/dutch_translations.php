@@ -89,6 +89,12 @@ return [
     'no_translations_were_found_message' => 'Er zijn geen teksten gevonden.',
 
     /**
+     * Admin account user maintenance page translations.
+     */
+    'admin_edit_regular_data_account_title' => 'Gegevens bewerken',
+    'admin_edit_password_account_title' => 'Wachtwoord bewerken',
+
+    /**
      * Admin account(s) maintenance page translations.
      */
     'admin_account_maintenance_title' => 'Account beheer',
@@ -97,7 +103,7 @@ return [
     'admin_create_account_successful_message' => 'Account is succesvol aangemaakt.',
     'admin_create_account_failed_message', 'Er is iets fout gegaan met het aanmaken van een nieuw account.',
     'admin_edit_account_title' => 'Account aanpassen',
-    'admin_edit_account_wrong_current_password_message', 'Onjuist huidig wachtwoord gegeven. Wachtwoord is niet bijgewerkt.',
+    'admin_edit_account_wrong_current_password_message' => 'Onjuist huidig wachtwoord gegeven. Wachtwoord is niet bijgewerkt.',
     'admin_edited_account_successful_message' => 'Account is succesvol bijgewerkt.',
     'admin_edited_account_failed_message' => 'Er is iets fout gegaan met het bijwerken van dit account.',
     'admin_account_cannot_be_visited' => 'Account kan om onbekende redenen niet worden bekeken.',
@@ -115,7 +121,7 @@ return [
     'admin_logout_message' => 'Succesvol uitgelogd.',
     'admin_email_already_exists_message' => 'Het account met email %s bestaat al.',
     'admin_invalid_passwords_message' => 'Ongeldige wachtwoorden opgegeven.',
-    'admin_passwords_are_not_the_same_message' => 'De wachtwoorden zijn niet hetzelfde.',
+    'admin_passwords_are_not_the_same_message' => 'De nieuwe wachtwoorden zijn niet hetzelfde.',
     'admin_invalid_rights_message' => 'Ongeldige rechten opgegeven.',
     'unknown_account_visited' => 'Je probeerde een onbekend account te bezoeken.',
     'student_email_already_exists' => 'Je kan alleen een account aanmaken op je eigen email van landstede.',
@@ -196,8 +202,8 @@ return [
     'form_password_placeholder' => 'Typ wachtwoord',
     'form_current_password' => 'Huidig wachtwoord',
     'form_new_password' => 'Nieuw wachtwoord',
-    'form_confirm_password' => 'Bevestig wachtwoord',
-    'form_confirm_password_placeholder' => 'Bevestig wachtwoord',
+    'form_confirmation_password' => 'Bevestig wachtwoord',
+    'form_confirmation_password_placeholder' => 'Bevestig wachtwoord',
     'form_rights' => 'Rollen',
     'form_rights_placeholder' => 'Kies de rol',
     'form_rights_admin' => 'Beheerder',

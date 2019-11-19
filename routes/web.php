@@ -6,6 +6,7 @@ use App\Controllers\Admin\AuthorizationController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\DebugController;
 use App\Controllers\Admin\PageController as AdminPageController;
+use App\Controllers\Admin\UserAccountController;
 use App\Controllers\PageController;
 use App\Models\User;
 use App\Src\Core\Router;
@@ -53,6 +54,18 @@ Router::prefix('admin')->group(function () {
      */
     Router::get('debug', DebugController::class,
         'index', User::DEVELOPER);
+
+    /**
+     * The user page.
+     */
+    Router::get('user/account', UserAccountController::class,
+        'index', User::ADMIN);
+    Router::post('user/account/store/data',
+        UserAccountController::class,
+        'storeData', User::ADMIN);
+    Router::post('user/account/store/password',
+        UserAccountController::class,
+        'storePassword', User::ADMIN);
 });
 
 /**

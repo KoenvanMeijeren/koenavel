@@ -83,7 +83,8 @@ $user = new User();
                     <?php endif;
                     if ($user->getRights() >= User::SUPER_ADMIN) : ?>
                         <li class="nav-item <?= strstr(URI::getUrl(),
-                            'account') ? 'active' : '' ?>">
+                            'account') && !strstr(URI::getUrl(),
+                        'user') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/account">
                                 <i class="fas fa-users"></i>
                                 <p>Accounts</p>
@@ -120,7 +121,8 @@ $user = new User();
                          id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link color-default"
+                                <a class="nav-link color-default <?= strstr(URI::getUrl(),
+                                    'user/account') ? 'active-link' : '' ?>"
                                    href="/admin/user/account">
                                 <span class="no-icon">
                                     Welkom <?= $user->getName() ?>
