@@ -9,6 +9,7 @@ use App\Services\Auth\Login;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
+use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
@@ -51,7 +52,7 @@ final class AuthorizationController
     public function login(): Redirect
     {
         $login = new Login($this->user);
-        if ($login->execute()) {
+        if (CSRF::validate() && $login->execute()) {
             return new Redirect('/admin/dashboard');
         }
 
