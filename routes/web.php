@@ -46,26 +46,14 @@ Router::prefix('admin')->group(function () {
      * The account page.
      */
     Router::get('account', AccountController::class,
-        'index', User::ADMIN);
+        'index', User::SUPER_ADMIN);
 
     /**
      * The debug page.
      */
     Router::get('debug', DebugController::class,
-        'index', User::ADMIN);
-
-    /**
-     * Page expired.
-     */
-    Router::get('pageExpired', PageController::class,
-        'expiredSession', User::GUEST);
+        'index', User::DEVELOPER);
 });
-
-/**
- * Page expired.
- */
-Router::get('pageExpired', PageController::class,
-    'expiredSession', User::GUEST);
 
 /**
  * Page not found.

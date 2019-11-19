@@ -16,13 +16,6 @@ final class PageController
         return new View('index/index', compact('title'));
     }
 
-    public function expiredSession(): View
-    {
-        $title = Translation::get('page_expired_title');
-
-        return new View('http/419', compact('title'));
-    }
-
     public function notFound(): View
     {
         $title = Translation::get('page_not_found_title');
