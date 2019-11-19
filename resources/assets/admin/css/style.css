@@ -29,8 +29,8 @@
 }
 
 .scrollbox-horizontal {
-    width: 300px;
-    max-width: 300px;
+    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -40,6 +40,26 @@
     max-height: 300px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.h-250 {
+    height: 250px;
+    max-height: 250px;
+}
+
+.h-500 {
+    height: 500px;
+    max-height: 500px;
+}
+
+.h-750 {
+    height: 750px;
+    max-height: 750px;
+}
+
+.h-1000 {
+    height: 1000px;
+    max-height: 1000px;
 }
 
 .alert-top-right {
