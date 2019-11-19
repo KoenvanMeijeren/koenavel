@@ -209,6 +209,9 @@ final class User extends BaseModel
         $builder = new Builder();
         $builder->destroy();
 
+        $builder->startSession();
+        $builder->setSessionSecurity();
+
         $session = new Session();
         $session->flash(State::SUCCESSFUL, Translation::get('admin_logout_message'));
 
