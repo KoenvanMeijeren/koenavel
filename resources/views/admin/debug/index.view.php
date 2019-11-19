@@ -70,7 +70,7 @@ $request = new \App\Src\Core\Request();
             Er is geen log data gevonden op de gegeven datum.
         </div>
     <?php else : ?>
-        <div class="col-sm-4 scrollbox-vertical h-500">
+        <div class="col-sm-4">
             <div class="form-label-group has-search">
                 <input type="text" id="searchLog" class="form-control"
                        placeholder="Search">
@@ -79,24 +79,26 @@ $request = new \App\Src\Core\Request();
                 </label>
             </div>
 
-            <div class="list-group overflow-hidden" id="list-tab"
-                 role="tablist">
-                <?php $active = 'active';
-                foreach (($logs ?? []) as $key => $log) :
-                    if (strstr($log['message'] ?? '', 'ERROR')) {
-                        $class = 'active-danger';
-                    } else {
-                        $class = 'active-success';
-                    }
-                    ?>
-                    <a class="list-group-item list-group-item-action <?= $active . ' ' . $class ?>"
-                       id="list-<?= $key ?>-list" data-toggle="list"
-                       href="#list-<?= $key ?>" role="tab"
-                       aria-controls="<?= $key ?>">
-                        <?= $log['title'] ?? 'undefined' ?>
-                    </a>
-                    <?php $active = '';
-                endforeach; ?>
+            <div class="scrollbox-vertical h-500">
+                <div class="list-group overflow-hidden"
+                     id="list-tab" role="tablist">
+                    <?php $active = 'active';
+                    foreach (($logs ?? []) as $key => $log) :
+                        if (strstr($log['message'] ?? '', 'ERROR')) {
+                            $class = 'active-danger';
+                        } else {
+                            $class = 'active-success';
+                        }
+                        ?>
+                        <a class="list-group-item list-group-item-action <?= $active . ' ' . $class ?>"
+                           id="list-<?= $key ?>-list" data-toggle="list"
+                           href="#list-<?= $key ?>" role="tab"
+                           aria-controls="<?= $key ?>">
+                            <?= $log['title'] ?? 'undefined' ?>
+                        </a>
+                        <?php $active = '';
+                    endforeach; ?>
+                </div>
             </div>
         </div>
         <div class="col-sm-8 scrollbox-vertical h-500">
