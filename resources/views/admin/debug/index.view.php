@@ -23,7 +23,7 @@ $request = new \App\Src\Core\Request();
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">

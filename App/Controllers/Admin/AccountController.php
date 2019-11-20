@@ -27,11 +27,8 @@ final class AccountController
         $accounts = $this->user->getAll();
 
         $dataTable = new DataTable('account');
-        $dataTable->addHead(
-            'Naam',
-            'Email',
-            'Rechten'
-        );
+        $dataTable->addHead('Naam', 'Email', 'Rechten');
+
         foreach ($accounts as $account) {
             $rights = 'Beheerder';
             if (intval($account->account_rights ?? 0) === User::SUPER_ADMIN) {
@@ -44,16 +41,12 @@ final class AccountController
                 $rights
             );
         }
-        $dataTable->addFooter(
-            'Naam',
-            'Email',
-            'Rechten'
-        );
-        $table = $dataTable->get();
+
+        $accounts = $dataTable->get();
 
         return new View(
-            'partials/table',
-            compact('title', 'table')
+            'admin/account/index',
+            compact('title', 'accounts')
         );
     }
 }

@@ -41,11 +41,11 @@ final class PageController
             );
         }
 
-        $table = $dataTable->get();
+        $pages = $dataTable->get();
 
         return new View(
-            'partials/table',
-            compact('title', 'table')
+            'admin/page/index',
+            compact('title', 'pages')
         );
     }
 }
