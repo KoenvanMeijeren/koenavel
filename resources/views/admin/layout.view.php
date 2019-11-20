@@ -19,6 +19,11 @@ $user = new User();
     <link rel="stylesheet" type="text/css"
           href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
+    <!-- Font awesome -->
+    <script type="text/javascript" charset="utf8" defer async
+            src="https://kit.fontawesome.com/ec953a682d.js"
+            crossorigin="anonymous"></script>
+
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
           href="/resources/assets/vendor/cms-theme/css/light-bootstrap-dashboard.css">
@@ -28,6 +33,10 @@ $user = new User();
     <!-- Data tables -->
     <link rel="stylesheet" type="text/css"
           href="/resources/assets/vendor/datatables/css/dataTables.bootstrap4.min.css">
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
 
     <?php if (!$user->isLoggedIn()) : ?>
         <!-- Custom CSS -->
@@ -154,11 +163,6 @@ $user = new User();
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/vendor/popper/popper.min.js"></script>
 
-    <!-- Font awesome -->
-    <script type="text/javascript" charset="utf8"
-            src="https://kit.fontawesome.com/ec953a682d.js"
-            crossorigin="anonymous"></script>
-
     <!-- Data tables -->
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
@@ -166,6 +170,10 @@ $user = new User();
             src="/resources/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/js/datatables.js"></script>
+
+    <!-- Datepicker -->
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/vendor/datepicker/js/datepicker.js"></script>
 
     <!-- Password strength indicator -->
     <script type="text/javascript" charset="utf8"

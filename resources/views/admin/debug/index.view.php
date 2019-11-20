@@ -139,11 +139,10 @@ $request = new \App\Src\Core\Request();
                             <div class="tab-content" id="nav-tabContent">
                                 <?php $active = 'active';
                                 foreach (($logs ?? []) as $key => $log) : ?>
-                                    <div
-                                        class="tab-pane fade show <?= $active ?>"
+                                    <div class="tab-pane fade show <?= $active ?>"
                                         id="list-<?= $key ?>" role="tabpanel"
                                         aria-labelledby="list-<?= $key ?>">
-                                        <h3><?= $log['date'] ?? '' ?></h3>
+                                        <h3 class="mt-0 pt-0"><?= $log['date'] ?? '' ?></h3>
 
                                         <ul class="list-group list-group-flush">
                                             <?php
