@@ -79,7 +79,7 @@ gj.widget = function () {
         "en-us": {
             monthNames: [
                 "Januari",
-                "Februarie",
+                "Februari",
                 "Maart",
                 "April",
                 "Mei",
