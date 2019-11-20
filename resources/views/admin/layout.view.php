@@ -77,7 +77,7 @@ $user = new User();
                     if ($user->getRights() >= User::SUPER_ADMIN) : ?>
                         <li class="nav-item <?= strstr(URI::getUrl(),
                             'account') && !strstr(URI::getUrl(),
-                        'user') ? 'active' : '' ?>">
+                            'user') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/account">
                                 <i class="fas fa-users"></i>
                                 <p>Accounts</p>
@@ -150,46 +150,44 @@ $user = new User();
     </div>
 <?php endif; ?>
 
-<footer>
-    <!-- Jquery -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/jquery/jquery-3.3.1.js"></script>
+<!-- Jquery -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/jquery/jquery-3.3.1.js"></script>
 
-    <!-- Bootstrap -->
-    <script type="text/javascript" charset="utf8"
-            src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" charset="utf8"
+        src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Popper js -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/popper/popper.min.js"></script>
+<!-- Popper js -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/popper/popper.min.js"></script>
 
-    <!-- Data tables -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/js/datatables.js"></script>
+<!-- Data tables -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/admin/js/datatables.js"></script>
 
-    <!-- Datepicker -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/datepicker/js/datepicker.js"></script>
+<!-- Datepicker -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/datepicker/js/datepicker.js"></script>
 
-    <!-- Password strength indicator -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/password-strength-indicator/zxcvbn.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/js/password-strength-indicator.js"></script>
+<!-- Password strength indicator -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/password-strength-indicator/zxcvbn.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/admin/js/password-strength-indicator.js"></script>
 
-    <!-- Theme js -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
+<!-- Theme js -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
 
-    <!-- Default JS -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/js/default.js"></script>
-</footer>
+<!-- Default JS -->
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/admin/js/default.js"></script>
 </body>
 </html>
