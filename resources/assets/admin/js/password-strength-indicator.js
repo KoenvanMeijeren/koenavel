@@ -10,17 +10,19 @@ var password = document.getElementById('newPassword');
 var meter = document.getElementById('password-strength-meter');
 var text = document.getElementById('password-strength-text');
 
-password.addEventListener('input', function () {
-    var val = password.value;
-    var result = zxcvbn(val);
+if (password !== null) {
+    password.addEventListener('input', function () {
+        var val = password.value;
+        var result = zxcvbn(val);
 
-    // Update the password strength meter
-    meter.value = result.score;
+        // Update the password strength meter
+        meter.value = result.score;
 
-    // Update the text indicator
-    if (val !== "") {
-        text.innerHTML = "Sterkte: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span";
-    } else {
-        text.innerHTML = "";
-    }
-});
+        // Update the text indicator
+        if (val !== "") {
+            text.innerHTML = "Sterkte: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span";
+        } else {
+            text.innerHTML = "";
+        }
+    });
+}
