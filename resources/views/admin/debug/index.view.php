@@ -78,9 +78,18 @@ $request = new \App\Src\Core\Request();
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title float-left">
-                    Log informatie
-                </h4>
+                <div class="float-left">
+                    <h4 class="card-title">
+                        Log informatie
+                    </h4>
+
+                    <?php if (empty($logs ?? '')) : ?>
+                        <p class="mt-2 font-weight-bold">
+                            Er is geen log data gevonden op
+                            <?= $request->get('logDate') ?>.
+                        </p>
+                    <?php endif; ?>
+                </div>
 
                 <form class="form-inline float-right" method="get">
                     <div class="form-group mr-2">
@@ -94,13 +103,6 @@ $request = new \App\Src\Core\Request();
                         Filter
                     </button>
                 </form>
-
-                <?php if (empty($logs ?? '')) : ?>
-                    <p class="mt-2 font-weight-bold">
-                        Er is geen log data gevonden op
-                        <?= $request->get('logDate') ?>.
-                    </p>
-                <?php endif; ?>
             </div>
             <div class="card-body">
                 <div class="row">
