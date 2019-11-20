@@ -32,6 +32,7 @@
 .scrollbox-horizontal {
     width: 100%;
     max-width: 100%;
+    padding-bottom: 10px;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -101,6 +102,16 @@
 
 .active-link {
     color: #FFA534 !important;
+}
+
+.page-item, .paginate_button  {
+    color: #000000;
+}
+
+.page-item.active .page-link {
+    background-color: #FFA534;
+    border-color: #FFA534;
+    color: #ffffff;
 }
 
 .active-success {
@@ -242,4 +253,28 @@ meter[value="4"]::-moz-meter-bar {
     padding: 0 .25em;
     font-family: Courgette, cursive;
     margin-top: 1em;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px darkgrey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #FFA534;
+    border-radius: 10px;
+    opacity: 0.7;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
 }

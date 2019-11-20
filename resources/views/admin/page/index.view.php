@@ -7,9 +7,7 @@
                 </h4>
             </div>
             <div class="card-body">
-                <div class="col scrollbox-horizontal">
-                    <?= $pages ?? 'Geen pagina\'s gevonden' ?>
-                </div>
+                <?= $pages ?? 'Geen pagina\'s gevonden' ?>
             </div>
         </div>
     </div>

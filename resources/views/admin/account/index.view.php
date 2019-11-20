@@ -7,9 +7,7 @@
                 </h4>
             </div>
             <div class="card-body">
-                <div class="col scrollbox-horizontal">
-                    <?= $accounts ?? 'Geen accounts gevonden' ?>
-                </div>
+                <?= $accounts ?? 'Geen accounts gevonden' ?>
             </div>
         </div>
     </div>

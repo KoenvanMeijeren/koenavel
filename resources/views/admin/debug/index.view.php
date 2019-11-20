@@ -31,9 +31,7 @@ $request = new \App\Src\Core\Request();
                 </h4>
             </div>
             <div class="card-body">
-                <div class="col scrollbox-horizontal">
-                    <?= $sessionSettings ?? 'Geen sessie instellingen gevonden' ?>
-                </div>
+                <?= $sessionSettings ?? 'Geen sessie instellingen gevonden' ?>
             </div>
         </div>
     </div>
@@ -48,9 +46,7 @@ $request = new \App\Src\Core\Request();
                 </h4>
             </div>
             <div class="card-body">
-                <div class="col scrollbox-horizontal">
-                    <?= $sessionInformation ?? 'Geen sessie informatie gevonden' ?>
-                </div>
+                <?= $sessionInformation ?? 'Geen sessie informatie gevonden' ?>
             </div>
         </div>
     </div>
@@ -61,14 +57,11 @@ $request = new \App\Src\Core\Request();
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">
-                    Cookie, opgeslagen gegevens in cookie's
+                    Cookie gegevens
                 </h4>
             </div>
             <div class="card-body">
-                <div class="col scrollbox-horizontal">
-                    <?= $cookieInformation ?? 'Geen cookie informatie gevonden' ?>
-                    <hr>
-                </div>
+                <?= $cookieInformation ?? 'Geen cookie informatie gevonden' ?>
             </div>
         </div>
     </div>

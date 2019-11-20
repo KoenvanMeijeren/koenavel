@@ -19,24 +19,18 @@ $user = new User();
     <link rel="stylesheet" type="text/css"
           href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
-    <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css"
-          href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
-
-    <!-- Data tables -->
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css">
-
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/vendor/cms-theme/css/light-bootstrap-dashboard.css">
+          href="/resources/assets/vendor/cms-theme/css/light-bootstrap-dashboard.css">
     <link rel="stylesheet" type="text/css"
           href="/resources/assets/admin/css/style.css">
 
-    <!-- Custom CSS -->
+    <!-- Data tables -->
+    <link rel="stylesheet" type="text/css"
+          href="/resources/assets/vendor/datatables/css/dataTables.bootstrap4.min.css">
+
     <?php if (!$user->isLoggedIn()) : ?>
+        <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css"
               href="/resources/assets/admin/css/login.css">
     <?php endif; ?>
@@ -52,7 +46,7 @@ $user = new User();
 <?php if ($user->isLoggedIn()) : ?>
     <div class="wrapper">
         <div class="sidebar" data-color="orange"
-             data-image="/resources/assets/admin/vendor/cms-theme/img/sidebar-5.jpg">
+             data-image="/resources/assets/vendor/cms-theme/img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <?php if ($user->getRights() >= User::ADMIN) : ?>
@@ -150,9 +144,7 @@ $user = new User();
 <footer>
     <!-- Jquery -->
     <script type="text/javascript" charset="utf8"
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+            src="/resources/assets/vendor/jquery/jquery-3.3.1.js"></script>
 
     <!-- Bootstrap -->
     <script type="text/javascript" charset="utf8"
@@ -160,7 +152,7 @@ $user = new User();
 
     <!-- Popper js -->
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/js/popper.min.js"></script>
+            src="/resources/assets/vendor/popper/popper.min.js"></script>
 
     <!-- Font awesome -->
     <script type="text/javascript" charset="utf8"
@@ -169,28 +161,23 @@ $user = new User();
 
     <!-- Data tables -->
     <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+            src="/resources/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.19/js/dataTables.semanticui.min.js"></script>
+            src="/resources/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
-    <script src="/resources/assets/admin/js/datatables.js"></script>
-
-    <!-- Date picker -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/datepicker/js/datepicker.js"></script>
+            src="/resources/assets/admin/js/datatables.js"></script>
 
     <!-- Password strength indicator -->
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/password-strength-indicator/zxcvbn.js"></script>
+            src="/resources/assets/vendor/password-strength-indicator/zxcvbn.js"></script>
     <script type="text/javascript" charset="utf8"
             src="/resources/assets/admin/js/password-strength-indicator.js"></script>
 
     <!-- Theme js -->
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
+            src="/resources/assets/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
+            src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
 
     <!-- Default JS -->
     <script type="text/javascript" charset="utf8"
