@@ -1,10 +1,5 @@
 $(document).ready(function () {
     $('.table').DataTable({
-        "aaSorting": [],
-        'columnDefs': [{
-            'targets': [-1], /* column index */
-            'orderable': false, /* true or false */
-        }],
         "language": {
             "lengthMenu": "Toon _MENU_ gegevens per pagina",
             "zeroRecords": "Geen gegevens gevonden",
