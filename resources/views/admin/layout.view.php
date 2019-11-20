@@ -39,7 +39,7 @@ $user = new User();
           href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
 
     <?php if (!$user->isLoggedIn()) : ?>
-        <!-- Custom CSS -->
+        <!-- Login CSS -->
         <link rel="stylesheet" type="text/css"
               href="/resources/assets/admin/css/login.css">
     <?php endif; ?>
