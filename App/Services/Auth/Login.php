@@ -165,10 +165,10 @@ final class Login extends BaseModel
      */
     private function addFailedLogInAttempt(): void
     {
-        $current = (int) $this->account->account_failed_login ?? 0;
+        $current = $this->account->account_failed_login ?? '0';
 
         $this->setFields([
-            'account_failed_login' => (string) ($current + 1)
+            'account_failed_login' => (string) ((int) $current + 1)
         ]);
     }
 
