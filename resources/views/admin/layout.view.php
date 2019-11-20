@@ -16,28 +16,18 @@ $user = new User();
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet"
+    <link rel="stylesheet" type="text/css"
           href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
-    <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/ec953a682d.js"
-            crossorigin="anonymous"></script>
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
 
     <!-- Data tables -->
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css">
-
-    <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker.standalone.css">
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.css">
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/vendor/datepicker/css/bootstrap-datepicker3.standalone.css">
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
@@ -159,15 +149,23 @@ $user = new User();
 
 <footer>
     <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script type="text/javascript" charset="utf8"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
 
     <!-- Bootstrap -->
-    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Popper js -->
-    <script src="/resources/assets/admin/js/popper.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/admin/js/popper.min.js"></script>
+
+    <!-- Font awesome -->
+    <script type="text/javascript" charset="utf8"
+            src="https://kit.fontawesome.com/ec953a682d.js"
+            crossorigin="anonymous"></script>
 
     <!-- Data tables -->
     <script type="text/javascript" charset="utf8"
@@ -180,9 +178,7 @@ $user = new User();
 
     <!-- Date picker -->
     <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/datepicker/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/admin/vendor/datepicker/js/bootstrap-datepicker.nl.min.js"></script>
+            src="/resources/assets/admin/vendor/datepicker/js/datepicker.js"></script>
 
     <!-- Password strength indicator -->
     <script type="text/javascript" charset="utf8"
