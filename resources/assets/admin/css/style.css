@@ -104,10 +104,6 @@
     color: #FFA534 !important;
 }
 
-.page-item, .paginate_button  {
-    color: #000000;
-}
-
 .page-item.active .page-link {
     background-color: #FFA534;
     border-color: #FFA534;

@@ -7,6 +7,18 @@ table.dataTable {
     border-spacing: 0
 }
 
+.page-link {
+    color: #000000;
+}
+
+a:focus {
+    border: none !important;
+}
+
+.page-link:hover {
+    opacity: 0.7;
+}
+
 table.dataTable td, table.dataTable th {
     -webkit-box-sizing: content-box;
     box-sizing: content-box
@@ -188,5 +200,5 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .custom-select {
-    min-width: 100px!important;
+    min-width: 100px !important;
 }
