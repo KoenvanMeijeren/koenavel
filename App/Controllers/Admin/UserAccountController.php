@@ -40,7 +40,7 @@ final class UserAccountController
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
-        $account = $this->user->get();
+        $account = $this->account;
 
         return new View(
             'admin/account/user/index',
@@ -58,7 +58,7 @@ final class UserAccountController
     public function storeData()
     {
         $title = Translation::get('admin_account_title');
-        $account = $this->user->get();
+        $account = $this->account;
 
         $updateUser = new UpdateUser($this->user);
         if ($updateUser->saveData()) {
@@ -81,7 +81,7 @@ final class UserAccountController
     public function storePassword()
     {
         $title = Translation::get('admin_account_title');
-        $account = $this->user->get();
+        $account = $this->account;
 
         $updateUser = new UpdateUser($this->user);
         if ($updateUser->savePassword()) {
