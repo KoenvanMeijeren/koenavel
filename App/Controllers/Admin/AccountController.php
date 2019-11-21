@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Models\User;
+use App\Services\Helpers\ConvertRights;
 use App\Services\Helpers\DataTable;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
@@ -30,15 +31,12 @@ final class AccountController
         $dataTable->addHead('Naam', 'Email', 'Rechten');
 
         foreach ($accounts as $account) {
-            $rights = 'Beheerder';
-            if (intval($account->account_rights ?? 0) === User::SUPER_ADMIN) {
-                $rights = 'Super-beheerder';
-            }
+            $rights = new ConvertRights($account->account_rights ?? '0');
 
             $dataTable->addRow(
                 ucfirst($account->account_name ?? ''),
                 lcfirst($account->account_email ?? ''),
-                $rights
+                $rights->convert()
             );
         }
 

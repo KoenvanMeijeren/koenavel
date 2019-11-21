@@ -6,36 +6,36 @@ return [
      * Page translations.
      */
     'home_page_title' => 'Home',
-    'page_expired_title' => 'De sessie is verlopen.',
     'page_not_found_title' => 'Pagina niet gevonden',
-    'page_not_found_title_fallback' => 'Page not found',
     'page_not_found_description' => 'Ga terug naar waar je vandaan kwam',
     'internal_server_error_title' => ' - Interne server error',
-    'internal_server_error_description' => 'Deze website werkt niet meer =>neem contact op met de website beheerder.',
+    'internal_server_error_description' => 'Deze website werkt niet meer, neem contact op met de website beheerder.',
+    'admin_dashboard_title' => 'Dashboard',
+    'admin_page_title' => 'Pagina\'s overzicht',
+    'admin_account_title' => 'Account overzicht',
+    'admin_debug_title' => 'Debug informatie',
 
     /**
-     * Mail page translations.
+     * Admin menu translations.
      */
-    'mail_page_title' => 'Mail',
+    'admin_menu_dashboard' => 'Dashboard',
+    'admin_menu_pages' => 'Pagina\'s',
+    'admin_menu_settings' => 'Instellingen',
+    'admin_menu_translations' => 'Teksten',
+    'admin_menu_account' => 'Account',
+    'admin_menu_accounts' => 'Accounts',
+    'admin_menu_debug' => 'Debuggen',
+    'admin_menu_logout' => 'Uitloggen',
 
     /**
      * Admin login page translations.
      */
     'login_page_title' => 'Inloggen',
-    'register_page_title' => 'Registreren',
     'login_successful_message' => 'Succesvol ingelogd.',
     'login_failed_message' => 'Gebruikersnaam en/of wachtwoord is onjuist.',
     'login_wrong_email_message' => 'Ongeldige email opgegeven.',
     'login_wrong_password_message' => 'Ongeldige wachtwoord opgegeven.',
     'login_failed_blocked_account_message' => 'Dit account is geblokkeerd. Neem contact op met de beheerder van deze website.',
-
-    /**
-     * Admin page translations.
-     */
-    'admin_dashboard_title' => 'Dashboard',
-    'admin_page_title' => 'Pagina\'s overzicht',
-    'admin_account_title' => 'Account overzicht',
-    'admin_debug_title' => 'Debug informatie',
 
     /**
      * Admin pages maintenance translations.
@@ -52,21 +52,6 @@ return [
     'delete_page_confirmation_message' => 'Weet je zeker dat je deze pagina wilt verwijderen?',
     'page_slug_cannot_be_edited' => 'De pagina url van een statische pagina kan niet worden aangepast.',
     'page_in_menu_cannot_be_edited' => 'De pagina in menu waarde van een statische pagina kan niet worden aangepast.',
-
-    /**
-     * Admin Projects maintenance translations.
-     */
-    'admin_projects_maintenance_title' => 'Projecten beheren',
-    'admin_create_project_title' => 'Project aanmaken',
-    'admin_edit_project_title' => 'Project bewerken',
-    'no_projects_were_found_message' => 'Er zijn geen projecten gevonden.',
-    'project_successfully_created' => 'Het project is succesvol aangemaakt',
-    'project_unsuccessfully_created' => 'Het project kon niet worden aangemaakt',
-    'project_successfully_updated' => 'Het project is succesvol bijgewerkt',
-    'project_unsuccessfully_updated' => 'Het project kon niet worden bijgwerkt',
-    'project_successful_deleted' => 'Het project is successvol verwijderd',
-    'project_unsuccessful_deleted' => 'Het project kon niet worden verwijderd',
-    'delete_project_confirmation_message' => 'Weet je zeker dat je dit project wilt verwijderen?',
 
     /**
      * Admin settings page translations.
@@ -131,15 +116,14 @@ return [
     'user_cannot_delete_his_own_account' => 'Je kan niet je eigen account verwijderen.',
 
     /**
-     * Admin menu translations.
+     * Account rights
      */
-    'admin_menu_dashboard' => 'Dashboard',
-    'admin_menu_pages' => 'Pagina\'s',
-    'admin_menu_settings' => 'Instellingen',
-    'admin_menu_translations' => 'Teksten',
-    'admin_menu_account' => 'Account',
-    'admin_menu_account_maintenance' => 'Account beheer',
-    'admin_menu_logout' => 'Uitloggen',
+    'account_rights' => 'Rollen',
+    'account_rights_placeholder' => 'Kies de rol',
+    'account_rights_guest' => 'Gast',
+    'account_rights_admin' => 'Beheerder',
+    'account_rights_super_admin' => 'Super-beheerder',
+    'account_rights_developer' => 'Developer',
 
     /**
      * Regular table texts translations.
@@ -204,11 +188,6 @@ return [
     'form_new_password' => 'Nieuw wachtwoord',
     'form_confirmation_password' => 'Bevestig wachtwoord',
     'form_confirmation_password_placeholder' => 'Bevestig wachtwoord',
-    'form_rights' => 'Rollen',
-    'form_rights_placeholder' => 'Kies de rol',
-    'form_rights_admin' => 'Beheerder',
-    'form_rights_super_admin' => 'Super beheerder',
-    'form_rights_unknown' => 'Onbekende rol',
     'form_message_for_required_fields' => 'Velden met een * zijn verplicht',
     'form_empty_name_message' => 'Naam is verplicht om op te geven.',
     'form_invalid_name_message' => 'Ongeldige naam opgegeven.',
@@ -250,66 +229,42 @@ return [
     'form_max_invalid_string_length' => '%s mag maximaal %u tekens bevatten.',
 
     /**
-     * Button translations.
+     * Buttons.
      */
-    'archive' => 'Archiveren',
-    'recover' => 'Herstellen',
     'edit' => 'Bewerken',
     'delete' => 'Verwijderen',
     'login_button' => 'Inloggen',
-    'register_button' => 'Registreren',
-    'mail_button' => 'Verzend mail',
-    'back_button' => 'Terug',
-    'previous_button' => 'Vorige',
+    'logout_button' => 'Uitloggen',
     'next_button' => 'Volgende',
     'add_button' => 'Toevoegen',
     'save_button' => 'Opslaan',
-    'create_button' => 'Aanmaken',
-    'sign_up_button' => 'Aanmelden >',
-    'signUp_button' => 'Aanmelden',
-    'send_button' => 'Verzenden',
     'reset_button' => 'Reset',
     'filter_button' => 'Filter',
-    'edit_button' => 'Bewerken >',
+    'edit_button' => 'Bewerken',
     'upload_button' => 'Uploaden',
     'unblock_button' => 'Deblokkeren',
-    'accounts_maintenance_button' => 'Accounts beheren',
-    'account_maintenance_button' => 'Account beheren',
     'add_account_button' => 'Account toevoegen',
-    'information_button' => 'Informatie >',
-    'view_button' => 'Bekijken >',
-    'view_all_button' => 'Bekijk alles >',
     'create_page_button' => 'Pagina toevoegen',
 
     /**
-     * Language translations.
+     * Texts
      */
-    'choose_language_title' => 'Taal',
-    'dutch_language' => 'Nederlands',
-    'dutch_language_flag_alt' => 'Nederlandse vlag',
-    'english_language' => 'Engels',
-    'english_language_flag_alt' => 'Engelse vlag',
+    'welcome_text' => 'Welkom',
 
     /**
-     * Mail translations.
-     */
-    'email_is_not_valid_mail_error' => 'Ongeldige email opgegeven.',
-
-    /**
-     * Upload translations.
+     * Uploader.
      */
     'not_allowed_file_upload' => 'Je probeerde een niet toegestaan bestand te uploaden. Alleen bestanden met .svg =>.jpg =>.jpeg en .png zijn toegestaan.',
     'error_while_uploading_file' => 'Het bestand kon niet worden geüpload.',
 
     /**
-     * CSRF translations.
+     * Cross site request forgery  protection.
      */
     'failed_csrf_check_message' => 'De sessie is verlopen.',
 
     /**
-     * Recaptcha translations.
+     * Recaptcha protection.
      */
     'failed_recaptcha_check_message' => 'Er is iets fout gegaan. Probeer het opnieuw.',
     'something_went_wrong' => 'Er is iets fout gegaan. Probeer het later opnieuw.',
-
 ];

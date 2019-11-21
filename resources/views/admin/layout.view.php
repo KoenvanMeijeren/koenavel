@@ -62,14 +62,18 @@ $user = new User();
                             'dashboard') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/dashboard">
                                 <i class="fas fa-home"></i>
-                                <p>Dashboard</p>
+                                <p>
+                                    <?= Translation::get('admin_menu_dashboard') ?>
+                                </p>
                             </a>
                         </li>
                         <li class="nav-item <?= strstr(URI::getUrl(),
                             'pages') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/pages">
                                 <i class="fas fa-sitemap"></i>
-                                <p>Pagina's</p>
+                                <p>
+                                    <?= Translation::get('admin_menu_pages') ?>
+                                </p>
                             </a>
                         </li>
                     <?php endif;
@@ -79,7 +83,9 @@ $user = new User();
                             'user') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/account">
                                 <i class="fas fa-users"></i>
-                                <p>Accounts</p>
+                                <p>
+                                    <?= Translation::get('admin_menu_accounts') ?>
+                                </p>
                             </a>
                         </li>
                     <?php endif;
@@ -88,7 +94,9 @@ $user = new User();
                             'debug') ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/debug">
                                 <i class="fas fa-code"></i>
-                                <p>Debuggen</p>
+                                <p>
+                                    <?= Translation::get('admin_menu_debug') ?>
+                                </p>
                             </a>
                         </li>
                     <?php endif; ?>
@@ -117,14 +125,17 @@ $user = new User();
                                     'user/account') ? 'active-link' : '' ?>"
                                    href="/admin/user/account">
                                 <span class="no-icon">
-                                    Welkom <?= $user->getName() ?>
+                                    <?= Translation::get('welcome_text') ?>
+                                    <?= $user->getName() ?>
                                 </span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link color-default"
                                    href="/admin/logout">
-                                    <span class="no-icon">Uitloggen</span>
+                                    <span class="no-icon">
+                                        <?= Translation::get('logout_button') ?>
+                                    </span>
                                 </a>
                             </li>
                         </ul>
