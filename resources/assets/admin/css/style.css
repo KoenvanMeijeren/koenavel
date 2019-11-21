@@ -265,12 +265,11 @@ meter[value="4"]::-moz-meter-bar {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #FFA534;
+    background: #FFB75C;
     border-radius: 10px;
-    opacity: 0.7;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    opacity: 1;
+    background: #FFA534;
 }
