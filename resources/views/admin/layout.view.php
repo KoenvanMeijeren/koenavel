@@ -20,9 +20,8 @@ $user = new User();
           href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Font awesome -->
-    <script type="text/javascript" charset="utf8" defer async
-            src="https://kit.fontawesome.com/ec953a682d.js"
-            crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="/resources/assets/vendor/fontawesome/fontawesome.js"></script>
 
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css"
@@ -36,7 +35,7 @@ $user = new User();
 
     <!-- Datepicker -->
     <link rel="stylesheet" type="text/css"
-          href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
+          href="/resources/assets/vendor/datepicker/css/datepicker.css">
 
     <?php if (!$user->isLoggedIn()) : ?>
         <!-- Login CSS -->
