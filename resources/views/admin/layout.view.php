@@ -6,6 +6,7 @@ use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 
 $user = new User();
+$rights = new \App\Services\Helpers\ConvertRights($user->getRights())
 ?>
 <!DOCTYPE html>
 <html lang="<?= Translation::DUTCH_LANGUAGE_CODE ?>">
@@ -126,7 +127,8 @@ $user = new User();
                                    href="/admin/user/account">
                                 <span class="no-icon">
                                     <?= Translation::get('welcome_text') ?>
-                                    <?= $user->getName() ?>
+                                    <?= $user->getName() ?> -
+                                    <b><?= $rights->convert() ?></b>
                                 </span>
                                 </a>
                             </li>
