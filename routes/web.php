@@ -7,6 +7,7 @@ use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\DebugController;
 use App\Controllers\Admin\PageController as AdminPageController;
 use App\Controllers\Admin\UserAccountController;
+use App\Controllers\DataRequestController;
 use App\Controllers\PageController;
 use App\Models\User;
 use App\Src\Core\Router;
@@ -21,6 +22,12 @@ Router::get('', PageController::class,
  * Authorization routes.
  */
 Router::prefix('admin')->group(function () {
+    /**
+     * Data Requests.
+     */
+    Router::get('api/data/{slug}', DataRequestController::class,
+        'json', User::ADMIN);
+
     /**
      * Authorization routes.
      */

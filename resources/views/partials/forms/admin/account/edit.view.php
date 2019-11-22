@@ -1,4 +1,4 @@
-<div id="<?= $id ?? '' ?>" class="accordian-body collapse">
+<div id="<?= $id ?? '' ?>" class="accordian-body collapse p-3">
     <p>ID: <span><?= $id ?? '' ?></span></p>
     <p>Date : <span>12 Jan 2018</span></p>
     <p>Description : <span>Good</span></p>

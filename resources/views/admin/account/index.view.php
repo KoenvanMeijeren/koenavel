@@ -7,7 +7,7 @@
                 </h4>
             </div>
             <div class="card-body w-100">
-                <?= $accounts ?? 'Geen accounts gevonden.' ?>
+                <?= $accounts ?? 'Geen gegevens beschikbaar.' ?>
             </div>
         </div>
     </div>

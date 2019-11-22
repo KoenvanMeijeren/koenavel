@@ -280,3 +280,13 @@ meter[value="4"]::-moz-meter-bar {
 .hiddenRow {
     padding: 0 4px !important;
 }
+
+td.details-control:before {
+    font-family: FontAwesome;
+    content: "\f067";
+}
+
+tr.shown td.details-control:before {
+    font-family: FontAwesome;
+    content: "\f068";
+}
