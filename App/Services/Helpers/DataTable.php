@@ -4,107 +4,218 @@ declare(strict_types=1);
 
 namespace App\Services\Helpers;
 
-use App\Src\Exceptions\Table\InvalidTableStructureException;
-
 final class DataTable
 {
     /**
-     * The table to be build.
+     * @var string
+     */
+    private $table = '';
+
+    /**
+     * @var string
+     */
+    private $head = '';
+
+    /**
+     * @var string
+     */
+    private $rows = '';
+
+    /**
+     * @var string
+     */
+    private $footer = '';
+
+    /**
+     * @var string
+     */
+    private $ids = '';
+
+    /**
+     * @var string
+     */
+    private $classes = '';
+
+    /**
+     * The var to add the pieces to.
      *
      * @var string
      */
-    private $table;
+    private $var = 'table';
 
-    /**
-     * @param string $id the id of the table
-     */
-    public function __construct(string $id)
+    public function addId(...$ids): void
     {
-        $this->addContent(
-            "<table id='".$id."' class='table table-hover table-striped celled display nowrap' style='width:100%'>"
-        );
+        $this->ids = implode(', ', $ids);
     }
 
-    /**
-     * Add a head to the table.
-     *
-     * @param string[] ...$heads the head of the table
-     *
-     * @throws InvalidTableStructureException
-     */
-    public function addHead(...$heads): void
+    public function addClasses(...$classes): void
     {
-        if (strstr($this->table, 'thead')) {
-            throw new InvalidTableStructureException(
-                'The head is already added to table.'
-            );
-        }
-
-        $heads = '<th>' . implode('</th><th>', $heads) . '</th>';
-        $this->addContent(
-            "<thead><tr>{$heads}</tr></thead>"
-        );
+        $this->classes = implode(', ', $classes);
     }
 
-    /**
-     * Add a row to the table.
-     *
-     * @param string[] ...$row the row to be added.
-     */
-    public function addRow(...$row): void
+    public function addTableStart(): void
     {
-        if (!strstr($this->table, 'tbody')) {
-            $this->addContent('<tbody>');
-        }
-
-        $row = '<td>' . implode('</td><td>', $row) . '</td>';
-        $this->addContent(
-            "<tr>{$row}</tr>"
-        );
+        $this->add("<table>", $this->var);
     }
 
-    /**
-     * Add a footer to the table.
-     *
-     * @param string[] ...$footer the footer of the table
-     *
-     * @throws InvalidTableStructureException
-     */
-    public function addFooter(...$footer): void
+    public function addTableEnd(): void
     {
-        if (strstr($this->table, 'tfoot')) {
-            throw new InvalidTableStructureException(
-                'The footer is already added to table.'
-            );
-        }
-
-        $heads = '<th>' . implode('</th><th>', $footer) . '</th>';
-        $this->addContent(
-            "<tfoot><tr>{$heads}</tr></tfoot>"
-        );
+        $this->add("</table>", $this->var);
     }
 
-    /**
-     * Get the built table.
-     *
-     * @return string
-     */
+    public function addHeadStart(): void
+    {
+        $this->add("<thead>", $this->var);
+    }
+
+    public function addHeadEnd(): void
+    {
+        $this->add("</thead>", $this->var);
+    }
+
+    public function addBodyStart(): void
+    {
+        $this->add("<tbody>", $this->var);
+    }
+
+    public function addBodyEnd(): void
+    {
+        $this->add("</tbody>", $this->var);
+    }
+
+    public function addFooterStart(): void
+    {
+        $this->add("<tfoot>", $this->var);
+    }
+
+    public function addFooterEnd(): void
+    {
+        $this->add("</tfoot>", $this->var);
+    }
+
+    public function addTrStart(): void
+    {
+        $this->add("<tr>", $this->var);
+    }
+
+    public function addTrEnd(): void
+    {
+        $this->add("</tr>", $this->var);
+    }
+
+    public function addThStart(): void
+    {
+        $this->add("<th>", $this->var);
+    }
+
+    public function addThEnd(): void
+    {
+        $this->add("</th>", $this->var);
+    }
+
+    public function addTdStart(): void
+    {
+        $this->add("<td>", $this->var);
+    }
+
+    public function addTdEnd(): void
+    {
+        $this->add("</td>", $this->var);
+    }
+
+    public function addHead(...$ths): void
+    {
+        $this->var = 'head';
+
+        $this->addTrStart();
+
+        array_walk($ths, function ($item) {
+            $this->addThStart();
+            $this->add($item, $this->var);
+            $this->addThEnd();
+        });
+
+        $this->addTrEnd();
+    }
+
+    public function addRow(...$tds): void
+    {
+        $this->var = 'rows';
+
+        $this->addTrStart();
+
+        array_walk($tds, function ($item) {
+            $this->addTdStart();
+            $this->add($item, $this->var);
+            $this->addTdEnd();
+        });
+
+        $this->addTrEnd();
+    }
+
+    public function addFooter(...$ths): void
+    {
+        $this->var = 'footer';
+
+        $this->addTrStart();
+
+        array_walk($ths, function ($item) {
+            $this->addTdStart();
+            $this->add($item, $this->var);
+            $this->addTdEnd();
+        });
+
+        $this->addTrEnd();
+    }
+
     public function get(): string
     {
-        $this->addContent(
-            "</tbody></table>"
-        );
+        $this->var = 'table';
+
+        $this->addClasses('table table-hover customTableStyle');
+        $this->addTableStart();
+
+        $this->addHeadStart();
+        $this->add($this->head);
+        $this->addHeadEnd();
+
+        $this->addBodyStart();
+        $this->add($this->rows);
+        $this->addBodyEnd();
+
+        $this->addFooterStart();
+        $this->add($this->footer);
+        $this->addFooterEnd();
+
+        $this->addTableEnd();
 
         return $this->table;
     }
 
-    /**
-     * Add html content to the table.
-     *
-     * @param string $table
-     */
-    private function addContent(string $table): void
+    private function add(string $piece, string $var = 'table'): void
     {
-        $this->table .= $table;
+        if ($this->ids !== '') {
+            $this->$var .= preg_replace(
+                '/>/',
+                " id='{$this->ids}' >",
+                $piece
+            );
+        } elseif ($this->classes !== '') {
+            $this->$var .= preg_replace(
+                '/>/',
+                " class='{$this->classes}' >",
+                $piece
+            );
+        } else {
+            $this->$var .= $piece;
+        }
+
+        $this->reset();
+    }
+
+    public function reset(): void
+    {
+        $this->ids = '';
+        $this->classes = '';
     }
 }

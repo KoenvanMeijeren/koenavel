@@ -26,7 +26,7 @@ final class PageController
         $title = Translation::get('admin_page_title');
         $pages = $this->page->getAll();
 
-        $dataTable = new DataTable('pages');
+        $dataTable = new DataTable();
         $dataTable->addHead(
             'page_slug_ID',
             'page_title',

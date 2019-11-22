@@ -145,11 +145,13 @@ $rights = new \App\Services\Helpers\ConvertRights($user->getRights())
                 </div>
             </nav>
 
-            <div class="content">
-                <div class="container-fluid">
-                    <?php Resource::loadFlashMessage(); ?>
+            <div class="scrollbox-vertical">
+                <div class="content">
+                    <div class="container-fluid">
+                        <?php Resource::loadFlashMessage(); ?>
 
-                    <?= $content ?? '' ?>
+                        <?= $content ?? '' ?>
+                    </div>
                 </div>
             </div>
         </div>

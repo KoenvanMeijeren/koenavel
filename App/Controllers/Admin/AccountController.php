@@ -25,12 +25,12 @@ final class AccountController
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
-        $accounts = $this->user->getAll();
 
-        $dataTable = new DataTable('account');
+        $dataTable = new DataTable();
         $dataTable->addHead('Naam', 'Email', 'Rechten');
 
-        foreach ($accounts as $account) {
+        $accounts = $this->user->getAll();
+        array_walk($accounts, function ($account) use ($dataTable) {
             $rights = new ConvertRights($account->account_rights ?? '0');
 
             $dataTable->addRow(
@@ -38,7 +38,7 @@ final class AccountController
                 lcfirst($account->account_email ?? ''),
                 $rights->convert()
             );
-        }
+        });
 
         $accounts = $dataTable->get();
 
