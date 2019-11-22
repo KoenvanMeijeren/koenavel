@@ -37,6 +37,21 @@ final class DataTable
     private $classes = '';
 
     /**
+     * @var string
+     */
+    private $toggle = '';
+
+    /**
+     * @var string
+     */
+    private $target = '';
+
+    /**
+     * @var string
+     */
+    private $colspan = '';
+
+    /**
      * The var to add the pieces to.
      *
      * @var string
@@ -51,6 +66,21 @@ final class DataTable
     public function addClasses(...$classes): void
     {
         $this->classes = implode(', ', $classes);
+    }
+
+    public function addDataToggle(string $name) : void
+    {
+        $this->toggle = $name;
+    }
+
+    public function addDataTarget(string $name) : void
+    {
+        $this->target = $name;
+    }
+
+    public function addColspan(string $number) : void
+    {
+        $this->colspan = $number;
     }
 
     public function addTableStart(): void
@@ -153,6 +183,42 @@ final class DataTable
         $this->addTrEnd();
     }
 
+    public function addCollapsibleRow(
+        string $target,
+        array $firstTds,
+        string $collapsible
+    ): void {
+        $this->var = 'rows';
+        $colspan = preg_match_all('/<\/th>/', $this->head);
+
+        $this->addDataToggle('collapse');
+        $this->addDataTarget($target);
+        $this->addClasses('accordion-toggle');
+
+        $this->addTrStart();
+        array_walk($firstTds, function ($item) {
+            $this->addTdStart();
+            $this->add($item, $this->var);
+            $this->addTdEnd();
+        });
+        $this->addTrEnd();
+
+        $this->addTrStart();
+        $this->addClasses('hiddenRow');
+        $this->addColspan((string) $colspan);
+        $this->addTdStart();
+        $this->add($collapsible, $this->var);
+        $this->addTdEnd();
+
+        for ($x = 1; $x < $colspan; ++$x) {
+            $this->addClasses('d-none');
+            $this->addTdStart();
+            $this->addTdEnd();
+        }
+
+        $this->addTrEnd();
+    }
+
     public function addFooter(...$ths): void
     {
         $this->var = 'footer';
@@ -160,9 +226,9 @@ final class DataTable
         $this->addTrStart();
 
         array_walk($ths, function ($item) {
-            $this->addTdStart();
+            $this->addThStart();
             $this->add($item, $this->var);
-            $this->addTdEnd();
+            $this->addThEnd();
         });
 
         $this->addTrEnd();
@@ -194,22 +260,49 @@ final class DataTable
 
     private function add(string $piece, string $var = 'table'): void
     {
+        $string = $piece;
+
         if ($this->ids !== '') {
-            $this->$var .= preg_replace(
+            $string = preg_replace(
                 '/>/',
                 " id='{$this->ids}' >",
-                $piece
+                $string
             );
-        } elseif ($this->classes !== '') {
-            $this->$var .= preg_replace(
-                '/>/',
-                " class='{$this->classes}' >",
-                $piece
-            );
-        } else {
-            $this->$var .= $piece;
         }
 
+        if ($this->classes !== '') {
+            $string = preg_replace(
+                '/>/',
+                " class='{$this->classes}' >",
+                $string
+            );
+        }
+
+        if ($this->toggle !== '') {
+            $string = preg_replace(
+                '/>/',
+                " data-toggle='{$this->toggle}' >",
+                $string
+            );
+        }
+
+        if ($this->target !== '') {
+            $string = preg_replace(
+                '/>/',
+                " data-target='{$this->target}' >",
+                $string
+            );
+        }
+
+        if ($this->colspan !== '') {
+            $string = preg_replace(
+                '/>/',
+                " colspan='{$this->colspan}' >",
+                $string
+            );
+        }
+
+        $this->$var .= $string;
         $this->reset();
     }
 
@@ -217,5 +310,8 @@ final class DataTable
     {
         $this->ids = '';
         $this->classes = '';
+        $this->toggle = '';
+        $this->target = '';
+        $this->colspan = '';
     }
 }

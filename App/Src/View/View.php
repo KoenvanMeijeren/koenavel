@@ -49,8 +49,6 @@ final class View
 
         includeFile(RESOURCES_PATH."/views/{$name}.view.php", $content);
 
-        $content = ob_get_clean();
-
-        return (string) $content;
+        return (string) ob_get_clean();
     }
 }

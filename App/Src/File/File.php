@@ -65,17 +65,24 @@ final class File
     /**
      * Get the content of the file.
      *
+     * @param array $vars
+     *
      * @return string
      */
-    public function get(): string
+    public function get(array $vars = []): string
     {
         if ($this->system->readlink($this->path, true) === null) {
             return '';
         }
 
-        return (string) file_get_contents(
-            $this->system->readlink($this->path, true)
+        ob_start();
+
+        includeFile(
+            $this->system->readlink($this->path, true),
+            $vars
         );
+
+        return (string) ob_get_clean();
     }
 
     /**

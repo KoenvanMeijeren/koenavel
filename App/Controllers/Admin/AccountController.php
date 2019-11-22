@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Models\User;
 use App\Services\Helpers\ConvertRights;
 use App\Services\Helpers\DataTable;
+use App\Services\Helpers\Resource;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
@@ -33,13 +34,16 @@ final class AccountController
         array_walk($accounts, function ($account) use ($dataTable) {
             $rights = new ConvertRights($account->account_rights ?? '0');
 
-            $dataTable->addRow(
+            $dataTable->addCollapsibleRow(
+                '#account' . ($account->account_ID ?? '0'), [
                 ucfirst($account->account_name ?? ''),
                 lcfirst($account->account_email ?? ''),
                 $rights->convert()
-            );
+            ], Resource::loadCollapsibleDiv(
+                'account' . ($account->account_ID ?? '0'),
+                'admin/account/edit'
+            ));
         });
-
         $accounts = $dataTable->get();
 
         return new View(
