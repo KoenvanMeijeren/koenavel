@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Models\admin;
+namespace App\Models\Admin;
 
 use App\Src\Model\BaseModel;
 

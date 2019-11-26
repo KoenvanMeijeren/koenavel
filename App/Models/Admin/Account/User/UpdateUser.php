@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Models\admin\account\user;
+namespace App\Models\Admin\Account\User;
 
 use App\Models\User;
 use App\Src\Core\Request;

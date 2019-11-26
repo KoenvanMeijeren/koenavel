@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
-use App\Models\admin\Debug;
+use App\Models\Admin\Debug;
 use App\Src\Core\Request;
 use App\Src\Translation\Translation;
 use App\Src\View\View;

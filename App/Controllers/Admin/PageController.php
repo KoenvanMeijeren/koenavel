@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
-use App\Models\admin\Page;
+use App\Models\Admin\Page;
 use App\Services\Helpers\DataTable;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
