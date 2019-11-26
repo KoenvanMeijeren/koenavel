@@ -20,7 +20,7 @@ final class Resource
     ): string {
         return '<div class="table-edit-row flex">
                     <a href="'.$editAction.'"
-                       class="btn btn-success flex-child"
+                       class="btn btn-success flex-child edit-button"
                        data-toggle="tooltip"
                        data-placement="top"
                        title="'.Translation::get('table_row_edit').'">
@@ -29,7 +29,7 @@ final class Resource
 
                     <form method="post" 
                           action="'.$destroyAction.'">
-                        <button class="btn btn-danger flex-child" 
+                        <button class="btn btn-danger flex-child edit-button" 
                                 type="submit" 
                                 data-toggle="tooltip" 
                                 data-placement="top"
