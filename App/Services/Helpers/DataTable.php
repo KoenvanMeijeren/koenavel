@@ -154,6 +154,31 @@ final class DataTable
     }
 
     /**
+     * Add an edit head to the table.
+     *
+     * @param string ...$ths each item represents a title for a column.
+     */
+    public function addEditHead(...$ths): void
+    {
+        $this->var = 'head';
+
+        $this->addTrStart();
+
+        array_walk($ths, function ($item) {
+            $this->addThStart();
+            $this->add($item, $this->var);
+            $this->addThEnd();
+        });
+
+        $this->addClasses('table-edit-row');
+        $this->addThStart();
+        $this->add('Bewerken', $this->var);
+        $this->addThEnd();
+
+        $this->addTrEnd();
+    }
+
+    /**
      * Add a row to the table.
      *
      * @param string ...$tds each item represent a piece of data in a row.
