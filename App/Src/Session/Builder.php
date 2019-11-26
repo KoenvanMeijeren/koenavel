@@ -122,8 +122,6 @@ final class Builder
 
     /**
      * Set some security options for the session.
-     *
-     * @throws Exception
      */
     public function setSessionSecurity(): void
     {
