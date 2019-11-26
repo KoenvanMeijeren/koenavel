@@ -65,7 +65,7 @@ final class File
     /**
      * Get the content of the file.
      *
-     * @param array $vars
+     * @param string[] $vars
      *
      * @return string
      */

@@ -37,50 +37,30 @@ final class DataTable
     private $classes = '';
 
     /**
-     * @var string
-     */
-    private $toggle = '';
-
-    /**
-     * @var string
-     */
-    private $target = '';
-
-    /**
-     * @var string
-     */
-    private $colspan = '';
-
-    /**
      * The var to add the pieces to.
      *
      * @var string
      */
     private $var = 'table';
 
+    /**
+     * Add (multiple) ids to a piece of html.
+     *
+     * @param string ...$ids
+     */
     public function addId(...$ids): void
     {
         $this->ids = implode(', ', $ids);
     }
 
+    /**
+     * Add (multiple) classes to a piece of html.
+     *
+     * @param string ...$classes
+     */
     public function addClasses(...$classes): void
     {
         $this->classes = implode(', ', $classes);
-    }
-
-    public function addDataToggle(string $name) : void
-    {
-        $this->toggle = $name;
-    }
-
-    public function addDataTarget(string $name) : void
-    {
-        $this->target = $name;
-    }
-
-    public function addColspan(string $number) : void
-    {
-        $this->colspan = $number;
     }
 
     public function addTableStart(): void
@@ -153,6 +133,11 @@ final class DataTable
         $this->add("</td>", $this->var);
     }
 
+    /**
+     * Add a head to the table.
+     *
+     * @param string ...$ths each item represents a title for a column.
+     */
     public function addHead(...$ths): void
     {
         $this->var = 'head';
@@ -168,6 +153,11 @@ final class DataTable
         $this->addTrEnd();
     }
 
+    /**
+     * Add a row to the table.
+     *
+     * @param string ...$tds each item represent a piece of data in a row.
+     */
     public function addRow(...$tds): void
     {
         $this->var = 'rows';
@@ -183,42 +173,11 @@ final class DataTable
         $this->addTrEnd();
     }
 
-    public function addCollapsibleRow(
-        string $target,
-        array $firstTds,
-        string $collapsible
-    ): void {
-        $this->var = 'rows';
-        $colspan = preg_match_all('/<\/th>/', $this->head);
-
-        $this->addDataToggle('collapse');
-        $this->addDataTarget($target);
-        $this->addClasses('accordion-toggle');
-
-        $this->addTrStart();
-        array_walk($firstTds, function ($item) {
-            $this->addTdStart();
-            $this->add($item, $this->var);
-            $this->addTdEnd();
-        });
-        $this->addTrEnd();
-
-        $this->addTrStart();
-        $this->addClasses('hiddenRow');
-        $this->addColspan((string) $colspan);
-        $this->addTdStart();
-        $this->add($collapsible, $this->var);
-        $this->addTdEnd();
-
-        for ($x = 1; $x < $colspan; ++$x) {
-            $this->addClasses('d-none');
-            $this->addTdStart();
-            $this->addTdEnd();
-        }
-
-        $this->addTrEnd();
-    }
-
+    /**
+     * Add a footer to the table.
+     *
+     * @param string ...$ths each item represent a head for a column.
+     */
     public function addFooter(...$ths): void
     {
         $this->var = 'footer';
@@ -234,11 +193,17 @@ final class DataTable
         $this->addTrEnd();
     }
 
+    /**
+     * Get the build table.
+     *
+     * @return string
+     */
     public function get(): string
     {
         $this->var = 'table';
 
         $this->addClasses('table table-hover customTableStyle');
+        $this->addId('table');
         $this->addTableStart();
 
         $this->addHeadStart();
@@ -258,6 +223,12 @@ final class DataTable
         return $this->table;
     }
 
+    /**
+     * Add a piece html to the table.
+     *
+     * @param string $piece
+     * @param string $var
+     */
     private function add(string $piece, string $var = 'table'): void
     {
         $string = $piece;
@@ -278,40 +249,16 @@ final class DataTable
             );
         }
 
-        if ($this->toggle !== '') {
-            $string = preg_replace(
-                '/>/',
-                " data-toggle='{$this->toggle}' >",
-                $string
-            );
-        }
-
-        if ($this->target !== '') {
-            $string = preg_replace(
-                '/>/',
-                " data-target='{$this->target}' >",
-                $string
-            );
-        }
-
-        if ($this->colspan !== '') {
-            $string = preg_replace(
-                '/>/',
-                " colspan='{$this->colspan}' >",
-                $string
-            );
-        }
-
         $this->$var .= $string;
         $this->reset();
     }
 
+    /**
+     * Reset all settings for the added piece html to the table.
+     */
     public function reset(): void
     {
         $this->ids = '';
         $this->classes = '';
-        $this->toggle = '';
-        $this->target = '';
-        $this->colspan = '';
     }
 }

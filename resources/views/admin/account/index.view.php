@@ -6,7 +6,7 @@
                     Accounts bewerken
                 </h4>
             </div>
-            <div class="card-body w-100">
+            <div class="card-body">
                 <?= $accounts ?? 'Geen gegevens beschikbaar.' ?>
             </div>
         </div>

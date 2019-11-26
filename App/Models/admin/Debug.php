@@ -11,6 +11,7 @@ use App\Src\Core\Env;
 use App\Src\Log\Log;
 use App\Src\Session\Session;
 use Cake\Chronos\Chronos;
+use stdClass;
 
 final class Debug
 {
@@ -23,7 +24,7 @@ final class Debug
 
     public function getSessionSettingsInformation(): string
     {
-        $table = new DataTable('sessionSettings');
+        $table = new DataTable();
         $session = new Session();
 
         $table->addHead('Sleutel', 'Waarde');
@@ -55,7 +56,7 @@ final class Debug
     public function getSessionInformation(): string
     {
         $session = new Session();
-        $table = new DataTable('sessionInfo');
+        $table = new DataTable();
 
         $table->addHead('Sleutel', 'Waarde');
         foreach ($_SESSION as $key => $data) {
@@ -84,7 +85,7 @@ final class Debug
     public function getCookieInformation(): string
     {
         $cookie = new Cookie();
-        $table = new DataTable('cookieInfo');
+        $table = new DataTable();
 
         $table->addHead('Sleutel', 'Waarde');
         foreach ($_COOKIE as $key => $data) {
@@ -121,7 +122,7 @@ final class Debug
     {
         $date = new Chronos($date);
         $logs = preg_split(
-            '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\])/',
+            '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}])/',
             Log::get($date->toDateString())
         );
 
@@ -131,7 +132,7 @@ final class Debug
 
         array_walk($logs, function (&$value) {
             if (preg_match_all(
-                '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|(?<=\]).*(?=\{)|{.*}/',
+                '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|(?<=]).*(?={)|{.*}/',
                 $value,
                 $matches,
                 PREG_PATTERN_ORDER
@@ -147,7 +148,7 @@ final class Debug
                 'date' => ucfirst($date->toDateTime()),
                 'title' => $title[0] ?? 'undefined',
                 'message' => $matches[1] ?? 'undefined',
-                'meta' => $matches[2] ?? new \stdClass()
+                'meta' => $matches[2] ?? new stdClass()
             ];
         });
 

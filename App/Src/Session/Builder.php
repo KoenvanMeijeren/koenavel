@@ -138,7 +138,7 @@ final class Builder
      */
     private function setSessionName(): void
     {
-        $cookie = new Cookie($this->expiringTime);
+        $cookie = new Cookie($this->expiringTime - 1);
         if ($cookie->exists('sessionName')) {
             return;
         }

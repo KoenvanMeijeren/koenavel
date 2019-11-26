@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Helpers;
 
-
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Translation\Translation;
 
-class ConvertRights
+final class ConvertRights
 {
     /**
      * @var int

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var table = $('.table').DataTable({
+    $('#table').DataTable({
         scrollX: true,
         aaSorting: [],
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Alles"]],

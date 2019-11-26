@@ -9,5 +9,3 @@ require_once VENDOR_PATH . '/autoload.php';
 
 $app = new App();
 $app->run();
-
-// todo make it possible to load data into tables via ajax requests
