@@ -68,6 +68,11 @@ final class User extends BaseModel
      */
     protected $token;
 
+    /**
+     * @var stdClass
+     */
+    private $account;
+
     public function __construct()
     {
         $request = new Request();
@@ -77,6 +82,9 @@ final class User extends BaseModel
 
         $this->idColumn = 'account_ID';
         $this->id = $this->getID();
+
+        $this->setDefaultFilters();
+        $this->account = $this->get();
 
         $this->email = $request->post('email');
         $this->password = $request->post('password');
@@ -123,12 +131,6 @@ final class User extends BaseModel
             (string) $this->id
         );
 
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
-        );
-
         return $this->getBy();
     }
 
@@ -146,12 +148,6 @@ final class User extends BaseModel
             'account_email',
             '=',
             $this->getEmail()
-        );
-
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
         );
 
         return $this->getBy();
@@ -188,7 +184,7 @@ final class User extends BaseModel
      */
     public function getName(): string
     {
-        return $this->get()->account_name ?? '';
+        return $this->account->account_name ?? '';
     }
 
     /**
@@ -202,7 +198,7 @@ final class User extends BaseModel
      */
     public function getRights(): int
     {
-        return intval($this->get()->account_rights ?? self::GUEST);
+        return intval($this->account->account_rights ?? self::GUEST);
     }
 
     /**
@@ -270,10 +266,33 @@ final class User extends BaseModel
         }
 
         if (!$idEncryption->validateHash(
-            $this->get()->account_login_token ?? '',
+            $this->account->account_login_token ?? '',
             $session->get('userID')
         )) {
             return $this->logout();
         }
+
+        if ((int) ($this->account->account_is_blocked ?? '') === 1) {
+            return $this->logout();
+        }
+    }
+
+    /**
+     * Set default filters, which the user must pass if he will be
+     * able to use his account.
+     */
+    private function setDefaultFilters(): void
+    {
+        $this->setFilter(
+            'account_is_blocked',
+            '=',
+            '0'
+        );
+
+        $this->setFilter(
+            'account_is_deleted',
+            '=',
+            '0'
+        );
     }
 }
