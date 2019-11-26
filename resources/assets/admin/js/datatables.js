@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#table').DataTable({
         scrollX: true,
         aaSorting: [],
@@ -9,11 +9,6 @@ $(document).ready(function() {
                 target: 'tr'
             }
         },
-        columnDefs: [ {
-            className: 'control',
-            orderable: true,
-            targets:   0
-        } ],
         language: {
             lengthMenu: "Toon _MENU_ gegevens per pagina",
             zeroRecords: "Geen gegevens gevonden",
