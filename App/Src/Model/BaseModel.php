@@ -63,7 +63,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    final public function get(): stdClass
+    public function get(): stdClass
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -79,7 +79,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    final public function getBy(): stdClass
+    public function getBy(): stdClass
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -90,6 +90,8 @@ abstract class BaseModel
             ->execute()
             ->first();
 
+        $this->reset();
+
         return $data;
     }
 
@@ -98,7 +100,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    final public function getAll(): array
+    public function getAll(): array
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -113,7 +115,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    final public function getAllBy(): array
+    public function getAllBy(): array
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -124,13 +126,15 @@ abstract class BaseModel
             ->execute()
             ->all();
 
+        $this->reset();
+
         return $data;
     }
 
     /**
      * Create a new record.
      */
-    final public function create(): void
+    public function create(): void
     {
         DB::table($this->table)
             ->insert($this->fields)
@@ -140,7 +144,7 @@ abstract class BaseModel
     /**
      * Save existing date in the database.
      */
-    final public function save(): void
+    public function save(): void
     {
         DB::table($this->table)
             ->update($this->fields)
@@ -208,5 +212,11 @@ abstract class BaseModel
         }
 
         return $statement;
+    }
+
+    private function reset(): void
+    {
+        $this->filters = [];
+        $this->filterValues = [];
     }
 }
