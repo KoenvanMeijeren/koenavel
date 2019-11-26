@@ -87,7 +87,7 @@ return [
     'admin_create_account_title' => 'Account aanmaken',
     'admin_create_account_successful_message' => 'Account is succesvol aangemaakt.',
     'admin_create_account_failed_message', 'Er is iets fout gegaan met het aanmaken van een nieuw account.',
-    'admin_edit_account_title' => 'Account aanpassen',
+    'admin_edit_account_title' => 'Account bewerken',
     'admin_edit_account_wrong_current_password_message' => 'Onjuist huidig wachtwoord gegeven. Wachtwoord is niet bijgewerkt.',
     'admin_edited_account_successful_message' => 'Account is succesvol bijgewerkt.',
     'admin_edited_account_failed_message' => 'Er is iets fout gegaan met het bijwerken van dit account.',
@@ -96,7 +96,6 @@ return [
     'admin_edited_other_account_successful_message' => 'Account is succesvol bijgewerkt.',
     'admin_edited_other_account_failed_message' => 'Account kon niet worden bijgwerkt.',
     'no_accounts_were_found_message' => 'Er zijn geen accounts gevonden',
-    'delete_account_confirmation_message' => 'Weet je zeker dat je dit account wilt verwijderen?',
     'cannot_delete_own_account_message' => 'Je kan niet je eigen account verwijderen.',
     'cannot_edit_own_account_message' => 'Je kan je eigen account niet in beheerders modus bewerken.',
     'admin_deleted_account_successful_message' => 'Account verwijderen is gelukt.',
@@ -114,6 +113,7 @@ return [
     'account_successful_activated' => 'Je account is succesvol geactiveerd en kan nu in gebruik worden genomen.',
     'account_unsuccessful_activated' => 'Je account kon niet worden geactiveerd =>probeer het opnieuw of neem contact op met de website beheerder.',
     'user_cannot_delete_his_own_account' => 'Je kan niet je eigen account verwijderen.',
+    'admin_delete_account_warning_message' => 'Weet je zeker dat je dit account wil verwijderen?',
 
     /**
      * Account rights
@@ -129,22 +129,13 @@ return [
      * Regular table texts translations.
      */
     'table_row_identifier' => 'Nr',
-    'table_row_workspace_identifier' => 'Categorie',
-    'table_row_branch' => 'Werkveld',
-    'table_row_landscape' => 'Landschap',
     'table_row_name' => 'Naam',
     'table_row_title' => 'Titel',
-    'table_row_location' => 'Locatie',
-    'table_row_datetime' => 'Datum en tijdstip',
-    'table_row_banner' => 'Banner',
-    'table_row_thumbnail' => 'Thumbnail',
     'table_row_email' => 'Email',
     'table_row_rights' => 'Rol',
-    'table_row_maximum_persons' => 'Aantal plekken',
-    'table_row_sign_ups' => 'Aanmeldingen',
     'table_row_block' => 'Blokkeren',
-    'table_row_archive' => 'Archiveren',
     'table_row_edit' => 'Bewerken',
+    'table_row_delete' => 'Bewerken',
 
     /**
      * Regular Form texts translations.
