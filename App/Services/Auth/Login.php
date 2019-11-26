@@ -32,7 +32,7 @@ final class Login extends BaseModel
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->account = $this->user->getAccount();
+        $this->account = $this->user->getByEmail();
 
         $this->table = 'account';
     }

@@ -15,7 +15,6 @@ use App\Src\Session\Builder;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
-use Exception;
 use stdClass;
 
 final class User extends BaseModel
@@ -47,13 +46,6 @@ final class User extends BaseModel
      * @var int
      */
     const DEVELOPER = 3;
-
-    /**
-     * The account of the user.
-     *
-     * @var object
-     */
-    protected $account;
 
     /**
      * The email of the user.
@@ -90,8 +82,6 @@ final class User extends BaseModel
         $this->password = $request->post('password');
         $this->token = $request->post('verificationToken');
 
-        $this->account = $this->getAccount();
-
         $this->authorizeUser();
     }
 
@@ -125,20 +115,46 @@ final class User extends BaseModel
      *
      * @return stdClass
      */
-    public function getAccount(): stdClass
+    public function get(): stdClass
     {
-        $account = $this->get();
-        if (empty((array) $account)) {
-            $this->setFilter(
-                'account_email',
-                '=',
-                $this->getEmail()
-            );
+        $this->setFilter(
+            $this->idColumn,
+            '=',
+            (string) $this->id
+        );
 
-            $account = $this->getBy();
-        }
+        $this->setFilter(
+            'account_is_deleted',
+            '=',
+            '0'
+        );
 
-        return $account;
+        return $this->getBy();
+    }
+
+    /**
+     * Get the account of the user.
+     *
+     * If the user is logged in the account will be returned.
+     * Otherwise an empty std class.
+     *
+     * @return stdClass
+     */
+    public function getByEmail(): stdClass
+    {
+        $this->setFilter(
+            'account_email',
+            '=',
+            $this->getEmail()
+        );
+
+        $this->setFilter(
+            'account_is_deleted',
+            '=',
+            '0'
+        );
+
+        return $this->getBy();
     }
 
     /**
@@ -149,7 +165,6 @@ final class User extends BaseModel
      * Otherwise the guest id is returned.
      *
      * @return int the id of the user
-     * @throws Exception
      */
     public function getID(): int
     {
@@ -173,7 +188,7 @@ final class User extends BaseModel
      */
     public function getName(): string
     {
-        return $this->account->account_name ?? '';
+        return $this->get()->account_name ?? '';
     }
 
     /**
@@ -187,7 +202,7 @@ final class User extends BaseModel
      */
     public function getRights(): int
     {
-        return intval($this->account->account_rights ?? self::GUEST);
+        return intval($this->get()->account_rights ?? self::GUEST);
     }
 
     /**
@@ -255,7 +270,7 @@ final class User extends BaseModel
         }
 
         if (!$idEncryption->validateHash(
-            $this->getAccount()->account_login_token ?? '',
+            $this->get()->account_login_token ?? '',
             $session->get('userID')
         )) {
             return $this->logout();

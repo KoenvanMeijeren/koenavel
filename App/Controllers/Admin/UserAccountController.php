@@ -27,7 +27,7 @@ final class UserAccountController
     public function __construct()
     {
         $this->user = new User();
-        $this->account = $this->user->getAccount();
+        $this->account = $this->user->get();
     }
 
     /**

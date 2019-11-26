@@ -153,7 +153,7 @@ final class UpdateUser extends BaseModel
 
         if (!password_verify(
             $this->currentPassword,
-            $this->user->getAccount()->account_password ?? ''
+            $this->user->get()->account_password ?? ''
         )) {
             $this->session->flash(
                 State::FAILED,
