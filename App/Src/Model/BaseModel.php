@@ -31,6 +31,11 @@ abstract class BaseModel
     protected $idColumn = 'ID';
 
     /**
+     * @var string
+     */
+    protected $softDeleteColumn = '';
+
+    /**
      * The id of a record.
      *
      * @var int
@@ -63,7 +68,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    public function get(): stdClass
+    protected function get()
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -79,7 +84,7 @@ abstract class BaseModel
      *
      * @return stdClass
      */
-    public function getBy(): stdClass
+    protected function getBy()
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -100,7 +105,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    public function getAll(): array
+    protected function getAll()
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -115,7 +120,7 @@ abstract class BaseModel
      *
      * @return object[]
      */
-    public function getAllBy(): array
+    protected function getAllBy()
     {
         $data = DB::table($this->table)
             ->select($this->columns)
@@ -134,7 +139,7 @@ abstract class BaseModel
     /**
      * Create a new record.
      */
-    public function create(): void
+    protected function create()
     {
         DB::table($this->table)
             ->insert($this->fields)
@@ -144,10 +149,21 @@ abstract class BaseModel
     /**
      * Save existing date in the database.
      */
-    public function save(): void
+    protected function save()
     {
         DB::table($this->table)
             ->update($this->fields)
+            ->addStatementWithValues(
+                $this->convertFiltersToStatement(),
+                $this->filterValues
+            )
+            ->execute();
+    }
+
+    protected function delete()
+    {
+        DB::table($this->table)
+            ->delete($this->softDeleteColumn)
             ->addStatementWithValues(
                 $this->convertFiltersToStatement(),
                 $this->filterValues
@@ -214,7 +230,7 @@ abstract class BaseModel
         return $statement;
     }
 
-    private function reset(): void
+    public function reset(): void
     {
         $this->filters = [];
         $this->filterValues = [];
