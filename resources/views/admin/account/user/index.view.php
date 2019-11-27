@@ -16,7 +16,7 @@ $request = new Request();
             <div class="card-body">
                 <form method="post" action="/admin/user/account/store/data">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="name">
                                     <?= Translation::get('form_name') ?>
@@ -30,12 +30,9 @@ $request = new Request();
                                        required>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="name">
+                                <label for="email">
                                     <?= Translation::get('form_email') ?>
                                     <span class="text-danger">*</span>
                                 </label>
@@ -88,7 +85,7 @@ $request = new Request();
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="newPassword">
                                     <?= Translation::get('form_new_password') ?>
@@ -104,10 +101,7 @@ $request = new Request();
                                 <p id="password-strength-text"></p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="confirmationPassword">
                                     <?= Translation::get('form_confirmation_password') ?>
