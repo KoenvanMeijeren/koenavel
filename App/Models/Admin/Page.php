@@ -18,4 +18,9 @@ final class Page extends BaseModel
 
         $this->idColumn = 'page_ID';
     }
+
+    public function getAll(): array
+    {
+        return parent::getAll();
+    }
 }
