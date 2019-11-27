@@ -121,7 +121,7 @@ final class UpdateUser extends BaseModel
             $this->setFields([
                 'account_password' => (string) password_hash(
                     $this->newPassword,
-                    PASSWORD_BCRYPT
+                    PASSWORD_ARGON2ID
                 )
             ]);
 
