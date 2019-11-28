@@ -16,6 +16,7 @@ parameters:
         - "#Variable property access on .*.#"
         - "#Method .* is not final, but since the containing class is abstract, it should be.#"
         - "#Class .* is neither abstract nor final.#"
+        - "#Foreach overwrites .* with its key variable.#"
     level: 7
     paths:
     - App/

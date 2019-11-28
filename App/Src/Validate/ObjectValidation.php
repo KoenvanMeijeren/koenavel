@@ -60,7 +60,7 @@ trait ObjectValidation
      */
     public function isCallable(
         bool $syntax_only = false,
-        string $callable_name = null
+        string $callable_name = ''
     ): Validate {
         if (!is_callable(self::$var, $syntax_only, $callable_name)) {
             throw new MethodNotCallableException(

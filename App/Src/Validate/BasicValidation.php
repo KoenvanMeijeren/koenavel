@@ -3,29 +3,10 @@ declare(strict_types=1);
 
 namespace App\Src\Validate;
 
-use App\Src\Exceptions\Basic\EmptyVarException;
 use App\Src\Exceptions\Basic\InvalidTypeException;
 
 trait BasicValidation
 {
-    /**
-     * Check the variable if it is not empty.
-     *
-     * @return Validate
-     *
-     * @throws EmptyVarException
-     */
-    public function isNotEmpty(): Validate
-    {
-        if ((int)(0 !== self::$var) && empty(self::$var)) {
-            throw new EmptyVarException(
-                'Empty variable given. The variable cannot be empty.'
-            );
-        }
-
-        return new Validate();
-    }
-
     /**
      * Check the variable if it is a scalar type.
      *
