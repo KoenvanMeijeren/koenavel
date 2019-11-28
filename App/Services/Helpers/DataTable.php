@@ -144,11 +144,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addTrEnd();
     }
@@ -164,11 +164,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addClasses('table-edit-row');
         $this->addThStart();
@@ -189,11 +189,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($tds, function ($item) {
+        foreach ($tds as $item) {
             $this->addTdStart();
             $this->add($item, $this->var);
             $this->addTdEnd();
-        });
+        }
 
         $this->addTrEnd();
     }
@@ -209,11 +209,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addTrEnd();
     }

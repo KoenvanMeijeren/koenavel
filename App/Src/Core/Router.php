@@ -246,13 +246,13 @@ final class Router
         $urlExploded = explode('/', $url);
         $routes = array_keys(self::$availableRoutes);
 
-        array_walk($routes, function ($route) use ($urlExploded) {
+        foreach ($routes as $route) {
             $routeExploded = explode('/', $route);
 
             if (preg_match('/{[a-zA-Z]+}/', $route)) {
                 $this->updateRoute($routeExploded, $urlExploded, $route);
             }
-        });
+        }
     }
 
     /**
@@ -275,8 +275,7 @@ final class Router
         // Walk through the exploded route array and if there is a match and
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
-        array_walk($routeExploded,
-            function ($routePart, $key) use ($urlExploded, $route) {
+        foreach ($routeExploded as $key => $routePart) {
             if (array_key_exists($key, $urlExploded)
                 && preg_match('/{[a-zA-Z]+}/', $routePart)
             ) {
@@ -293,7 +292,7 @@ final class Router
                 );
                 // @codeCoverageIgnoreEnd
             }
-        });
+        }
     }
 
     /**
