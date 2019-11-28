@@ -47,8 +47,7 @@ final class AccountController
         $dataTable->addEditHead('Naam', 'Email', 'Rechten');
 
         $accounts = $this->account->getAll();
-        array_walk($accounts,
-            function ($account) use ($dataTable, $user) {
+        foreach ($accounts as $account) {
             $rights = new Converter($account->account_rights ?? '0');
             $blocked = new Converter($account->account_is_blocked ?? '0');
 
@@ -64,10 +63,10 @@ final class AccountController
                     '/admin/account/edit/' . ($account->account_ID ?? 0),
                     '/admin/account/delete/' . ($account->account_ID ?? 0),
                     Translation::get('admin_delete_account_warning_message'),
-                    $user->getID() === (int) ($account->account_ID ?? '0') ? true : false
+                    $user->getID() === (int)($account->account_ID ?? '0') ? true : false
                 )
             );
-        });
+        }
         $accounts = $dataTable->get();
 
         return new View(
@@ -93,7 +92,7 @@ final class AccountController
         $title = Translation::get('admin_edit_account_title');
         $account = $this->account->get();
 
-        if (empty((array) $account)) {
+        if (empty((array)$account)) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('admin_account_cannot_be_visited')

@@ -141,11 +141,11 @@ final class Builder
             return;
         }
 
-        array_walk($_COOKIE, function ($value, $key) use ($cookie) {
+        foreach ($_COOKIE as $key => $value) {
             if (strlen($key) === strlen($this->name)) {
                 $cookie->unset($key);
             }
-        });
+        }
 
         $cookie->save('sessionName', $this->name);
     }
