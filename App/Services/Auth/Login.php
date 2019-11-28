@@ -217,9 +217,17 @@ final class Login extends BaseModel
      */
     private function accountIsBlocked(): bool
     {
-        if ((int) ($this->account->account_is_blocked ?? '0') === 1) {
+        if (!array_key_exists(
+            'account_is_blocked',
+            (array) $this->account
+        )) {
+            return false;
+        }
+
+        if ((int) $this->account->account_is_blocked === 1) {
             return true;
         }
+
         return false;
     }
 }

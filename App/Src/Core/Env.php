@@ -100,8 +100,8 @@ final class Env
     private function setEnv(): void
     {
         $this->env = self::PRODUCTION;
-        if (strstr($this->host, 'localhost') ||
-            strstr($this->host, '127.0.0.1')
+        if (strstr($this->host, 'localhost') !== false ||
+            strstr($this->host, '127.0.0.1') !== false
         ) {
             $this->env = self::DEVELOPMENT;
         }

@@ -26,8 +26,10 @@ final class View
             $filesystemLoader
         );
 
-        $layout = strstr(URI::getUrl(), 'admin') ?
-            'admin/layout.view.php' : 'layout.view.php';
+        $layout = 'layout.view.php';
+        if (strstr(URI::getUrl(), 'admin') !== false) {
+            $layout = 'admin/layout.view.php';
+        }
 
         echo $templating->render($layout, [
             'content' => $this->renderContent($name, $content),

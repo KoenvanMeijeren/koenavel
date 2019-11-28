@@ -24,11 +24,11 @@ final class Translation extends Loader
      */
     protected function __construct()
     {
-        if (strstr(URI::getDomainExtension(), 'localhost')
-            || strstr(URI::getDomainExtension(), 'nl')
+        if (strstr(URI::getDomainExtension(), 'localhost') !== false
+            || strstr(URI::getDomainExtension(), 'nl') !== false
         ) {
             $this->language = self::DUTCH_LANGUAGE_ID;
-        } elseif (strstr(URI::getDomainExtension(), 'com')) {
+        } elseif (strstr(URI::getDomainExtension(), 'com') !== false) {
             $this->language = self::ENGLISH_LANGUAGE_ID;
         }
 

@@ -259,7 +259,7 @@ final class DataTable
         $string = $piece;
 
         if ($this->ids !== '') {
-            $string = preg_replace(
+            $string = (string) preg_replace(
                 '/>/',
                 " id='{$this->ids}' >",
                 $string
@@ -267,7 +267,7 @@ final class DataTable
         }
 
         if ($this->classes !== '') {
-            $string = preg_replace(
+            $string = (string) preg_replace(
                 '/>/',
                 " class='{$this->classes}' >",
                 $string

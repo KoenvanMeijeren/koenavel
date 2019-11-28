@@ -54,7 +54,7 @@ final class Recaptcha
     public function validate(): bool
     {
         $context = stream_context_create($this->query);
-        $response = file_get_contents(
+        $response = (string) file_get_contents(
             'https://www.google.com/recaptcha/api/siteverify',
             false,
             $context

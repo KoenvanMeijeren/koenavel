@@ -137,7 +137,8 @@ final class Upload
         if ($result->isValid()) {
             try {
                 $result->confirm();
-                $filename = isset($result->name) ? $result->name : '';
+                $filename = array_key_exists('name', $result->file ?? [])
+                    ? $result->file['name'] : '';
                 $this->setStoredFilePath($this->stripedPath . $filename);
 
                 return true;

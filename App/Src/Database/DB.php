@@ -87,7 +87,7 @@ final class DB
      */
     public function addStatement(string $statement): DB
     {
-        if (strpos($this->query, 'WHERE')) {
+        if (strpos($this->query, 'WHERE') !== false) {
             $statement = preg_replace(
                 '/\b(WHERE)\b/',
                 "AND",
@@ -110,13 +110,13 @@ final class DB
      */
     public function addStatementWithValues(string $statement, array $values): DB
     {
-        if (strpos($this->query, 'WHERE')) {
+        if (strpos($this->query, 'WHERE') !== false) {
             $statement = replaceString(
                 'WHERE',
                 'AND',
                 $statement
             );
-        } elseif (preg_match_all('/\b(WHERE)\b/', $statement)) {
+        } elseif (preg_match_all('/\b(WHERE)\b/', $statement) !== false) {
             $statement = replaceAllExceptFirstString(
                 'WHERE',
                 'AND',

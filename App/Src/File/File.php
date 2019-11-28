@@ -46,10 +46,11 @@ final class File
      */
     public function isEmpty(): bool
     {
-        $link = $this->system->readlink($this->path, true);
-        $content = file_get_contents($link);
+        $content = (string) file_get_contents(
+            (string) $this->system->readlink($this->path, true)
+        );
 
-        return $content === false || $content === '';
+        return $content === '';
     }
 
     /**
