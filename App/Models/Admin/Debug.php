@@ -121,14 +121,11 @@ final class Debug
     public function getLogInformation(string $date): array
     {
         $date = new Chronos($date);
-        $logs = preg_split(
+        $logs = (array) preg_split(
             '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}])/',
             Log::get($date->toDateString())
         );
-
-        if ($logs !== false) {
-            unset($logs[array_key_first($logs)]);
-        }
+        unset($logs[array_key_first($logs)]);
 
         array_walk($logs, function (&$value) {
             if (preg_match_all(
@@ -136,8 +133,7 @@ final class Debug
                 $value,
                 $matches,
                 PREG_PATTERN_ORDER
-            )
-            ) {
+            ) !== false) {
                 $matches = $matches[0] ?? [];
                 $matches[2] = isJson($matches[2] ?? '') ? json_decode($matches[2]) : [];
             }
@@ -152,6 +148,6 @@ final class Debug
             ];
         });
 
-        return $logs !== false ? array_reverse($logs) : [];
+        return array_reverse($logs);
     }
 }
