@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Src\Core\Router;
 
 /**
- * Pages.
+ * Pages routes.
  */
 Router::get('', PageController::class,
     'index', User::GUEST);
@@ -32,19 +32,19 @@ Router::prefix('admin')->group(function () {
         'logout', User::ADMIN);
 
     /**
-     * The dashboard page.
+     * Dashboard routes.
      */
     Router::get('dashboard', DashboardController::class,
         'index', User::ADMIN);
 
     /**
-     * The pages page.
+     * Pages routes.
      */
     Router::get('pages', AdminPageController::class,
         'index', User::ADMIN);
 
     /**
-     * The account maintenance page.
+     * Account maintenance routes.
      */
     Router::get('account', AccountController::class,
         'index', User::SUPER_ADMIN);
@@ -68,13 +68,13 @@ Router::prefix('admin')->group(function () {
         'destroy', User::SUPER_ADMIN);
 
     /**
-     * The debug page.
+     * Debug routes.
      */
     Router::get('debug', DebugController::class,
         'index', User::DEVELOPER);
 
     /**
-     * The user page.
+     * User routes.
      */
     Router::get('user/account', UserAccountController::class,
         'index', User::ADMIN);
@@ -87,7 +87,7 @@ Router::prefix('admin')->group(function () {
 });
 
 /**
- * Page not found.
+ * Page not found route.
  */
 Router::get('pageNotFound', PageController::class,
     'notFound', User::GUEST);
