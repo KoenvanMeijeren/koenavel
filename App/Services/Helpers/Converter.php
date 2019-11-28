@@ -10,13 +10,13 @@ use App\Src\Translation\Translation;
 final class Converter
 {
     /**
-     * @var mixed
+     * @var string
      */
     private $text;
 
-    public function __construct($rights)
+    public function __construct(string $text)
     {
-        $this->text = $rights;
+        $this->text = $text;
     }
 
     public function toReadableRights(): string

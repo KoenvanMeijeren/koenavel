@@ -43,7 +43,7 @@ final class LoggerHandler extends Handler
      */
     private function buildStackTrace(Throwable $exception): void
     {
-        foreach($exception->getTrace() as $trace) {
+        foreach ($exception->getTrace() as $trace) {
             if (array_key_exists('line', $trace)) {
                 $this->error .= " on line {$trace['line']}";
             }
