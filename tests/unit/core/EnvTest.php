@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\core\Config;
-use App\services\core\Env;
+use App\Src\Core\Env;
 use PHPUnit\Framework\TestCase;
 
 class EnvTest extends TestCase
@@ -14,6 +13,7 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->assertEquals('1', ini_get('display_errors'));
         $this->assertEquals('1', ini_get('display_startup_errors'));
@@ -23,6 +23,7 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->assertEquals('0', ini_get('display_errors'));
         $this->assertEquals('0', ini_get('display_startup_errors'));
@@ -32,6 +33,7 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->expectException(ErrorException::class);
         echo $test;
@@ -41,22 +43,26 @@ class EnvTest extends TestCase
     {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->expectException(ErrorException::class);
         echo $test;
     }
 
-    public function test_that_we_can_get_the_env()
+    public function test_that_we_can_get_the_development_env()
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->assertEquals(Env::DEVELOPMENT, $this->env->getEnv());
-        unset($this->env);
-        Config::unsetAll();
+    }
 
+    public function test_that_we_can_get_the_production_env()
+    {
         $_SERVER['HTTP_HOST'] = 'www.test.com';
         $this->env = new Env();
+        $this->env->setErrorHandling();
 
         $this->assertEquals(Env::PRODUCTION, $this->env->getEnv());
     }
@@ -64,6 +70,5 @@ class EnvTest extends TestCase
     public function tearDown(): void
     {
         unset($this->env);
-        Config::unsetAll();
     }
 }

@@ -18,28 +18,30 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">app</directory>
+            <directory suffix=".php">App</directory>
             <exclude>
-                <directory suffix=".php">app/services/exceptions</directory>
-                <directory suffix=".php">app/functions</directory>
-                <directory suffix=".php">app/controllers</directory>
+                <directory suffix=".php">App/Functions</directory>
+                <directory suffix=".php">App/Controllers</directory>
 
-                <file>app/services/core/App.php</file>
-                <file>app/services/core/Upload.php</file>
-                <file>app/services/core/Mail.php</file>
-                <file>app/services/core/Cookie.php</file>
+                <file>App/Src/Core/App.php</file>
+                <file>App/Src/Core/Upload.php</file>
+                <file>App/Src/Core/Mail.php</file>
 
-                <file>app/services/security/CSRF.php</file>
-                <file>app/services/security/Recaptcha.php</file>
+                <file>App/Src/Log/LoggerHandler.php</file>
 
-                <file>app/services/session/Builder.php</file>
-                <file>app/services/session/Security.php</file>
+                <file>App/Src/Security/CSRF.php</file>
+                <file>App/Src/Security/Recaptcha.php</file>
 
-                <file>app/services/response/Redirect.php</file>
+                <file>App/Src/Session/Builder.php</file>
+                <file>App/Src/Session/Security.php</file>
+
+                <file>App/Src/View/ProductionErrorView.php</file>
+                <file>App/Src/View/View.php</file>
             </exclude>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-html" target="./coverage"/>
+        <log type="coverage-clover" target="/tmp/coverage.xml"/>
     </logging>
 </phpunit>

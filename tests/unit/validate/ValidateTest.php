@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\validate\Validate;
+use App\Src\validate\Validate;
 use PHPUnit\Framework\TestCase;
 
 class ValidateTest extends TestCase
@@ -157,7 +157,7 @@ class ValidateTest extends TestCase
     public function test_that_we_can_fail_a_domain_validation_check()
     {
         $this->expectException(Exception::class);
-        Validate::var(1234)->isDomain();
+        Validate::var('1234')->isDomain();
     }
 
     public function test_that_we_can_fail_an_env_validation_check()

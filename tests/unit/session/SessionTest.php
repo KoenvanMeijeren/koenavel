@@ -1,40 +1,55 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 
-use App\services\core\Config;
-use App\services\session\Session;
+use App\Src\Session\Session;
 use PHPUnit\Framework\TestCase;
 
 class SessionTest extends TestCase
 {
+    /**
+     * The session class
+     *
+     * @var Session
+     */
+    private $session;
+
     public function setUp(): void
     {
-        // ENCRYPTION TOKEN
-        Config::set(
-            'encryptionToken',
-            'def00000bf6a79439be74b32d34b4c00dcb528a02f654b34472d1ca02383fc0284804eaa8404d6d0af3c41f7651d7f5d424af236f0daee2eea3704d00af9b1f68b31317b'
+        $this->session = new Session();
+        $_SESSION = [];
+    }
+
+    public function test_that_we_can_set_up_the_session()
+    {
+        $this->assertInstanceOf(
+            Session::class,
+            new Session()
         );
-        Config::set('appName', 'TestApp');
     }
 
     public function test_that_we_can_get_data_from_the_session()
     {
-        Session::save('test', 'test');
+        $this->session->save('test', 'test');
+        $this->session->save(\App\Src\State\State::FAILED, 'test');
+        $this->session->save(\App\Src\State\State::SUCCESSFUL, 'test');
 
-        $this->assertEquals('test', Session::get('test'));
+        $this->assertEquals('test', $this->session->get('test'));
+        $this->assertEquals('test', $this->session->get(\App\Src\State\State::FAILED));
+        $this->assertEquals('test', $this->session->get(\App\Src\State\State::SUCCESSFUL));
 
         unset($_SESSION['test']);
+        unset($_SESSION[\App\Src\State\State::FAILED]);
+        unset($_SESSION[\App\Src\State\State::SUCCESSFUL]);
     }
 
     public function test_that_we_cannot_get_duplicated_data_from_the_session()
     {
-        Session::save('test', 'test');
-        Session::save('test', 'test2');
+        $this->session->save('test', 'test');
+        $this->session->save('test', 'test2');
 
         $this->assertNotEquals(
             'test2',
-            Session::get('test')
+            $this->session->get('test')
         );
 
         unset($_SESSION['test']);
@@ -43,18 +58,18 @@ class SessionTest extends TestCase
     public function test_that_we_cannot_get_data_from_the_session()
     {
         $this->assertEmpty(
-            Session::get('test_non_existing_item')
+            $this->session->get('test_non_existing_item')
         );
     }
 
     public function test_that_we_can_save_data_forced_into_the_session()
     {
-        Session::save('test', 'test');
-        Session::saveForced('test', 'test2');
+        $this->session->save('test', 'test');
+        $this->session->saveForced('test', 'test2');
 
         $this->assertNotEquals(
             'test',
-            Session::get('test2')
+            $this->session->get('test2')
         );
 
         unset($_SESSION['test']);
@@ -62,32 +77,39 @@ class SessionTest extends TestCase
 
     public function test_that_we_can_unset_data_from_the_session()
     {
-        Session::save('test', 'test');
-        $this->assertNotEmpty(Session::get('test'));
+        $this->session->save('test', 'test');
+        $this->assertNotEmpty($this->session->get('test'));
 
-        Session::unset('test');
-        $this->assertEmpty(Session::get('test'));
+        $this->session->unset('test');
+        $this->assertEmpty($this->session->get('test'));
 
-        Session::save('test', 'test');
-        $this->assertNotEmpty(Session::get('test', true));
-        $this->assertEmpty(Session::get('test'));
+        $this->session->save('test', 'test');
+        $this->assertNotEmpty($this->session->get('test', true));
+        $this->assertEmpty($this->session->get('test'));
     }
 
     public function test_that_we_can_flash_data_into_the_session()
     {
-        Session::flash('test', 'test');
+        $this->session->flash('test', 'test');
 
         $this->assertEquals(
             'test',
-            Session::get('test')
+            $this->session->get('test')
         );
 
-        Session::unset('test');
+        $this->session->unset('test');
     }
 
-    public function tearDown(): void
+    public function test_that_we_can_check_if_data_exists_in_the_session()
     {
-        Config::unset('encryptionToken');
-        Config::unset('appName');
+        $this->assertFalse(
+            $this->session->exists('exists')
+        );
+
+        $this->session->saveForced('exists', 'test');
+
+        $this->assertTrue(
+            $this->session->exists('exists')
+        );
     }
 }

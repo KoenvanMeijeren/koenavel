@@ -8,35 +8,71 @@
     ],
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "App/"
         }
     },
     "require": {
-        "defuse/php-encryption": "^2.2",
-        "paragonie/anti-csrf": "^2.2",
-        "monolog/monolog": "^2.0",
-        "siriusphp/upload": "^2.1",
         "php": "^7.3",
-        "cakephp/chronos": "^1.2",
-        "kminek/email-obfuscator": "^1.0",
-        "filp/whoops": "^2.5",
         "ext-intl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-xdebug": "*",
+        "cakephp/chronos": "^1.2",
+        "defuse/php-encryption": "^2.2",
+        "filp/whoops": "^2.5",
+        "kminek/email-obfuscator": "^1.0",
+        "monolog/monolog": "^2.0",
+        "paragonie/anti-csrf": "^2.2",
+        "siriusphp/upload": "^2.1",
+        "symfony/filesystem": "^4.3",
+        "symfony/templating": "^4.3",
+        "twbs/bootstrap": "4.3.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.3",
-        "friendsofphp/php-cs-fixer": "^2.15",
-        "phpstan/phpstan": "^0.11.7",
-        "squizlabs/php_codesniffer": "^3.2",
+        "bmitch/churn-php": "^1.0",
+        "daniel-werner/php-quality-tools": "^1.0",
+        "localheinz/phpstan-rules": "^0.13.0",
+        "nunomaduro/phpinsights": "^1.9",
         "php-coveralls/php-coveralls": "^2.1",
-        "thecodingmachine/phpstan-strict-rules": "^0.11.2",
-        "vimeo/psalm": "^3.5"
+        "phploc/phploc": "^5.0",
+        "phpstan/phpstan-deprecation-rules": "^0.11.2",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "phpstan/phpstan-strict-rules": "^0.11.1",
+        "phpunit/phpunit": "^8.3",
+        "sebastian/phpcpd": "^4.1",
+        "thecodingmachine/phpstan-strict-rules": "^0.11.2"
     },
     "scripts": {
+        "start": "php -S localhost:8002",
         "phpunit": "phpunit",
-        "phpstan": "phpstan analyse app -c phpstan.Neon --level=7",
-        "psalm": "psalm",
-        "cs-fix": "phpcbf",
-        "cs-check": "phpcs"
+        "inspect": [
+            "phpcs app",
+            "phpcpd app",
+            "phpmnd app",
+            "phpstan analyse app -c phpstan.neon --level=7"
+        ],
+        "inspect-deep": [
+            "phpcs app",
+            "phpcpd app",
+            "phploc app",
+            "phpmnd app",
+            "phpstan analyse app -c phpstan.neon --level=7",
+            "phpunit",
+            "vendor/bin/phpinsights"
+        ],
+        "phpstan": [
+            "phpstan analyse app -c phpstan.neon --level=7"
+        ],
+        "inspect-fix": [
+            "php-cs-fixer fix app",
+            "phpcbf app"
+        ],
+        "insights": [
+            "phploc app",
+            "phpmd app codesize,unusedcode,naming"
+        ]
+    },
+    "config": {
+        "sort-packages": true
     }
 }

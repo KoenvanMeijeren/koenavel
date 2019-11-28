@@ -2,30 +2,44 @@
 declare(strict_types=1);
 
 
-use App\services\translation\Translation;
+use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\Src\Translation\Translation;
 use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase
 {
-    public function test_that_we_can_get_a_translation()
+    public function test_that_we_can_get_the_dutch_translation()
     {
-        Translation::set('test', 'test');
+        $_SERVER['HTTP_HOST'] = 'www.test.nl';
 
-        $this->assertEquals('test', Translation::get('test'));
+        $this->assertNotEmpty(Translation::get('home_page_title'));
+        $this->assertIsString(Translation::get('home_page_title'));
+    }
+
+    public function test_that_we_can_get_the_english_translation()
+    {
+        $_SERVER['HTTP_HOST'] = 'www.test.com';
+
+        $this->assertNotEmpty(Translation::get('home_page_title'));
+        $this->assertIsString(Translation::get('home_page_title'));
+    }
+
+    public function test_that_we_cannot_load_the_translations()
+    {
+        $_SERVER['HTTP_HOST'] = 'www.test.non_existing_domain';
+
+        $this->expectException(NoTranslationsForGivenLanguageID::class);
+
+        Translation::get('home_page_title');
     }
 
     public function test_that_we_cannot_get_a_translation()
     {
-        $this->expectException(Exception::class);
+        $_SERVER['HTTP_HOST'] = 'www.test.nl';
+
+        $this->expectException(InvalidKeyException::class);
 
         Translation::get('testennn');
-    }
-
-    public function test_that_we_cannot_set_a_duplicated_translation()
-    {
-        $this->expectException(Exception::class);
-
-        Translation::set('test1', 'test');
-        Translation::set('test1', 'test');
     }
 }

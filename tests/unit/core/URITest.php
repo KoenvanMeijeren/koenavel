@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use App\services\core\URI;
+use App\Src\Core\URI;
 use PHPUnit\Framework\TestCase;
 
 class URITest extends TestCase
@@ -12,12 +12,7 @@ class URITest extends TestCase
         $_SERVER['REQUEST_URI'] = '/home';
         $_SERVER['HTTP_REFERER'] = '/contact';
         $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['REMOTE_ADDR'] = '::1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 ' .
-        '(Windows NT 10.0; Win64; x64)' .
-        'AppleWebKit/537.36 (KHTML, like Gecko)' .
-        'Chrome/77.0.3865.75 Safari/537.36';
     }
 
     public function test_that_we_can_get_an_url()
@@ -32,24 +27,37 @@ class URITest extends TestCase
 
     public function test_that_we_can_get_a_http_host()
     {
-        $this->assertEquals('localhost', URI::getHost());
-    }
-
-    public function test_that_we_can_get_a_remote_addr()
-    {
-        $this->assertEquals('::1', URI::getRemoteIp());
+        $this->assertEquals(
+            'localhost', URI::getDomainExtension()
+        );
     }
 
     public function test_that_we_can_get_a_request_method()
     {
-        $this->assertEquals('GET', URI::method());
+        $this->assertEquals('GET', URI::getMethod());
     }
 
-    public function test_that_we_can_get_a_http_user_agent()
+    /**
+     * @runInSeparateProcess
+     */
+    public function test_that_we_can_get_the_redirect_header()
     {
-        $this->assertEquals(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' .
-            'AppleWebKit/537.36 (KHTML, like Gecko)' .
-            'Chrome/77.0.3865.75 Safari/537.36', URI::getUserAgent());
+        URI::redirect('/test');
+
+        $this->assertContains(
+            'Location: /test', xdebug_get_headers()
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function test_that_we_can_get_the_refresh_header()
+    {
+        URI::refresh('/test', 3600);
+
+        $this->assertContains(
+            "Refresh: 3600; URL=/test", xdebug_get_headers()
+        );
     }
 }

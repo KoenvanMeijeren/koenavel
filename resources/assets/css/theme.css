@@ -1,0 +1,227 @@
+body {
+    display: flex;
+    flex-direction: column;
+    color: #666;
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7em;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    font-family: 'satisfy', cursive;
+}
+
+.font-beyond {
+    font-family: 'satisfy', cursive;
+}
+
+a {
+    color: #000000;
+}
+
+a:hover {
+    color: #962a2a;
+}
+
+.active {
+    color: #962a2a;
+}
+
+.default-color {
+    color: #962a2a;
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-weight: normal;
+    font-style: normal;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+
+.button-unstyled, .button-unstyled:focus {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: transparent !important;
+    outline: transparent !important;
+}
+
+#nav-icon {
+    width: 60px;
+    height: 45px;
+    position: relative;
+    margin: auto 10px auto auto;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+#nav-icon span {
+    display: block;
+    position: absolute;
+    height: 9px;
+    width: 100%;
+    background: #d3531a;
+    border-radius: 9px;
+    opacity: 1;
+    right: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+}
+
+#nav-icon span:nth-child(1) {
+    top: 0;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+}
+
+#nav-icon span:nth-child(2) {
+    top: 18px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+}
+
+#nav-icon span:nth-child(3) {
+    top: 36px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+}
+
+#nav-icon.open span:nth-child(1) {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: -3px;
+    left: 8px;
+}
+
+#nav-icon.open span:nth-child(2) {
+    width: 0;
+    opacity: 0;
+}
+
+#nav-icon.open span:nth-child(3) {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: 39px;
+    left: 8px;
+}
+
+.logo {
+    max-width: 100px;
+}
+
+.page {
+    flex: 1;
+}
+
+.row-striped:nth-of-type(odd) {
+    background-color: #efefef;
+    border-left: 4px #000000 solid;
+}
+
+.row-striped:nth-of-type(even) {
+    background-color: #ffffff;
+    border-left: 4px #efefef solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}
+
+.event {
+    width: 100%;
+    margin: 5px auto;
+    /* For Safari 3.1 to 6.0 */
+    -webkit-transition-property: padding-left;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease;
+    /* Standard syntax */
+    transition-property: padding-left;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    min-height: 63px;
+    background-color: #fafafa;
+}
+
+.event-border {
+    /* For Safari 3.1 to 6.0 */
+    -webkit-transition-property: border-left-width;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease;
+    /* Standard syntax */
+    transition-property: border-left-width;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    border-left: 2px #962a2a solid;
+}
+
+.event:hover {
+    cursor: pointer;
+    padding-left: 5px;
+    background-color: #f4f4f4;
+}
+
+.event-border:hover {
+    border-left-width: 7px;
+}
+
+.image-mobile {
+    display: block;
+}
+
+.image-desktop {
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .image-mobile {
+        display: none;
+    }
+
+    .image-desktop {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .event {
+        width: 500px;
+    }
+}
+
+@media (min-width: 992px) {
+    .event {
+        width: 750px;
+    }
+
+    .navbar-nav {
+        margin-left: auto!important;
+    }
+}

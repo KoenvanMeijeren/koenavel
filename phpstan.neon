@@ -1,9 +1,46 @@
 parameters:
     ignoreErrors:
-        # A lot of functions are in extensions so it is ok not to find those
         - "#Function .* not found.#"
         - "#Constant .* not found.#"
-        - "#not use the .* superglobal.#"
         - "#Internal error#"
+        - "#In method .*, parameter .* can be type-hinted to .*.#"
+        - "#Method .* should return .* but returns .*.#"
+        - "#Constructor .* has parameter .* with default value.#"
+        - "#Class .* is not allowed to extend .*#"
+        - "#Variable method call on mixed.#"
+        - "#Function .* should not be used.#"
+        - "#Access to an undefined property .*#"
+        - "#Call to function .* with array will always evaluate to true.#"
+        - "#Variable property access on .*.#"
+        - "#Method .* is not final, but since the containing class is abstract, it should be.#"
+        - "#Class .* is neither abstract nor final.#"
 includes:
-    - phpstan-strict-rules.Neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/localheinz/phpstan-rules/rules.neon
+services:
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\ThrowMustBundlePreviousExceptionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\DoNotThrowExceptionBaseClassRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\EmptyExceptionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\Exceptions\MustRethrowRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\TypeHints\MissingTypeHintInFunctionRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: TheCodingMachine\PHPStan\Rules\TypeHints\MissingTypeHintInMethodRule
+    tags:
+      - phpstan.rules.rule
