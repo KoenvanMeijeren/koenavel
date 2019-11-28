@@ -9,35 +9,44 @@ use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Translation\Translation;
 
-final class ConvertRights
+final class Converter
 {
     /**
-     * @var int
+     * @var mixed
      */
-    private $rights;
+    private $text;
 
-    public function __construct(string $rights)
+    public function __construct($rights)
     {
-        $this->rights = (int) $rights;
+        $this->text = $rights;
     }
 
     /**
-     * Convert the given rights into readable rights.
+     * Convert the given text into readable rights.
      *
      * @return string
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
-    public function convert(): string
+    public function toReadableRights(): string
     {
-        if ($this->rights === User::ADMIN) {
+        if ((int) $this->text === User::ADMIN) {
             return Translation::get('account_rights_admin');
-        } elseif ($this->rights === User::SUPER_ADMIN) {
+        } elseif ((int) $this->text === User::SUPER_ADMIN) {
             return Translation::get('account_rights_super_admin');
-        } elseif ($this->rights === User::DEVELOPER) {
+        } elseif ((int) $this->text === User::DEVELOPER) {
             return Translation::get('account_rights_developer');
         }
 
         return Translation::get('account_rights_guest');
+    }
+
+    public function toReadableBlockState(): string
+    {
+        if ((int) $this->text === 0) {
+            return '';
+        }
+
+        return ' - ' . Translation::get('account_is_blocked');
     }
 }

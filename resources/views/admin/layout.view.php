@@ -1,12 +1,13 @@
 <?php
 
 use App\Models\User;
+use App\Services\Helpers\Converter;
 use App\Services\Helpers\Resource;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 
 $user = new User();
-$rights = new \App\Services\Helpers\ConvertRights($user->getRights())
+$rights = new Converter($user->getRights())
 ?>
 <!DOCTYPE html>
 <html lang="<?= Translation::DUTCH_LANGUAGE_CODE ?>">
@@ -128,7 +129,7 @@ $rights = new \App\Services\Helpers\ConvertRights($user->getRights())
                                 <span class="no-icon">
                                     <?= Translation::get('welcome_text') ?>
                                     <?= $user->getName() ?> -
-                                    <b><?= $rights->convert() ?></b>
+                                    <b><?= $rights->toReadableRights() ?></b>
                                 </span>
                                 </a>
                             </li>
