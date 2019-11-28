@@ -79,11 +79,9 @@ final class User extends BaseModel
 
         $this->table = 'account';
         $this->setColumns('*');
-
         $this->idColumn = 'account_ID';
-        $this->id = $this->getID();
 
-        $this->setDefaultFilters();
+        $this->id = $this->getID();
         $this->account = $this->get();
 
         $this->email = $request->post('email');
@@ -125,11 +123,8 @@ final class User extends BaseModel
      */
     public function get(): stdClass
     {
-        $this->setFilter(
-            $this->idColumn,
-            '=',
-            (string) $this->id
-        );
+        $this->setIDFilter();
+        $this->setDefaultFilters();
 
         return $this->getBy();
     }
@@ -144,11 +139,8 @@ final class User extends BaseModel
      */
     public function getByEmail(): stdClass
     {
-        $this->setFilter(
-            'account_email',
-            '=',
-            $this->getEmail()
-        );
+        $this->setEmailFilter();
+        $this->setDefaultFilters();
 
         return $this->getBy();
     }
@@ -293,6 +285,24 @@ final class User extends BaseModel
             'account_is_deleted',
             '=',
             '0'
+        );
+    }
+
+    private function setIDFilter(): void
+    {
+        $this->setFilter(
+            $this->idColumn,
+            '=',
+            (string) $this->id
+        );
+    }
+
+    private function setEmailFilter(): void
+    {
+        $this->setFilter(
+            'account_email',
+            '=',
+            $this->getEmail()
         );
     }
 }

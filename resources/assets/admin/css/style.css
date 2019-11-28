@@ -6,6 +6,7 @@
     font-size: 1.75rem;
     background-color: #FFA534;
     color: #ffffff;
+    border: none;
 }
 
 .btn-default-small {
@@ -18,11 +19,13 @@
 .btn-default:hover {
     background-color: #FFA534;
     color: #fefefe;
+    border: none;
 }
 
 .btn-default:hover {
     transition: 0.3s;
     opacity: 0.7;
+    border: none;
 }
 
 .color-default:hover {
@@ -315,4 +318,8 @@ tr.shown td.details-control:before {
 .edit-button {
     width: 50px;
     text-align: center;
+}
+
+.user-blocked, .user-blocked:hover {
+    background-color: #f5c6cb !important;
 }

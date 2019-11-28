@@ -16,8 +16,16 @@ final class Resource
     public static function addTableEditColumn(
         string $editAction,
         string $destroyAction,
-        string $destroyMessageWarning
+        string $destroyMessageWarning,
+        bool $disableDestroyButton = false
     ): string {
+        $disabledDestroyButton = '';
+        $removeBorder = '';
+        if ($disableDestroyButton) {
+            $removeBorder = 'border-0';
+            $disabledDestroyButton = 'disabled';
+        }
+
         return '<div class="table-edit-row flex">
                     <a href="'.$editAction.'"
                        class="btn btn-success flex-child edit-button"
@@ -29,10 +37,11 @@ final class Resource
 
                     <form method="post" 
                           action="'.$destroyAction.'">
-                        <button class="btn btn-danger flex-child edit-button" 
+                        <button class="btn btn-danger flex-child edit-button '.$removeBorder.'" 
                                 type="submit" 
                                 data-toggle="tooltip" 
                                 data-placement="top"
+                                '.$disabledDestroyButton.'
                                 title="'.Translation::get('table_row_delete').'" 
                                 onclick="return confirm(\''.$destroyMessageWarning.'\')">
                             <i class="fas fa-trash-alt"></i>

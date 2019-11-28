@@ -4,11 +4,15 @@ var strength = {
     2: "Zwak <i class=\"far fa-frown\"></i>",
     3: "Goed <i class=\"far fa-smile\"></i>",
     4: "Sterk <i class=\"far fa-grin-alt\"></i>"
-}
+};
 
 var password = document.getElementById('newPassword');
 var meter = document.getElementById('password-strength-meter');
 var text = document.getElementById('password-strength-text');
+
+if (password === null) {
+    password = document.getElementById('password');
+}
 
 if (password !== null) {
     password.addEventListener('input', function () {

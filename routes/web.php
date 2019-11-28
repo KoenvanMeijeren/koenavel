@@ -44,10 +44,28 @@ Router::prefix('admin')->group(function () {
         'index', User::ADMIN);
 
     /**
-     * The account page.
+     * The account maintenance page.
      */
     Router::get('account', AccountController::class,
         'index', User::SUPER_ADMIN);
+    Router::get('account/create', AccountController::class,
+        'create', User::SUPER_ADMIN);
+    Router::post('account/create/store', AccountController::class,
+        'store', User::SUPER_ADMIN);
+    Router::get('account/edit/{slug}', AccountController::class,
+        'show', User::SUPER_ADMIN);
+    Router::post('account/edit/{slug}/store/data', AccountController::class,
+        'storeData', User::SUPER_ADMIN);
+    Router::post('account/edit/{slug}/store/email', AccountController::class,
+        'storeEmail', User::SUPER_ADMIN);
+    Router::post('account/edit/{slug}/store/password', AccountController::class,
+        'storePassword', User::SUPER_ADMIN);
+    Router::post('account/block/{slug}', AccountController::class,
+        'block', User::SUPER_ADMIN);
+    Router::post('account/unblock/{slug}', AccountController::class,
+        'unblock', User::SUPER_ADMIN);
+    Router::post('account/delete/{slug}', AccountController::class,
+        'destroy', User::SUPER_ADMIN);
 
     /**
      * The debug page.
