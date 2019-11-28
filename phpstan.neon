@@ -3,18 +3,17 @@ parameters:
         - "#Function .* not found.#"
         - "#Constant .* not found.#"
         - "#Internal error#"
-        - "#function .* expects .*, .*|false given.#"
         - "#In method .*, parameter .* can be type-hinted to .*.#"
+        - "#Method .* should return .* but returns .*.#"
         - "#Constructor .* has parameter .* with default value.#"
         - "#Class .* is not allowed to extend .*#"
         - "#Variable method call on mixed.#"
         - "#Function .* should not be used.#"
-        - "#Language construct .* should not be used.#"
-        - "#Construct .* is not allowed. Use more strict comparison.#"
         - "#Access to an undefined property .*#"
         - "#Call to function .* with array will always evaluate to true.#"
-        - "#Strict comparison using === between 0 and 1 will always evaluate to false.#"
         - "#Variable property access on .*.#"
+        - "#Method .* is not final, but since the containing class is abstract, it should be.#"
+        - "#Class .* is neither abstract nor final.#"
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
