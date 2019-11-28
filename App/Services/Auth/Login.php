@@ -11,6 +11,7 @@ use App\Src\Model\BaseModel;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use stdClass;
 
 final class Login extends BaseModel
 {
@@ -19,15 +20,8 @@ final class Login extends BaseModel
      */
     const MAXIMUM_LOGIN_ATTEMPTS = 3;
 
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var object
-     */
-    private $account;
+    private User $user;
+    private stdClass $account;
 
     public function __construct(User $user)
     {

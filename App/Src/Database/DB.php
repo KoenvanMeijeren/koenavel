@@ -12,26 +12,9 @@ final class DB
     use SelectStatements;
     use WhereStatements;
 
-    /**
-     * The table to execute the query on.
-     *
-     * @var string
-     */
-    private static $table = '';
-
-    /**
-     * The query.
-     *
-     * @var string
-     */
-    private $query = '';
-
-    /**
-     * The values to bind to the query.
-     *
-     * @var mixed[]
-     */
-    private $values = [];
+    private static string $table = '';
+    private string $query = '';
+    private array $values = [];
 
     /**
      * Set the table.

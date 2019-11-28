@@ -14,12 +14,7 @@ use Exception;
 
 final class App implements AppContract
 {
-    /**
-     * The location of the routes file.
-     *
-     * @var string
-     */
-    private $routesLocation;
+    private string $routesLocation;
 
     /**
      * Construct the app.

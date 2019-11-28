@@ -29,19 +29,8 @@ final class Env
      */
     const ERROR_PAGE = 'http/500-error';
 
-    /**
-     * The host of the app.
-     *
-     * @var string
-     */
-    private $host;
-
-    /**
-     * The env of the app.
-     *
-     * @var string
-     */
-    private $env = '';
+    private string $host;
+    private string $env = '';
 
     /**
      * Construct the env.

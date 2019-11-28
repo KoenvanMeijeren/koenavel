@@ -47,31 +47,11 @@ final class User extends BaseModel
      */
     const DEVELOPER = 3;
 
-    /**
-     * The email of the user.
-     *
-     * @var string
-     */
-    protected $email;
+    protected string $email;
+    protected string $password;
+    protected string $token;
 
-    /**
-     * The password of the user.
-     *
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * The verification token of the user
-     *
-     * @var string
-     */
-    protected $token;
-
-    /**
-     * @var stdClass
-     */
-    private $account;
+    private stdClass $account;
 
     public function __construct()
     {

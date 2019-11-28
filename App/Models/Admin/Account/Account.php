@@ -15,40 +15,14 @@ use stdClass;
 
 class Account extends BaseModel
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $user;
+    protected Session $session;
 
-    /**
-     * @var Session
-     */
-    protected $session;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @var string
-     */
-    protected $confirmationPassword;
-
-    /**
-     * @var int
-     */
-    protected $rights;
+    protected string $name;
+    protected string $email;
+    protected string $password;
+    protected string $confirmationPassword;
+    protected int $rights;
 
     public function __construct()
     {

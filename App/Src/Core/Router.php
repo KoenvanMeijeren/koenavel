@@ -20,34 +20,18 @@ final class Router
      * 0 = Public
      * 1 = Maintainer
      * 2 = Super maintainer
-     *
-     * @var array
      */
-    private static $routes = [
+    private static array $routes = [
         'GET' => [],
         'POST' => [],
     ];
 
     /**
      * All the available routes based on the current rights of the user.
-     *
-     * @var array
      */
-    private static $availableRoutes = [];
-
-    /**
-     * Add a prefix to the routes.
-     *
-     * @var string
-     */
-    private static $prefix = '';
-
-    /**
-     * The current used wildcard.
-     *
-     * @var string
-     */
-    private static $wildcard = '';
+    private static array $availableRoutes = [];
+    private static string $prefix = '';
+    private static string $wildcard = '';
 
     /**
      * Load the routes.

@@ -13,12 +13,7 @@ use Defuse\Crypto\Key;
 
 final class Encrypt
 {
-    /**
-     * The data to be encrypted or decrypted.
-     *
-     * @var string
-     */
-    private $data;
+    private string $data;
 
     /**
      * Construct the data.

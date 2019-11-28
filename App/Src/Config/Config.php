@@ -10,12 +10,7 @@ use App\Src\Type\TypeChanger;
 
 final class Config extends Loader
 {
-    /**
-     * The config items.
-     *
-     * @var array
-     */
-    private $config = [];
+    private array $config = [];
 
     public function __construct()
     {

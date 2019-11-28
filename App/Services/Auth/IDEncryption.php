@@ -9,12 +9,7 @@ use Exception;
 
 final class IDEncryption
 {
-    /**
-     * The secret token.
-     *
-     * @var string
-     */
-    private $secretToken;
+    private string $secretToken;
 
     public function __construct()
     {

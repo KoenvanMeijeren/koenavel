@@ -10,33 +10,10 @@ use Exception;
 
 final class Mail
 {
-    /**
-     * The headers of the mail.
-     *
-     * @var string
-     */
-    private $headers;
-
-    /**
-     * The receivers of the mail.
-     *
-     * @var string
-     */
-    private $receivers;
-
-    /**
-     * Set the subject.
-     *
-     * @var string
-     */
-    private $subject;
-
-    /**
-     * Set the body of the mail.
-     *
-     * @var string
-     */
-    private $body;
+    private string $headers;
+    private string $receivers;
+    private string $subject;
+    private string $body;
 
     /**
      * Construct the PHPMailer.

@@ -19,35 +19,13 @@ final class UpdateUser extends BaseModel
     const MINIMUM_PASSWORD_LENGTH = 8;
     const MAXIMUM_NAME_LENGTH = 255;
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
+    private Session $session;
 
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $currentPassword;
-
-    /**
-     * @var string
-     */
-    private $newPassword;
-
-    /**
-     * @var string
-     */
-    private $confirmationPassword;
+    private string $name;
+    private string $currentPassword;
+    private string $newPassword;
+    private string $confirmationPassword;
 
     public function __construct(User $user)
     {

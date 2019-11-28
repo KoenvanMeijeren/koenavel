@@ -24,40 +24,11 @@ final class Upload
         'image/svg+xml', 'image/png'
     ];
 
-    /**
-     * The session.
-     *
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * The file.
-     *
-     * @var array
-     */
-    private $file;
-
-    /**
-     * The path of the file.
-     *
-     * @var string
-     */
-    private $path;
-
-    /**
-     * The striped path of the file.
-     *
-     * @var string
-     */
-    private $stripedPath;
-
-    /**
-     * The stored path of the file.
-     *
-     * @var string
-     */
-    private $storedPath;
+    private Session $session;
+    private array $file;
+    private string $path;
+    private string $stripedPath;
+    private string $storedPath;
 
     /**
      * Prepare the file.

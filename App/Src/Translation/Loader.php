@@ -19,12 +19,7 @@ abstract class Loader
     const ENGLISH_LANGUAGE_ID = 2;
     const ENGLISH_LANGUAGE_CODE = 'en';
 
-    /**
-     * The current application language id.
-     *
-     * @var int
-     */
-    protected $language = 0;
+    protected int $language = 0;
 
     /**
      * Construct the language.

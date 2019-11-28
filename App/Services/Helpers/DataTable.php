@@ -6,42 +6,13 @@ namespace App\Services\Helpers;
 
 final class DataTable
 {
-    /**
-     * @var string
-     */
-    private $table = '';
-
-    /**
-     * @var string
-     */
-    private $head = '';
-
-    /**
-     * @var string
-     */
-    private $rows = '';
-
-    /**
-     * @var string
-     */
-    private $footer = '';
-
-    /**
-     * @var string
-     */
-    private $ids = '';
-
-    /**
-     * @var string
-     */
-    private $classes = '';
-
-    /**
-     * The var to add the pieces to.
-     *
-     * @var string
-     */
-    private $var = 'table';
+    private string $table = '';
+    private string $head = '';
+    private string $rows = '';
+    private string $footer = '';
+    private string $ids = '';
+    private string $classes = '';
+    private string $var = 'table';
 
     /**
      * Add (multiple) ids to a piece of html.

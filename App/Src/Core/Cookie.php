@@ -8,40 +8,11 @@ use App\Src\Security\Encrypt;
 
 final class Cookie
 {
-    /**
-     * The expiring time of the cookie.
-     *
-     * @var int
-     */
-    private $expiringTime;
-
-    /**
-     * The path of the cookie.
-     *
-     * @var string
-     */
-    private $path;
-
-    /**
-     * The domain of the cookie.
-     *
-     * @var string
-     */
-    private $domain;
-
-    /**
-     * Determine if the cookie must be secure.
-     *
-     * @var bool
-     */
-    private $secure;
-
-    /**
-     * Determine if the cookie must be http only.
-     *
-     * @var bool
-     */
-    private $httpOnly;
+    private int $expiringTime;
+    private string $path;
+    private string $domain;
+    private bool $secure;
+    private bool $httpOnly;
 
     /**
      * Construct the cookie.
