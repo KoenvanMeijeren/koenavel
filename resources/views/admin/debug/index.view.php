@@ -135,7 +135,7 @@ $request = new \App\Src\Core\Request();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8 scrollbox-vertical h-500">
+                        <div class="col-sm-8">
                             <div class="tab-content" id="nav-tabContent">
                                 <?php $active = 'active';
                                 foreach (($logs ?? []) as $key => $log) : ?>
