@@ -220,7 +220,10 @@ final class Router
 
         for ($maximumRights = 0; $maximumRights <= $rights; ++$maximumRights) {
             if (array_key_exists($requestType, self::$routes)
-                && array_key_exists($maximumRights, self::$routes[$requestType])
+                && array_key_exists(
+                    $maximumRights,
+                    self::$routes[$requestType]
+                )
             ) {
                 // @codeCoverageIgnoreStart
                 self::$availableRoutes = array_merge(
@@ -240,14 +243,16 @@ final class Router
      */
     private function replaceWildcards(string $url): void
     {
-        foreach (array_keys(self::$availableRoutes) as $route) {
+        $urlExploded = explode('/', $url);
+        $routes = array_keys(self::$availableRoutes);
+
+        array_walk($routes, function ($route) use ($urlExploded) {
             $routeExploded = explode('/', $route);
-            $urlExploded = explode('/', $url);
 
             if (preg_match('/{[a-zA-Z]+}/', $route)) {
                 $this->updateRoute($routeExploded, $urlExploded, $route);
             }
-        }
+        });
     }
 
     /**
@@ -267,10 +272,11 @@ final class Router
             return;
         }
 
-        // loop through the route exploded array and if there is a match and
+        // Walk through the exploded route array and if there is a match and
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
-        foreach ($routeExploded as $key => $routePart) {
+        array_walk($routeExploded,
+            function ($routePart, $key) use ($urlExploded, $route) {
             if (array_key_exists($key, $urlExploded)
                 && preg_match('/{[a-zA-Z]+}/', $routePart)
             ) {
@@ -286,12 +292,8 @@ final class Router
                     [$route => $newRoute]
                 );
                 // @codeCoverageIgnoreEnd
-
-                break;
             }
-        }
-
-        return;
+        });
     }
 
     /**
