@@ -17,13 +17,6 @@ class TranslationTest extends TestCase
         $this->assertIsString(Translation::get('home_page_title'));
     }
 
-    public function test_that_we_can_get_the_english_translation()
-    {
-        $_SERVER['HTTP_HOST'] = 'www.test.com';
-
-        $this->assertNotEmpty(Translation::get('home_page_title'));
-        $this->assertIsString(Translation::get('home_page_title'));
-    }
 
     public function test_that_we_cannot_load_the_translations()
     {

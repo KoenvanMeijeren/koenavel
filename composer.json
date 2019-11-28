@@ -49,7 +49,7 @@
             "phpcs app",
             "phpcpd app",
             "phpmnd app",
-            "phpstan analyse app -c phpstan.neon --level=7"
+            "phpstan analyse -c phpstan.neon"
         ],
         "inspect-deep": [
             "phpcs app",
@@ -61,7 +61,7 @@
             "vendor/bin/phpinsights"
         ],
         "phpstan": [
-            "phpstan analyse app -c phpstan.neon --level=7"
+            "phpstan analyse -c phpstan.neon"
         ],
         "inspect-fix": [
             "php-cs-fixer fix app",
