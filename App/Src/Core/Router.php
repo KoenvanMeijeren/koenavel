@@ -30,6 +30,7 @@ final class Router
      * All the available routes based on the current rights of the user.
      */
     private static array $availableRoutes = [];
+
     private static string $prefix = '';
     private static string $wildcard = '';
 
@@ -233,7 +234,7 @@ final class Router
         foreach ($routes as $route) {
             $routeExploded = explode('/', $route);
 
-            if (preg_match('/{[a-zA-Z]+}/', $route)) {
+            if ((bool) preg_match('/{[a-zA-Z]+}/', $route)) {
                 $this->updateRoute($routeExploded, $urlExploded, $route);
             }
         }
@@ -261,7 +262,7 @@ final class Router
         // same position from the url exploded array
         foreach ($routeExploded as $key => $routePart) {
             if (array_key_exists($key, $urlExploded)
-                && preg_match('/{[a-zA-Z]+}/', $routePart)
+                && (bool) preg_match('/{+[a-zA-Z]+}/', $routePart)
             ) {
                 $newRoute = preg_replace(
                     '/{[a-zA-Z]+}/',
