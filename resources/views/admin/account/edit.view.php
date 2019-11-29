@@ -6,6 +6,8 @@ use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 $request = new Request();
+$rights = (int) $request->post('rights');
+$rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -50,21 +52,15 @@ $request = new Request();
                                         <?= Translation::get('form_choose_rights') ?>
                                     </option>
                                     <option value="<?= User::ADMIN ?>"
-                                        <?= !empty($request->post('rights')) ?
-                                            (int)$request->post('rights') === User::ADMIN ? 'selected' : ''
-                                            : (int)($account->account_rights ?? '0') === User::ADMIN ? 'selected' : '' ?>>
+                                        <?= $rights === User::ADMIN ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_admin') ?>
                                     </option>
                                     <option value="<?= User::SUPER_ADMIN ?>"
-                                        <?= !empty($request->post('rights')) ?
-                                            (int)$request->post('rights') === User::SUPER_ADMIN ? 'selected' : ''
-                                            : (int)($account->account_rights ?? '0') === User::SUPER_ADMIN ? 'selected' : '' ?>>
+                                        <?= $rights === User::SUPER_ADMIN ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_super_admin') ?>
                                     </option>
                                     <option value="<?= User::DEVELOPER ?>"
-                                        <?= !empty($request->post('rights')) ?
-                                            (int)$request->post('rights') === User::DEVELOPER ? 'selected' : ''
-                                            : (int)($account->account_rights ?? '0') === User::DEVELOPER ? 'selected' : '' ?>>
+                                        <?= $rights === User::DEVELOPER ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_developer') ?>
                                     </option>
                                 </select>
