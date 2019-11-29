@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Models\Test;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
@@ -21,5 +22,19 @@ final class PageController
         $title = Translation::get('page_not_found_title');
 
         return new View('http/404', compact('title'));
+    }
+
+    public function test()
+    {
+        $user = new Test();
+
+        $user->create([
+            'test_name' => 'Test'
+        ]);
+
+        dd(
+            $user,
+            $user->name
+        );
     }
 }

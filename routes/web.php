@@ -12,6 +12,12 @@ use App\Models\User;
 use App\Src\Core\Router;
 
 /**
+ * TEST routes
+ */
+Router::get('test', PageController::class,
+    'test');
+
+/**
  * Pages routes.
  */
 Router::get('', PageController::class,
