@@ -97,6 +97,7 @@ final class Builder
             return;
         }
 
+        // unset all session name cookies
         foreach ($_COOKIE as $key => $value) {
             if (strlen($key) === strlen($this->name)) {
                 $cookie->unset($key);
