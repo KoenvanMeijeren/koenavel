@@ -30,32 +30,50 @@ final class Env
     const ERROR_PAGE = 'http/500-error';
 
     private string $host;
-    private string $env = '';
+    private string $env;
+
+    public function __construct()
+    {
+        $this->setHost();
+        $this->setEnv();
+    }
 
     /**
-     * Construct the env.
-     *
-     * Set the live url, host and set the env.
+     * Define the host of the app.
      *
      * @throws InvalidDomainException
-     * @throws InvalidEnvException
      */
-    public function __construct()
+    private function setHost(): void
     {
         $request = new Request();
 
         $host = $request->server(Request::HTTP_HOST);
         $this->host = $host !== '' ? $host : 'localhost';
         Validate::var($this->host)->isDomain();
+    }
 
-        $this->setEnv();
+    public function getHost(): string
+    {
+        return $this->host;
     }
 
     /**
-     * Get the env
+     * Set the current env based on the uri.
      *
-     * @return string
+     * @throws InvalidEnvException
      */
+    private function setEnv(): void
+    {
+        $this->env = self::PRODUCTION;
+        if (strstr($this->host, 'localhost') !== false ||
+            strstr($this->host, '127.0.0.1') !== false
+        ) {
+            $this->env = self::DEVELOPMENT;
+        }
+
+        Validate::var($this->env)->isEnv();
+    }
+
     public function getEnv(): string
     {
         return $this->env;
@@ -79,23 +97,6 @@ final class Env
         error_reporting((self::DEVELOPMENT === $this->env ? E_ALL : -1));
 
         $this->initializeWhoops();
-    }
-
-    /**
-     * Set the current env based on the uri.
-     *
-     * @throws InvalidEnvException
-     */
-    private function setEnv(): void
-    {
-        $this->env = self::PRODUCTION;
-        if (strstr($this->host, 'localhost') !== false ||
-            strstr($this->host, '127.0.0.1') !== false
-        ) {
-            $this->env = self::DEVELOPMENT;
-        }
-
-        Validate::var($this->env)->isEnv();
     }
 
     /**
