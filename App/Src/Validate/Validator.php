@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Validate;
 
-
 class Validator
 {
     private array $input;
@@ -19,6 +18,5 @@ class Validator
 
     public function required(): bool
     {
-
     }
 }
