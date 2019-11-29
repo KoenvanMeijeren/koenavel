@@ -8,25 +8,10 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class File
 {
-    /**
-     * @var Filesystem
-     */
-    private $system;
-
-    /**
-     * @var string
-     */
-    private $directory;
-
-    /**
-     * @var string
-     */
-    private $file;
-
-    /**
-     * @var string
-     */
-    private $path;
+    private Filesystem $system;
+    private string $directory;
+    private string $file;
+    private string $path;
 
     public function __construct(string $directory, string $file)
     {

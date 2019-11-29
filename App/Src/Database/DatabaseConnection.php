@@ -12,40 +12,10 @@ use PDOStatement;
 
 abstract class DatabaseConnection
 {
-    /**
-     * The PDO class.
-     *
-     * @var PDO
-     */
-    protected $pdo;
-
-    /**
-     * The PDO statement class.
-     *
-     * @var PDOStatement
-     */
-    protected $statement;
-
-    /**
-     * The values to bind to the query.
-     *
-     * @var string[]
-     */
-    protected $values = [];
-
-    /**
-     * The last inserted ID.
-     *
-     * @var int
-     */
-    protected $lastInsertedId = 0;
-
-    /**
-     * The message which is returned when the query is executed.
-     *
-     * @var string
-     */
-    protected $message = '';
+    protected PDO $pdo;
+    protected PDOStatement $statement;
+    protected array $values = [];
+    protected int $lastInsertedId = 0;
 
     /**
      * Connect with the database and execute the query.

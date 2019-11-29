@@ -15,12 +15,7 @@ use App\Src\View\View;
 
 final class AuthorizationController
 {
-    /**
-     * The user of the app.
-     *
-     * @var User
-     */
-    private $user;
+    private User $user;
 
     public function __construct()
     {

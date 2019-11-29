@@ -10,12 +10,7 @@ use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 
 final class Translation extends Loader
 {
-    /**
-     * The translation items loaded based on the current language id.
-     *
-     * @var array
-     */
-    private static $translations = [];
+    private static array $translations = [];
 
     /**
      * Construct the translations.

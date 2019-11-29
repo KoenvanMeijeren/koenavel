@@ -11,10 +11,7 @@ use App\Src\View\View;
 
 final class PageController
 {
-    /**
-     * @var Page
-     */
-    private $page;
+    private Page $page;
 
     public function __construct()
     {

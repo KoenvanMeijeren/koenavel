@@ -14,10 +14,7 @@ use App\Src\View\View;
 
 final class UserAccountController
 {
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
 
     /**
      * @var object

@@ -22,15 +22,8 @@ use App\Src\View\View;
 
 final class AccountController
 {
-    /**
-     * @var Account
-     */
-    private $account;
-
-    /**
-     * @var Session
-     */
-    private $session;
+    private Account $account;
+    private Session $session;
 
     public function __construct()
     {

@@ -10,19 +10,8 @@ use Exception;
 
 final class Security
 {
-    /**
-     * The request class
-     *
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * The session class
-     *
-     * @var Session
-     */
-    private $session;
+    private Request $request;
+    private Session $session;
 
     /**
      * Construct the security

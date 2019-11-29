@@ -23,27 +23,9 @@ final class Sanitize
      * @var string|bool|float|double|int
      */
     private $data;
-
-    /**
-     * The typo of the data.
-     *
-     * @var string
-     */
-    private $type;
-
-    /**
-     * The flags for htmlspecialchars filtering.
-     *
-     * @var int
-     */
-    private $flags;
-
-    /**
-     * The encoding for htmlspecialchars filtering.
-     *
-     * @var string
-     */
-    private $encoding;
+    private string $type;
+    private int $flags;
+    private string $encoding;
 
     /**
      * Construct the data.

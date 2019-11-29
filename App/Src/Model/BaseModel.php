@@ -9,59 +9,17 @@ use stdClass;
 
 abstract class BaseModel
 {
-    /**
-     * The table to select records from.
-     *
-     * @var string
-     */
-    protected $table = '';
+    protected string $table = '';
+    protected string $columns = '*';
+    protected string $idColumn = 'ID';
+    protected string $softDeleteColumn = '';
 
-    /**
-     * The columns to be selected.
-     *
-     * @var string
-     */
-    protected $columns = '*';
+    protected int $id = 0;
 
-    /**
-     * Set the column name of the ids.
-     *
-     * @var string
-     */
-    protected $idColumn = 'ID';
+    private array $filters = [];
+    private array $filterValues = [];
 
-    /**
-     * @var string
-     */
-    protected $softDeleteColumn = '';
-
-    /**
-     * The id of a record.
-     *
-     * @var int
-     */
-    protected $id = 0;
-
-    /**
-     * The filter of the get and get all by method.
-     *
-     * @var array
-     */
-    private $filters = [];
-
-    /**
-     * The values of the specified filters.
-     *
-     * @var string[]
-     */
-    private $filterValues = [];
-
-    /**
-     * The fields to be inserted or updated.
-     *
-     * @var string[]
-     */
-    private $fields = [];
+    private array $fields = [];
 
     /**
      * Get data from the specified table.

@@ -9,33 +9,11 @@ use IntlDateFormatter;
 
 final class DateTime
 {
-    /**
-     * The datetime to be converted.
-     *
-     * @var Chronos
-     */
-    private $datetime;
+    private Chronos $datetime;
 
-    /**
-     * The locale datetime to convert the given datetime to.
-     *
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * The timezone to convert the datetime to.
-     *
-     * @var string
-     */
-    private $timezone = 'Europe/Amsterdam';
-
-    /**
-     * The calendar which is going to be used for formatting the date.
-     *
-     * @var int
-     */
-    private $calendar = IntlDateFormatter::GREGORIAN;
+    private string $locale;
+    private string $timezone = 'Europe/Amsterdam';
+    private int $calendar = IntlDateFormatter::GREGORIAN;
 
     public function __construct(
         Chronos $datetime,

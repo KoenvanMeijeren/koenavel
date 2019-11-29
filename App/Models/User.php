@@ -20,58 +20,25 @@ use stdClass;
 final class User extends BaseModel
 {
     /**
-     * Accessible for everyone rights.
+     * The follow rights option ara available.
+     *
+     * - Accessible for everyone
+     * - Admin
+     * - Super Admin
+     * - Developer
      *
      * @var int
      */
     const GUEST = 0;
-
-    /**
-     * Admin rights
-     *
-     * @var int
-     */
     const ADMIN = 1;
-
-    /**
-     * Super admin rights.
-     *
-     * @var int
-     */
     const SUPER_ADMIN = 2;
-
-    /**
-     * Developer rights.
-     *
-     * @var int
-     */
     const DEVELOPER = 3;
 
-    /**
-     * The email of the user.
-     *
-     * @var string
-     */
-    protected $email;
+    protected string $email;
+    protected string $password;
+    protected string $token;
 
-    /**
-     * The password of the user.
-     *
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * The verification token of the user
-     *
-     * @var string
-     */
-    protected $token;
-
-    /**
-     * @var stdClass
-     */
-    private $account;
+    private stdClass $account;
 
     public function __construct()
     {
@@ -89,17 +56,6 @@ final class User extends BaseModel
         $this->token = $request->post('verificationToken');
 
         $this->authorizeUser();
-    }
-
-    /**
-     * Get the given email of the user.
-     * (only available with a POST request)
-     *
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
     }
 
     /**
@@ -159,9 +115,7 @@ final class User extends BaseModel
         $session = new Session();
         $idEncryption = new IDEncryption();
 
-        $id = $idEncryption->decrypt(
-            $session->get('userID')
-        );
+        $id = $idEncryption->decrypt($session->get('userID'));
         if ($id !== self::GUEST) {
             return $id;
         }
@@ -302,7 +256,7 @@ final class User extends BaseModel
         $this->setFilter(
             'account_email',
             '=',
-            $this->getEmail()
+            $this->email
         );
     }
 }

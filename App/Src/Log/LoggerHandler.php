@@ -9,10 +9,7 @@ use Whoops\Handler\Handler;
 
 final class LoggerHandler extends Handler
 {
-    /**
-     * @var string
-     */
-    private $error;
+    private string $error;
 
     public function handle()
     {

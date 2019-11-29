@@ -14,7 +14,7 @@ abstract class Loader
      *
      * @var string
      */
-    protected $configLocation;
+    protected string $configLocation;
 
     /**
      * Construct the config loader.

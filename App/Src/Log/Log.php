@@ -17,12 +17,7 @@ use Monolog\Processor\WebProcessor;
 
 final class Log
 {
-    /**
-     * The logger object.
-     *
-     * @var Logger
-     */
-    private static $logger;
+    private static Logger $logger;
 
     private function __construct()
     {

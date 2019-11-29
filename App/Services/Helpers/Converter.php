@@ -9,10 +9,7 @@ use App\Src\Translation\Translation;
 
 final class Converter
 {
-    /**
-     * @var string
-     */
-    private $text;
+    private string $text;
 
     public function __construct(string $text)
     {
