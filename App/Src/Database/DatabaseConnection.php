@@ -68,7 +68,7 @@ abstract class DatabaseConnection
      *
      * @return string[]|object[]
      */
-    abstract public function fetchAll(int $fetchMethod): array;
+    abstract public function fetchAll(int $fetchMethod);
 
     /**
      * Fetch one record from the database with the given fetch method.

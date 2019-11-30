@@ -36,11 +36,9 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]|object[]
      */
-    public function fetchAll(int $fetchMethod): array
+    public function fetchAll(int $fetchMethod)
     {
-        $result = $this->statement->fetchAll($fetchMethod);
-
-        return (array) $result;
+        return $this->statement->fetchAll($fetchMethod);
     }
 
     /**
@@ -60,11 +58,9 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return object[]
      */
-    public function all(): array
+    public function all()
     {
-        $result = $this->statement->fetchAll(PDO::FETCH_OBJ);
-
-        return (array) $result;
+        return $this->statement->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -72,11 +68,9 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]
      */
-    public function toArray(): array
+    public function toArray()
     {
-        $result = $this->statement->fetchAll(PDO::FETCH_NAMED);
-
-        return (array) $result;
+        return $this->statement->fetchAll(PDO::FETCH_NAMED);
     }
 
     /**
@@ -84,11 +78,9 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return stdClass
      */
-    public function first(): stdClass
+    public function first()
     {
-        $result = $this->statement->fetch(PDO::FETCH_OBJ);
-
-        return $result !== false ? $result : new stdClass();
+        return $this->statement->fetch(PDO::FETCH_OBJ);
     }
 
     /**
@@ -96,11 +88,9 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]
      */
-    public function firstToArray(): array
+    public function firstToArray()
     {
-        $result = $this->statement->fetch(PDO::FETCH_NAMED);
-
-        return (array) $result;
+        return $this->statement->fetch(PDO::FETCH_NAMED);
     }
 
     /**
