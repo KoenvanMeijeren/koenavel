@@ -28,13 +28,14 @@ final class PageController
     {
         $user = new Test();
 
-        $user->create([
-            'test_name' => 'Test'
+        $user->updateOrCreate(
+            5, [
+            'test_name' => 'Koen van Meijeren',
+            'test_city' => 'Harderwijk',
         ]);
 
         dd(
             $user,
-            $user->name
         );
     }
 }

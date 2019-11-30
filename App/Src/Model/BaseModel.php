@@ -55,6 +55,10 @@ abstract class BaseModel
 
         $this->reset();
 
+        if ($data === false) {
+            return new stdClass();
+        }
+
         return $data;
     }
 
@@ -102,8 +106,7 @@ abstract class BaseModel
     protected function create()
     {
         DB::table($this->table)
-            ->insert($this->fields)
-            ->execute();
+            ->insert($this->fields);
     }
 
     /**
@@ -118,8 +121,7 @@ abstract class BaseModel
             ->addStatementWithValues(
                 $this->convertFiltersToStatement(),
                 $this->filterValues
-            )
-            ->execute();
+            );
     }
 
     /**
