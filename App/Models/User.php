@@ -29,10 +29,10 @@ final class User extends BaseModel
      *
      * @var int
      */
-    const GUEST = 0;
-    const ADMIN = 1;
-    const SUPER_ADMIN = 2;
-    const DEVELOPER = 3;
+    public const GUEST = 0;
+    public const ADMIN = 1;
+    public const SUPER_ADMIN = 2;
+    public const DEVELOPER = 3;
 
     protected string $email;
     protected string $password;
