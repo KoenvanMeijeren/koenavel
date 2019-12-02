@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Model;
 
-
 use App\Src\Database\DB;
 use stdClass;
 
@@ -18,7 +17,7 @@ abstract class Model
      *
      * @param string[] $attributes
      */
-    public function create(array $attributes)
+    public function create(array $attributes): void
     {
         DB::table($this->table)
             ->insert($attributes);
@@ -49,7 +48,7 @@ abstract class Model
      * @param int      $id
      * @param string[] $attributes
      */
-    public function updateOrCreate(int $id, array $attributes)
+    public function updateOrCreate(int $id, array $attributes): void
     {
         if ($this->firstByID($id) === false) {
             $this->create($attributes);
@@ -66,7 +65,7 @@ abstract class Model
      * @param int      $id
      * @param string[] $attributes
      */
-    public function update(int $id, array $attributes)
+    public function update(int $id, array $attributes): void
     {
         DB::table($this->table)
             ->update($attributes)
@@ -79,7 +78,7 @@ abstract class Model
      *
      * @param string[] $attributes
      *
-     * @return stdClass
+     * @return stdClass|false
      */
     protected function firstByAttributes(array $attributes)
     {
@@ -96,7 +95,7 @@ abstract class Model
      *
      * @param int $id
      *
-     * @return stdClass
+     * @return stdClass|false
      */
     protected function firstByID(int $id)
     {
@@ -106,6 +105,11 @@ abstract class Model
             ->first();
     }
 
+    /**
+     * @param string[] $attributes
+     *
+     * @return string
+     */
     private function convertAttributesIntoWhereQuery(
         array $attributes
     ): string {

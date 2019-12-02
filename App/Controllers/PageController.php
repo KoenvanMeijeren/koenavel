@@ -29,10 +29,12 @@ final class PageController
         $user = new Test();
 
         $user->updateOrCreate(
-            5, [
+            5,
+            [
             'test_name' => 'Koen van Meijeren',
             'test_city' => 'Harderwijk',
-        ]);
+            ]
+        );
 
         dd(
             $user,

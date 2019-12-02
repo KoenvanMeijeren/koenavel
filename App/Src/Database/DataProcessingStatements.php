@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Database;
 
-
 use PDOException;
 use stdClass;
 
@@ -16,14 +15,14 @@ trait DataProcessingStatements
      * @return DatabaseProcessor
      * @throws PDOException
      */
-    public abstract function execute(): DatabaseProcessor;
+    abstract public function execute(): DatabaseProcessor;
 
     /**
      * Get every record from the table which matches with the given query.
      *
-     * @return array
+     * @return object[]|false
      */
-    public function get(): array
+    public function get()
     {
         return $this->execute()->all();
     }
@@ -31,7 +30,7 @@ trait DataProcessingStatements
     /**
      * Get the first record from the table which matches with the given query.
      *
-     * @return stdClass
+     * @return stdClass|false
      */
     public function first()
     {

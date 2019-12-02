@@ -34,7 +34,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object[]
+     * @return string[]|object[]|false
      */
     public function fetchAll(int $fetchMethod)
     {
@@ -46,7 +46,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return string[]|object
+     * @return string[]|object|false
      */
     public function fetch(int $fetchMethod)
     {
@@ -56,7 +56,7 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an object.
      *
-     * @return object[]
+     * @return object[]|false
      */
     public function all()
     {
@@ -66,7 +66,7 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an array.
      *
-     * @return string[]
+     * @return string[]|false
      */
     public function toArray()
     {
@@ -76,7 +76,7 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch the first record found in the database into an object.
      *
-     * @return stdClass
+     * @return stdClass|false
      */
     public function first()
     {
@@ -86,7 +86,7 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch the first record found in the database into an array.
      *
-     * @return string[]
+     * @return string[]|false
      */
     public function firstToArray()
     {
