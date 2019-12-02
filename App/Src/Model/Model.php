@@ -73,6 +73,28 @@ abstract class Model
             ->execute();
     }
 
+    /**
+     * Get all records.
+     *
+     * @param string[] $columns
+     *
+     * @return false|object[]
+     */
+    public function all(array $columns = array('*'))
+    {
+        $columns = implode(',', $columns);
+
+        return DB::table($this->table)->select($columns)->get();
+    }
+
+    /**
+     * Get the first record for the given id.
+     *
+     * @param int      $id
+     * @param string[] $columns
+     *
+     * @return false|stdClass
+     */
     public function find(int $id, array $columns = array('*'))
     {
         $columns = implode(',', $columns);
