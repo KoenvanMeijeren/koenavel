@@ -60,7 +60,7 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function all()
     {
-        return $this->statement->fetchAll(PDO::FETCH_OBJ);
+        return $this->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -70,7 +70,7 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function toArray()
     {
-        return $this->statement->fetchAll(PDO::FETCH_NAMED);
+        return $this->fetchAll(PDO::FETCH_NAMED);
     }
 
     /**
@@ -80,7 +80,7 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function first()
     {
-        return $this->statement->fetch(PDO::FETCH_OBJ);
+        return $this->fetch(PDO::FETCH_OBJ);
     }
 
     /**
@@ -90,7 +90,7 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function firstToArray()
     {
-        return $this->statement->fetch(PDO::FETCH_NAMED);
+        return $this->fetch(PDO::FETCH_NAMED);
     }
 
     /**

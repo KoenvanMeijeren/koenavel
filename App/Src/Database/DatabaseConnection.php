@@ -22,6 +22,8 @@ abstract class DatabaseConnection
      *
      * @param string    $query  The query to execute
      * @param string[]  $values The values to bind to the query
+     *
+     * @throws PDOException
      */
     final public function __construct(string $query, array $values)
     {
