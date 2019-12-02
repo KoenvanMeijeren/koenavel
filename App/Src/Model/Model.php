@@ -73,6 +73,16 @@ abstract class Model
             ->execute();
     }
 
+    public function find(int $id, array $columns = array('*'))
+    {
+        $columns = implode(',', $columns);
+
+        return DB::table($this->table)
+            ->select($columns)
+            ->where($this->primaryKey, '=', (string) $id)
+            ->first();
+    }
+
     /**
      * Get the first record for the given attributes.
      *
