@@ -22,6 +22,8 @@ abstract class DatabaseConnection
      *
      * @param string    $query  The query to execute
      * @param string[]  $values The values to bind to the query
+     *
+     * @throws PDOException
      */
     final public function __construct(string $query, array $values)
     {
@@ -66,16 +68,16 @@ abstract class DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object[]
+     * @return string[]|object[]|false
      */
-    abstract public function fetchAll(int $fetchMethod): array;
+    abstract public function fetchAll(int $fetchMethod);
 
     /**
      * Fetch one record from the database with the given fetch method.
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return string[]|object
+     * @return string[]|object|false
      */
     abstract public function fetch(int $fetchMethod);
 }

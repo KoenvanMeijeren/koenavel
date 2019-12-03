@@ -9,7 +9,7 @@ use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Exceptions\Session\InvalidSessionException;
-use App\Src\Model\BaseModel;
+use App\Src\Model\Model;
 use App\Src\Response\Redirect;
 use App\Src\Session\Builder;
 use App\Src\Session\Session;
@@ -17,8 +17,12 @@ use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-final class User extends BaseModel
+final class User extends Model
 {
+    protected string $table = 'account';
+    protected string $primaryKey = 'account_ID';
+    protected string $softDeletedKey = 'account_is_deleted';
+
     /**
      * The follow rights option ara available.
      *
@@ -29,10 +33,10 @@ final class User extends BaseModel
      *
      * @var int
      */
-    const GUEST = 0;
-    const ADMIN = 1;
-    const SUPER_ADMIN = 2;
-    const DEVELOPER = 3;
+    public const GUEST = 0;
+    public const ADMIN = 1;
+    public const SUPER_ADMIN = 2;
+    public const DEVELOPER = 3;
 
     protected string $email;
     protected string $password;
@@ -43,17 +47,12 @@ final class User extends BaseModel
     public function __construct()
     {
         $request = new Request();
-
-        $this->table = 'account';
-        $this->setColumns('*');
-        $this->idColumn = 'account_ID';
-
-        $this->id = $this->getID();
-        $this->account = $this->get();
-
         $this->email = $request->post('email');
         $this->password = $request->post('password');
         $this->token = $request->post('verificationToken');
+
+        $account = $this->find($this->getID());
+        if ($account !== false) $this->account = $account;
 
         $this->authorizeUser();
     }
@@ -77,28 +76,11 @@ final class User extends BaseModel
      *
      * @return stdClass
      */
-    public function get(): stdClass
-    {
-        $this->setIDFilter();
-        $this->setDefaultFilters();
-
-        return $this->getBy();
-    }
-
-    /**
-     * Get the account of the user.
-     *
-     * If the user is logged in the account will be returned.
-     * Otherwise an empty std class.
-     *
-     * @return stdClass
-     */
     public function getByEmail(): stdClass
     {
-        $this->setEmailFilter();
-        $this->setDefaultFilters();
-
-        return $this->getBy();
+        return $this->firstByAttributes([
+            'account_email' => $this->email
+        ]);
     }
 
     /**
@@ -148,6 +130,16 @@ final class User extends BaseModel
     }
 
     /**
+     * Get the account of the user.
+     *
+     * @return false|stdClass
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    /**
      * Determine if the user is logged in.
      *
      * @return bool
@@ -181,7 +173,10 @@ final class User extends BaseModel
         $builder->setSessionSecurity();
 
         $session = new Session();
-        $session->flash(State::SUCCESSFUL, Translation::get('admin_logout_message'));
+        $session->flash(
+            State::SUCCESSFUL,
+            Translation::get('admin_logout_message')
+        );
 
         return new Redirect($redirectTo);
     }
@@ -221,42 +216,5 @@ final class User extends BaseModel
         if ((int) ($this->account->account_is_blocked ?? '') === 1) {
             return $this->logout();
         }
-    }
-
-    /**
-     * Set default filters, which the user must pass if he will be
-     * able to use his account.
-     */
-    private function setDefaultFilters(): void
-    {
-        $this->setFilter(
-            'account_is_blocked',
-            '=',
-            '0'
-        );
-
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
-        );
-    }
-
-    private function setIDFilter(): void
-    {
-        $this->setFilter(
-            $this->idColumn,
-            '=',
-            (string) $this->id
-        );
-    }
-
-    private function setEmailFilter(): void
-    {
-        $this->setFilter(
-            'account_email',
-            '=',
-            $this->email
-        );
     }
 }

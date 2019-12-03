@@ -13,7 +13,7 @@ final class Redirect
      *
      * @var string
      */
-    private $path;
+    private string $path;
 
     /**
      * Construct the path and redirect to the path.

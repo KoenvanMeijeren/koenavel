@@ -7,13 +7,12 @@ namespace App\Services\Auth;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Src\Model\BaseModel;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-final class Login extends BaseModel
+final class Login
 {
     /**
      * @var int
@@ -22,13 +21,12 @@ final class Login extends BaseModel
 
     private User $user;
     private stdClass $account;
+    private array $attributes;
 
     public function __construct(User $user)
     {
         $this->user = $user;
         $this->account = $this->user->getByEmail();
-
-        $this->table = 'account';
     }
 
     /**
@@ -107,22 +105,7 @@ final class Login extends BaseModel
      */
     public function storeToken(string $token): void
     {
-        $this->setFields([
-            'account_login_token' => $token
-        ]);
-
-        $this->setFilter(
-            'account_ID',
-            '=',
-            $this->account->account_ID ?? '0'
-        );
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
-        );
-
-        $this->save();
+        $this->attributes['account_login_token'] = $token;
     }
 
     /**
@@ -135,12 +118,10 @@ final class Login extends BaseModel
             PASSWORD_BCRYPT
         )
         ) {
-            $this->setFields([
-                'account_password' => (string) password_hash(
-                    $this->account->account_password ?? '',
-                    PASSWORD_BCRYPT
-                )
-            ]);
+            $this->attributes['account_password'] = (string) password_hash(
+                $this->account->account_password ?? '',
+                PASSWORD_BCRYPT
+            );
         }
     }
 
@@ -149,9 +130,7 @@ final class Login extends BaseModel
      */
     private function resetFailedLogInAttempts(): void
     {
-        $this->setFields([
-            'account_failed_login' => '0'
-        ]);
+        $this->attributes['account_failed_login'] = '0';
     }
 
     /**
@@ -161,9 +140,7 @@ final class Login extends BaseModel
     {
         $current = $this->account->account_failed_login ?? '0';
 
-        $this->setFields([
-            'account_failed_login' => (string) ((int) $current + 1)
-        ]);
+        $this->attributes['account_failed_login'] = (string) ((int) $current + 1);
     }
 
     /**
@@ -174,9 +151,7 @@ final class Login extends BaseModel
     {
         $failedLogInAttempts = $this->account->account_failed_login ?? '0';
         if ((int) $failedLogInAttempts >= self::MAXIMUM_LOGIN_ATTEMPTS) {
-            $this->setFields([
-                'account_is_blocked' => '1'
-            ]);
+            $this->attributes['account_is_blocked'] = '1';
         }
     }
 
@@ -185,23 +160,10 @@ final class Login extends BaseModel
      */
     private function store(): void
     {
-        $this->setFilter(
-            'account_ID',
-            '=',
-            $this->account->account_ID ?? '0'
+        $this->user->update(
+            (int) ($this->account->account_ID ?? '0'),
+            $this->attributes
         );
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
-        );
-        $this->setFilter(
-            'account_rights',
-            '<',
-            (string) User::SUPER_ADMIN
-        );
-
-        $this->save();
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\Helpers\Converter;
 use App\Services\Helpers\DataTable;
 use App\Services\Helpers\Resource;
+use App\Src\Core\Router;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
@@ -39,7 +40,7 @@ final class AccountController
         $user = new User();
         $dataTable->addEditHead('Naam', 'Email', 'Rechten');
 
-        $accounts = $this->account->getAll();
+        $accounts = $this->account->all();
         foreach ($accounts as $account) {
             $rights = new Converter($account->account_rights ?? '0');
             $blocked = new Converter($account->account_is_blocked ?? '0');
@@ -76,16 +77,18 @@ final class AccountController
     }
 
     /**
+     * @param string $title
+     *
      * @return Redirect|View
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
-    public function show()
+    public function show(string $title = 'admin_edit_account_title')
     {
-        $title = Translation::get('admin_edit_account_title');
-        $account = $this->account->get();
+        $title = Translation::get($title);
+        $account = $this->account->find($this->account->getID());
 
-        if (empty((array)$account)) {
+        if ($account === false) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('admin_account_cannot_be_visited')
@@ -109,8 +112,8 @@ final class AccountController
     {
         $title = Translation::get('admin_create_account_title');
 
-        $account = new CreateAccount();
-        if (CSRF::validate() && $account->create()) {
+        $create = new CreateAccount();
+        if (CSRF::validate() && $create->execute()) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 Translation::get('admin_create_account_successful_message')
@@ -129,8 +132,6 @@ final class AccountController
      */
     public function storeData()
     {
-        $title = Translation::get('admin_edit_account_title');
-
         $account = new UpdateAccount();
         if (CSRF::validate() && $account->saveData()) {
             $this->session->flash(
@@ -143,12 +144,7 @@ final class AccountController
             );
         }
 
-        $account = $this->account->get();
-
-        return new View(
-            'admin/account/edit',
-            compact('title', 'account')
-        );
+        return $this->show('admin_create_account_title');
     }
 
     /**
@@ -158,8 +154,6 @@ final class AccountController
      */
     public function storeEmail()
     {
-        $title = Translation::get('admin_edit_account_title');
-
         $account = new UpdateAccount();
         if (CSRF::validate() && $account->saveEmail()) {
             $this->session->flash(
@@ -172,12 +166,7 @@ final class AccountController
             );
         }
 
-        $account = $this->account->get();
-
-        return new View(
-            'admin/account/edit',
-            compact('title', 'account')
-        );
+        return $this->show('admin_edit_account_title');
     }
 
     /**
@@ -187,8 +176,6 @@ final class AccountController
      */
     public function storePassword()
     {
-        $title = Translation::get('admin_edit_account_title');
-
         $account = new UpdateAccount();
         if (CSRF::validate() && $account->savePassword()) {
             $this->session->flash(
@@ -201,17 +188,12 @@ final class AccountController
             );
         }
 
-        $account = $this->account->get();
-
-        return new View(
-            'admin/account/edit',
-            compact('title', 'account')
-        );
+        return $this->show('admin_edit_account_title');
     }
 
     public function block(): Redirect
     {
-        if ($this->account->block()) {
+        if ($this->account->block($this->account->getID())) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 Translation::get('admin_account_successful_blocked_message')
@@ -225,7 +207,7 @@ final class AccountController
 
     public function unblock(): Redirect
     {
-        if ($this->account->unblock()) {
+        if ($this->account->unblock($this->account->getID())) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 Translation::get('admin_account_successful_unblocked_message')
@@ -233,13 +215,13 @@ final class AccountController
         }
 
         return new Redirect(
-            '/admin/account/edit/' . $this->account->getID()
+            '/admin/account/edit/' . Router::getWildcard()
         );
     }
 
     public function destroy(): Redirect
     {
-        if ($this->account->delete()) {
+        if ($this->account->delete($this->account->getID())) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 Translation::get('admin_deleted_account_successful_message')

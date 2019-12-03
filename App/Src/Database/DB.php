@@ -11,6 +11,7 @@ final class DB
     use BasicStatements;
     use SelectStatements;
     use WhereStatements;
+    use DataProcessingStatements;
 
     private static string $table = '';
     private string $query = '';
