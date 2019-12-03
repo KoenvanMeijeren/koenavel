@@ -52,7 +52,9 @@ final class User extends Model
         $this->token = $request->post('verificationToken');
 
         $account = $this->find($this->getID());
-        if ($account !== false) $this->account = $account;
+        if ($account !== false) {
+            $this->account = $account;
+        }
 
         $this->authorizeUser();
     }

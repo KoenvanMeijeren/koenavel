@@ -133,6 +133,8 @@ abstract class Model
      * Delete a record by the given id..
      *
      * @param int $id
+     *
+     * @return mixed|void
      */
     public function delete(int $id)
     {
