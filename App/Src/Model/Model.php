@@ -11,6 +11,7 @@ abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
+    protected bool $softDelete = true;
     protected string $softDeletedKey;
 
     /**
@@ -85,6 +86,13 @@ abstract class Model
     {
         $columns = implode(',', $columns);
 
+        if ($this->softDelete) {
+            return DB::table($this->table)
+                ->select($columns)
+                ->where($this->softDeletedKey, '=', '0')
+                ->get();
+        }
+
         return DB::table($this->table)->select($columns)->get();
     }
 
@@ -99,6 +107,14 @@ abstract class Model
     public function find(int $id, array $columns = array('*'))
     {
         $columns = implode(',', $columns);
+
+        if ($this->softDelete) {
+            return DB::table($this->table)
+                ->select($columns)
+                ->where($this->primaryKey, '=', (string) $id)
+                ->where($this->softDeletedKey, '=', '0')
+                ->first();
+        }
 
         return DB::table($this->table)
             ->select($columns)
@@ -128,6 +144,16 @@ abstract class Model
      */
     protected function firstByAttributes(array $attributes)
     {
+        if ($this->softDelete) {
+            return DB::table($this->table)
+                ->select('*')
+                ->where($this->softDeletedKey, '=', '0')
+                ->addStatementWithValues(
+                    $this->convertAttributesIntoWhereQuery($attributes),
+                    $this->convertAttributesIntoWhereValues($attributes)
+                )->first();
+        }
+
         return DB::table($this->table)
             ->select('*')
             ->addStatementWithValues(
@@ -145,6 +171,14 @@ abstract class Model
      */
     protected function firstByID(int $id)
     {
+        if ($this->softDelete) {
+            return DB::table($this->table)
+                ->select('*')
+                ->where($this->primaryKey, '=', (string) $id)
+                ->where($this->softDeletedKey, '=', '0')
+                ->first();
+        }
+
         return DB::table($this->table)
             ->select('*')
             ->where($this->primaryKey, '=', (string) $id)

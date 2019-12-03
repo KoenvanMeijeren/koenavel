@@ -21,6 +21,7 @@ final class User extends Model
 {
     protected string $table = 'account';
     protected string $primaryKey = 'account_ID';
+    protected string $softDeletedKey = 'account_is_deleted';
 
     /**
      * The follow rights option ara available.

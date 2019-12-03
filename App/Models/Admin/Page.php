@@ -10,4 +10,5 @@ final class Page extends Model
 {
     protected string $table = 'page';
     protected string $primaryKey = 'page_ID';
+    protected string $softDeletedKey = 'page_is_deleted';
 }
