@@ -100,6 +100,7 @@ return [
     'cannot_edit_own_account_block_state_message' => 'Je kan niet je eigen account blokkeren.',
     'cannot_edit_own_account_unblock_state_message' => 'Je kan niet je eigen account deblokkeren.',
     'admin_deleted_account_successful_message' => 'Account verwijderen is gelukt.',
+    'admin_deleted_account_failed_message' => 'Account kon niet worden verwijderd.',
     'admin_account_successful_blocked_message' => 'Account is succesvol geblokkeerd.',
     'admin_account_successful_unblocked_message' => 'Account is succesvol gedeblokkeerd.',
     'admin_logout_message' => 'Succesvol uitgelogd.',

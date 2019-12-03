@@ -10,21 +10,13 @@ use App\Src\Translation\Translation;
 
 final class CreateAccount extends Account
 {
-    public function create(): bool
+    public function execute(): bool
     {
         if (!$this->validate()) {
             return false;
         }
 
-        $this->prepare();
-        parent::create();
-
-        return true;
-    }
-
-    private function prepare(): void
-    {
-        $this->setFields([
+        $this->create([
             'account_name' => $this->name,
             'account_email' => $this->email,
             'account_password' => (string) password_hash(
@@ -33,6 +25,8 @@ final class CreateAccount extends Account
             ),
             'account_rights' => (string) $this->rights,
         ]);
+
+        return true;
     }
 
     private function validate(): bool
@@ -84,7 +78,7 @@ final class CreateAccount extends Account
             return false;
         }
 
-        if (!empty((array) $this->getByEmail($this->email))) {
+        if ($this->getByEmail($this->email) !== false) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(
