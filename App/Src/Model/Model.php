@@ -11,7 +11,7 @@ use stdClass;
  * Class Model
  * @package App\Src\Model
  *
- * @todo find out how i can add dynamic scopes and statements such as scopes
+ * @todo find out how i can add dynamic scopes and statements
  * @todo find out how i can define relations between classes and automatic select both records
  */
 abstract class Model
