@@ -11,6 +11,7 @@ abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
+    protected string $softDeletedKey;
 
     /**
      * Create a new record.
@@ -103,6 +104,19 @@ abstract class Model
             ->select($columns)
             ->where($this->primaryKey, '=', (string) $id)
             ->first();
+    }
+
+    /**
+     * Delete a record by the given id..
+     *
+     * @param int $id
+     */
+    public function delete(int $id)
+    {
+        DB::table($this->table)
+            ->delete($this->softDeletedKey)
+            ->where($this->primaryKey, '=', (string) $id)
+            ->execute();
     }
 
     /**
