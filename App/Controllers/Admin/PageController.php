@@ -21,13 +21,13 @@ final class PageController
     public function index(): View
     {
         $title = Translation::get('admin_page_title');
-        $pages = $this->page->getAll();
+        $pages = $this->page->all();
 
         $dataTable = new DataTable();
         $dataTable->addHead(
-            'page_slug_ID',
-            'page_title',
-            'page_in_menu'
+            'Slug ID',
+            'Titel',
+            'Tonen in menu?'
         );
 
         foreach ($pages as $page) {
