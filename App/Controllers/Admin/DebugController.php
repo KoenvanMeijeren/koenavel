@@ -12,10 +12,7 @@ use Cake\Chronos\Chronos;
 
 final class DebugController
 {
-    /**
-     * @var Debug
-     */
-    private $debug;
+    private Debug $debug;
 
     public function __construct()
     {

@@ -5,29 +5,17 @@ declare(strict_types=1);
 namespace App\Services\Helpers;
 
 use App\Models\User;
-use App\Src\Exceptions\Basic\InvalidKeyException;
-use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Translation\Translation;
 
 final class Converter
 {
-    /**
-     * @var mixed
-     */
-    private $text;
+    private string $text;
 
-    public function __construct($rights)
+    public function __construct(string $text)
     {
-        $this->text = $rights;
+        $this->text = $text;
     }
 
-    /**
-     * Convert the given text into readable rights.
-     *
-     * @return string
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
-     */
     public function toReadableRights(): string
     {
         if ((int) $this->text === User::ADMIN) {

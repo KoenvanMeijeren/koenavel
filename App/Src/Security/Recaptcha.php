@@ -15,10 +15,8 @@ final class Recaptcha
 {
     /**
      * The http request for google recaptcha.
-     *
-     * @var array
      */
-    private $query = [];
+    private array $query = [];
 
     /**
      * Build the recaptcha http request.

@@ -7,62 +7,34 @@ namespace App\Models\Admin\Account;
 use App\Models\User;
 use App\Src\Core\Request;
 use App\Src\Core\Router;
-use App\Src\Model\BaseModel;
+use App\Src\Model\Model;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-class Account extends BaseModel
+class Account extends Model
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    protected string $table = 'account';
+    protected string $primaryKey = 'account_ID';
+    protected string $softDeletedKey = 'account_is_deleted';
 
-    /**
-     * @var Session
-     */
-    protected $session;
+    protected User $user;
+    protected Account $account;
+    protected Session $session;
 
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @var string
-     */
-    protected $confirmationPassword;
-
-    /**
-     * @var int
-     */
-    protected $rights;
+    protected string $name;
+    protected string $email;
+    protected string $password;
+    protected string $confirmationPassword;
+    protected int $rights;
 
     public function __construct()
     {
         $this->user = new User();
         $this->session = new Session();
-
-        $this->table = 'account';
-        $this->setColumns('*');
-
-        $this->idColumn = 'account_ID';
-        $this->softDeleteColumn = 'account_is_deleted';
-        $this->id = (int) Router::getWildcard();
-
         $request = new Request();
+
         $this->name = $request->post('name');
         $this->email = $request->post('email');
         $this->password = $request->post('password');
@@ -70,91 +42,65 @@ class Account extends BaseModel
         $this->rights = (int) $request->post('rights');
     }
 
+    /**
+     * Get the id of the account.
+     *
+     * @return int
+     */
     public function getID(): int
     {
-        return $this->id;
+        return (int) Router::getWildcard();
     }
 
     /**
-     * @return stdClass
+     * Get an account by the given email.
+     *
+     * @param string $email
+     *
+     * @return false|stdClass
      */
-    public function get(): stdClass
+    public function getByEmail(string $email)
     {
-        $this->setDefaultFilters();
-        $this->setIDFilter();
-
-        return $this->getBy();
+        return $this->firstByAttributes([
+            'account_email' => $email
+        ]);
     }
 
-    public function getByEmail(string $email): stdClass
+    public function block(int $id): bool
     {
-        $this->setDefaultFilters();
-        $this->setEmailFilter($email);
-
-        return $this->getBy();
-    }
-
-    /**
-     * @return object[]
-     */
-    public function getAll(): array
-    {
-        $this->setDefaultFilters();
-
-        return $this->getAllBy();
-    }
-
-    public function block(): bool
-    {
-        if ($this->user->getID() === $this->id) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('cannot_edit_own_account_block_state_message')
-            );
-
+        if (!$this->validateUser($id)) {
             return false;
         }
 
-        $this->setIDFilter();
-        $this->changeBlockState(1);
-        parent::save();
+        $this->update($id, [
+            'account_is_blocked' => '1'
+        ]);
 
         return true;
     }
 
-    public function unblock(): bool
+    public function unblock(int $id): bool
     {
-        if ($this->user->getID() === $this->id) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('cannot_edit_own_account_unblock_state_message')
-            );
-
+        if (!$this->validateUser($id)) {
             return false;
         }
 
-        $this->setIDFilter();
-        $this->changeBlockState(0);
-        parent::save();
+        $this->update($id, [
+            'account_is_blocked' => '0'
+        ]);
 
         return true;
     }
 
-    public function delete(): bool
+    public function delete(int $id): bool
     {
-        if ($this->user->getID() === $this->id) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('cannot_delete_own_account_message')
-            );
-
+        if (!$this->validateUser($id)) {
             return false;
         }
 
-        $this->setIDFilter();
-        parent::delete();
+        parent::delete($id);
 
-        if (empty((array) $this->get())) {
+        if ($this->firstByID($id) === false) {
             return true;
         }
 
@@ -166,37 +112,16 @@ class Account extends BaseModel
         return false;
     }
 
-    protected function setIDFilter(): void
+    private function validateUser(int $id): bool
     {
-        $this->setFilter(
-            $this->idColumn,
-            '=',
-            (string) $this->id
-        );
-    }
+        if ($this->user->getID() === $id) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('cannot_delete_own_account_message')
+            );
+            return false;
+        }
 
-    protected function setDefaultFilters(): void
-    {
-        $this->setFilter(
-            $this->softDeleteColumn,
-            '=',
-            '0'
-        );
-    }
-
-    protected function setEmailFilter(string $email): void
-    {
-        $this->setFilter(
-            'account_email',
-            '=',
-            $email
-        );
-    }
-
-    protected function changeBlockState(int $state): void
-    {
-        $this->setFields([
-            'account_is_blocked' => (string) $state
-        ]);
+        return true;
     }
 }

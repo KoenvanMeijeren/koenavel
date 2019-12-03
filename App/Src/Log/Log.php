@@ -7,6 +7,7 @@ namespace App\Src\Log;
 use App\Src\Config\Config;
 use App\Src\Core\Env;
 use App\Src\File\File;
+use DateTimeZone;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\RotatingFileHandler;
@@ -17,12 +18,7 @@ use Monolog\Processor\WebProcessor;
 
 final class Log
 {
-    /**
-     * The logger object.
-     *
-     * @var Logger
-     */
-    private static $logger;
+    private static Logger $logger;
 
     private function __construct()
     {
@@ -31,7 +27,7 @@ final class Log
 
         $format = "[%datetime%] %level_name% %message% %context% %extra%\n";
         $timeFormat = "Y-m-d H:i:s";
-        $dateTimeZone = new \DateTimeZone('Europe/Amsterdam');
+        $dateTimeZone = new DateTimeZone('Europe/Amsterdam');
 
         self::$logger = new Logger($config->get('appName')->toString());
         self::$logger->setTimezone($dateTimeZone);

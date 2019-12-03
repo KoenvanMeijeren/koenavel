@@ -47,9 +47,9 @@ trait BasicStatements
      *
      * @param string[] $values The values to be inserted.
      *
-     * @return $this
+     * @return void
      */
-    public function insert(array $values)
+    public function insert(array $values): void
     {
         $columns = implode(', ', array_keys($values));
         $bindColumns = ':' . implode(', :', array_keys($values));
@@ -61,7 +61,7 @@ trait BasicStatements
 
         $this->addValues($values);
 
-        return $this;
+        $this->execute();
     }
 
     /**

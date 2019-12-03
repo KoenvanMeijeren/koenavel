@@ -84,9 +84,8 @@ final class Session
 
         $sanitize = new Sanitize($data);
         $data = new Encrypt((string) $sanitize->data());
-        $value = $data->decrypt();
 
-        return $value;
+        return $data->decrypt();
     }
 
     /**

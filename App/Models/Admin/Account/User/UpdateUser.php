@@ -6,12 +6,11 @@ namespace App\Models\Admin\Account\User;
 
 use App\Models\User;
 use App\Src\Core\Request;
-use App\Src\Model\BaseModel;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class UpdateUser extends BaseModel
+final class UpdateUser
 {
     /**
      * @var int
@@ -19,35 +18,15 @@ final class UpdateUser extends BaseModel
     const MINIMUM_PASSWORD_LENGTH = 8;
     const MAXIMUM_NAME_LENGTH = 255;
 
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
+    private Session $session;
 
-    /**
-     * @var Session
-     */
-    private $session;
+    private string $name;
+    private string $currentPassword;
+    private string $newPassword;
+    private string $confirmationPassword;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $currentPassword;
-
-    /**
-     * @var string
-     */
-    private $newPassword;
-
-    /**
-     * @var string
-     */
-    private $confirmationPassword;
+    private array $attributes;
 
     public function __construct(User $user)
     {
@@ -61,17 +40,12 @@ final class UpdateUser extends BaseModel
         $this->confirmationPassword = $request->post(
             'confirmationPassword'
         );
-
-        $this->table = 'account';
     }
 
     public function saveData(): bool
     {
         if ($this->validateData()) {
-            $this->setFields([
-                'account_name' => $this->name
-            ]);
-
+            $this->attributes['account_name'] = $this->name;
             $this->store();
 
             $this->session->flash(
@@ -118,13 +92,10 @@ final class UpdateUser extends BaseModel
     public function savePassword(): bool
     {
         if ($this->validatePassword()) {
-            $this->setFields([
-                'account_password' => (string) password_hash(
-                    $this->newPassword,
-                    PASSWORD_ARGON2ID
-                )
-            ]);
-
+            $this->attributes['account_password'] = (string) password_hash(
+                $this->newPassword,
+                PASSWORD_ARGON2ID
+            );
             $this->store();
 
             $this->session->flash(
@@ -153,7 +124,7 @@ final class UpdateUser extends BaseModel
 
         if (!password_verify(
             $this->currentPassword,
-            $this->user->get()->account_password ?? ''
+            $this->user->getAccount()->account_password ?? ''
         )) {
             $this->session->flash(
                 State::FAILED,
@@ -177,6 +148,7 @@ final class UpdateUser extends BaseModel
                 State::FAILED,
                 'Het nieuwe wachtwoord moet minimaal 8 tekens bevatten.'
             );
+
             return false;
         }
 
@@ -185,17 +157,9 @@ final class UpdateUser extends BaseModel
 
     private function store(): void
     {
-        $this->setFilter(
-            'account_ID',
-            '=',
-            (string)$this->user->getID()
+        $this->user->update(
+            $this->user->getID(),
+            $this->attributes
         );
-        $this->setFilter(
-            'account_is_deleted',
-            '=',
-            '0'
-        );
-
-        $this->save();
     }
 }

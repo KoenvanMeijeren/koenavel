@@ -269,7 +269,7 @@ trait WhereStatements
 
             $this->addValues([$bindColumn => $value]);
 
-            if (strstr($query, 'WHERE')) {
+            if (strstr($query, 'WHERE') !== false) {
                 $query .= "OR {$column} = :{$bindColumn} ";
             } else {
                 $query .= "WHERE {$column} = :{$bindColumn} ";
@@ -277,7 +277,7 @@ trait WhereStatements
         }
 
         // add hooks to the query if there is already a where statement added
-        if (strstr($this->query, 'WHERE')) {
+        if (strstr($this->query, 'WHERE') !== false) {
             $query = preg_replace(
                 '/\b(WHERE)\b/',
                 "WHERE (",

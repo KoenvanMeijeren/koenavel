@@ -13,61 +13,17 @@ use Exception;
 
 final class Builder
 {
-    /**
-     * The session class
-     *
-     * @var Session
-     */
-    private $session;
+    private Session $session;
+    private SessionSecurity $security;
 
-    /**
-     * The session security class
-     *
-     * @var SessionSecurity
-     */
-    private $security;
+    private string $name;
+    private string $path;
+    private string $domain;
 
-    /**
-     * The name of the session.
-     *
-     * @var string
-     */
-    private $name;
+    private int $expiringTime;
 
-    /**
-     * The expiring time of the session.
-     *
-     * @var int
-     */
-    private $expiringTime;
-
-    /**
-     * The path of the session.
-     *
-     * @var string
-     */
-    private $path;
-
-    /**
-     * The domain of the session.
-     *
-     * @var string
-     */
-    private $domain;
-
-    /**
-     * Determine if the session must be secure.
-     *
-     * @var bool
-     */
-    private $secure;
-
-    /**
-     * Determine if the session must be http only.
-     *
-     * @var bool
-     */
-    private $httpOnly;
+    private bool $secure;
+    private bool $httpOnly;
 
     /**
      * Construct the session.
@@ -141,11 +97,12 @@ final class Builder
             return;
         }
 
-        array_walk($_COOKIE, function ($value, $key) use ($cookie) {
+        // unset all session name cookies
+        foreach ($_COOKIE as $key => $value) {
             if (strlen($key) === strlen($this->name)) {
                 $cookie->unset($key);
             }
-        });
+        }
 
         $cookie->save('sessionName', $this->name);
     }

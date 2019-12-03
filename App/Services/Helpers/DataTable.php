@@ -6,42 +6,13 @@ namespace App\Services\Helpers;
 
 final class DataTable
 {
-    /**
-     * @var string
-     */
-    private $table = '';
-
-    /**
-     * @var string
-     */
-    private $head = '';
-
-    /**
-     * @var string
-     */
-    private $rows = '';
-
-    /**
-     * @var string
-     */
-    private $footer = '';
-
-    /**
-     * @var string
-     */
-    private $ids = '';
-
-    /**
-     * @var string
-     */
-    private $classes = '';
-
-    /**
-     * The var to add the pieces to.
-     *
-     * @var string
-     */
-    private $var = 'table';
+    private string $table = '';
+    private string $head = '';
+    private string $rows = '';
+    private string $footer = '';
+    private string $ids = '';
+    private string $classes = '';
+    private string $var = 'table';
 
     /**
      * Add (multiple) ids to a piece of html.
@@ -144,11 +115,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addTrEnd();
     }
@@ -164,11 +135,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addClasses('table-edit-row');
         $this->addThStart();
@@ -189,11 +160,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($tds, function ($item) {
+        foreach ($tds as $item) {
             $this->addTdStart();
             $this->add($item, $this->var);
             $this->addTdEnd();
-        });
+        }
 
         $this->addTrEnd();
     }
@@ -209,11 +180,11 @@ final class DataTable
 
         $this->addTrStart();
 
-        array_walk($ths, function ($item) {
+        foreach ($ths as $item) {
             $this->addThStart();
             $this->add($item, $this->var);
             $this->addThEnd();
-        });
+        }
 
         $this->addTrEnd();
     }

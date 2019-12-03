@@ -19,12 +19,7 @@ final class CSRF
      */
     const ECHO_CSRF_TOKEN = false;
 
-    /**
-     * The antiCSRF object.
-     *
-     * @var AntiCSRF
-     */
-    private static $csrf;
+    private static AntiCSRF $csrf;
 
     /**
      * Construct the csrf

@@ -12,46 +12,18 @@ use PDOStatement;
 
 abstract class DatabaseConnection
 {
-    /**
-     * The PDO class.
-     *
-     * @var PDO
-     */
-    protected $pdo;
-
-    /**
-     * The PDO statement class.
-     *
-     * @var PDOStatement
-     */
-    protected $statement;
-
-    /**
-     * The values to bind to the query.
-     *
-     * @var string[]
-     */
-    protected $values = [];
-
-    /**
-     * The last inserted ID.
-     *
-     * @var int
-     */
-    protected $lastInsertedId = 0;
-
-    /**
-     * The message which is returned when the query is executed.
-     *
-     * @var string
-     */
-    protected $message = '';
+    protected PDO $pdo;
+    protected PDOStatement $statement;
+    protected array $values = [];
+    protected int $lastInsertedId = 0;
 
     /**
      * Connect with the database and execute the query.
      *
      * @param string    $query  The query to execute
      * @param string[]  $values The values to bind to the query
+     *
+     * @throws PDOException
      */
     final public function __construct(string $query, array $values)
     {
@@ -96,16 +68,16 @@ abstract class DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object[]
+     * @return string[]|object[]|false
      */
-    abstract public function fetchAll(int $fetchMethod): array;
+    abstract public function fetchAll(int $fetchMethod);
 
     /**
      * Fetch one record from the database with the given fetch method.
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return string[]|object
+     * @return string[]|object|false
      */
     abstract public function fetch(int $fetchMethod);
 }

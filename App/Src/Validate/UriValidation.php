@@ -20,7 +20,7 @@ trait UriValidation
      */
     public function isUrl(): Validate
     {
-        if (!filter_var(self::$var, FILTER_VALIDATE_URL)) {
+        if (filter_var(self::$var, FILTER_VALIDATE_URL) === false) {
             throw new InvalidUriException('Invalid url given.');
         }
 
@@ -36,15 +36,19 @@ trait UriValidation
      */
     public function isDomain(): Validate
     {
-        if (!strstr(self::$var, 'localhost')
-            && !strstr(self::$var, '127.0.0.1')
-            && !preg_match(
-                '^(?!-)(?:[a-zA-Z\\d\\-]{0,62}[a-zA-Z\\d]\\.)'.
-                '{1,126}(?!\\d+)[a-zA-Z\\d]{1,63}$^',
-                (string) self::$var
-            )
+        if (self::$var !== 'localhost'
+            && preg_match(
+                '/[a-zA-Z]{0,9}+[:][0-9]{0,4}/',
+                self::$var
+            ) === 0
+            && preg_match(
+                '/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/',
+                self::$var
+            ) === 0
         ) {
-            throw new InvalidDomainException('Invalid domain given.');
+            throw new InvalidDomainException(
+                'Invalid domain: '.self::$var.' given.'
+            );
         }
 
         return new Validate();

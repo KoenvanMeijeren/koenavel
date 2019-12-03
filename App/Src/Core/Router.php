@@ -20,34 +20,19 @@ final class Router
      * 0 = Public
      * 1 = Maintainer
      * 2 = Super maintainer
-     *
-     * @var array
      */
-    private static $routes = [
+    private static array $routes = [
         'GET' => [],
         'POST' => [],
     ];
 
     /**
      * All the available routes based on the current rights of the user.
-     *
-     * @var array
      */
-    private static $availableRoutes = [];
+    private static array $availableRoutes = [];
 
-    /**
-     * Add a prefix to the routes.
-     *
-     * @var string
-     */
-    private static $prefix = '';
-
-    /**
-     * The current used wildcard.
-     *
-     * @var string
-     */
-    private static $wildcard = '';
+    private static string $prefix = '';
+    private static string $wildcard = '';
 
     /**
      * Load the routes.
@@ -246,13 +231,13 @@ final class Router
         $urlExploded = explode('/', $url);
         $routes = array_keys(self::$availableRoutes);
 
-        array_walk($routes, function ($route) use ($urlExploded) {
+        foreach ($routes as $route) {
             $routeExploded = explode('/', $route);
 
-            if (preg_match('/{[a-zA-Z]+}/', $route)) {
+            if ((bool) preg_match('/{[a-zA-Z]+}/', $route)) {
                 $this->updateRoute($routeExploded, $urlExploded, $route);
             }
-        });
+        }
     }
 
     /**
@@ -275,10 +260,9 @@ final class Router
         // Walk through the exploded route array and if there is a match and
         // if it contains {a-zA-Z} replace it with the same value on the
         // same position from the url exploded array
-        array_walk($routeExploded,
-            function ($routePart, $key) use ($urlExploded, $route) {
+        foreach ($routeExploded as $key => $routePart) {
             if (array_key_exists($key, $urlExploded)
-                && preg_match('/{[a-zA-Z]+}/', $routePart)
+                && (bool) preg_match('/{+[a-zA-Z]+}/', $routePart)
             ) {
                 $newRoute = preg_replace(
                     '/{[a-zA-Z]+}/',
@@ -293,7 +277,7 @@ final class Router
                 );
                 // @codeCoverageIgnoreEnd
             }
-        });
+        }
     }
 
     /**

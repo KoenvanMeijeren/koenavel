@@ -19,10 +19,6 @@ class ValidateTest extends TestCase
     public function test_that_we_can_pass_a_validation_check()
     {
         $this->assertInstanceOf(
-            Validate::class, Validate::var('test')->isNotEmpty()
-        );
-
-        $this->assertInstanceOf(
             Validate::class, Validate::var('test')->isString()
         );
 
@@ -94,12 +90,6 @@ class ValidateTest extends TestCase
         );
     }
 
-    public function test_that_we_can_fail_a_not_empty_validation_check()
-    {
-        $this->expectException(Exception::class);
-        Validate::var('')->isNotEmpty();
-    }
-
     public function test_that_we_can_fail_a_string_validation_check()
     {
         $this->expectException(Exception::class);
@@ -157,7 +147,8 @@ class ValidateTest extends TestCase
     public function test_that_we_can_fail_a_domain_validation_check()
     {
         $this->expectException(Exception::class);
-        Validate::var('1234')->isDomain();
+
+        Validate::var('test')->isDomain();
     }
 
     public function test_that_we_can_fail_an_env_validation_check()

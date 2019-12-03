@@ -150,9 +150,9 @@ if (!function_exists('isJson')) {
             return false;
         }
 
-        \json_decode($data);
+        json_decode($data);
 
-        if (\json_last_error()) {
+        if (json_last_error()) {
             return false;
         }
 
@@ -183,7 +183,7 @@ if (!function_exists('random_string')) {
         string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     ): string {
         if ($length < 1) {
-            throw new \RangeException("Length must be a positive integer");
+            throw new RangeException("Length must be a positive integer");
         }
 
         $pieces = [];

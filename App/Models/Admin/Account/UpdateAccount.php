@@ -13,23 +13,15 @@ final class UpdateAccount extends Account
     public function saveData(): bool
     {
         if ($this->validateData()) {
-            $this->prepareData();
-            $this->setIDFilter();
-
-            parent::save();
+            $this->update($this->getID(), [
+                'account_name' => $this->name,
+                'account_rights' => (string) $this->rights,
+            ]);
 
             return true;
         }
 
         return false;
-    }
-
-    private function prepareData(): void
-    {
-        $this->setFields([
-            'account_name' => $this->name,
-            'account_rights' => (string) $this->rights,
-        ]);
     }
 
     private function validateData(): bool
@@ -57,7 +49,7 @@ final class UpdateAccount extends Account
             return false;
         }
 
-        if ($this->id === $this->user->getID()
+        if ($this->getID() === $this->user->getID()
             && $this->rights !== $this->user->getRights()
         ) {
             $this->session->flash(
@@ -74,22 +66,14 @@ final class UpdateAccount extends Account
     public function saveEmail(): bool
     {
         if ($this->validateEmail()) {
-            $this->prepareEmail();
-            $this->setIDFilter();
-
-            parent::save();
+            $this->update($this->getID(), [
+                'account_email' => $this->email,
+            ]);
 
             return true;
         }
 
         return false;
-    }
-
-    private function prepareEmail(): void
-    {
-        $this->setFields([
-            'account_email' => $this->email,
-        ]);
     }
 
     private function validateEmail(): bool
@@ -115,7 +99,7 @@ final class UpdateAccount extends Account
             return false;
         }
 
-        if (!empty((array) $this->getByEmail($this->email))) {
+        if ($this->getByEmail($this->email) !== false) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(
@@ -133,25 +117,17 @@ final class UpdateAccount extends Account
     public function savePassword(): bool
     {
         if ($this->validatePassword()) {
-            $this->preparePassword();
-            $this->setIDFilter();
-
-            parent::save();
+            $this->update($this->getID(), [
+                'account_password' => (string) password_hash(
+                    $this->password,
+                    PASSWORD_ARGON2ID
+                ),
+            ]);
 
             return true;
         }
 
         return false;
-    }
-
-    private function preparePassword(): void
-    {
-        $this->setFields([
-            'account_password' => (string) password_hash(
-                $this->password,
-                PASSWORD_ARGON2ID
-            ),
-        ]);
     }
 
     private function validatePassword(): bool

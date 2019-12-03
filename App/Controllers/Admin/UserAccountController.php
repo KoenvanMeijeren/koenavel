@@ -11,23 +11,17 @@ use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
+use stdClass;
 
 final class UserAccountController
 {
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var object
-     */
-    private $account;
+    private User $user;
+    private stdClass $account;
 
     public function __construct()
     {
         $this->user = new User();
-        $this->account = $this->user->get();
+        $this->account = $this->user->getAccount();
     }
 
     /**
