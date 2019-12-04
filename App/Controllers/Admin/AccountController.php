@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Actions\Account\BlockAccountAction;
+use App\Actions\Account\CreateAccountAction;
 use App\Actions\Account\DeleteAccountAction;
 use App\Actions\Account\UnblockAccountAction;
-use App\Models\Admin\Account\Account;
-use App\Models\Admin\Account\CreateAccount;
-use App\Models\Admin\Account\UpdateAccount;
+use App\Actions\Account\UpdateAccountDataAction;
+use App\Actions\Account\UpdateAccountEmailAction;
+use App\Actions\Account\UpdateAccountPasswordAction;
+use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Helpers\Converter;
 use App\Services\Helpers\DataTable;
@@ -17,7 +19,6 @@ use App\Services\Helpers\Resource;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
@@ -79,13 +80,26 @@ final class AccountController
     }
 
     /**
+     * @return Redirect|View
+     */
+    public function store()
+    {
+        $create = new CreateAccountAction($this->account);
+        if ($create->execute()) {
+            return new Redirect('/admin/account');
+        }
+
+        return $this->create();
+    }
+
+    /**
      * @param string $title
      *
      * @return Redirect|View
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
-    public function show(string $title = 'admin_edit_account_title')
+    public function edit(string $title = 'admin_edit_account_title')
     {
         $title = Translation::get($title);
         $account = $this->account->find($this->account->getID());
@@ -107,40 +121,11 @@ final class AccountController
 
     /**
      * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
-     */
-    public function store()
-    {
-        $title = Translation::get('admin_create_account_title');
-
-        $create = new CreateAccount();
-        if (CSRF::validate() && $create->execute()) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_create_account_successful_message')
-            );
-
-            return new Redirect('/admin/account');
-        }
-
-        return new View('admin/account/create', compact('title'));
-    }
-
-    /**
-     * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
      */
     public function storeData()
     {
-        $account = new UpdateAccount();
-        if (CSRF::validate() && $account->saveData()) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_edited_account_successful_message')
-            );
-
+        $account = new UpdateAccountDataAction($this->account);
+        if ($account->execute()) {
             return new Redirect(
                 '/admin/account/edit/' . $this->account->getID()
             );
@@ -151,18 +136,11 @@ final class AccountController
 
     /**
      * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
      */
     public function storeEmail()
     {
-        $account = new UpdateAccount();
-        if (CSRF::validate() && $account->saveEmail()) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_edited_account_successful_message')
-            );
-
+        $account = new UpdateAccountEmailAction($this->account);
+        if ($account->execute()) {
             return new Redirect(
                 '/admin/account/edit/' . $this->account->getID()
             );
@@ -173,18 +151,11 @@ final class AccountController
 
     /**
      * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
      */
     public function storePassword()
     {
-        $account = new UpdateAccount();
-        if (CSRF::validate() && $account->savePassword()) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_edited_account_successful_message')
-            );
-
+        $account = new UpdateAccountPasswordAction($this->account);
+        if ($account->execute()) {
             return new Redirect(
                 '/admin/account/edit/' . $this->account->getID()
             );

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Account;
 
 
-use App\Models\Admin\Account\Account;
+use App\Models\Admin\Account;
 use App\Models\User;
 use App\Src\Action\Action;
 use App\Src\Session\Session;
