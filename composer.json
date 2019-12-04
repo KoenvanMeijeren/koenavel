@@ -1,5 +1,6 @@
 {
     "name": "koenvanmeijeren/koenavel",
+    "license": "private",
     "authors": [
         {
             "name": "Koen van Meijeren",
@@ -44,7 +45,6 @@
     },
     "scripts": {
         "start": "php -S localhost:8002",
-        "phpunit": "phpunit",
         "inspect": [
             "phpcs app",
             "phpcpd app",
@@ -57,7 +57,6 @@
             "phploc app",
             "phpmnd app",
             "phpstan analyse app -c phpstan.neon --level=7",
-            "phpunit",
             "vendor/bin/phpinsights"
         ],
         "phpstan": [

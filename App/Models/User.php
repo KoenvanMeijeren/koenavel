@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Actions\Account\User\Auth\LogUserOutAction;
 use App\Services\Auth\IDEncryption;
-use App\Src\Core\Request;
-use App\Src\Exceptions\Basic\InvalidKeyException;
-use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Src\Exceptions\Session\InvalidSessionException;
 use App\Src\Model\Model;
 use App\Src\Response\Redirect;
-use App\Src\Session\Builder;
 use App\Src\Session\Session;
-use App\Src\State\State;
-use App\Src\Translation\Translation;
 use stdClass;
 
 final class User extends Model
@@ -24,7 +18,7 @@ final class User extends Model
     protected string $softDeletedKey = 'account_is_deleted';
 
     /**
-     * The follow rights option ara available.
+     * The follow rights option are available.
      *
      * - Accessible for everyone
      * - Admin
@@ -38,36 +32,13 @@ final class User extends Model
     public const SUPER_ADMIN = 2;
     public const DEVELOPER = 3;
 
-    protected string $email;
-    protected string $password;
-    protected string $token;
-
     private stdClass $account;
 
     public function __construct()
     {
-        $request = new Request();
-        $this->email = $request->post('email');
-        $this->password = $request->post('password');
-        $this->token = $request->post('verificationToken');
-
-        $account = $this->find($this->getID());
-        if ($account !== false) {
-            $this->account = $account;
-        }
+        $this->account = $this->find($this->getID());
 
         $this->authorizeUser();
-    }
-
-    /**
-     * Get the given password of the user.
-     * (only available with a POST request)
-     *
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
     }
 
     /**
@@ -76,12 +47,14 @@ final class User extends Model
      * If the user is logged in the account will be returned.
      * Otherwise an empty std class.
      *
+     * @param string $email
+     *
      * @return stdClass
      */
-    public function getByEmail(): stdClass
+    public function getByEmail(string $email)
     {
         return $this->firstByAttributes([
-            'account_email' => $this->email
+            'account_email' => $email
         ]);
     }
 
@@ -156,34 +129,6 @@ final class User extends Model
     }
 
     /**
-     * Log the user out and redirect the user.
-     *
-     * @param string $redirectTo the path to redirect the user to
-     *                           after the user is logged out.
-     *
-     * @return Redirect
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
-     * @throws InvalidSessionException
-     */
-    public function logout(string $redirectTo = '/admin'): Redirect
-    {
-        $builder = new Builder();
-        $builder->destroy();
-
-        $builder->startSession();
-        $builder->setSessionSecurity();
-
-        $session = new Session();
-        $session->flash(
-            State::SUCCESSFUL,
-            Translation::get('admin_logout_message')
-        );
-
-        return new Redirect($redirectTo);
-    }
-
-    /**
      * Authorize the user.
      *
      * - Check if the rights are valid and if not log the user out.
@@ -191,12 +136,10 @@ final class User extends Model
      *   and if not log the user out.
      *
      * @return void|Redirect
-     * @throws InvalidKeyException
-     * @throws InvalidSessionException
-     * @throws NoTranslationsForGivenLanguageID
      */
     private function authorizeUser()
     {
+        $logout = new LogUserOutAction($this);
         $session = new Session();
         $idEncryption = new IDEncryption();
 
@@ -205,18 +148,24 @@ final class User extends Model
             && $this->getRights() !== self::SUPER_ADMIN
             && $this->getRights() !== self::DEVELOPER
         ) {
-            return $this->logout();
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
 
         if (!$idEncryption->validateHash(
             $this->account->account_login_token ?? '',
             $session->get('userID')
         )) {
-            return $this->logout();
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
 
-        if ((int) ($this->account->account_is_blocked ?? '') === 1) {
-            return $this->logout();
+        if ((int) ($this->account->account_is_blocked ?? '0') === 1) {
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
     }
 }

@@ -2,21 +2,48 @@
 declare(strict_types=1);
 
 
-namespace App\Models\Admin\Account;
+namespace App\Actions\Account;
 
+
+use App\Models\Admin\Account;
 use App\Models\User;
+use App\Src\Action\Action;
+use App\Src\Core\Request;
+use App\Src\Security\CSRF;
+use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class CreateAccount extends Account
+class CreateAccountAction extends Action
 {
-    public function execute(): bool
-    {
-        if (!$this->validate()) {
-            return false;
-        }
+    private Account $account;
+    private Session $session;
 
-        $this->create([
+    protected string $name;
+    protected string $email;
+    protected string $password;
+    protected string $confirmationPassword;
+    protected int $rights;
+
+    public function __construct(Account $account)
+    {
+        $this->account = $account;
+        $this->session = new Session();
+        $request = new Request();
+
+        $this->name = $request->post('name');
+        $this->email = $request->post('email');
+        $this->password = $request->post('password');
+        $this->confirmationPassword = $request->post('confirmationPassword');
+        $this->rights = (int) $request->post('rights');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function handle(): bool
+    {
+        $this->account->create([
             'account_name' => $this->name,
             'account_email' => $this->email,
             'account_password' => (string) password_hash(
@@ -26,10 +53,29 @@ final class CreateAccount extends Account
             'account_rights' => (string) $this->rights,
         ]);
 
+        $this->session->flash(
+            State::SUCCESSFUL,
+            Translation::get('admin_create_account_successful_message')
+        );
         return true;
     }
 
-    private function validate(): bool
+    /**
+     * @inheritDoc
+     */
+    protected function authorize(): bool
+    {
+        if (!CSRF::validate()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function validate(): bool
     {
         if (empty($this->name)
             || empty($this->email)
@@ -78,7 +124,7 @@ final class CreateAccount extends Account
             return false;
         }
 
-        if ($this->getByEmail($this->email) !== false) {
+        if (!empty((array) $this->account->getByEmail($this->email))) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

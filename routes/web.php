@@ -53,7 +53,7 @@ Router::prefix('admin')->group(function () {
     Router::post('account/create/store', AccountController::class,
         'store', User::SUPER_ADMIN);
     Router::get('account/edit/{slug}', AccountController::class,
-        'show', User::SUPER_ADMIN);
+        'edit', User::SUPER_ADMIN);
     Router::post('account/edit/{slug}/store/data', AccountController::class,
         'storeData', User::SUPER_ADMIN);
     Router::post('account/edit/{slug}/store/email', AccountController::class,
