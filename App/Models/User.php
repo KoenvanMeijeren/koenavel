@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Actions\Account\User\Auth\LogUserOutAction;
 use App\Services\Auth\IDEncryption;
 use App\Src\Model\Model;
+use App\Src\Response\Redirect;
 use App\Src\Session\Session;
 use stdClass;
 
@@ -134,7 +135,7 @@ final class User extends Model
      * - Check if the user is really the user which he says that he is
      *   and if not log the user out.
      *
-     * @return void|bool
+     * @return void|Redirect
      */
     private function authorizeUser()
     {
@@ -147,18 +148,24 @@ final class User extends Model
             && $this->getRights() !== self::SUPER_ADMIN
             && $this->getRights() !== self::DEVELOPER
         ) {
-            return $logout->execute();
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
 
         if (!$idEncryption->validateHash(
             $this->account->account_login_token ?? '',
             $session->get('userID')
         )) {
-            return $logout->execute();
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
 
         if ((int) ($this->account->account_is_blocked ?? '0') === 1) {
-            return $logout->execute();
+            $logout->execute();
+
+            return new Redirect('/admin');
         }
     }
 }
