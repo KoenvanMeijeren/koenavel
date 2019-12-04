@@ -12,7 +12,7 @@ abstract class Action
      *
      * @return void
      */
-    abstract protected function handle(): void;
+    abstract protected function handle(): bool;
 
     /**
      * Authorize the request for the action.
@@ -36,9 +36,7 @@ abstract class Action
     final public function execute(): bool
     {
         if ($this->authorize() && $this->validate()) {
-            $this->handle();
-
-            return true;
+            return $this->handle();
         }
 
         return false;
