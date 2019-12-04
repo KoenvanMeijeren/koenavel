@@ -109,7 +109,7 @@ abstract class Model
      * @param int      $id
      * @param string[] $columns
      *
-     * @return false|stdClass
+     * @return stdClass
      */
     public function find(int $id, array $columns = array('*'))
     {

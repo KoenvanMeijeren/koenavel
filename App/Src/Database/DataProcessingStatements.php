@@ -20,7 +20,7 @@ trait DataProcessingStatements
     /**
      * Get every record from the table which matches with the given query.
      *
-     * @return object[]|false
+     * @return object[]
      */
     public function get()
     {
@@ -30,7 +30,7 @@ trait DataProcessingStatements
     /**
      * Get the first record from the table which matches with the given query.
      *
-     * @return stdClass|false
+     * @return stdClass
      */
     public function first()
     {

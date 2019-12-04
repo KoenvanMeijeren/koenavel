@@ -34,11 +34,14 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object[]|false
+     * @return string[]|object[]
      */
     public function fetchAll(int $fetchMethod)
     {
-        return $this->statement->fetchAll($fetchMethod);
+        $data = $this->statement->fetchAll($fetchMethod);
+        if ($data === false) $data = [];
+
+        return $data;
     }
 
     /**
@@ -46,51 +49,66 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return string[]|object|false
+     * @return string[]|object
      */
     public function fetch(int $fetchMethod)
     {
-        return $this->statement->fetch($fetchMethod);
+        $data = $this->statement->fetch($fetchMethod);
+        if ($data === false) $data = [];
+
+        return $data;
     }
 
     /**
      * Fetch all the records from the database to an object.
      *
-     * @return object[]|false
+     * @return object[]|string[]
      */
     public function all()
     {
-        return $this->fetchAll(PDO::FETCH_OBJ);
+        $data = $this->fetchAll(PDO::FETCH_OBJ);
+        if ($data === false) $data = [];
+
+        return $data;
     }
 
     /**
      * Fetch all the records from the database to an array.
      *
-     * @return string[]|false
+     * @return string[]
      */
     public function toArray()
     {
-        return $this->fetchAll(PDO::FETCH_NAMED);
+        $data =  $this->fetchAll(PDO::FETCH_NAMED);
+        if ($data === false) $data = [];
+
+        return $data;
     }
 
     /**
      * Fetch the first record found in the database into an object.
      *
-     * @return stdClass|false
+     * @return stdClass
      */
     public function first()
     {
-        return $this->fetch(PDO::FETCH_OBJ);
+        $data = $this->fetch(PDO::FETCH_OBJ);
+        if (empty($data)) $data = new stdClass();
+
+        return $data;
     }
 
     /**
      * Fetch the first record found in the database into an array.
      *
-     * @return string[]|false
+     * @return string[]
      */
     public function firstToArray()
     {
-        return $this->fetch(PDO::FETCH_NAMED);
+        $data = $this->fetch(PDO::FETCH_NAMED);
+        if ($data === false) $data = [];
+
+        return $data;
     }
 
     /**
