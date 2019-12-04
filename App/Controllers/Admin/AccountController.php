@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Services\Helpers\Converter;
 use App\Services\Helpers\DataTable;
 use App\Services\Helpers\Resource;
-use App\Src\Core\Router;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
@@ -215,7 +214,7 @@ final class AccountController
         }
 
         return new Redirect(
-            '/admin/account/edit/' . Router::getWildcard()
+            '/admin/account/edit/' . $this->account->getID()
         );
     }
 
