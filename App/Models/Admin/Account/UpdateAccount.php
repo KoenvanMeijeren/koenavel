@@ -99,7 +99,7 @@ final class UpdateAccount extends Account
             return false;
         }
 
-        if ($this->getByEmail($this->email) !== false) {
+        if (!empty((array) $this->getByEmail($this->email))) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

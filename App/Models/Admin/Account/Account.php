@@ -73,52 +73,6 @@ class Account extends Model
         ]);
     }
 
-    public function block(int $id): bool
-    {
-        if (!$this->validateUser($id)) {
-            return false;
-        }
-
-        $this->update($id, [
-            'account_is_blocked' => '1'
-        ]);
-
-        return true;
-    }
-
-    public function unblock(int $id): bool
-    {
-        if (!$this->validateUser($id)) {
-            return false;
-        }
-
-        $this->update($id, [
-            'account_is_blocked' => '0'
-        ]);
-
-        return true;
-    }
-
-    public function delete(int $id): bool
-    {
-        if (!$this->validateUser($id)) {
-            return false;
-        }
-
-        parent::delete($id);
-
-        if ($this->firstByID($id) === false) {
-            return true;
-        }
-
-        $this->session->flash(
-            State::FAILED,
-            Translation::get('admin_deleted_account_failed_message')
-        );
-
-        return false;
-    }
-
     private function validateUser(int $id): bool
     {
         if ($this->user->getID() === $id) {

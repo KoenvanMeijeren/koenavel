@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
+use App\Actions\Account\BlockAccountAction;
+use App\Actions\Account\DeleteAccountAction;
+use App\Actions\Account\UnblockAccountAction;
 use App\Models\Admin\Account\Account;
 use App\Models\Admin\Account\CreateAccount;
 use App\Models\Admin\Account\UpdateAccount;
@@ -87,7 +90,7 @@ final class AccountController
         $title = Translation::get($title);
         $account = $this->account->find($this->account->getID());
 
-        if ($account === false) {
+        if (empty((array) $account)) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('admin_account_cannot_be_visited')
@@ -192,12 +195,8 @@ final class AccountController
 
     public function block(): Redirect
     {
-        if ($this->account->block($this->account->getID())) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_account_successful_blocked_message')
-            );
-        }
+        $block = new BlockAccountAction($this->account);
+        $block->execute();
 
         return new Redirect(
             '/admin/account/edit/' . $this->account->getID()
@@ -206,12 +205,8 @@ final class AccountController
 
     public function unblock(): Redirect
     {
-        if ($this->account->unblock($this->account->getID())) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_account_successful_unblocked_message')
-            );
-        }
+        $unblock = new UnblockAccountAction($this->account);
+        $unblock->execute();
 
         return new Redirect(
             '/admin/account/edit/' . $this->account->getID()
@@ -220,12 +215,8 @@ final class AccountController
 
     public function destroy(): Redirect
     {
-        if ($this->account->delete($this->account->getID())) {
-            $this->session->flash(
-                State::SUCCESSFUL,
-                Translation::get('admin_deleted_account_successful_message')
-            );
-        }
+        $delete = new DeleteAccountAction($this->account);
+        $delete->execute();
 
         return new Redirect('/admin/account');
     }
