@@ -1,6 +1,7 @@
 <?php
 
 use App\Src\Core\Request;
+use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 $request = new Request();
@@ -15,6 +16,8 @@ $request = new Request();
             </div>
             <div class="card-body">
                 <form method="post" action="/admin/user/account/store/data">
+                    <?= CSRF::insertToken('/admin/user/account/store/data') ?>
+
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -67,6 +70,8 @@ $request = new Request();
             </div>
             <div class="card-body">
                 <form method="post" action="/admin/user/account/store/password">
+                    <?= CSRF::insertToken('/admin/user/account/store/password') ?>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">

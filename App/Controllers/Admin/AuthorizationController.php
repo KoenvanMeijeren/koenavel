@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
+use App\Actions\Account\User\Auth\LoginUserAction;
+use App\Actions\Account\User\Auth\LogUserOutAction;
 use App\Models\User;
-use App\Services\Auth\Login;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
-use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
 
@@ -46,16 +46,19 @@ final class AuthorizationController
 
     public function login(): Redirect
     {
-        $login = new Login($this->user);
-        if (CSRF::validate() && $login->execute()) {
+        $login = new LoginUserAction($this->user);
+        if ($login->execute()) {
             return new Redirect('/admin/dashboard');
         }
 
         return new Redirect('/admin');
     }
 
-    public function logout(): Redirect
+    public function logout()
     {
-        return $this->user->logout();
+        $logout = new LogUserOutAction($this->user);
+        $logout->execute();
+
+        return new Redirect('/admin');
     }
 }

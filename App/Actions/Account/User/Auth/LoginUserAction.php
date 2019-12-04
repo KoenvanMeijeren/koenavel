@@ -2,17 +2,23 @@
 declare(strict_types=1);
 
 
-namespace App\Services\Auth;
+namespace App\Actions\Account\User\Auth;
 
+
+use App\Models\Admin\Account\Account;
 use App\Models\User;
+use App\Services\Auth\IDEncryption;
+use App\Src\Action\Action;
+use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
+use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-final class Login
+final class LoginUserAction extends Action
 {
     /**
      * @var int
@@ -20,80 +26,117 @@ final class Login
     const MAXIMUM_LOGIN_ATTEMPTS = 3;
 
     private User $user;
+    private Session $session;
     private stdClass $account;
+
+    private string $email;
+    private string $password;
+
     private array $attributes;
 
     public function __construct(User $user)
     {
+        $request = new Request();
         $this->user = $user;
-        $this->account = $this->user->getByEmail();
+        $this->session = new Session();
+
+        $this->email = $request->post('email');
+        $this->password = $request->post('password');
+
+        $this->account = $this->user->getByEmail($this->email);
     }
 
     /**
-     * Determine if the user is going to be logged in.
-     * If the given credentials matches with the data in
-     * the database, the ID of the user will be saved in
-     * the session. Otherwise the user will be redirected
-     * to the login page with an error.
-     *
-     * @note If the user is logged in, during every new request
-     *       the user will be authorized.
-     *
-     * @return bool
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
+     * @inheritDoc
      */
-    public function execute(): bool
+    protected function handle(): bool
     {
-        $session = new Session();
+        if (password_verify(
+            $this->password, $this->account->account_password ?? ''
+        )) {
+            $this->session->unset('userID');
+
+            $idEncryption = new IDEncryption();
+            $token = $idEncryption->generateToken();
+
+            $this->session->save('userID', $idEncryption->encrypt(
+                $this->account->account_ID ?? '0', $token
+            ));
+
+            // always executed
+            $this->storeToken($token);
+            $this->rehashPassword();
+            // only executed when the user is an admin
+            $this->resetFailedLogInAttempts();
+
+            $this->store();
+
+            $this->session->flash(
+                State::SUCCESSFUL,
+                Translation::get('login_successful_message')
+            );
+
+            return true;
+        }
+
+        // only executed when the user is an admin
+        $this->addFailedLogInAttempt();
+        $this->blockAccount();
+
+        $this->store();
+
+        $this->session->flash(
+            State::FAILED,
+            Translation::get('login_failed_message')
+        );
+
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function authorize(): bool
+    {
+        if (!CSRF::validate()) {
+            return false;
+        }
+
         if ($this->accountIsBlocked()) {
-            $session->flash(
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function validate(): bool
+    {
+        if (empty($this->email)
+            || empty($this->password)) {
+            $this->session->flash(
                 State::FAILED,
-                Translation::get('login_failed_blocked_account_message')
+                Translation::get('form_message_for_required_fields')
             );
 
             return false;
         }
 
-        if (password_verify(
-            $this->user->getPassword(),
-            $this->account->account_password ?? ''
-        )) {
-            $session->unset('userID');
-
-            $idEncryption = new IDEncryption();
-            $token = $idEncryption->generateToken();
-
-            $session->save('userID', $idEncryption->encrypt(
-                $this->account->account_ID ?? '0',
-                $token
-            ));
-
-            // always executed
-            $this->storeToken($token);
-
-            // only be executed when the user is not a super admin
-            $this->rehashPassword();
-            $this->resetFailedLogInAttempts();
-            $this->store();
-
-            $session->flash(
-                State::SUCCESSFUL,
-                Translation::get('login_successful_message')
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $this->session->flash(
+                State::FAILED,
+                sprintf(
+                    Translation::get('form_invalid_email_message'),
+                    $this->email
+                )
             );
-            return true;
+
+            return false;
         }
 
-        // only be executed when the user is not a super admin
-        $this->addFailedLogInAttempt();
-        $this->blockAccount();
-        $this->store();
-
-        $session->flash(
-            State::FAILED,
-            Translation::get('login_failed_message')
-        );
-        return false;
+        return true;
     }
 
     /**
@@ -103,7 +146,7 @@ final class Login
      *
      * @return void
      */
-    public function storeToken(string $token): void
+    private function storeToken(string $token): void
     {
         $this->attributes['account_login_token'] = $token;
     }
@@ -115,12 +158,12 @@ final class Login
     {
         if (password_needs_rehash(
             $this->account->account_password ?? '',
-            PASSWORD_BCRYPT
+            Account::PASSWORD_ENCRYPTION
         )
         ) {
             $this->attributes['account_password'] = (string) password_hash(
                 $this->account->account_password ?? '',
-                PASSWORD_BCRYPT
+                Account::PASSWORD_ENCRYPTION
             );
         }
     }
@@ -130,6 +173,10 @@ final class Login
      */
     private function resetFailedLogInAttempts(): void
     {
+        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+            return;
+        }
+
         $this->attributes['account_failed_login'] = '0';
     }
 
@@ -138,6 +185,10 @@ final class Login
      */
     private function addFailedLogInAttempt(): void
     {
+        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+            return;
+        }
+
         $current = $this->account->account_failed_login ?? '0';
 
         $this->attributes['account_failed_login'] = (string) ((int) $current + 1);
@@ -149,6 +200,10 @@ final class Login
      */
     private function blockAccount(): void
     {
+        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+            return;
+        }
+
         $failedLogInAttempts = $this->account->account_failed_login ?? '0';
         if ((int) $failedLogInAttempts >= self::MAXIMUM_LOGIN_ATTEMPTS) {
             $this->attributes['account_is_blocked'] = '1';
@@ -160,6 +215,10 @@ final class Login
      */
     private function store(): void
     {
+        if (empty($this->attributes)) {
+            return;
+        }
+
         $this->user->update(
             (int) ($this->account->account_ID ?? '0'),
             $this->attributes
@@ -170,17 +229,17 @@ final class Login
      * Determine if the account has been blocked.
      *
      * @return bool
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
     private function accountIsBlocked(): bool
     {
-        if (!array_key_exists(
-            'account_is_blocked',
-            (array) $this->account
-        )) {
-            return false;
-        }
+        if ((int) ($this->account->account_is_blocked ?? '') === 1) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('login_failed_blocked_account_message')
+            );
 
-        if ((int) $this->account->account_is_blocked === 1) {
             return true;
         }
 

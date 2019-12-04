@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
-use App\Models\Admin\Account\User\UpdateUser;
+use App\Actions\Account\User\UpdateUserDataAction;
+use App\Actions\Account\User\UpdateUserPasswordAction;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
@@ -51,18 +52,12 @@ final class UserAccountController
      */
     public function storeData()
     {
-        $title = Translation::get('admin_account_title');
-        $account = $this->account;
-
-        $updateUser = new UpdateUser($this->user);
-        if ($updateUser->saveData()) {
+        $updateUser = new UpdateUserDataAction($this->user);
+        if ($updateUser->execute()) {
             return new Redirect('/admin/user/account');
         }
 
-        return new View(
-            'admin/account/user/index',
-            compact('title', 'account')
-        );
+        return $this->index();
     }
 
     /**
@@ -74,17 +69,11 @@ final class UserAccountController
      */
     public function storePassword()
     {
-        $title = Translation::get('admin_account_title');
-        $account = $this->account;
-
-        $updateUser = new UpdateUser($this->user);
-        if ($updateUser->savePassword()) {
+        $updateUser = new UpdateUserPasswordAction($this->user);
+        if ($updateUser->execute()) {
             return new Redirect('/admin/user/account');
         }
 
-        return new View(
-            'admin/account/user/index',
-            compact('title', 'account')
-        );
+        return $this->index();
     }
 }
