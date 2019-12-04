@@ -48,7 +48,7 @@ final class User extends Model
      *
      * @param string $email
      *
-     * @return stdClass|false
+     * @return stdClass
      */
     public function getByEmail(string $email)
     {

@@ -87,7 +87,7 @@ abstract class Model
      *
      * @param string[] $columns
      *
-     * @return false|object[]
+     * @return object[]
      */
     public function all(array $columns = array('*'))
     {
@@ -149,7 +149,7 @@ abstract class Model
      *
      * @param string[] $attributes
      *
-     * @return stdClass|false
+     * @return stdClass
      */
     protected function firstByAttributes(array $attributes)
     {
@@ -176,7 +176,7 @@ abstract class Model
      *
      * @param int $id
      *
-     * @return stdClass|false
+     * @return stdClass
      */
     protected function firstByID(int $id)
     {
