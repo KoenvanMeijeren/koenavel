@@ -32,7 +32,7 @@ final class UpdateUserDataAction extends Action
     /**
      * @inheritDoc
      */
-    protected function handle(): void
+    protected function handle(): bool
     {
         $this->user->update($this->user->getID(), [
             'account_name' => $this->name
@@ -42,6 +42,8 @@ final class UpdateUserDataAction extends Action
             State::SUCCESSFUL,
             Translation::get('admin_edited_account_successful_message')
         );
+
+        return true;
     }
 
     /**

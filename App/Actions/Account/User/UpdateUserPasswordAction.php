@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Account\User;
 
 
+use App\Models\Admin\Account\Account;
 use App\Models\User;
 use App\Src\Action\Action;
 use App\Src\Core\Request;
@@ -38,12 +39,12 @@ class UpdateUserPasswordAction extends Action
     /**
      * @inheritDoc
      */
-    protected function handle(): void
+    protected function handle(): bool
     {
         $this->user->update($this->user->getID(), [
             'account_password' =>  (string) password_hash(
                 $this->newPassword,
-                PASSWORD_ARGON2ID
+                Account::PASSWORD_ENCRYPTION
             )
         ]);
 
@@ -51,6 +52,8 @@ class UpdateUserPasswordAction extends Action
             State::SUCCESSFUL,
             Translation::get('admin_edited_account_successful_message')
         );
+
+        return true;
     }
 
     /**

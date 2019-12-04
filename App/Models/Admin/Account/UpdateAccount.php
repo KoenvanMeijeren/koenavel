@@ -120,7 +120,7 @@ final class UpdateAccount extends Account
             $this->update($this->getID(), [
                 'account_password' => (string) password_hash(
                     $this->password,
-                    PASSWORD_ARGON2ID
+                    Account::PASSWORD_ENCRYPTION
                 ),
             ]);
 

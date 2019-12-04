@@ -19,6 +19,13 @@ class Account extends Model
     protected string $primaryKey = 'account_ID';
     protected string $softDeletedKey = 'account_is_deleted';
 
+    /**
+     * The encryption of the account password.
+     *
+     * @var int
+     */
+    public const PASSWORD_ENCRYPTION = PASSWORD_ARGON2ID;
+
     protected User $user;
     protected Account $account;
     protected Session $session;
