@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Domain\Admin\Accounts\Actions;
-
+namespace App\Http\Domain\Admin\Accounts\Account\Actions;
 
 use App\Models\Admin\Account;
 use App\Src\Action\Action;
@@ -15,7 +14,7 @@ use App\Src\Translation\Translation;
 
 final class UpdateAccountPasswordAction extends Action
 {
-    private Account $account;
+    private ?Account $account;
     private Session $session;
 
     protected string $password;

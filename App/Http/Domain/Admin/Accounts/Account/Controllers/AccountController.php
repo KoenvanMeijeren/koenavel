@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Domain\Admin\Accounts\Controllers;
+namespace App\Http\Domain\Admin\Accounts\Account\Controllers;
 
 use App\Http\Domain\Admin\Accounts\Actions\BlockAccountAction;
 use App\Http\Domain\Admin\Accounts\Actions\CreateAccountAction;
