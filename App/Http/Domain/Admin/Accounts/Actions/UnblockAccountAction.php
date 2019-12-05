@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Actions\Account;
+namespace App\Http\Domain\Admin\Accounts\Actions;
 
 
 use App\Models\Admin\Account;
@@ -12,7 +12,7 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class BlockAccountAction extends Action
+class UnblockAccountAction extends Action
 {
     private Account $account;
     private Session $session;
@@ -31,12 +31,12 @@ class BlockAccountAction extends Action
     protected function handle(): bool
     {
         $this->account->update($this->account->getID(), [
-            'account_is_blocked' => '1'
+            'account_is_blocked' => '0'
         ]);
 
         $this->session->flash(
             State::SUCCESSFUL,
-            Translation::get('admin_account_successful_blocked_message')
+            Translation::get('admin_account_successful_unblocked_message')
         );
         return true;
     }

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Debug\Controllers;
 
 use App\Models\Admin\Debug;
 use App\Src\Core\Request;

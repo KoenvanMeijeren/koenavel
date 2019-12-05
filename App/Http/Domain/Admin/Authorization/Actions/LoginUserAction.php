@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Actions\Account\User\Auth;
+namespace App\Http\Domain\Admin\Authorization\Actions;
 
 
-use App\Models\Admin\Account\Account;
+use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Auth\IDEncryption;
 use App\Src\Action\Action;

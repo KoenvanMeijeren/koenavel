@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Pages\Controllers;
 
 use App\Models\Admin\Page;
 use App\Services\Helpers\DataTable;

@@ -2,10 +2,11 @@
 declare(strict_types=1);
 
 
-namespace App\Actions\Account;
+namespace App\Http\Domain\Admin\Accounts\Actions;
 
 
 use App\Models\Admin\Account;
+use App\Models\User;
 use App\Src\Action\Action;
 use App\Src\Core\Request;
 use App\Src\Security\CSRF;
@@ -13,20 +14,24 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class UpdateAccountEmailAction extends Action
+final class UpdateAccountDataAction extends Action
 {
     private Account $account;
+    private User $user;
     private Session $session;
 
-    protected string $email;
+    protected string $name;
+    protected int $rights;
 
     public function __construct(Account $account)
     {
         $this->account = $account;
+        $this->user = new User();
         $this->session = new Session();
         $request = new Request();
 
-        $this->email = $request->post('email');
+        $this->name = $request->post('name');
+        $this->rights = (int) $request->post('rights');
     }
 
     /**
@@ -35,7 +40,8 @@ final class UpdateAccountEmailAction extends Action
     protected function handle(): bool
     {
         $this->account->update($this->account->getID(), [
-            'account_email' => $this->email,
+            'account_name' => $this->name,
+            'account_rights' => (string) $this->rights,
         ]);
 
         $this->session->flash(
@@ -54,6 +60,17 @@ final class UpdateAccountEmailAction extends Action
             return false;
         }
 
+        if ($this->account->getID() === $this->user->getID()
+            && $this->rights !== $this->user->getRights()
+        ) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('cannot_edit_own_account_rights_message')
+            );
+
+            return false;
+        }
+
         return true;
     }
 
@@ -62,7 +79,9 @@ final class UpdateAccountEmailAction extends Action
      */
     protected function validate(): bool
     {
-        if (empty($this->email)) {
+        if (empty($this->name)
+            || empty($this->rights)
+        ) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('form_message_for_required_fields')
@@ -71,25 +90,13 @@ final class UpdateAccountEmailAction extends Action
             return false;
         }
 
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if ($this->rights !== User::ADMIN
+            && $this->rights !== User::SUPER_ADMIN
+            && $this->rights !== User::DEVELOPER
+        ) {
             $this->session->flash(
                 State::FAILED,
-                sprintf(
-                    Translation::get('form_invalid_email_message'),
-                    $this->email
-                )
-            );
-
-            return false;
-        }
-
-        if (!empty((array) $this->account->getByEmail($this->email))) {
-            $this->session->flash(
-                State::FAILED,
-                sprintf(
-                    Translation::get('admin_email_already_exists_message'),
-                    $this->email
-                )
+                Translation::get('admin_invalid_rights_message')
             );
 
             return false;
