@@ -7,8 +7,6 @@ namespace App\Http\Domain\Admin\Accounts\User\Controllers;
 use App\Http\Domain\Admin\Accounts\User\Actions\UpdateUserDataAction;
 use App\Http\Domain\Admin\Accounts\User\Actions\UpdateUserPasswordAction;
 use App\Models\User;
-use App\Src\Exceptions\Basic\InvalidKeyException;
-use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
@@ -17,7 +15,7 @@ use stdClass;
 final class UserAccountController
 {
     private User $user;
-    private stdClass $account;
+    private ?stdClass $account;
 
     public function __construct()
     {
@@ -25,13 +23,6 @@ final class UserAccountController
         $this->account = $this->user->getAccount();
     }
 
-    /**
-     * Show the edit page for the user.
-     *
-     * @return View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
-     */
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
@@ -44,11 +35,7 @@ final class UserAccountController
     }
 
     /**
-     * Store the data of the user.
-     *
      * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
      */
     public function storeData()
     {
@@ -61,11 +48,7 @@ final class UserAccountController
     }
 
     /**
-     * Store the new password of the user.
-     *
      * @return Redirect|View
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
      */
     public function storePassword()
     {

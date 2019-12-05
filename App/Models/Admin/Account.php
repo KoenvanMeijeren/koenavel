@@ -8,7 +8,7 @@ use App\Src\Core\Router;
 use App\Src\Model\Model;
 use stdClass;
 
-class Account extends Model
+final class Account extends Model
 {
     protected string $table = 'account';
     protected string $primaryKey = 'account_ID';
@@ -36,9 +36,9 @@ class Account extends Model
      *
      * @param string $email
      *
-     * @return stdClass
+     * @return stdClass|null
      */
-    public function getByEmail(string $email)
+    public function getByEmail(string $email): ?stdClass
     {
         return $this->firstByAttributes([
             'account_email' => $email

@@ -89,7 +89,10 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function first(): ?stdClass
     {
-        return $this->fetch(PDO::FETCH_OBJ);
+        $result = $this->fetch(PDO::FETCH_OBJ);
+        if ($result instanceof stdClass) return $result;
+
+        return null;
     }
 
     /**

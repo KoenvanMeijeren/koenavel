@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Authorization\Actions;
 
-
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Auth\IDEncryption;
@@ -27,7 +26,7 @@ final class LoginUserAction extends Action
 
     private User $user;
     private Session $session;
-    private stdClass $account;
+    private ?stdClass $account;
 
     private string $email;
     private string $password;
@@ -52,7 +51,8 @@ final class LoginUserAction extends Action
     protected function handle(): bool
     {
         if (password_verify(
-            $this->password, $this->account->account_password ?? ''
+            $this->password,
+            $this->account->account_password ?? ''
         )) {
             $this->session->unset('userID');
 
@@ -60,7 +60,8 @@ final class LoginUserAction extends Action
             $token = $idEncryption->generateToken();
 
             $this->session->save('userID', $idEncryption->encrypt(
-                $this->account->account_ID ?? '0', $token
+                $this->account->account_ID ?? '0',
+                $token
             ));
 
             // always executed
@@ -124,7 +125,7 @@ final class LoginUserAction extends Action
             return false;
         }
 
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (! (bool) filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

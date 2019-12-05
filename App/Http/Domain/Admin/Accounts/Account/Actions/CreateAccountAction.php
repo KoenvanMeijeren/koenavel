@@ -13,9 +13,9 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class CreateAccountAction extends Action
+final class CreateAccountAction extends Action
 {
-    private ?Account $account;
+    private Account $account;
     private Session $session;
 
     protected string $name;
@@ -90,7 +90,7 @@ class CreateAccountAction extends Action
             return false;
         }
 
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (! (bool) filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

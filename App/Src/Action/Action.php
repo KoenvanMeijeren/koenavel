@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Src\Action;
 
-
 abstract class Action
 {
     /**
      * Handle the request and execute the action.
      *
-     * @return void
+     * @return bool
      */
     abstract protected function handle(): bool;
 

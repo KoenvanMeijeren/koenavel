@@ -26,7 +26,7 @@ abstract class Model
      *
      * @param string[] $attributes
      */
-    public function create(array $attributes): void
+    final public function create(array $attributes): void
     {
         DB::table($this->table)
             ->insert($attributes);
@@ -39,7 +39,7 @@ abstract class Model
      *
      * @return stdClass
      */
-    public function firstOrCreate(array $attributes): stdClass
+    final public function firstOrCreate(array $attributes): stdClass
     {
         if (!is_null($result = $this->firstByAttributes($attributes))) {
             return $result;
@@ -56,9 +56,9 @@ abstract class Model
      * @param int      $id
      * @param string[] $attributes
      */
-    public function updateOrCreate(int $id, array $attributes): void
+    final public function updateOrCreate(int $id, array $attributes): void
     {
-        if (empty((array) $this->firstByID($id))) {
+        if (is_null($this->firstByID($id))) {
             $this->create($attributes);
             return;
         }
@@ -73,7 +73,7 @@ abstract class Model
      * @param int      $id
      * @param string[] $attributes
      */
-    public function update(int $id, array $attributes): void
+    final public function update(int $id, array $attributes): void
     {
         DB::table($this->table)
             ->update($attributes)
@@ -86,20 +86,20 @@ abstract class Model
      *
      * @param string[] $columns
      *
-     * @return object[]|null
+     * @return object[]
      */
-    public function all(array $columns = array('*'))
+    final public function all(array $columns = array('*')): array
     {
         $columns = implode(',', $columns);
 
         if ($this->softDelete) {
-            return DB::table($this->table)
+            return (array) DB::table($this->table)
                 ->select($columns)
                 ->where($this->softDeletedKey, '=', '0')
                 ->get();
         }
 
-        return DB::table($this->table)->select($columns)->get();
+        return (array) DB::table($this->table)->select($columns)->get();
     }
 
     /**
@@ -110,7 +110,7 @@ abstract class Model
      *
      * @return stdClass|null
      */
-    public function find(int $id, array $columns = array('*')): ?stdClass
+    final public function find(int $id, array $columns = array('*')): ?stdClass
     {
         $columns = implode(',', $columns);
 
@@ -135,7 +135,7 @@ abstract class Model
      *
      * @return mixed|void
      */
-    public function delete(int $id)
+    final public function delete(int $id)
     {
         DB::table($this->table)
             ->delete($this->softDeletedKey)
@@ -150,7 +150,7 @@ abstract class Model
      *
      * @return stdClass|null
      */
-    protected function firstByAttributes(array $attributes): ?stdClass
+    final protected function firstByAttributes(array $attributes): ?stdClass
     {
         if ($this->softDelete) {
             return DB::table($this->table)
@@ -177,7 +177,7 @@ abstract class Model
      *
      * @return stdClass|null
      */
-    protected function firstByID(int $id): ?stdClass
+    final protected function firstByID(int $id): ?stdClass
     {
         if ($this->softDelete) {
             return DB::table($this->table)

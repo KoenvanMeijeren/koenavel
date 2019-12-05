@@ -11,9 +11,9 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class UnblockAccountAction extends Action
+final class UnblockAccountAction extends Action
 {
-    private ?Account $account;
+    private Account $account;
     private Session $session;
     private User $user;
 

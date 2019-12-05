@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\User\Actions;
 
-
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Src\Action\Action;
@@ -14,7 +13,7 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class UpdateUserPasswordAction extends Action
+final class UpdateUserPasswordAction extends Action
 {
     private Session $session;
     private User $user;

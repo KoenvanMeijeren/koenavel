@@ -14,7 +14,7 @@ use App\Src\Translation\Translation;
 
 final class UpdateAccountEmailAction extends Action
 {
-    private ?Account $account;
+    private Account $account;
     private Session $session;
 
     protected string $email;
@@ -70,7 +70,7 @@ final class UpdateAccountEmailAction extends Action
             return false;
         }
 
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (! (bool) filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

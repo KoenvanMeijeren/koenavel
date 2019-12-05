@@ -32,7 +32,7 @@ final class User extends Model
     public const SUPER_ADMIN = 2;
     public const DEVELOPER = 3;
 
-    private stdClass $account;
+    private ?stdClass $account;
 
     public function __construct()
     {
@@ -49,9 +49,9 @@ final class User extends Model
      *
      * @param string $email
      *
-     * @return stdClass
+     * @return stdClass|null
      */
-    public function getByEmail(string $email)
+    public function getByEmail(string $email): ?stdClass
     {
         return $this->firstByAttributes([
             'account_email' => $email
@@ -107,9 +107,9 @@ final class User extends Model
     /**
      * Get the account of the user.
      *
-     * @return false|stdClass
+     * @return stdClass|null
      */
-    public function getAccount()
+    public function getAccount(): ?stdClass
     {
         return $this->account;
     }

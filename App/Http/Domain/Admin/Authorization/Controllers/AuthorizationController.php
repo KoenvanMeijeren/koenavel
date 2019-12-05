@@ -54,7 +54,7 @@ final class AuthorizationController
         return new Redirect('/admin');
     }
 
-    public function logout()
+    public function logout(): Redirect
     {
         $logout = new LogUserOutAction($this->user);
         $logout->execute();

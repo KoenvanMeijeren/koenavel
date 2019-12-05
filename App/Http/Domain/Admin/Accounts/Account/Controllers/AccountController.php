@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\Account\Controllers;
 
-use App\Http\Domain\Admin\Accounts\Actions\BlockAccountAction;
-use App\Http\Domain\Admin\Accounts\Actions\CreateAccountAction;
-use App\Http\Domain\Admin\Accounts\Actions\DeleteAccountAction;
-use App\Http\Domain\Admin\Accounts\Actions\UnblockAccountAction;
-use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountDataAction;
-use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountEmailAction;
-use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountPasswordAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\BlockAccountAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\CreateAccountAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\DeleteAccountAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\UnblockAccountAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountDataAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountEmailAction;
+use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountPasswordAction;
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Helpers\Converter;
@@ -121,6 +121,8 @@ final class AccountController
 
     /**
      * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
     public function storeData()
     {
@@ -131,11 +133,13 @@ final class AccountController
             );
         }
 
-        return $this->show('admin_create_account_title');
+        return $this->edit('admin_create_account_title');
     }
 
     /**
      * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
     public function storeEmail()
     {
@@ -146,11 +150,13 @@ final class AccountController
             );
         }
 
-        return $this->show('admin_edit_account_title');
+        return $this->edit('admin_edit_account_title');
     }
 
     /**
      * @return Redirect|View
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
      */
     public function storePassword()
     {
@@ -161,7 +167,7 @@ final class AccountController
             );
         }
 
-        return $this->show('admin_edit_account_title');
+        return $this->edit('admin_edit_account_title');
     }
 
     public function block(): Redirect

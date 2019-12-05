@@ -15,7 +15,7 @@ use App\Src\Translation\Translation;
 
 final class UpdateAccountDataAction extends Action
 {
-    private ?Account $account;
+    private Account $account;
     private User $user;
     private Session $session;
 

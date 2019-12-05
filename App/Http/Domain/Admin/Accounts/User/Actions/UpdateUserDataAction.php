@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\User\Actions;
 
-
 use App\Models\User;
 use App\Src\Action\Action;
 use App\Src\Core\Request;

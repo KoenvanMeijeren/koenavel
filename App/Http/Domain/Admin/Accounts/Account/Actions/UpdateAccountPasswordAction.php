@@ -14,7 +14,7 @@ use App\Src\Translation\Translation;
 
 final class UpdateAccountPasswordAction extends Action
 {
-    private ?Account $account;
+    private Account $account;
     private Session $session;
 
     protected string $password;
