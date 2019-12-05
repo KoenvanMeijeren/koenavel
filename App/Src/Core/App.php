@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
-use App\Contract\Src\Core\AppContract;
 use App\Models\User;
 use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
@@ -12,7 +11,7 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use Exception;
 
-final class App implements AppContract
+final class App
 {
     private string $routesLocation;
 
