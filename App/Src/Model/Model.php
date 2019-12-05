@@ -37,12 +37,11 @@ abstract class Model
      *
      * @param string[] $attributes
      *
-     * @return stdClass|void
+     * @return stdClass
      */
-    public function firstOrCreate(array $attributes)
+    public function firstOrCreate(array $attributes): stdClass
     {
-        $result = $this->firstByAttributes($attributes);
-        if ($result !== false) {
+        if (!is_null($result = $this->firstByAttributes($attributes))) {
             return $result;
         }
 
@@ -59,7 +58,7 @@ abstract class Model
      */
     public function updateOrCreate(int $id, array $attributes): void
     {
-        if ($this->firstByID($id) === false) {
+        if (empty((array) $this->firstByID($id))) {
             $this->create($attributes);
             return;
         }
@@ -87,7 +86,7 @@ abstract class Model
      *
      * @param string[] $columns
      *
-     * @return object[]
+     * @return object[]|null
      */
     public function all(array $columns = array('*'))
     {
@@ -109,9 +108,9 @@ abstract class Model
      * @param int      $id
      * @param string[] $columns
      *
-     * @return stdClass
+     * @return stdClass|null
      */
-    public function find(int $id, array $columns = array('*'))
+    public function find(int $id, array $columns = array('*')): ?stdClass
     {
         $columns = implode(',', $columns);
 
@@ -149,9 +148,9 @@ abstract class Model
      *
      * @param string[] $attributes
      *
-     * @return stdClass
+     * @return stdClass|null
      */
-    protected function firstByAttributes(array $attributes)
+    protected function firstByAttributes(array $attributes): ?stdClass
     {
         if ($this->softDelete) {
             return DB::table($this->table)
@@ -176,9 +175,9 @@ abstract class Model
      *
      * @param int $id
      *
-     * @return stdClass
+     * @return stdClass|null
      */
-    protected function firstByID(int $id)
+    protected function firstByID(int $id): ?stdClass
     {
         if ($this->softDelete) {
             return DB::table($this->table)
