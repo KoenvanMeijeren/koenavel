@@ -465,35 +465,6 @@ class DBStatementBuilderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function test_that_we_can_add_the_insert_into_statement()
-    {
-        $this->assertEquals(
-            'INSERT INTO city (Name, CountryCode, District, Population) VALUES (:Name, :CountryCode, :District, :Population) ',
-            DB::table('city')
-                ->insert([
-                    'Name' => 'Harderwijk',
-                    'CountryCode' => 'NLD',
-                    'District' => 'Gelderland',
-                    'Population' => '50000'
-                ])
-                ->getQuery()
-        );
-
-        $values = DB::table('city')
-            ->insert([
-                'Name' => 'Harderwijk',
-                'CountryCode' => 'NLD',
-                'District' => 'Gelderland',
-                'Population' => '50000'
-            ])
-            ->getValues();
-
-        $this->assertArrayHasKey('Name', $values);
-        $this->assertArrayHasKey('CountryCode', $values);
-        $this->assertArrayHasKey('District', $values);
-        $this->assertArrayHasKey('Population', $values);
-    }
-
     public function test_that_we_can_add_the_update_statement()
     {
         $this->assertEquals(

@@ -216,7 +216,7 @@ trait WhereStatements
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
-            array_push($bindColumns, $column.$key);
+            $bindColumns[] = $column . $key;
 
             $this->addValues([$column.$key => $value]);
         }
@@ -243,7 +243,7 @@ trait WhereStatements
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
-            array_push($bindColumns, $column.$key);
+            $bindColumns[] = $column . $key;
 
             $this->addValues([$column.$key => $value]);
         }

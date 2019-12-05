@@ -67,18 +67,7 @@ final class Mail
         $filename = RESOURCES_PATH."/partials/mails/{$htmlBody}.view.php";
         Validate::var($filename)->fileExists()->isReadable();
         $htmlBody = (string) file_get_contents($filename);
-
-        // replace some specials vars in the mail
-        $htmlBody = str_replace('{token}', $token ?? '', $htmlBody);
-        $htmlBody = str_replace('{email}', $email ?? '', $htmlBody);
-        $htmlBody = str_replace('{subject}', $subject ?? '', $htmlBody);
-        $htmlBody = str_replace('{message}', $message ?? '', $htmlBody);
-        $htmlBody = str_replace('{workspaceName}', $workspaceName ?? '', $htmlBody);
-        $htmlBody = str_replace('{date}', $date ?? '', $htmlBody);
-        $htmlBody = str_replace('{time}', $time ?? '', $htmlBody);
-        $htmlBody = str_replace('{title}', $title ?? '', $htmlBody);
-        $htmlBody = str_replace('{location}', $location ?? '', $htmlBody);
-
+        
         // save the html body
         $this->body = $htmlBody;
     }

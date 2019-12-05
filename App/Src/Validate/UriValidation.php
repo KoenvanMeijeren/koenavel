@@ -38,7 +38,7 @@ trait UriValidation
     {
         if (self::$var !== 'localhost'
             && preg_match(
-                '/[a-zA-Z]{0,9}+[:][0-9]{0,4}/',
+                '/[a-zA-Z]{0,9}+[:][\d]{0,4}/',
                 self::$var
             ) === 0
             && preg_match(
