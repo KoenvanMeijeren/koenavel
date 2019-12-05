@@ -20,7 +20,7 @@ Router::get('', PageController::class,
 /**
  * Admin routes.
  */
-Router::prefix('admin')->group(function () {
+Router::prefix('admin')->group(static function () {
     /**
      * Authorization routes.
      */
