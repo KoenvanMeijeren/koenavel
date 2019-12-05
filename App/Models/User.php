@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Actions\Account\User\Auth\LogUserOutAction;
+use App\Http\Domain\Admin\Authorization\Actions\LogUserOutAction;
 use App\Services\Auth\IDEncryption;
 use App\Src\Model\Model;
 use App\Src\Response\Redirect;

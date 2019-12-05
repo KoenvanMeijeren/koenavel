@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Authorization\Controllers;
 
-use App\Actions\Account\User\Auth\LoginUserAction;
-use App\Actions\Account\User\Auth\LogUserOutAction;
+use App\Http\Domain\Admin\Authorization\Actions\LoginUserAction;
+use App\Http\Domain\Admin\Authorization\Actions\LogUserOutAction;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
