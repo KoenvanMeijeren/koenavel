@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use App\Controllers\Admin\AccountController;
-use App\Controllers\Admin\AuthorizationController;
-use App\Controllers\Admin\DashboardController;
-use App\Controllers\Admin\DebugController;
-use App\Controllers\Admin\PageController as AdminPageController;
-use App\Controllers\Admin\UserAccountController;
-use App\Controllers\PageController;
+use App\Http\Domain\Admin\Accounts\Controllers\AccountController;
+use App\Http\Domain\Admin\Accounts\User\Controllers\UserAccountController;
+use App\Http\Domain\Admin\Authorization\Controllers\AuthorizationController;
+use App\Http\Domain\Admin\Dashboard\Controllers\DashboardController;
+use App\Http\Domain\Admin\Debug\Controllers\DebugController;
+use App\Http\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
+use App\Http\Domain\Pages\Controllers\PageController;
 use App\Models\User;
 use App\Src\Core\Router;
 
