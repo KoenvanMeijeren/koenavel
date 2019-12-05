@@ -2,15 +2,15 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Accounts\Controllers;
 
-use App\Actions\Account\BlockAccountAction;
-use App\Actions\Account\CreateAccountAction;
-use App\Actions\Account\DeleteAccountAction;
-use App\Actions\Account\UnblockAccountAction;
-use App\Actions\Account\UpdateAccountDataAction;
-use App\Actions\Account\UpdateAccountEmailAction;
-use App\Actions\Account\UpdateAccountPasswordAction;
+use App\Http\Domain\Admin\Accounts\Actions\BlockAccountAction;
+use App\Http\Domain\Admin\Accounts\Actions\CreateAccountAction;
+use App\Http\Domain\Admin\Accounts\Actions\DeleteAccountAction;
+use App\Http\Domain\Admin\Accounts\Actions\UnblockAccountAction;
+use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountDataAction;
+use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountEmailAction;
+use App\Http\Domain\Admin\Accounts\Actions\UpdateAccountPasswordAction;
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Helpers\Converter;

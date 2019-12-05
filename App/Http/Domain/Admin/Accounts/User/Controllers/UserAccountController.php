@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Accounts\User\Controllers;
 
-use App\Actions\Account\User\UpdateUserDataAction;
-use App\Actions\Account\User\UpdateUserPasswordAction;
+use App\Http\Domain\Admin\Accounts\User\Actions\UpdateUserDataAction;
+use App\Http\Domain\Admin\Accounts\User\Actions\UpdateUserPasswordAction;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;

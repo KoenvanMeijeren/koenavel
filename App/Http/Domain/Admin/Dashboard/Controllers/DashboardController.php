@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Controllers\Admin;
+namespace App\Http\Domain\Admin\Dashboard\Controllers;
 
 use App\Src\Translation\Translation;
 use App\Src\View\View;

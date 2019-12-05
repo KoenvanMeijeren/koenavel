@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Actions\Account;
+namespace App\Http\Domain\Admin\Accounts\Actions;
 
 
 use App\Models\Admin\Account;
@@ -12,7 +12,7 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-class UnblockAccountAction extends Action
+class DeleteAccountAction extends Action
 {
     private Account $account;
     private Session $session;
@@ -30,21 +30,35 @@ class UnblockAccountAction extends Action
      */
     protected function handle(): bool
     {
-        $this->account->update($this->account->getID(), [
-            'account_is_blocked' => '0'
-        ]);
+        $this->account->delete($this->account->getID());
+
+        if (empty((array) $this->account->find($this->account->getID()))) {
+            $this->session->flash(
+                State::SUCCESSFUL,
+                Translation::get('admin_deleted_account_successful_message')
+            );
+            return true;
+        }
 
         $this->session->flash(
-            State::SUCCESSFUL,
-            Translation::get('admin_account_successful_unblocked_message')
+            State::FAILED,
+            Translation::get('admin_deleted_account_failed_message')
         );
-        return true;
+        return false;
     }
 
     /**
      * @inheritDoc
      */
     protected function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function validate(): bool
     {
         if ($this->user->getID() === $this->account->getID()) {
             $this->session->flash(
@@ -54,14 +68,6 @@ class UnblockAccountAction extends Action
             return false;
         }
 
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validate(): bool
-    {
         return true;
     }
 }
