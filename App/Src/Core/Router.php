@@ -49,7 +49,7 @@ final class Router
         self::resetRoutes();
         includeFile($directoryPath.$file);
 
-        return new Router();
+        return new self();
     }
 
     /**
