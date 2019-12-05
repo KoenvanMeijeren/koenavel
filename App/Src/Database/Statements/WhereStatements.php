@@ -2,10 +2,14 @@
 declare(strict_types=1);
 
 
-namespace App\Src\Database;
+namespace App\Src\Database\Statements;
+
+use App\Src\Database\DB;
 
 trait WhereStatements
 {
+    private static string $table = '';
+
     /**
      * Add a statement to the query.
      *
@@ -100,8 +104,8 @@ trait WhereStatements
             "WHERE {$column} {$operator} ANY ({$query}) "
         );
 
-        foreach ($values as $column => $value) {
-            $this->addValues([$column => $value]);
+        foreach ($values as $columnKey => $value) {
+            $this->addValues([$columnKey => $value]);
         }
 
         return $this;
@@ -134,8 +138,8 @@ trait WhereStatements
             "WHERE {$column} {$operator} ALL ({$query}) "
         );
 
-        foreach ($values as $column => $value) {
-            $this->addValues([$column => $value]);
+        foreach ($values as $columnKey => $value) {
+            $this->addValues([$columnKey => $value]);
         }
 
         return $this;

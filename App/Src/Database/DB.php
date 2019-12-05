@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Src\Database;
 
+use App\Src\Database\Statements\BasicStatements;
+use App\Src\Database\Statements\DataProcessingStatements;
+use App\Src\Database\Statements\SelectStatements;
+use App\Src\Database\Statements\WhereStatements;
 use PDOException;
 
 final class DB

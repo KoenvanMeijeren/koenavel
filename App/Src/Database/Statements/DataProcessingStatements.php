@@ -2,8 +2,9 @@
 declare(strict_types=1);
 
 
-namespace App\Src\Database;
+namespace App\Src\Database\Statements;
 
+use App\Src\Database\DatabaseProcessor;
 use PDOException;
 use stdClass;
 
@@ -24,7 +25,7 @@ trait DataProcessingStatements
      *
      * @return string[]|object[]|null
      */
-    public function fetchAll(int $fetchMethod)
+    public function fetchAll(int $fetchMethod): ?array
     {
         return $this->execute()->fetchAll($fetchMethod);
     }
@@ -46,7 +47,7 @@ trait DataProcessingStatements
      *
      * @return object[]|null
      */
-    public function get()
+    public function get(): ?array
     {
         return $this->execute()->all();
     }
@@ -54,11 +55,11 @@ trait DataProcessingStatements
     /**
      * Get every record from the table which matches with the given query.
      *
-     * @return array
+     * @return string[]
      */
     public function getToArray(): array
     {
-        return $this->execute()->toArray();
+        return $this->execute()->allToArray();
     }
 
     /**
@@ -66,7 +67,7 @@ trait DataProcessingStatements
      *
      * @return stdClass|null
      */
-    public function first()
+    public function first(): ?stdClass
     {
         return $this->execute()->first();
     }

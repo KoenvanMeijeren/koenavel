@@ -36,7 +36,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]|object[]|null
      */
-    public function fetchAll(int $fetchMethod)
+    public function fetchAll(int $fetchMethod): ?array
     {
         $data = $this->statement->fetchAll($fetchMethod);
         if ($data === false) $data = null;
@@ -64,7 +64,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return object[]|null
      */
-    public function all()
+    public function all(): ?array
     {
         return $this->fetchAll(PDO::FETCH_OBJ);
     }
@@ -74,7 +74,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]
      */
-    public function toArray()
+    public function allToArray(): array
     {
         $data = $this->fetchAll(PDO::FETCH_NAMED);
         if (is_null($data)) $data = [];
@@ -87,7 +87,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return stdClass|null
      */
-    public function first()
+    public function first(): ?stdClass
     {
         return $this->fetch(PDO::FETCH_OBJ);
     }
@@ -97,7 +97,7 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @return string[]
      */
-    public function firstToArray()
+    public function firstToArray(): array
     {
         $data = $this->fetch(PDO::FETCH_NAMED);
         if (is_null($data)) $data = [];

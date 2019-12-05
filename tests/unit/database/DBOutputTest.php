@@ -19,7 +19,7 @@ class DBOutputTest extends \PHPUnit\Framework\TestCase
         $result = \App\Src\Database\DB::table('account')
             ->select('*')
             ->execute()
-            ->toArray();
+            ->allToArray();
 
         $this->assertNotCount(1, $result);
 

@@ -2,10 +2,14 @@
 declare(strict_types=1);
 
 
-namespace App\Src\Database;
+namespace App\Src\Database\Statements;
+
+use App\Src\Database\DB;
 
 trait BasicStatements
 {
+    private static string $table = '';
+
     /**
      * Add a statement to the query.
      *
