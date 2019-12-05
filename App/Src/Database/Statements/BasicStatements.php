@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Src\Database\Statements;
 
+use App\Src\Database\DatabaseProcessor;
 use App\Src\Database\DB;
+use PDOException;
 
 trait BasicStatements
 {
@@ -26,6 +28,14 @@ trait BasicStatements
      * @param string[] $values The values to be added
      */
     abstract public function addValues(array $values): void;
+
+    /**
+     * Execute the prepared query.
+     *
+     * @return DatabaseProcessor
+     * @throws PDOException
+     */
+    abstract public function execute(): DatabaseProcessor;
 
     /**
      * The HAVING clause was added to SQL because

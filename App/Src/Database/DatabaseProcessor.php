@@ -105,7 +105,7 @@ final class DatabaseProcessor extends DatabaseConnection
         $data = $this->fetch(PDO::FETCH_NAMED);
         if (is_null($data)) $data = [];
 
-        return $data;
+        return (array) $data;
     }
 
     /**
