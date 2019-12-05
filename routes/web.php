@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\Http\Domain\Admin\Accounts\Controllers\AccountController;
+use App\Http\Domain\Admin\Accounts\Account\Controllers\AccountController;
 use App\Http\Domain\Admin\Accounts\User\Controllers\UserAccountController;
 use App\Http\Domain\Admin\Authorization\Controllers\AuthorizationController;
 use App\Http\Domain\Admin\Dashboard\Controllers\DashboardController;

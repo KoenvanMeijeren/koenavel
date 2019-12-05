@@ -34,12 +34,12 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database records.
      *
-     * @return string[]|object[]
+     * @return string[]|object[]|null
      */
     public function fetchAll(int $fetchMethod)
     {
         $data = $this->statement->fetchAll($fetchMethod);
-        if ($data === false) $data = [];
+        if ($data === false) $data = null;
 
         return $data;
     }
@@ -49,12 +49,12 @@ final class DatabaseProcessor extends DatabaseConnection
      *
      * @param int $fetchMethod The used method to fetch the database record.
      *
-     * @return string[]|object
+     * @return string[]|object|null
      */
     public function fetch(int $fetchMethod)
     {
         $data = $this->statement->fetch($fetchMethod);
-        if ($data === false) $data = [];
+        if ($data === false) $data = null;
 
         return $data;
     }
@@ -62,14 +62,11 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch all the records from the database to an object.
      *
-     * @return object[]|string[]
+     * @return object[]|null
      */
     public function all()
     {
-        $data = $this->fetchAll(PDO::FETCH_OBJ);
-        if ($data === false) $data = [];
-
-        return $data;
+        return $this->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -79,8 +76,8 @@ final class DatabaseProcessor extends DatabaseConnection
      */
     public function toArray()
     {
-        $data =  $this->fetchAll(PDO::FETCH_NAMED);
-        if ($data === false) $data = [];
+        $data = $this->fetchAll(PDO::FETCH_NAMED);
+        if (is_null($data)) $data = [];
 
         return $data;
     }
@@ -88,14 +85,11 @@ final class DatabaseProcessor extends DatabaseConnection
     /**
      * Fetch the first record found in the database into an object.
      *
-     * @return stdClass
+     * @return stdClass|null
      */
     public function first()
     {
-        $data = $this->fetch(PDO::FETCH_OBJ);
-        if (empty($data)) $data = new stdClass();
-
-        return $data;
+        return $this->fetch(PDO::FETCH_OBJ);
     }
 
     /**
@@ -106,7 +100,7 @@ final class DatabaseProcessor extends DatabaseConnection
     public function firstToArray()
     {
         $data = $this->fetch(PDO::FETCH_NAMED);
-        if ($data === false) $data = [];
+        if (is_null($data)) $data = [];
 
         return $data;
     }
