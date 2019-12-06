@@ -44,21 +44,4 @@ final class Account extends Model
             'account_email' => $email
         ]);
     }
-
-    public function getPassword(stdClass $account): string
-    {
-        return $this->account->account_password ?? '';
-    }
-
-    /**
-     * Determine if the given account has been blocked.
-     *
-     * @param stdClass $account
-     *
-     * @return bool
-     */
-    public function isBlocked(stdClass $account): bool
-    {
-        return (int)($account->account_is_blocked ?? '') === 1;
-    }
 }
