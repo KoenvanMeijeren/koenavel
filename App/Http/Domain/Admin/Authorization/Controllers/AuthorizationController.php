@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Authorization\Controllers;
 
-use App\Http\Domain\Admin\Authorization\Actions\LoginUserAction;
+use App\Http\Domain\Admin\Authorization\Actions\LogUserInAction;
 use App\Http\Domain\Admin\Authorization\Actions\LogUserOutAction;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
@@ -46,7 +46,7 @@ final class AuthorizationController
 
     public function login(): Redirect
     {
-        $login = new LoginUserAction($this->user);
+        $login = new LogUserInAction($this->user);
         if ($login->execute()) {
             return new Redirect('/admin/dashboard');
         }

@@ -7,17 +7,16 @@ namespace App\Http\Domain\Admin\Authorization\Actions;
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Auth\IDEncryption;
-use App\Src\Action\Action;
+use App\Src\Action\FormAction;
 use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-final class LoginUserAction extends Action
+final class LogUserInAction extends FormAction
 {
     /**
      * @var int
@@ -99,15 +98,11 @@ final class LoginUserAction extends Action
      */
     protected function authorize(): bool
     {
-        if (!CSRF::validate()) {
-            return false;
-        }
-
         if ($this->accountIsBlocked()) {
             return false;
         }
 
-        return true;
+        return parent::authorize();
     }
 
     /**

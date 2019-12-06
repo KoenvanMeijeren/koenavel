@@ -6,14 +6,13 @@ namespace App\Http\Domain\Admin\Accounts\Account\Actions;
 
 use App\Models\Admin\Account;
 use App\Models\User;
-use App\Src\Action\Action;
+use App\Src\Action\FormAction;
 use App\Src\Core\Request;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class UpdateAccountDataAction extends Action
+final class UpdateAccountDataAction extends FormAction
 {
     private Account $account;
     private User $user;
@@ -55,10 +54,6 @@ final class UpdateAccountDataAction extends Action
      */
     protected function authorize(): bool
     {
-        if (!CSRF::validate()) {
-            return false;
-        }
-
         if ($this->rights !== $this->user->getRights()
             && $this->account->getID() === $this->user->getID()
         ) {
@@ -70,7 +65,7 @@ final class UpdateAccountDataAction extends Action
             return false;
         }
 
-        return true;
+        return parent::authorize();
     }
 
     /**

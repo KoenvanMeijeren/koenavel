@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Domain\Admin\Accounts\Account\Actions;
 
 use App\Models\Admin\Account;
-use App\Src\Action\Action;
+use App\Src\Action\FormAction;
 use App\Src\Core\Request;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class UpdateAccountEmailAction extends Action
+final class UpdateAccountEmailAction extends FormAction
 {
     private Account $account;
     private Session $session;
@@ -41,18 +40,6 @@ final class UpdateAccountEmailAction extends Action
             State::SUCCESSFUL,
             Translation::get('admin_edited_account_successful_message')
         );
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function authorize(): bool
-    {
-        if (!CSRF::validate()) {
-            return false;
-        }
-
         return true;
     }
 

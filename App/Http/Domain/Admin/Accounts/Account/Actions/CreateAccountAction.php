@@ -6,14 +6,13 @@ namespace App\Http\Domain\Admin\Accounts\Account\Actions;
 
 use App\Models\Admin\Account;
 use App\Models\User;
-use App\Src\Action\Action;
+use App\Src\Action\FormAction;
 use App\Src\Core\Request;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class CreateAccountAction extends Action
+final class CreateAccountAction extends FormAction
 {
     private Account $account;
     private Session $session;
@@ -56,18 +55,6 @@ final class CreateAccountAction extends Action
             State::SUCCESSFUL,
             Translation::get('admin_create_account_successful_message')
         );
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function authorize(): bool
-    {
-        if (!CSRF::validate()) {
-            return false;
-        }
-
         return true;
     }
 

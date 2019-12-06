@@ -6,14 +6,13 @@ namespace App\Http\Domain\Admin\Accounts\User\Actions;
 
 use App\Models\Admin\Account;
 use App\Models\User;
-use App\Src\Action\Action;
+use App\Src\Action\FormAction;
 use App\Src\Core\Request;
-use App\Src\Security\CSRF;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class UpdateUserPasswordAction extends Action
+final class UpdateUserPasswordAction extends FormAction
 {
     private Session $session;
     private User $user;
@@ -51,18 +50,6 @@ final class UpdateUserPasswordAction extends Action
             State::SUCCESSFUL,
             Translation::get('admin_edited_account_successful_message')
         );
-
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function authorize(): bool
-    {
-        if (!CSRF::validate()) {
-            return false;
-        }
 
         return true;
     }
