@@ -9,12 +9,9 @@ use App\Models\User;
 use App\Services\Auth\IDEncryption;
 use App\Src\Action\FormAction;
 use App\Src\Core\Request;
-use App\Src\Exceptions\Basic\InvalidKeyException;
-use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
-use stdClass;
 
 final class LogUserInAction extends FormAction
 {
@@ -25,12 +22,17 @@ final class LogUserInAction extends FormAction
 
     private User $user;
     private Session $session;
-    private ?stdClass $account;
 
     private string $email;
     private string $password;
 
     private array $attributes;
+
+    private int $accountID;
+    private string $accountPassword;
+    private int $accountRights;
+    private int $accountFailedLogIns;
+    private bool $accountIsBlocked;
 
     public function __construct(User $user)
     {
@@ -41,7 +43,12 @@ final class LogUserInAction extends FormAction
         $this->email = $request->post('email');
         $this->password = $request->post('password');
 
-        $this->account = $this->user->getByEmail($this->email);
+        $account = $this->user->getByEmail($this->email);
+        $this->accountID = (int) ($account->account_ID ?? '0');
+        $this->accountPassword = $account->account_password ?? '';
+        $this->accountRights = (int) ($account->account_rights ?? '0');
+        $this->accountFailedLogIns = (int) ($account->account_failed_login ?? '0');
+        $this->accountIsBlocked = (bool) ($account->account_is_blocked ?? '');
     }
 
     /**
@@ -49,19 +56,16 @@ final class LogUserInAction extends FormAction
      */
     protected function handle(): bool
     {
-        if (password_verify(
-            $this->password,
-            $this->account->account_password ?? ''
-        )) {
+        if (password_verify($this->password, $this->accountPassword)) {
             $this->session->unset('userID');
 
             $idEncryption = new IDEncryption();
             $token = $idEncryption->generateToken();
 
-            $this->session->save('userID', $idEncryption->encrypt(
-                $this->account->account_ID ?? '0',
-                $token
-            ));
+            $this->session->save(
+                'userID',
+                $idEncryption->encrypt($this->accountID, $token)
+            );
 
             // always executed
             $this->storeToken($token);
@@ -98,7 +102,12 @@ final class LogUserInAction extends FormAction
      */
     protected function authorize(): bool
     {
-        if ($this->accountIsBlocked()) {
+        if ($this->accountIsBlocked) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('login_failed_blocked_account_message')
+            );
+
             return false;
         }
 
@@ -135,59 +144,40 @@ final class LogUserInAction extends FormAction
         return true;
     }
 
-    /**
-     * Store the login token for the user
-     *
-     * @param string $token The login token from the user.
-     *
-     * @return void
-     */
     private function storeToken(string $token): void
     {
         $this->attributes['account_login_token'] = $token;
     }
 
-    /**
-     * Rehash the password if necessary.
-     */
     private function rehashPassword(): void
     {
         if (password_needs_rehash(
-            $this->account->account_password ?? '',
-            Account::PASSWORD_ENCRYPTION
+            $this->accountPassword, Account::PASSWORD_ENCRYPTION
         )
         ) {
             $this->attributes['account_password'] = (string) password_hash(
-                $this->account->account_password ?? '',
-                Account::PASSWORD_ENCRYPTION
+                $this->accountPassword, Account::PASSWORD_ENCRYPTION
             );
         }
     }
 
-    /**
-     * Reset the number of failed log in attempts.
-     */
     private function resetFailedLogInAttempts(): void
     {
-        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+        if ($this->accountRights > User::ADMIN) {
             return;
         }
 
         $this->attributes['account_failed_login'] = '0';
     }
 
-    /**
-     * Add a failed log in attempt.
-     */
     private function addFailedLogInAttempt(): void
     {
-        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+        if ($this->accountRights > User::ADMIN) {
             return;
         }
 
-        $current = $this->account->account_failed_login ?? '0';
-
-        $this->attributes['account_failed_login'] = (string) ((int) $current + 1);
+        $current = $this->accountFailedLogIns;
+        $this->attributes['account_failed_login'] = (string) ++$current;
     }
 
     /**
@@ -196,49 +186,20 @@ final class LogUserInAction extends FormAction
      */
     private function blockAccount(): void
     {
-        if ((int) ($this->account->account_rights ?? '') > User::ADMIN) {
+        if ($this->accountRights > User::ADMIN
+            || $this->accountFailedLogIns < self::MAXIMUM_LOGIN_ATTEMPTS) {
             return;
         }
 
-        $failedLogInAttempts = $this->account->account_failed_login ?? '0';
-        if ((int) $failedLogInAttempts >= self::MAXIMUM_LOGIN_ATTEMPTS) {
-            $this->attributes['account_is_blocked'] = '1';
-        }
+        $this->attributes['account_is_blocked'] = '1';
     }
 
-    /**
-     * Save the date into the database.
-     */
     private function store(): void
     {
-        if (empty($this->attributes)) {
+        if (!isset($this->attributes)) {
             return;
         }
 
-        $this->user->update(
-            (int) ($this->account->account_ID ?? '0'),
-            $this->attributes
-        );
-    }
-
-    /**
-     * Determine if the account has been blocked.
-     *
-     * @return bool
-     * @throws InvalidKeyException
-     * @throws NoTranslationsForGivenLanguageID
-     */
-    private function accountIsBlocked(): bool
-    {
-        if ((int) ($this->account->account_is_blocked ?? '') === 1) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('login_failed_blocked_account_message')
-            );
-
-            return true;
-        }
-
-        return false;
+        $this->user->update($this->accountID, $this->attributes);
     }
 }

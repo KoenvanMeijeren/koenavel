@@ -32,14 +32,14 @@ final class IDEncryption
     /**
      * Encrypt the id to make sure that it cannot be read by attackers.
      *
-     * @param string $id the id to be encrypted
+     * @param int    $id the id to be encrypted
      * @param string $token the token which will be used to encrypt the id.
      *
      * @return string
      * @throws Exception
      */
     public function encrypt(
-        string $id,
+        int $id,
         string $token
     ): string {
         $string = $id . ':' . $token;
