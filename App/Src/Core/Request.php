@@ -11,13 +11,13 @@ final class Request
      *
      * @var string
      */
-    const URI = 'REQUEST_URI';//used URI for page access
-    const METHOD = 'REQUEST_METHOD';//used method for page access
-    const HTTP_HOST = 'HTTP_HOST';// host header from current request
-    const HTTP_REFERER = 'HTTP_REFERER';// complete URL of current page
-    const HTTP_USER_AGENT = 'HTTP_USER_AGENT';// the agent of the user
-    const USER_IP_ADDRESS = 'REMOTE_ADDR';// IP address from the user his IP
-    const DOCUMENT_ROOT = 'DOCUMENT_ROOT';// the root of the document
+    public const URI = 'REQUEST_URI';//used URI for page access
+    public const METHOD = 'REQUEST_METHOD';//used method for page access
+    public const HTTP_HOST = 'HTTP_HOST';// host header from current request
+    public const HTTP_REFERER = 'HTTP_REFERER';// complete URL of current page
+    public const HTTP_USER_AGENT = 'HTTP_USER_AGENT';// the agent of the user
+    public const USER_IP_ADDRESS = 'REMOTE_ADDR';// IP address from the user his IP
+    public const DOCUMENT_ROOT = 'DOCUMENT_ROOT';// the root of the document
 
     /**
      * Get a server item.

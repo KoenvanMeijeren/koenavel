@@ -27,7 +27,7 @@ final class View
         );
 
         $layout = 'layout.view.php';
-        if (strstr(URI::getUrl(), 'admin') !== false) {
+        if (strpos(URI::getUrl(), 'admin') !== false) {
             $layout = 'admin/layout.view.php';
         }
 

@@ -8,8 +8,6 @@ use App\Src\Database\DB;
 
 trait SelectStatements
 {
-    private static string $table = '';
-
     /**
      * Add a statement to the query.
      *
@@ -35,12 +33,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function select(...$columns)
+    public function select(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT {$columns} FROM " . self::$table . ' '
+            "SELECT {$queryColumns} FROM " . self::$table . ' '
         );
 
         return $this;
@@ -61,12 +59,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectUnion(string $table, ...$columns)
+    public function selectUnion(string $table, ...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "UNION SELECT {$columns} FROM {$table}"
+            "UNION SELECT {$queryColumns} FROM {$table}"
         );
 
         return $this;
@@ -87,12 +85,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectUnionAll(string $table, ...$columns)
+    public function selectUnionAll(string $table, ...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "UNION ALL SELECT {$columns} FROM {$table}"
+            "UNION ALL SELECT {$queryColumns} FROM {$table}"
         );
 
         return $this;
@@ -106,12 +104,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectDistinct(...$columns)
+    public function selectDistinct(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT DISTINCT {$columns} FROM " . self::$table . ' '
+            "SELECT DISTINCT {$queryColumns} FROM " . self::$table . ' '
         );
 
         return $this;
@@ -124,12 +122,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectMin(...$columns)
+    public function selectMin(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT MIN({$columns}) FROM " . self::$table . ' '
+            "SELECT MIN({$queryColumns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -142,12 +140,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectMax(...$columns)
+    public function selectMax(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT MAX({$columns}) FROM " . self::$table . ' '
+            "SELECT MAX({$queryColumns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -161,12 +159,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectCount(...$columns)
+    public function selectCount(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT COUNT({$columns}) FROM " . self::$table . ' '
+            "SELECT COUNT({$queryColumns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -179,12 +177,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectAvg(...$columns)
+    public function selectAvg(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT AVG({$columns}) FROM " . self::$table . ' '
+            "SELECT AVG({$queryColumns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -197,12 +195,12 @@ trait SelectStatements
      *
      * @return $this
      */
-    public function selectSum(...$columns)
+    public function selectSum(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "SELECT SUM({$columns}) FROM " . self::$table . ' '
+            "SELECT SUM({$queryColumns}) FROM " . self::$table . ' '
         );
 
         return $this;
@@ -222,7 +220,7 @@ trait SelectStatements
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ) {
+    ): self {
         $this->addStatement(
             "INNER JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "
@@ -246,7 +244,7 @@ trait SelectStatements
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ) {
+    ): self {
         $this->addStatement(
             "LEFT JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "
@@ -270,7 +268,7 @@ trait SelectStatements
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ) {
+    ): self {
         $this->addStatement(
             "RIGHT JOIN {$table} ON " .
             "{$tableOneColumn} = {$tableTwoColumn}) "
@@ -295,7 +293,7 @@ trait SelectStatements
         string $table,
         string $tableOneColumn,
         string $tableTwoColumn
-    ) {
+    ): self {
         $this->addStatement(
             "FULL OUTER JOIN {$table} " .
             "ON {$tableOneColumn} = {$tableTwoColumn}) "

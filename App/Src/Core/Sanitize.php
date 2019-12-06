@@ -11,11 +11,11 @@ final class Sanitize
      *
      * @var string
      */
-    const TYPE_STRING = 'string';
-    const TYPE_INT = 'integer';
-    const TYPE_DOUBLE = 'double';
-    const TYPE_FLOAT = 'float';
-    const TYPE_URL = 'url';
+    public const TYPE_STRING = 'string';
+    public const TYPE_INT = 'integer';
+    public const TYPE_DOUBLE = 'double';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_URL = 'url';
 
     /**
      * The data to be sanitized.
@@ -73,14 +73,20 @@ final class Sanitize
         if ($this->type === self::TYPE_STRING) {
             $data = (string) filter_var($data, FILTER_SANITIZE_STRING);
             return trim($data);
-        } elseif ($this->type === self::TYPE_INT) {
+        }
+
+        if ($this->type === self::TYPE_INT) {
             return (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT);
-        } elseif ($this->type === self::TYPE_DOUBLE
+        }
+
+        if ($this->type === self::TYPE_DOUBLE
             || $this->type === self::TYPE_FLOAT) {
             return (double) filter_var($data);
-        } elseif ($this->type === self::TYPE_URL) {
-            $data = parse_url((string) $data, PHP_URL_PATH);
-            $data = trim((string) $data, '/');
+        }
+
+        if ($this->type === self::TYPE_URL) {
+            $parsedUrl = parse_url((string) $data, PHP_URL_PATH);
+            $data = trim((string) $parsedUrl, '/');
             return filter_var($data, FILTER_SANITIZE_URL);
         }
 

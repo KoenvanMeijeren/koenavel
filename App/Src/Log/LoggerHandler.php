@@ -11,7 +11,7 @@ final class LoggerHandler extends Handler
 {
     private string $error;
 
-    public function handle()
+    public function handle(): ?int
     {
         $this->buildStringException($this->getException());
         $this->buildStackTrace($this->getException());

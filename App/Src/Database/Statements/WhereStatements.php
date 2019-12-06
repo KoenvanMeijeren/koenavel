@@ -8,8 +8,6 @@ use App\Src\Database\DB;
 
 trait WhereStatements
 {
-    private static string $table = '';
-
     /**
      * Add a statement to the query.
      *
@@ -42,7 +40,7 @@ trait WhereStatements
         string $column,
         string $operator,
         string $condition
-    ) {
+    ): self {
         $bindColumn = str_replace('.', '', $column);
 
         $this->addStatement(
@@ -64,7 +62,7 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereExists(string $query, array $values)
+    public function whereExists(string $query, array $values): self
     {
         $this->addStatement(
             "WHERE EXISTS ({$query}) "
@@ -99,7 +97,7 @@ trait WhereStatements
         string $operator,
         string $query,
         array $values
-    ) {
+    ): self {
         $this->addStatement(
             "WHERE {$column} {$operator} ANY ({$query}) "
         );
@@ -133,7 +131,7 @@ trait WhereStatements
         string $operator,
         string $query,
         array $values
-    ) {
+    ): self {
         $this->addStatement(
             "WHERE {$column} {$operator} ALL ({$query}) "
         );
@@ -158,7 +156,7 @@ trait WhereStatements
         string $column,
         string $operator,
         string $condition
-    ) {
+    ): self {
         $this->addStatement(
             "WHERE NOT {$column} {$operator} :{$column} "
         );
@@ -175,12 +173,12 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereIsNull(...$columns)
+    public function whereIsNull(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "WHERE {$columns} IS NULL "
+            "WHERE {$queryColumns} IS NULL "
         );
 
         return $this;
@@ -193,12 +191,12 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereIsNotNull(...$columns)
+    public function whereIsNotNull(...$columns): self
     {
-        $columns = implode(', ', $columns);
+        $queryColumns = implode(', ', $columns);
 
         $this->addStatement(
-            "WHERE {$columns} IS NOT NULL "
+            "WHERE {$queryColumns} IS NOT NULL "
         );
 
         return $this;
@@ -212,7 +210,7 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereInValue(string $column, ...$condition)
+    public function whereInValue(string $column, ...$condition): self
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
@@ -239,7 +237,7 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereNotInValue(string $column, ...$condition)
+    public function whereNotInValue(string $column, ...$condition): self
     {
         $bindColumns = [];
         foreach ($condition as $key => $value) {
@@ -265,7 +263,7 @@ trait WhereStatements
      *
      * @return $this
      */
-    public function whereOr(string $column, ...$values)
+    public function whereOr(string $column, ...$values): self
     {
         $query = '';
         foreach ($values as $key => $value) {
@@ -273,7 +271,7 @@ trait WhereStatements
 
             $this->addValues([$bindColumn => $value]);
 
-            if (strstr($query, 'WHERE') !== false) {
+            if (strpos($query, 'WHERE') !== false) {
                 $query .= "OR {$column} = :{$bindColumn} ";
             } else {
                 $query .= "WHERE {$column} = :{$bindColumn} ";
@@ -281,10 +279,10 @@ trait WhereStatements
         }
 
         // add hooks to the query if there is already a where statement added
-        if (strstr($this->query, 'WHERE') !== false) {
+        if (strpos($this->query, 'WHERE') !== false) {
             $query = preg_replace(
                 '/\b(WHERE)\b/',
-                "WHERE (",
+                'WHERE (',
                 $query
             );
             $query .= ')';
@@ -308,7 +306,7 @@ trait WhereStatements
         string $column,
         string $query,
         array $values
-    ) {
+    ): self {
         $this->addStatement(
             "WHERE {$column} IN ({$query}) "
         );
@@ -338,7 +336,7 @@ trait WhereStatements
         string $start,
         string $end,
         bool $orStatement = false
-    ) {
+    ): self {
         $hook = $orStatement ? '(' : '';
 
         $this->addStatement(
@@ -371,7 +369,7 @@ trait WhereStatements
         string $start,
         string $end,
         bool $orStatement = false
-    ) {
+    ): self {
         $hook = $orStatement ? '(' : '';
 
         $this->addStatement(
@@ -401,7 +399,7 @@ trait WhereStatements
         string $column,
         string $start,
         string $end
-    ) {
+    ): self {
         $this->addStatement(
             "OR {$column} BETWEEN :{$column}Start AND :{$column}End "
         );

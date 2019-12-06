@@ -41,7 +41,7 @@ abstract class Model
      */
     final public function firstOrCreate(array $attributes): stdClass
     {
-        if (!is_null($result = $this->firstByAttributes($attributes))) {
+        if (($result = $this->firstByAttributes($attributes)) !== null) {
             return $result;
         }
 
@@ -58,13 +58,12 @@ abstract class Model
      */
     final public function updateOrCreate(int $id, array $attributes): void
     {
-        if (is_null($this->firstByID($id))) {
+        if ($this->firstByID($id) === null) {
             $this->create($attributes);
             return;
         }
 
         $this->update($id, $attributes);
-        return;
     }
 
     /**
@@ -90,16 +89,16 @@ abstract class Model
      */
     final public function all(array $columns = array('*')): array
     {
-        $columns = implode(',', $columns);
+        $queryColumns = implode(',', $columns);
 
         if ($this->softDelete) {
             return (array) DB::table($this->table)
-                ->select($columns)
+                ->select($queryColumns)
                 ->where($this->softDeletedKey, '=', '0')
                 ->get();
         }
 
-        return (array) DB::table($this->table)->select($columns)->get();
+        return (array) DB::table($this->table)->select($queryColumns)->get();
     }
 
     /**
@@ -112,18 +111,18 @@ abstract class Model
      */
     final public function find(int $id, array $columns = array('*')): ?stdClass
     {
-        $columns = implode(',', $columns);
+        $queryColumns = implode(',', $columns);
 
         if ($this->softDelete) {
             return DB::table($this->table)
-                ->select($columns)
+                ->select($queryColumns)
                 ->where($this->primaryKey, '=', (string) $id)
                 ->where($this->softDeletedKey, '=', '0')
                 ->first();
         }
 
         return DB::table($this->table)
-            ->select($columns)
+            ->select($queryColumns)
             ->where($this->primaryKey, '=', (string) $id)
             ->first();
     }
@@ -223,7 +222,7 @@ abstract class Model
     ): array {
         $values = [];
         foreach ($attributes as $column => $attribute) {
-            $values += DB::table($this->table)
+            $values = DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
         }

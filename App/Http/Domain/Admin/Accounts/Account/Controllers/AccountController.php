@@ -53,14 +53,14 @@ final class AccountController
             }
 
             $dataTable->addRow(
-                ucfirst($account->account_name ?? '') . "{$blocked->toReadableBlockState()}",
+                ucfirst($account->account_name ?? '') . $blocked->toReadableBlockState(),
                 lcfirst($account->account_email ?? ''),
                 $rights->toReadableRights(),
                 Resource::addTableEditColumn(
                     '/admin/account/edit/' . ($account->account_ID ?? 0),
                     '/admin/account/delete/' . ($account->account_ID ?? 0),
                     Translation::get('admin_delete_account_warning_message'),
-                    $user->getID() === (int)($account->account_ID ?? '0') ? true : false
+                    $user->getID() === (int)($account->account_ID ?? '0')
                 )
             );
         }

@@ -17,7 +17,7 @@ final class CSRF
      *
      * @var bool
      */
-    const ECHO_CSRF_TOKEN = false;
+    public const ECHO_CSRF_TOKEN = false;
 
     private static AntiCSRF $csrf;
 

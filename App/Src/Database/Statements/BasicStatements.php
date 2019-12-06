@@ -10,8 +10,6 @@ use PDOException;
 
 trait BasicStatements
 {
-    private static string $table = '';
-
     /**
      * Add a statement to the query.
      *
@@ -45,12 +43,10 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function having(...$conditions)
+    public function having(...$conditions): self
     {
-        $conditions = implode(', ', $conditions);
-
         $this->addStatement(
-            "HAVING {$conditions} "
+            'HAVING ' . implode(', ', $conditions) . ' '
         );
 
         return $this;
@@ -69,7 +65,7 @@ trait BasicStatements
         $bindColumns = ':' . implode(', :', array_keys($values));
 
         $this->addStatement(
-            "INSERT INTO " . self::$table .
+            'INSERT INTO ' . self::$table .
             " ({$columns}) VALUES ({$bindColumns}) "
         );
 
@@ -85,10 +81,10 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function update(array $values)
+    public function update(array $values): self
     {
         $this->addStatement(
-            "UPDATE " . self::$table . " SET "
+            'UPDATE ' . self::$table . ' SET '
         );
 
         foreach (array_keys($values) as $column) {
@@ -114,7 +110,7 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function delete(string $column, string $value = '1')
+    public function delete(string $column, string $value = '1'): self
     {
         $this->update([$column => $value]);
 
@@ -126,10 +122,10 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function permanentDelete()
+    public function permanentDelete(): self
     {
         $this->addStatement(
-            "DELETE FROM " . self::$table . " "
+            'DELETE FROM ' . self::$table . ' '
         );
 
         return $this;
@@ -144,12 +140,10 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function orderBy(string $filter, ...$columns)
+    public function orderBy(string $filter, ...$columns): self
     {
-        $columns = implode(', ', $columns);
-
         $this->addStatement(
-            "ORDER BY {$columns} {$filter} "
+            'ORDER BY ' . implode(', ', $columns) . " {$filter} "
         );
 
         return $this;
@@ -163,12 +157,10 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function groupBy(...$columns)
+    public function groupBy(...$columns): self
     {
-        $columns = implode(', ', $columns);
-
         $this->addStatement(
-            "GROUP BY {$columns} "
+            'GROUP BY ' . implode(', ', $columns) . ' '
         );
 
         return $this;
@@ -181,7 +173,7 @@ trait BasicStatements
      *
      * @return $this
      */
-    public function limit(int $number = 1)
+    public function limit(int $number = 1): self
     {
         $this->addStatement(
             "LIMIT {$number} "

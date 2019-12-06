@@ -10,7 +10,7 @@ use App\Src\Type\TypeChanger;
 
 final class Config extends Loader
 {
-    private array $config = [];
+    private array $config;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ final class Config extends Loader
             $this->configLocation = CONFIG_PATH . '/dev_config.php';
         }
 
-        $this->config += $this->loadConfig();
+        $this->config = $this->loadConfig();
     }
 
     /**

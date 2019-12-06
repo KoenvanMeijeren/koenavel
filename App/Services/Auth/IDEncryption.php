@@ -61,7 +61,7 @@ final class IDEncryption
             return 0;
         }
 
-        list($id, $token, $mac) = explode(':', $encryptedId);
+        [$id, $token, $mac] = explode(':', $encryptedId);
 
         if (!hash_equals(
             hash_hmac(
@@ -97,7 +97,7 @@ final class IDEncryption
             return false;
         }
 
-        list($id, $token, $mac) = explode(':', $encryptedId);
+        [$id, $token, $mac] = explode(':', $encryptedId);
 
         if (hash_equals($userToken, $token)) {
             return true;

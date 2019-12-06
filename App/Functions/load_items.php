@@ -8,7 +8,7 @@ use App\Src\Validate\Validate;
 function includeFile(string $filename, $vars = null)
 {
     if (!empty($vars)) {
-        extract($vars);
+        extract($vars, EXTR_SKIP);
     }
     Validate::var($filename)->fileExists();
 
@@ -63,5 +63,5 @@ function loadTable(string $filename, array $keys, array $rows = [])
     $filename = RESOURCES_PATH."/partials/tables/{$filename}.view.php";
     Validate::var($filename)->fileExists();
 
-    return include_once $filename;
+    return include $filename;
 }

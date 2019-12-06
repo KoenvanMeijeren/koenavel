@@ -19,15 +19,15 @@ final class Env
      *
      * @var string
      */
-    const DEVELOPMENT = 'development';
-    const PRODUCTION = 'production';
+    public const DEVELOPMENT = 'development';
+    public const PRODUCTION = 'production';
 
     /**
      * The default error page.
      *
      * @var string
      */
-    const ERROR_PAGE = 'http/500-error';
+    public const ERROR_PAGE = 'http/500-error';
 
     private string $host;
     private string $env;
@@ -65,8 +65,8 @@ final class Env
     private function setEnv(): void
     {
         $this->env = self::PRODUCTION;
-        if (strstr($this->host, 'localhost') !== false ||
-            strstr($this->host, '127.0.0.1') !== false
+        if (strpos($this->host, 'localhost') !== false ||
+            strpos($this->host, '127.0.0.1') !== false
         ) {
             $this->env = self::DEVELOPMENT;
         }

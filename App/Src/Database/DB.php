@@ -17,7 +17,7 @@ final class DB
     use WhereStatements;
     use DataProcessingStatements;
 
-    private static string $table = '';
+    protected static string $table = '';
     private string $query = '';
     private array $values = [];
 
@@ -78,7 +78,7 @@ final class DB
         if (strpos($this->query, 'WHERE') !== false) {
             $statement = preg_replace(
                 '/\b(WHERE)\b/',
-                "AND",
+                'AND',
                 $statement
             );
         }
@@ -138,7 +138,9 @@ final class DB
      */
     public function addValues(array $values): void
     {
-        $this->values += $values;
+        foreach ($values as $column => $condition) {
+            $this->values[$column] = $condition;
+        }
     }
 
     /**

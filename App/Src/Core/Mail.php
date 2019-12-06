@@ -59,7 +59,7 @@ final class Mail
         string $htmlBody,
         array $vars = []
     ): void {
-        extract($vars);
+        extract($vars, EXTR_SKIP);
 
         $this->subject = $subject;
 
@@ -67,7 +67,7 @@ final class Mail
         $filename = RESOURCES_PATH."/partials/mails/{$htmlBody}.view.php";
         Validate::var($filename)->fileExists()->isReadable();
         $htmlBody = (string) file_get_contents($filename);
-        
+
         // save the html body
         $this->body = $htmlBody;
     }

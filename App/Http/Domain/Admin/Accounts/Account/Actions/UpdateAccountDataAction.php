@@ -59,8 +59,8 @@ final class UpdateAccountDataAction extends Action
             return false;
         }
 
-        if ($this->account->getID() === $this->user->getID()
-            && $this->rights !== $this->user->getRights()
+        if ($this->rights !== $this->user->getRights()
+            && $this->account->getID() === $this->user->getID()
         ) {
             $this->session->flash(
                 State::FAILED,

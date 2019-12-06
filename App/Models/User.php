@@ -101,7 +101,7 @@ final class User extends Model
      */
     public function getRights(): int
     {
-        return intval($this->account->account_rights ?? self::GUEST);
+        return (int) ($this->account->account_rights ?? self::GUEST);
     }
 
     /**
@@ -121,11 +121,7 @@ final class User extends Model
      */
     public function isLoggedIn(): bool
     {
-        if ($this->getRights() > self::GUEST) {
-            return true;
-        }
-
-        return false;
+        return $this->getRights() > self::GUEST;
     }
 
     /**
@@ -143,10 +139,11 @@ final class User extends Model
         $session = new Session();
         $idEncryption = new IDEncryption();
 
-        if ($this->getRights() !== self::GUEST
-            && $this->getRights() !== self::ADMIN
-            && $this->getRights() !== self::SUPER_ADMIN
-            && $this->getRights() !== self::DEVELOPER
+        $rights = $this->getRights();
+        if ($rights !== self::GUEST
+            && $rights !== self::ADMIN
+            && $rights !== self::SUPER_ADMIN
+            && $rights !== self::DEVELOPER
         ) {
             $logout->execute();
 

@@ -26,7 +26,7 @@ final class Log
         $env = new Env();
 
         $format = "[%datetime%] %level_name% %message% %context% %extra%\n";
-        $timeFormat = "Y-m-d H:i:s";
+        $timeFormat = 'Y-m-d H:i:s';
         $dateTimeZone = new DateTimeZone('Europe/Amsterdam');
 
         self::$logger = new Logger($config->get('appName')->toString());
@@ -144,6 +144,6 @@ final class Log
             $message = "{$method} request for page {$url}";
         }
 
-        self::info($state . " " . $message);
+        self::info($state . ' ' . $message);
     }
 }

@@ -18,11 +18,16 @@ final class Converter
 
     public function toReadableRights(): string
     {
-        if ((int) $this->text === User::ADMIN) {
+        $rights = (int) $this->text;
+        if ($rights === User::ADMIN) {
             return Translation::get('account_rights_admin');
-        } elseif ((int) $this->text === User::SUPER_ADMIN) {
+        }
+
+        if ($rights === User::SUPER_ADMIN) {
             return Translation::get('account_rights_super_admin');
-        } elseif ((int) $this->text === User::DEVELOPER) {
+        }
+
+        if ($rights === User::DEVELOPER) {
             return Translation::get('account_rights_developer');
         }
 

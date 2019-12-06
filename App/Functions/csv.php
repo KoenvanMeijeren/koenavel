@@ -34,7 +34,7 @@ function strPutCSV(
     string $enclosure = '"'
 ) {
     // Open a memory "file" for read/write
-    $fp = fopen('php://temp', 'r+');
+    $fp = fopen('php://temp', 'rb+');
 
     if (is_resource($fp)) {
         // Write the array to the target file using fputcsv()
@@ -68,7 +68,7 @@ function outputCsv(string $fileName, array $assocDataArray)
     header('Content-Disposition: attachment;filename='.$fileName.'.csv');
 
     if (!empty($assocDataArray) && is_array($assocDataArray)) {
-        $fp = fopen('php://output', 'w');
+        $fp = fopen('php://output', 'wb');
 
         if (is_resource($fp)) {
             foreach ($assocDataArray as $values) {

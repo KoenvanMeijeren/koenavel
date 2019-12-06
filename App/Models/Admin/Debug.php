@@ -93,8 +93,8 @@ final class Debug
                 continue;
             }
 
-            if ($cookie->exists($cookie->get('sessionName'))
-                && $key === $cookie->get('sessionName')
+            if ($key === $cookie->get('sessionName')
+                && $cookie->exists($cookie->get('sessionName'))
             ) {
                 $table->addRow(
                     'sessie cookie',
@@ -120,14 +120,14 @@ final class Debug
      */
     public function getLogInformation(string $date): array
     {
-        $date = new Chronos($date);
+        $chronos = new Chronos($date);
         $logs = (array) preg_split(
             '/(?=\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}])/',
-            Log::get($date->toDateString())
+            Log::get($chronos->toDateString())
         );
         unset($logs[array_key_first($logs)]);
 
-        array_walk($logs, function (&$value) {
+        array_walk($logs, static function (&$value) {
             if (preg_match_all(
                 '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|(?<=]).*(?={)|{.*}/',
                 $value,
@@ -135,7 +135,12 @@ final class Debug
                 PREG_PATTERN_ORDER
             ) !== false) {
                 $matches = $matches[0] ?? [];
-                $matches[2] = isJson($matches[2] ?? '') ? json_decode($matches[2]) : [];
+                $matches[2] = isJson($matches[2] ?? '') ? json_decode(
+                    $matches[2],
+                    true,
+                    512,
+                    JSON_THROW_ON_ERROR
+                ) : [];
             }
 
             $date = new DateTime(new Chronos($matches[0] ?? ''));

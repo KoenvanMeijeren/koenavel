@@ -68,11 +68,7 @@ final class Router
         string $method = 'index',
         int $rights = User::GUEST
     ): void {
-        if (self::$prefix !== '' && $route !== '') {
-            $route = self::$prefix . '/' . $route;
-        } elseif (self::$prefix !== '') {
-            $route = self::$prefix;
-        }
+        $route = self::addRoutePrefix($route);
 
         self::$routes['GET'][$rights][$route] = [$controller, $method];
     }
@@ -93,11 +89,7 @@ final class Router
         string $method = 'index',
         int $rights = User::GUEST
     ): void {
-        if (self::$prefix !== '' && $route !== '') {
-            $route = self::$prefix . '/' . $route;
-        } elseif (self::$prefix !== '') {
-            $route = self::$prefix;
-        }
+        $route = self::addRoutePrefix($route);
 
         self::$routes['POST'][$rights][$route] = [$controller, $method];
     }
@@ -202,7 +194,6 @@ final class Router
     private function setAvailableRoutes(string $requestType, int $rights): void
     {
         self::$availableRoutes = [];
-
         for ($maximumRights = 0; $maximumRights <= $rights; ++$maximumRights) {
             if (array_key_exists($requestType, self::$routes)
                 && array_key_exists(
@@ -210,12 +201,9 @@ final class Router
                     self::$routes[$requestType]
                 )
             ) {
-                // @codeCoverageIgnoreStart
-                self::$availableRoutes = array_merge(
-                    self::$availableRoutes,
-                    self::$routes[$requestType][$maximumRights]
-                );
-                // @codeCoverageIgnoreEnd
+                foreach (self::$routes[$requestType][$maximumRights] as $url => $route) {
+                    self::$availableRoutes[$url] = $route;
+                }
             }
         }
     }
@@ -278,6 +266,25 @@ final class Router
                 // @codeCoverageIgnoreEnd
             }
         }
+    }
+
+    /**
+     * Add the prefix to the given route.
+     *
+     * @param string $route
+     * @return string the prefixed route.
+     */
+    private static function addRoutePrefix(string $route): string
+    {
+        if (self::$prefix !== '' && $route !== '') {
+            return self::$prefix . '/' . $route;
+        }
+
+        if (self::$prefix !== '') {
+            return self::$prefix;
+        }
+
+        return $route;
     }
 
     /**

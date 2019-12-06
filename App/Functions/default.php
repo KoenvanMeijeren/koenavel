@@ -150,9 +150,14 @@ if (!function_exists('isJson')) {
             return false;
         }
 
-        json_decode($data);
-
-        if (json_last_error()) {
+        try {
+            json_decode(
+                $data,
+                true,
+                512,
+                JSON_THROW_ON_ERROR
+            );
+        } catch (Exception $exception) {
             return false;
         }
 
@@ -183,7 +188,7 @@ if (!function_exists('random_string')) {
         string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     ): string {
         if ($length < 1) {
-            throw new RangeException("Length must be a positive integer");
+            throw new RangeException('Length must be a positive integer');
         }
 
         $pieces = [];

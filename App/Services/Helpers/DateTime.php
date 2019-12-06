@@ -12,8 +12,8 @@ final class DateTime
     private Chronos $datetime;
 
     private string $locale;
-    private string $timezone = 'Europe/Amsterdam';
-    private int $calendar = IntlDateFormatter::GREGORIAN;
+    private string $timezone;
+    private int $calendar;
 
     public function __construct(
         Chronos $datetime,

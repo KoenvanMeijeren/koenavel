@@ -22,7 +22,7 @@ final class LoginUserAction extends Action
     /**
      * @var int
      */
-    const MAXIMUM_LOGIN_ATTEMPTS = 3;
+    public const MAXIMUM_LOGIN_ATTEMPTS = 3;
 
     private User $user;
     private Session $session;

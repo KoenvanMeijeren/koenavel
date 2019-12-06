@@ -148,16 +148,13 @@ final class Builder
      */
     private function setCanarySession(): void
     {
-        if ($this->session->get('canary') === ''
-            && PHP_SESSION_NONE !== session_status()
-        ) {
+        $canary = (int) $this->session->get('canary');
+        if ($canary === 0 && PHP_SESSION_NONE !== session_status()) {
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string)time());
         }
 
-        if ((int)$this->session->get('canary') < time() - 300
-            && PHP_SESSION_NONE !== session_status()
-        ) {
+        if (PHP_SESSION_NONE !== session_status() && $canary < (time() - 300)) {
             session_regenerate_id(true);
             $this->session->saveForced('canary', (string)time());
         }
@@ -172,7 +169,7 @@ final class Builder
     {
         if (PHP_SESSION_ACTIVE !== session_status()) {
             throw new InvalidSessionException(
-                "Cannot destroy the session if the session does not exists"
+                'Cannot destroy the session if the session does not exists'
             );
         }
 

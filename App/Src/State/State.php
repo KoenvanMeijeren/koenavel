@@ -11,6 +11,6 @@ abstract class State
      *
      * @var string
      */
-    const SUCCESSFUL = 'successful';
-    const FAILED = 'failed';
+    public const SUCCESSFUL = 'successful';
+    public const FAILED = 'failed';
 }

@@ -51,20 +51,14 @@ trait ObjectValidation
     /**
      * Check if a function is callable.
      *
-     * @param bool   $syntax_only   determine if it must be syntax only
-     * @param string $callable_name the name to be called
-     *
      * @return Validate
-     *
      * @throws MethodNotCallableException
      */
-    public function isCallable(
-        bool $syntax_only = false,
-        string $callable_name = ''
-    ): Validate {
-        if (!is_callable(self::$var, $syntax_only, $callable_name)) {
+    public function isCallable(): Validate
+    {
+        if (!is_callable(self::$var)) {
             throw new MethodNotCallableException(
-                "The called method does not exist: " .
+                'The called method does not exist: ' .
                 serialize(self::$var) . '.'
             );
         }

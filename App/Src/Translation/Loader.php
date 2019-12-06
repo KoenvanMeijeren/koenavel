@@ -14,10 +14,10 @@ abstract class Loader
      *
      * @var int
      */
-    const DUTCH_LANGUAGE_ID = 1;
-    const DUTCH_LANGUAGE_CODE = 'nl';
-    const ENGLISH_LANGUAGE_ID = 2;
-    const ENGLISH_LANGUAGE_CODE = 'en';
+    public const DUTCH_LANGUAGE_ID = 1;
+    public const DUTCH_LANGUAGE_CODE = 'nl';
+    public const ENGLISH_LANGUAGE_ID = 2;
+    public const ENGLISH_LANGUAGE_CODE = 'en';
 
     protected int $language = 0;
 
@@ -50,7 +50,9 @@ abstract class Loader
             $filename = '/language/dutch/dutch_translations.php';
 
             return includeFile(RESOURCES_PATH . $filename);
-        } elseif (self::ENGLISH_LANGUAGE_ID === $this->language) {
+        }
+
+        if (self::ENGLISH_LANGUAGE_ID === $this->language) {
             $filename = '/language/english/english_translations.php';
 
             return includeFile(RESOURCES_PATH . $filename);

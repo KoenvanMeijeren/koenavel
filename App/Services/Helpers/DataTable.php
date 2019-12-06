@@ -36,72 +36,72 @@ final class DataTable
 
     public function addTableStart(): void
     {
-        $this->add("<table>", $this->var);
+        $this->add('<table>', $this->var);
     }
 
     public function addTableEnd(): void
     {
-        $this->add("</table>", $this->var);
+        $this->add('</table>', $this->var);
     }
 
     public function addHeadStart(): void
     {
-        $this->add("<thead>", $this->var);
+        $this->add('<thead>', $this->var);
     }
 
     public function addHeadEnd(): void
     {
-        $this->add("</thead>", $this->var);
+        $this->add('</thead>', $this->var);
     }
 
     public function addBodyStart(): void
     {
-        $this->add("<tbody>", $this->var);
+        $this->add('<tbody>', $this->var);
     }
 
     public function addBodyEnd(): void
     {
-        $this->add("</tbody>", $this->var);
+        $this->add('</tbody>', $this->var);
     }
 
     public function addFooterStart(): void
     {
-        $this->add("<tfoot>", $this->var);
+        $this->add('<tfoot>', $this->var);
     }
 
     public function addFooterEnd(): void
     {
-        $this->add("</tfoot>", $this->var);
+        $this->add('</tfoot>', $this->var);
     }
 
     public function addTrStart(): void
     {
-        $this->add("<tr>", $this->var);
+        $this->add('<tr>', $this->var);
     }
 
     public function addTrEnd(): void
     {
-        $this->add("</tr>", $this->var);
+        $this->add('</tr>', $this->var);
     }
 
     public function addThStart(): void
     {
-        $this->add("<th>", $this->var);
+        $this->add('<th>', $this->var);
     }
 
     public function addThEnd(): void
     {
-        $this->add("</th>", $this->var);
+        $this->add('</th>', $this->var);
     }
 
     public function addTdStart(): void
     {
-        $this->add("<td>", $this->var);
+        $this->add('<td>', $this->var);
     }
 
     public function addTdEnd(): void
     {
-        $this->add("</td>", $this->var);
+        $this->add('</td>', $this->var);
     }
 
     /**

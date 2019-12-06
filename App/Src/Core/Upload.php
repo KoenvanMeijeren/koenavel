@@ -19,7 +19,7 @@ final class Upload
      *
      * @var string[]
      */
-    const ALLOWED_FILE_TYPES = [
+    public const ALLOWED_FILE_TYPES = [
         'image/jpg', 'image/jpeg',
         'image/svg+xml', 'image/png'
     ];
@@ -158,7 +158,7 @@ final class Upload
             array_key_exists('name', $this->file) ?
             $this->file['type'] : '';
 
-        if (!key_exists($type, self::ALLOWED_FILE_TYPES)) {
+        if (!array_key_exists($type, self::ALLOWED_FILE_TYPES)) {
             $this->session->flash(
                 'error',
                 Translation::get('not_allowed_file_upload')
