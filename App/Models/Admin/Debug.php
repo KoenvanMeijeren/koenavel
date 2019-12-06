@@ -137,7 +137,7 @@ final class Debug
                 $matches = $matches[0] ?? [];
                 $matches[2] = isJson($matches[2] ?? '') ? json_decode(
                     $matches[2],
-                    true,
+                    false,
                     512,
                     JSON_THROW_ON_ERROR
                 ) : [];
