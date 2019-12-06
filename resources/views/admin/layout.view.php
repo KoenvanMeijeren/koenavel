@@ -60,8 +60,8 @@ $rights = new Converter($user->getRights())
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <?php if ($user->getRights() >= User::ADMIN) : ?>
-                        <li class="nav-item <?= strstr(URI::getUrl(),
-                            'dashboard') ? 'active' : '' ?>">
+                        <li class="nav-item <?= strpos(URI::getUrl(),
+                            'dashboard') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/dashboard">
                                 <i class="fas fa-home"></i>
                                 <p>
@@ -69,8 +69,8 @@ $rights = new Converter($user->getRights())
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item <?= strstr(URI::getUrl(),
-                            'pages') ? 'active' : '' ?>">
+                        <li class="nav-item <?= strpos(URI::getUrl(),
+                            'pages') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/pages">
                                 <i class="fas fa-sitemap"></i>
                                 <p>
@@ -80,9 +80,9 @@ $rights = new Converter($user->getRights())
                         </li>
                     <?php endif;
                     if ($user->getRights() >= User::SUPER_ADMIN) : ?>
-                        <li class="nav-item <?= strstr(URI::getUrl(),
-                            'account') && !strstr(URI::getUrl(),
-                            'user') ? 'active' : '' ?>">
+                        <li class="nav-item <?= strpos(URI::getUrl(),
+                            'account') !== false && strpos(URI::getUrl(),
+                            'user') === false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/account">
                                 <i class="fas fa-users"></i>
                                 <p>
@@ -92,8 +92,8 @@ $rights = new Converter($user->getRights())
                         </li>
                     <?php endif;
                     if ($user->getRights() >= User::DEVELOPER) : ?>
-                        <li class="nav-item <?= strstr(URI::getUrl(),
-                            'debug') ? 'active' : '' ?>">
+                        <li class="nav-item <?= strpos(URI::getUrl(),
+                            'debug') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/debug">
                                 <i class="fas fa-code"></i>
                                 <p>
@@ -123,8 +123,8 @@ $rights = new Converter($user->getRights())
                          id="navigation">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link color-default <?= strstr(URI::getUrl(),
-                                    'user/account') ? 'active-link' : '' ?>"
+                                <a class="nav-link color-default <?= strpos(URI::getUrl(),
+                                    'user/account') !== false ? 'active-link' : '' ?>"
                                    href="/admin/user/account">
                                 <span class="no-icon">
                                     <?= Translation::get('welcome_text') ?>
