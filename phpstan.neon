@@ -2,9 +2,8 @@ parameters:
     fileExtensions:
         - php
     ignoreErrors:
-        - "#Function .* not found.#"
-        - "#Constant .* not found.#"
-        - "#Internal error#"
+        - "#In function .*#"
+        - "#Function .* has .*#"
         - "#In method .*, parameter .* can be type-hinted to .*.#"
         - "#Method .* should return .* but returns .*.#"
         - "#Constructor .* has parameter .* with default value.#"
@@ -16,6 +15,8 @@ parameters:
         - "#Variable property access on .*.#"
         - "#Method .* has a nullable return type declaration.#"
         - "#In method .*, return type is .*#"
+        - "#Method .* is not final, but since the containing class is abstract, it should be.#"
+        - "#Method .* has parameter .* with a nullable type declaration.#"
     level: 7
     paths:
     - App/
