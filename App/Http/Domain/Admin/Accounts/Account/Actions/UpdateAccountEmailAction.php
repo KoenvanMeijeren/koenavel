@@ -69,7 +69,7 @@ final class UpdateAccountEmailAction extends FormAction
             return false;
         }
 
-        if (!empty((array) $this->account->getByEmail($this->email))) {
+        if ($this->account->getByEmail($this->email) !== null) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(

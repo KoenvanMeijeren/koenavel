@@ -84,9 +84,8 @@ final class UpdateAccountDataAction extends FormAction
             return false;
         }
 
-        if ($this->rights !== User::ADMIN
-            && $this->rights !== User::SUPER_ADMIN
-            && $this->rights !== User::DEVELOPER
+        if ($this->rights < User::ADMIN
+            && $this->rights > User::DEVELOPER
         ) {
             $this->session->flash(
                 State::FAILED,

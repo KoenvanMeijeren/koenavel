@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\User\Actions;
 
+use App\Http\Domain\Repositories\AccountRepository;
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Src\Action\FormAction;
@@ -21,11 +22,15 @@ final class UpdateUserPasswordAction extends FormAction
     private string $newPassword;
     private string $confirmationPassword;
 
+    private AccountRepository $account;
+
     public function __construct(User $user)
     {
         $request = new Request();
         $this->session = new Session();
+
         $this->user = $user;
+        $this->account = new AccountRepository($user->getAccount());
 
         $this->currentPassword = $request->post('currentPassword');
         $this->newPassword = $request->post('newPassword');
@@ -39,7 +44,7 @@ final class UpdateUserPasswordAction extends FormAction
      */
     protected function handle(): bool
     {
-        $this->user->update($this->user->getID(), [
+        $this->user->update($this->account->getId(), [
             'account_password' =>  (string) password_hash(
                 $this->newPassword,
                 Account::PASSWORD_ENCRYPTION
@@ -73,7 +78,7 @@ final class UpdateUserPasswordAction extends FormAction
 
         if (!password_verify(
             $this->currentPassword,
-            $this->user->getAccount()->account_password ?? ''
+            $this->account->getPassword()
         )) {
             $this->session->flash(
                 State::FAILED,

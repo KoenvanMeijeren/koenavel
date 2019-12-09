@@ -10,23 +10,20 @@ use App\Models\User;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\View;
-use stdClass;
 
 final class UserAccountController
 {
     private User $user;
-    private ?stdClass $account;
 
     public function __construct()
     {
         $this->user = new User();
-        $this->account = $this->user->getAccount();
     }
 
     public function index(): View
     {
         $title = Translation::get('admin_account_title');
-        $account = $this->account;
+        $account = $this->user->getAccount();
 
         return new View(
             'admin/account/user/index',

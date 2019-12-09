@@ -46,7 +46,7 @@ final class CreateAccountAction extends FormAction
             'account_email' => $this->email,
             'account_password' => (string) password_hash(
                 $this->password,
-                PASSWORD_ARGON2ID
+                Account::PASSWORD_ENCRYPTION
             ),
             'account_rights' => (string) $this->rights,
         ]);
@@ -98,9 +98,8 @@ final class CreateAccountAction extends FormAction
             return false;
         }
 
-        if ($this->rights !== User::ADMIN
-            && $this->rights !== User::SUPER_ADMIN
-            && $this->rights !== User::DEVELOPER
+        if ($this->rights < User::ADMIN
+            && $this->rights > User::DEVELOPER
         ) {
             $this->session->flash(
                 State::FAILED,
@@ -110,7 +109,7 @@ final class CreateAccountAction extends FormAction
             return false;
         }
 
-        if (!empty((array) $this->account->getByEmail($this->email))) {
+        if ($this->account->getByEmail($this->email) !== null) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(
