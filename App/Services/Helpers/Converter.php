@@ -9,16 +9,19 @@ use App\Src\Translation\Translation;
 
 final class Converter
 {
-    private string $text;
+    /**
+     * @var mixed
+     */
+    private $var;
 
-    public function __construct(string $text)
+    public function __construct($var)
     {
-        $this->text = $text;
+        $this->var = $var;
     }
 
     public function toReadableRights(): string
     {
-        $rights = (int) $this->text;
+        $rights = (int) $this->var;
         if ($rights === User::ADMIN) {
             return Translation::get('account_rights_admin');
         }
@@ -36,7 +39,7 @@ final class Converter
 
     public function toReadableBlockState(): string
     {
-        if ((int) $this->text === 0) {
+        if (!(bool) $this->var) {
             return '';
         }
 

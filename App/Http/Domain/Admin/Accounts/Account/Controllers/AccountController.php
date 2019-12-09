@@ -11,23 +11,22 @@ use App\Http\Domain\Admin\Accounts\Account\Actions\UnblockAccountAction;
 use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountDataAction;
 use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountEmailAction;
 use App\Http\Domain\Admin\Accounts\Account\Actions\UpdateAccountPasswordAction;
+use App\Http\Domain\Admin\Accounts\Account\ViewModels\EditViewModel;
+use App\Http\Domain\Admin\Accounts\Account\ViewModels\IndexViewModel;
 use App\Models\Admin\Account;
-use App\Models\User;
-use App\Services\Helpers\Converter;
-use App\Services\Helpers\DataTable;
-use App\Services\Helpers\Resource;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Session\Session;
-use App\Src\State\State;
 use App\Src\Translation\Translation;
-use App\Src\View\View;
+use App\Src\View\DomainView;
 
 final class AccountController
 {
     private Account $account;
     private Session $session;
+
+    private string $baseViewPath = 'Admin/Accounts/Account/Views/';
 
     public function __construct()
     {
@@ -35,52 +34,29 @@ final class AccountController
         $this->session = new Session();
     }
 
-    public function index(): View
+    public function index(): DomainView
     {
-        $title = Translation::get('admin_account_title');
+        $accounts = new IndexViewModel($this->account->all());
 
-        $dataTable = new DataTable();
-        $user = new User();
-        $dataTable->addEditHead('Naam', 'Email', 'Rechten');
-
-        $accounts = $this->account->all();
-        foreach ($accounts as $account) {
-            $rights = new Converter($account->account_rights ?? '0');
-            $blocked = new Converter($account->account_is_blocked ?? '0');
-
-            if ($blocked->toReadableBlockState() !== '') {
-                $dataTable->addClasses('user-blocked');
-            }
-
-            $dataTable->addRow(
-                ucfirst($account->account_name ?? '') . $blocked->toReadableBlockState(),
-                lcfirst($account->account_email ?? ''),
-                $rights->toReadableRights(),
-                Resource::addTableEditColumn(
-                    '/admin/account/edit/' . ($account->account_ID ?? 0),
-                    '/admin/account/delete/' . ($account->account_ID ?? 0),
-                    Translation::get('admin_delete_account_warning_message'),
-                    $user->getID() === (int)($account->account_ID ?? '0')
-                )
-            );
-        }
-        $accounts = $dataTable->get();
-
-        return new View(
-            'admin/account/index',
-            compact('title', 'accounts')
+        return new DomainView(
+            $this->baseViewPath . 'index', [
+                'title' => Translation::get('admin_account_title'),
+                'accounts' => $accounts->table()
+            ]
         );
     }
 
-    public function create(): View
+    public function create(): DomainView
     {
-        $title = Translation::get('admin_create_account_title');
-
-        return new View('admin/account/create', compact('title'));
+        return new DomainView(
+            $this->baseViewPath . 'create', [
+                'title' => Translation::get('admin_create_account_title')
+            ]
+        );
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      */
     public function store()
     {
@@ -95,32 +71,26 @@ final class AccountController
     /**
      * @param string $title
      *
-     * @return Redirect|View
+     * @return Redirect|DomainView
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
     public function edit(string $title = 'admin_edit_account_title')
     {
-        $title = Translation::get($title);
-        $account = $this->account->find($this->account->getID());
+        $account = new EditViewModel(
+            $this->account->find($this->account->getID())
+        );
 
-        if (empty((array) $account)) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_account_cannot_be_visited')
-            );
-
-            return new Redirect('/admin/account');
-        }
-
-        return new View(
-            'admin/account/edit',
-            compact('title', 'account')
+        return new DomainView(
+            $this->baseViewPath . 'edit', [
+                'title' => Translation::get($title),
+                'account' => $account->get()
+            ]
         );
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
@@ -137,7 +107,7 @@ final class AccountController
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
@@ -154,7 +124,7 @@ final class AccountController
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
