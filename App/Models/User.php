@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Http\Domain\Admin\Authorization\Actions\LogUserOutAction;
+use App\Http\Domain\Admin\Authentication\Actions\LogUserOutAction;
 use App\Services\Auth\IDEncryption;
 use App\Src\Model\Model;
 use App\Src\Response\Redirect;
@@ -72,12 +72,7 @@ final class User extends Model
         $session = new Session();
         $idEncryption = new IDEncryption();
 
-        $id = $idEncryption->decrypt($session->get('userID'));
-        if ($id !== self::GUEST) {
-            return $id;
-        }
-
-        return self::GUEST;
+        return $idEncryption->decrypt($session->get('userID'));
     }
 
     /**
@@ -140,26 +135,14 @@ final class User extends Model
         $idEncryption = new IDEncryption();
 
         $rights = $this->getRights();
-        if ($rights !== self::GUEST
-            && $rights !== self::ADMIN
-            && $rights !== self::SUPER_ADMIN
-            && $rights !== self::DEVELOPER
+        if ($rights < self::GUEST
+            || $rights > self::DEVELOPER
+            || (int) ($this->account->account_is_blocked ?? '0') === 1
+            || !$idEncryption->validateHash(
+                $this->account->account_login_token ?? '',
+                $session->get('userID')
+            )
         ) {
-            $logout->execute();
-
-            return new Redirect('/admin');
-        }
-
-        if (!$idEncryption->validateHash(
-            $this->account->account_login_token ?? '',
-            $session->get('userID')
-        )) {
-            $logout->execute();
-
-            return new Redirect('/admin');
-        }
-
-        if ((int) ($this->account->account_is_blocked ?? '0') === 1) {
             $logout->execute();
 
             return new Redirect('/admin');
