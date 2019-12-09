@@ -9,7 +9,6 @@ parameters:
         - "#Constructor .* has parameter .* with default value.#"
         - "#Class .* is not allowed to extend .*#"
         - "#Variable method call on mixed.#"
-        - "#Function .* should not be used.#"
         - "#Access to an undefined property .*#"
         - "#Call to function .* with array will always evaluate to true.#"
         - "#Variable property access on .*.#"
