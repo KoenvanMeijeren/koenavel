@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Domain\Admin\Authorization\Controllers;
+namespace App\Http\Domain\Admin\Authentication\Controllers;
 
-use App\Http\Domain\Admin\Authorization\Actions\LogUserInAction;
-use App\Http\Domain\Admin\Authorization\Actions\LogUserOutAction;
+use App\Http\Domain\Admin\Authentication\Actions\LogUserInAction;
+use App\Http\Domain\Admin\Authentication\Actions\LogUserOutAction;
 use App\Models\User;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
@@ -16,6 +16,9 @@ use App\Src\View\View;
 final class AuthorizationController
 {
     private User $user;
+
+    private string $redirectTo = '/admin/dashboard';
+    private string $redirectBack = '/admin';
 
     public function __construct()
     {
@@ -35,7 +38,7 @@ final class AuthorizationController
         $title = Translation::get('login_page_title');
 
         if ($this->user->isLoggedIn()) {
-            return new Redirect('/admin/dashboard');
+            return new Redirect($this->redirectTo);
         }
 
         return new View(
@@ -48,10 +51,10 @@ final class AuthorizationController
     {
         $login = new LogUserInAction($this->user);
         if ($login->execute()) {
-            return new Redirect('/admin/dashboard');
+            return new Redirect($this->redirectTo);
         }
 
-        return new Redirect('/admin');
+        return new Redirect($this->redirectBack);
     }
 
     public function logout(): Redirect
@@ -59,6 +62,6 @@ final class AuthorizationController
         $logout = new LogUserOutAction($this->user);
         $logout->execute();
 
-        return new Redirect('/admin');
+        return new Redirect($this->redirectBack);
     }
 }

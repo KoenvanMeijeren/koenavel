@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Domain\Admin\Authorization\Actions;
+namespace App\Http\Domain\Admin\Authentication\Actions;
 
 use App\Models\User;
 use App\Src\Action\Action;

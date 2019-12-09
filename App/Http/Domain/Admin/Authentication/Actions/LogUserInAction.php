@@ -2,8 +2,9 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Domain\Admin\Authorization\Actions;
+namespace App\Http\Domain\Admin\Authentication\Actions;
 
+use App\Http\Domain\Repositories\AccountRepository;
 use App\Models\Admin\Account;
 use App\Models\User;
 use App\Services\Auth\IDEncryption;
@@ -22,17 +23,12 @@ final class LogUserInAction extends FormAction
 
     private User $user;
     private Session $session;
+    private AccountRepository $account;
 
     private string $email;
     private string $password;
 
     private array $attributes;
-
-    private int $accountID;
-    private string $accountPassword;
-    private int $accountRights;
-    private int $accountFailedLogIns;
-    private bool $accountIsBlocked;
 
     public function __construct(User $user)
     {
@@ -43,12 +39,9 @@ final class LogUserInAction extends FormAction
         $this->email = $request->post('email');
         $this->password = $request->post('password');
 
-        $account = $this->user->getByEmail($this->email);
-        $this->accountID = (int) ($account->account_ID ?? '0');
-        $this->accountPassword = $account->account_password ?? '';
-        $this->accountRights = (int) ($account->account_rights ?? '0');
-        $this->accountFailedLogIns = (int) ($account->account_failed_login ?? '0');
-        $this->accountIsBlocked = (bool) ($account->account_is_blocked ?? '');
+        $this->account = new AccountRepository(
+            $this->user->getByEmail($this->email)
+        );
     }
 
     /**
@@ -56,7 +49,7 @@ final class LogUserInAction extends FormAction
      */
     protected function handle(): bool
     {
-        if (password_verify($this->password, $this->accountPassword)) {
+        if (password_verify($this->password, $this->account->getPassword())) {
             $this->session->unset('userID');
 
             $idEncryption = new IDEncryption();
@@ -64,7 +57,7 @@ final class LogUserInAction extends FormAction
 
             $this->session->save(
                 'userID',
-                $idEncryption->encrypt($this->accountID, $token)
+                $idEncryption->encrypt($this->account->getId(), $token)
             );
 
             // always executed
@@ -102,7 +95,7 @@ final class LogUserInAction extends FormAction
      */
     protected function authorize(): bool
     {
-        if ($this->accountIsBlocked) {
+        if ($this->account->isBlocked()) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('login_failed_blocked_account_message')
@@ -152,18 +145,20 @@ final class LogUserInAction extends FormAction
     private function rehashPassword(): void
     {
         if (password_needs_rehash(
-            $this->accountPassword, Account::PASSWORD_ENCRYPTION
+            $this->account->getPassword(),
+            Account::PASSWORD_ENCRYPTION
         )
         ) {
             $this->attributes['account_password'] = (string) password_hash(
-                $this->accountPassword, Account::PASSWORD_ENCRYPTION
+                $this->account->getPassword(),
+                Account::PASSWORD_ENCRYPTION
             );
         }
     }
 
     private function resetFailedLogInAttempts(): void
     {
-        if ($this->accountRights > User::ADMIN) {
+        if ($this->account->getRights() > User::ADMIN) {
             return;
         }
 
@@ -172,11 +167,11 @@ final class LogUserInAction extends FormAction
 
     private function addFailedLogInAttempt(): void
     {
-        if ($this->accountRights > User::ADMIN) {
+        if ($this->account->getRights() > User::ADMIN) {
             return;
         }
 
-        $current = $this->accountFailedLogIns;
+        $current = $this->account->getFailedLogInAttempts();
         $this->attributes['account_failed_login'] = (string) ++$current;
     }
 
@@ -186,8 +181,8 @@ final class LogUserInAction extends FormAction
      */
     private function blockAccount(): void
     {
-        if ($this->accountRights > User::ADMIN
-            || $this->accountFailedLogIns < self::MAXIMUM_LOGIN_ATTEMPTS) {
+        if ($this->account->getRights() > User::ADMIN
+            || $this->account->getFailedLogInAttempts() < self::MAXIMUM_LOGIN_ATTEMPTS) {
             return;
         }
 
@@ -200,6 +195,6 @@ final class LogUserInAction extends FormAction
             return;
         }
 
-        $this->user->update($this->accountID, $this->attributes);
+        $this->user->update($this->account->getId(), $this->attributes);
     }
 }
