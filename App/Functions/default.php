@@ -31,7 +31,7 @@ if (!function_exists('array_replace_keys')) {
     function array_replace_keys(array $array, array $keys)
     {
         foreach ($keys as $search => $replace) {
-            if (isset($array[$search])) {
+            if (array_key_exists($search, $array)) {
                 $array[$replace] = $array[$search];
                 unset($array[$search]);
             }
@@ -123,7 +123,7 @@ if (!function_exists('replaceAllExceptFirstString')) {
         string $toReplace,
         string $string
     ) {
-        return (string) replaceString(
+        return replaceString(
             $toReplace,
             $toRemove,
             replaceString(

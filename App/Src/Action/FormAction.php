@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Action;
 
-
 use App\Src\Security\CSRF;
 
 abstract class FormAction extends Action

@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
+use App\Src\Validate\Validate;
+
 $filenames = [
     'default',
-    'date_time',
     'csv',
     'load_items',
 ];
 
 foreach ($filenames as $filename) {
-    $filename = APP_PATH.'/functions/'.$filename.'.php';
+    $filename = APP_PATH . '/functions/' . $filename . '.php';
 
-    if (file_exists($filename)) {
-        include_once $filename;
-    }
+    Validate::var($filename)->fileExists();
+
+    include_once $filename;
 }

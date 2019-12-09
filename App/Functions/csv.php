@@ -67,7 +67,7 @@ function outputCsv(string $fileName, array $assocDataArray)
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment;filename='.$fileName.'.csv');
 
-    if (!empty($assocDataArray) && is_array($assocDataArray)) {
+    if (is_array($assocDataArray) && sizeof($assocDataArray) > 0) {
         $fp = fopen('php://output', 'wb');
 
         if (is_resource($fp)) {

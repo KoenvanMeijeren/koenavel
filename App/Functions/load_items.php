@@ -7,15 +7,16 @@ use App\Src\Validate\Validate;
 
 function includeFile(string $filename, $vars = null)
 {
-    if (!empty($vars)) {
+    if ($vars !== null) {
         extract($vars, EXTR_SKIP);
     }
+
     Validate::var($filename)->fileExists();
 
     return include $filename;
 }
 
-function getFileContent(string $filename)
+function getFileContents(string $filename)
 {
     Validate::var($filename)->fileExists();
 
@@ -23,7 +24,7 @@ function getFileContent(string $filename)
 }
 
 /**
- * Load a picture and return it.
+ * Load an image and return it.
  *
  * @param string $name     the filename
  * @param string $fallback the fallback for the filename
@@ -32,15 +33,11 @@ function getFileContent(string $filename)
  */
 function includeImage(string $name, string $fallback)
 {
-    if (!empty($name)
-        && file_exists($_SERVER['DOCUMENT_ROOT'].$name)
-    ) {
+    if (file_exists($_SERVER['DOCUMENT_ROOT'].$name)) {
         return $name;
     }
 
-    if (!empty($fallback)
-        && file_exists($_SERVER['DOCUMENT_ROOT'].$fallback)
-    ) {
+    if (file_exists($_SERVER['DOCUMENT_ROOT'].$fallback)) {
         return $fallback;
     }
 
@@ -61,6 +58,7 @@ function includeImage(string $name, string $fallback)
 function loadTable(string $filename, array $keys, array $rows = [])
 {
     $filename = RESOURCES_PATH."/partials/tables/{$filename}.view.php";
+
     Validate::var($filename)->fileExists();
 
     return include $filename;

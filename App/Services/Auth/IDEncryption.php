@@ -32,7 +32,7 @@ final class IDEncryption
     /**
      * Encrypt the id to make sure that it cannot be read by attackers.
      *
-     * @param int    $id the id to be encrypted
+     * @param int    $id    the id to be encrypted
      * @param string $token the token which will be used to encrypt the id.
      *
      * @return string
