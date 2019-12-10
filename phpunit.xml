@@ -22,6 +22,7 @@
             <exclude>
                 <directory suffix=".php">App/Functions</directory>
                 <directory suffix=".php">App/Controllers</directory>
+                <directory suffix=".view.php">*</directory>
 
                 <file>App/Src/Core/App.php</file>
                 <file>App/Src/Core/Upload.php</file>
