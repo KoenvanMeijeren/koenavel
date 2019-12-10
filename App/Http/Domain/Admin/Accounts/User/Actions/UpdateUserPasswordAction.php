@@ -12,6 +12,7 @@ use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class UpdateUserPasswordAction extends FormAction
 {
@@ -64,39 +65,19 @@ final class UpdateUserPasswordAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->currentPassword)
-            || empty($this->newPassword)
-            || empty($this->confirmationPassword)
-        ) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
+        $validator = new FormValidator();
 
-            return false;
-        }
+        $validator->input($this->currentPassword)
+            ->isRequired()
+            ->passwordIsVerified($this->account->getPassword());
 
-        if (!password_verify(
-            $this->currentPassword,
-            $this->account->getPassword()
-        )) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_edit_account_wrong_current_password_message')
-            );
+        $validator->input($this->newPassword)
+            ->isRequired();
 
-            return false;
-        }
+        $validator->input($this->confirmationPassword)
+            ->isRequired()
+            ->passwordIsEqual($this->newPassword);
 
-        if ($this->newPassword !== $this->confirmationPassword) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_passwords_are_not_the_same_message')
-            );
-
-            return false;
-        }
-
-        return true;
+        return $validator->handleFormValidation();
     }
 }
