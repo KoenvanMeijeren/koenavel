@@ -31,7 +31,7 @@ $account = new AccountRepository($account ?? null);
                                 <input type="text" name="name" id="name"
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_name') ?>"
-                                       value="<?= !empty($request->post('name')) ?
+                                       value="<?= $request->post('name') !== '' ?
                                            $request->post('name') : $account->getName() ?>"
                                        required>
                             </div>

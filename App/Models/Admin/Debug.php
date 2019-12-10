@@ -160,7 +160,7 @@ final class Debug
 
         phpinfo();
 
-        $phpinfo = ob_get_clean();
+        $phpinfo = (string) ob_get_clean();
 
         return preg_replace(
             '%^.*<body>(.*)</body>.*$%ms',
