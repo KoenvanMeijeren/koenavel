@@ -9,7 +9,7 @@ use App\Src\Exceptions\Basic\UndefinedRouteException;
 use App\Src\Exceptions\Object\InvalidMethodCalledException;
 use App\Src\Exceptions\Object\InvalidObjectException;
 use App\Src\Validate\Validate;
-use App\Src\View\View;
+use App\Src\View\DomainView;
 use Closure;
 
 final class Router
@@ -138,7 +138,7 @@ final class Router
      * @param string $requestType the request type
      * @param int    $rights      the rights of the user
      *
-     * @return View|string
+     * @return DomainView|string
      *
      * @throws InvalidObjectException
      * @throws InvalidMethodCalledException
@@ -168,7 +168,7 @@ final class Router
      * @param string $url the current url to search for the
      *                    corresponding route in the routes
      *
-     * @return View|string
+     * @return DomainView|string
      *
      * @throws InvalidObjectException
      * @throws InvalidMethodCalledException
