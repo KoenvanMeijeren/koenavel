@@ -27,23 +27,23 @@ final class Resource
         }
 
         return '<div class="table-edit-row flex">
-                    <a href="'.$editAction.'"
+                    <a href="' . $editAction . '"
                        class="btn btn-success flex-child edit-button"
                        data-toggle="tooltip"
                        data-placement="top"
-                       title="'.Translation::get('table_row_edit').'">
+                       title="' . Translation::get('table_row_edit') . '">
                         <i class="fas fa-user-edit"></i>
                     </a>
 
                     <form method="post"
-                          action="'.$destroyAction.'">
-                        <button class="btn btn-danger flex-child edit-button '.$removeBorder.'"
+                          action="' . $destroyAction . '">
+                        <button class="btn btn-danger flex-child edit-button ' . $removeBorder . '"
                                 type="submit"
                                 data-toggle="tooltip"
                                 data-placement="top"
-                                '.$disabledDestroyButton.'
-                                title="'.Translation::get('table_row_delete').'"
-                                onclick="return confirm(\''.$destroyMessageWarning.'\')">
+                                ' . $disabledDestroyButton . '
+                                title="' . Translation::get('table_row_delete') . '"
+                                onclick="return confirm(\'' . $destroyMessageWarning . '\')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </form>

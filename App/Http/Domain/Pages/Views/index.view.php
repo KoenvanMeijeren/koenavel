@@ -45,36 +45,37 @@ declare(strict_types=1);
         <?php
         $date = new \App\Services\Helpers\DateTime(new \Cake\Chronos\Chronos());
         for ($x = 8; $x < 15; $x++) : ?>
-        <div class="row event event-border rounded shadow">
-            <div class="col-1 pt-2 default-color">
+            <div class="row event event-border rounded shadow">
+                <div class="col-1 pt-2 default-color">
                 <span class="h3 font-weight-bold">
                     <?= $x ?>
                 </span>
-                <span class="text-uppercase">
+                    <span class="text-uppercase">
                     <?= $date->toShortMonth() ?>
                 </span>
-            </div>
-            <div class="col-11 pt-2">
-                <h5 class="font-weight-bold text-uppercase">
-                    Concert in de grote kerk - Kaatsheuvel
-                </h5>
+                </div>
+                <div class="col-11 pt-2">
+                    <h5 class="font-weight-bold text-uppercase">
+                        Concert in de grote kerk - Kaatsheuvel
+                    </h5>
 
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        Maandag
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        12:30 uur
-                    </li>
-                    <li class="list-inline-item">
-                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                        Grote kerk
-                    </li>
-                </ul>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                            Maandag
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            12:30 uur
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fas fa-map-marker-alt"
+                               aria-hidden="true"></i>
+                            Grote kerk
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
         <?php endfor; ?>
     </div>
 </div>

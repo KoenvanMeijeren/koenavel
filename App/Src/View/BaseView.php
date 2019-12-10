@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\View;
 
-
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\TemplateNameParser;

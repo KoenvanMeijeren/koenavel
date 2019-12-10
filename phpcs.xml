@@ -2,6 +2,7 @@
 <ruleset name="PSR2">
     <description>The PSR2 coding standard.</description>
     <rule ref="PSR2"/>
+    <exclude-pattern>Views</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>resources</exclude-pattern>
     <exclude-pattern>storage/</exclude-pattern>
