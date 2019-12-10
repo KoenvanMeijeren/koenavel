@@ -124,7 +124,7 @@ final class LogUserInAction extends FormAction
 
         $validator->flashErrorsIntoSession();
 
-        return $validator->validate();
+        return $validator->handleFormValidation();
     }
 
     private function storeToken(string $token): void
