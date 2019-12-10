@@ -48,7 +48,7 @@ final class UnblockAccountAction extends Action
         if ($this->user->getID() === $this->account->getID()) {
             $this->session->flash(
                 State::FAILED,
-                Translation::get('cannot_delete_own_account_message')
+                Translation::get('cannot_unblock_own_account_message')
             );
             return false;
         }

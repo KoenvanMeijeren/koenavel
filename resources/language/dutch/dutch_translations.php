@@ -96,6 +96,7 @@ return [
     'admin_edited_other_account_successful_message' => 'Account is succesvol bijgewerkt.',
     'no_accounts_were_found_message' => 'Er zijn geen accounts gevonden',
     'cannot_block_own_account_message' => 'Je kan niet je eigen account blokkeren.',
+    'cannot_unblock_own_account_message' => 'Je kan niet je eigen account deblokkeren.',
     'cannot_delete_own_account_message' => 'Je kan niet je eigen account verwijderen.',
     'cannot_edit_own_account_rights_message' => 'Je kan niet de rechten van je eigen account bewerken.',
     'cannot_edit_own_account_block_state_message' => 'Je kan niet je eigen account blokkeren.',
