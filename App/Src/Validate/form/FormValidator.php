@@ -39,10 +39,50 @@ final class FormValidator
         return $this;
     }
 
+    public function isBetweenRange(
+        int $min,
+        int $max,
+        string $errorMessage = ''
+    ): FormValidator {
+        $number = (int)$this->input;
+        if ($number < $min || $number > $max) {
+            $error = $errorMessage;
+            if ($errorMessage === '') {
+                $error = sprintf(
+                    Translation::get('validator_form_field_has_invalid_range'),
+                    $this->alias, $min, $max
+                );
+            }
+
+            $this->errors[] = $error;
+        }
+
+        return $this;
+    }
+
     public function isEmail(): FormValidator
     {
-        if (! (bool)filter_var($this->input, FILTER_VALIDATE_EMAIL)) {
+        if (!(bool)filter_var($this->input, FILTER_VALIDATE_EMAIL)) {
             $this->errors[] = Translation::get('validator_form_email_is_invalid');
+        }
+
+        return $this;
+    }
+
+    public function isUnique(
+        ?object $databaseRecord,
+        string $errorMessage = ''
+    ): FormValidator {
+        if ($databaseRecord !== null) {
+            $error = $errorMessage;
+            if ($errorMessage === '') {
+                $error = sprintf(
+                    Translation::get('validator_form_field_is_unique'),
+                    $this->alias
+                );
+            }
+
+            $this->errors[] = $error;
         }
 
         return $this;
@@ -57,8 +97,8 @@ final class FormValidator
         return $this;
     }
 
-    public function passwordIsNotCurrentPassword(string $currentHashedPassword): FormValidator
-    {
+    public function passwordIsNotCurrentPassword(string $currentHashedPassword
+    ): FormValidator {
         if (password_verify($this->input, $currentHashedPassword)) {
             $this->errors[] = Translation::get('validator_form_new_password_cannot_be_the_same_as_the_current_password');
         }
