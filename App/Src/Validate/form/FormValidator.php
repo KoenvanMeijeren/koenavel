@@ -57,6 +57,15 @@ final class FormValidator
         return $this;
     }
 
+    public function passwordIsNotCurrentPassword(string $currentHashedPassword): FormValidator
+    {
+        if (password_verify($this->input, $currentHashedPassword)) {
+            $this->errors[] = Translation::get('validator_form_new_password_cannot_be_the_same_as_the_current_password');
+        }
+
+        return $this;
+    }
+
     public function passwordIsVerified(string $hashedPassword): FormValidator
     {
         if (!password_verify($this->input, $hashedPassword)) {

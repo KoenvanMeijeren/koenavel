@@ -226,7 +226,8 @@ return [
     'validator_form_field_is_required' => '%s is verplicht om in te vullen.',
     'validator_form_email_is_invalid' => 'Ongeldige email opgegeven.',
     'validator_form_passwords_are_not_equal' => 'De nieuwe wachtwoorden zijn niet hetzelfde.',
-    'validator_form_passwords_is_not_verified' => 'Het opgegeven wachtwoord is onjuist.',
+    'validator_form_new_password_cannot_be_the_same_as_the_current_password' => 'Het nieuwe wachtwoord mag niet hetzelfde zijn als het huidge wachtwoord.',
+    'validator_form_passwords_is_not_verified' => 'Het huidige wachtwoord is onjuist.',
 
     /**
      * Buttons.
