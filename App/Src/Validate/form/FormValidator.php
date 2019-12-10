@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Validate\form;
 
-
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
@@ -50,7 +49,9 @@ final class FormValidator
             if ($errorMessage === '') {
                 $error = sprintf(
                     Translation::get('validator_form_field_has_invalid_range'),
-                    $this->alias, $min, $max
+                    $this->alias,
+                    $min,
+                    $max
                 );
             }
 
@@ -97,10 +98,13 @@ final class FormValidator
         return $this;
     }
 
-    public function passwordIsNotCurrentPassword(string $currentHashedPassword
+    public function passwordIsNotCurrentPassword(
+        string $currentHashedPassword
     ): FormValidator {
         if (password_verify($this->input, $currentHashedPassword)) {
-            $this->errors[] = Translation::get('validator_form_new_password_cannot_be_the_same_as_the_current_password');
+            $this->errors[] = Translation::get(
+                'validator_form_new_password_cannot_be_the_same_as_the_current_password'
+            );
         }
 
         return $this;
