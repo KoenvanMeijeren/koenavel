@@ -14,6 +14,9 @@ final class Converter
      */
     private $var;
 
+    /**
+     * @param mixed $var
+     */
     public function __construct($var)
     {
         $this->var = $var;

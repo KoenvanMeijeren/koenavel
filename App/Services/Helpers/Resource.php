@@ -10,7 +10,7 @@ final class Resource
 {
     public static function loadFlashMessage(): void
     {
-        includeFile(RESOURCES_PATH . '/views/partials/flash.view.php');
+        includeFile(RESOURCES_PATH . '/partials/flash.view.php');
     }
 
     public static function addTableEditColumn(
@@ -35,18 +35,18 @@ final class Resource
                         <i class="fas fa-user-edit"></i>
                     </a>
 
-                    <form method="post" 
+                    <form method="post"
                           action="'.$destroyAction.'">
-                        <button class="btn btn-danger flex-child edit-button '.$removeBorder.'" 
-                                type="submit" 
-                                data-toggle="tooltip" 
+                        <button class="btn btn-danger flex-child edit-button '.$removeBorder.'"
+                                type="submit"
+                                data-toggle="tooltip"
                                 data-placement="top"
                                 '.$disabledDestroyButton.'
-                                title="'.Translation::get('table_row_delete').'" 
+                                title="'.Translation::get('table_row_delete').'"
                                 onclick="return confirm(\''.$destroyMessageWarning.'\')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
-                    </form>     
+                    </form>
                 </div>';
     }
 }

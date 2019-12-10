@@ -16,6 +16,7 @@ parameters:
         - "#In method .*, return type is .*#"
         - "#Method .* is not final, but since the containing class is abstract, it should be.#"
         - "#Method .* has parameter .* with a nullable type declaration.#"
+        - "#Empty array passed to foreach.#"
     level: 7
     paths:
     - App/

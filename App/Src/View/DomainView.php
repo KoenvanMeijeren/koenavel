@@ -18,7 +18,7 @@ final class DomainView
     public function __construct(string $name, array $content = [])
     {
         $filesystemLoader = new FilesystemLoader(
-            RESOURCES_PATH.'/views/%name%'
+            RESOURCES_PATH.'/partials/%name%'
         );
 
         $templating = new PhpEngine(
@@ -28,7 +28,7 @@ final class DomainView
 
         $layout = 'layout.view.php';
         if (strpos(URI::getUrl(), 'admin') !== false) {
-            $layout = 'admin/layout.view.php';
+            $layout = 'admin.layout.view.php';
         }
 
         echo $templating->render($layout, [

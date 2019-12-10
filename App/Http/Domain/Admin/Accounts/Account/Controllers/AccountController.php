@@ -17,21 +17,18 @@ use App\Models\Admin\Account;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
-use App\Src\Session\Session;
 use App\Src\Translation\Translation;
 use App\Src\View\DomainView;
 
 final class AccountController
 {
     private Account $account;
-    private Session $session;
 
     private string $baseViewPath = 'Admin/Accounts/Account/Views/';
 
     public function __construct()
     {
         $this->account = new Account();
-        $this->session = new Session();
     }
 
     public function index(): DomainView
@@ -39,7 +36,8 @@ final class AccountController
         $accounts = new IndexViewModel($this->account->all());
 
         return new DomainView(
-            $this->baseViewPath . 'index', [
+            $this->baseViewPath . 'index',
+            [
                 'title' => Translation::get('admin_account_title'),
                 'accounts' => $accounts->table()
             ]
@@ -49,7 +47,8 @@ final class AccountController
     public function create(): DomainView
     {
         return new DomainView(
-            $this->baseViewPath . 'create', [
+            $this->baseViewPath . 'create',
+            [
                 'title' => Translation::get('admin_create_account_title')
             ]
         );
@@ -82,7 +81,8 @@ final class AccountController
         );
 
         return new DomainView(
-            $this->baseViewPath . 'edit', [
+            $this->baseViewPath . 'edit',
+            [
                 'title' => Translation::get($title),
                 'account' => $account->get()
             ]

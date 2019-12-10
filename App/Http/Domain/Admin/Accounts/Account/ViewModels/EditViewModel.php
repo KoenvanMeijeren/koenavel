@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\Account\ViewModels;
 
-
+use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 use stdClass;
 
-class EditViewModel
+final class EditViewModel
 {
     private ?stdClass $account;
     private Session $session;
@@ -22,6 +23,11 @@ class EditViewModel
         $this->session = new Session();
     }
 
+    /**
+     * @return Redirect|stdClass
+     * @throws InvalidKeyException
+     * @throws NoTranslationsForGivenLanguageID
+     */
     public function get()
     {
         if ($this->account === null) {

@@ -5,21 +5,29 @@ declare(strict_types=1);
 namespace App\Http\Domain\Pages\Controllers;
 
 use App\Src\Translation\Translation;
-use App\Src\View\View;
+use App\Src\View\DomainView;
 
 final class PageController
 {
-    public function index(): View
-    {
-        $title = Translation::get('home_page_title');
+    private string $baseViewPath = 'Pages/Views/';
 
-        return new View('index/index', compact('title'));
+    public function index(): DomainView
+    {
+        return new DomainView(
+            $this->baseViewPath . 'index',
+            [
+                'title' => Translation::get('home_page_title')
+            ]
+        );
     }
 
-    public function notFound(): View
+    public function notFound(): DomainView
     {
-        $title = Translation::get('page_not_found_title');
-
-        return new View('http/404', compact('title'));
+        return new DomainView(
+            $this->baseViewPath . '404',
+            [
+                'title' => Translation::get('page_not_found_title')
+            ]
+        );
     }
 }

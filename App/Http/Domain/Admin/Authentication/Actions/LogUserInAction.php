@@ -28,7 +28,7 @@ final class LogUserInAction extends FormAction
     private string $email;
     private string $password;
 
-    private array $attributes;
+    private array $attributes = [];
 
     public function __construct(User $user)
     {
@@ -191,7 +191,7 @@ final class LogUserInAction extends FormAction
 
     private function store(): void
     {
-        if (!isset($this->attributes)) {
+        if (sizeof($this->attributes) === 0) {
             return;
         }
 

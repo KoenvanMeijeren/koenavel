@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Repositories;
 
-use stdClass;
-
 final class AccountRepository
 {
-    private ?stdClass $account;
-
     private int $id;
     private string $name;
     private string $email;
@@ -20,10 +16,8 @@ final class AccountRepository
     private bool $isBlocked;
     private bool $isDeleted;
 
-    public function __construct(?stdClass $account)
+    public function __construct(?object $account)
     {
-        $this->account = $account;
-
         $this->id = (int) ($account->account_ID ?? '0');
         $this->name = $account->account_name ?? '';
         $this->email = $account->account_email ?? '';
@@ -35,7 +29,7 @@ final class AccountRepository
         $this->isDeleted = (bool) ($account->account_is_deleted ?? '');
     }
 
-    public function getAccount(): ?stdClass
+    public function getAccount(): ?object
     {
         return $this->account;
     }
