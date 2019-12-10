@@ -102,4 +102,11 @@ final class FormValidator
     {
         return sizeof($this->errors) === 0;
     }
+
+    public function handleFormValidation(): bool
+    {
+        $this->flashErrorsIntoSession();
+
+        return $this->validate();
+    }
 }
