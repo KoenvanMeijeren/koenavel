@@ -167,7 +167,6 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                 <input type="password" name="password"
                                        id="password"
                                        class="form-control"
-                                       value="<?= $request->post('newPassword') ?>"
                                        placeholder="<?= Translation::get('form_new_password') ?>"
                                        required>
                                 <meter max="4" id="password-strength-meter"
@@ -186,7 +185,6 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                        name="confirmationPassword"
                                        id="confirmationPassword"
                                        class="form-control"
-                                       value="<?= $request->post('confirmationPassword') ?>"
                                        placeholder="<?= Translation::get('form_confirmation_password') ?>"
                                        required>
                             </div>

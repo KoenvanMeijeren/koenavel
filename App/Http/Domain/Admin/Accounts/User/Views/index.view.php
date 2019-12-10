@@ -86,7 +86,6 @@ $account = new AccountRepository($account ?? null);
                                 <input type="password" name="currentPassword"
                                        id="currentPassword"
                                        class="form-control"
-                                       value="<?= $request->post('currentPassword') ?>"
                                        placeholder="<?= Translation::get('form_current_password') ?>"
                                        required>
                             </div>
@@ -103,7 +102,6 @@ $account = new AccountRepository($account ?? null);
                                 <input type="password" name="newPassword"
                                        id="newPassword"
                                        class="form-control"
-                                       value="<?= $request->post('newPassword') ?>"
                                        placeholder="<?= Translation::get('form_new_password') ?>"
                                        required>
                                 <meter max="4" id="password-strength-meter"
@@ -121,7 +119,6 @@ $account = new AccountRepository($account ?? null);
                                        name="confirmationPassword"
                                        id="confirmationPassword"
                                        class="form-control"
-                                       value="<?= $request->post('confirmationPassword') ?>"
                                        placeholder="<?= Translation::get('form_confirmation_password') ?>"
                                        required>
                             </div>
