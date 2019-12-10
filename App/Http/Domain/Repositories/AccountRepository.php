@@ -29,11 +29,6 @@ final class AccountRepository
         $this->isDeleted = (bool) ($account->account_is_deleted ?? '');
     }
 
-    public function getAccount(): ?object
-    {
-        return $this->account;
-    }
-
     public function getId(): int
     {
         return $this->id;
