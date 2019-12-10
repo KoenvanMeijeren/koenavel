@@ -44,7 +44,8 @@ final class DebugController
                 'sessionSettings' => $this->debug->getSessionSettingsInformation(),
                 'sessionInformation' => $this->debug->getSessionInformation(),
                 'cookieInformation' => $this->debug->getCookieInformation(),
-                'logs' => $this->debug->getLogInformation($date)
+                'logs' => $this->debug->getLogInformation($date),
+                'phpinfo' => $this->debug->getPHPInfo()
             ]
         );
     }

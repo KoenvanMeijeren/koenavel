@@ -244,3 +244,15 @@ $request = new Request();
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="scrollbox-vertical h-500">
+                    <?= $phpinfo ?? '' ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

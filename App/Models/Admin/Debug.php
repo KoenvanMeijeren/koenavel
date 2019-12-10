@@ -153,4 +153,19 @@ final class Debug
 
         return array_reverse($logs);
     }
+
+    public function getPHPInfo(): string
+    {
+        ob_start();
+
+        phpinfo();
+
+        $phpinfo = ob_get_clean();
+
+        return preg_replace(
+            '%^.*<body>(.*)</body>.*$%ms',
+            '$1',
+            $phpinfo
+        );
+    }
 }
