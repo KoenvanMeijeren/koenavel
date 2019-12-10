@@ -9,30 +9,32 @@ use App\Http\Domain\Admin\Accounts\User\Actions\UpdateUserPasswordAction;
 use App\Models\User;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
-use App\Src\View\View;
+use App\Src\View\DomainView;
 
 final class UserAccountController
 {
     private User $user;
+
+    private string $baseViewPath = 'Admin/Accounts/User/Views/';
 
     public function __construct()
     {
         $this->user = new User();
     }
 
-    public function index(): View
+    public function index(): DomainView
     {
-        $title = Translation::get('admin_account_title');
-        $account = $this->user->getAccount();
-
-        return new View(
-            'admin/account/user/index',
-            compact('title', 'account')
+        return new DomainView(
+            $this->baseViewPath . 'index',
+            [
+                'title' => Translation::get('admin_account_title'),
+                'account' => $this->user->getAccount()
+            ]
         );
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      */
     public function storeData()
     {
@@ -45,7 +47,7 @@ final class UserAccountController
     }
 
     /**
-     * @return Redirect|View
+     * @return Redirect|DomainView
      */
     public function storePassword()
     {

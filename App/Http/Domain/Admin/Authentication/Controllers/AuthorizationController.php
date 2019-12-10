@@ -11,7 +11,7 @@ use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
-use App\Src\View\View;
+use App\Src\View\DomainView;
 
 final class AuthorizationController
 {
@@ -19,6 +19,7 @@ final class AuthorizationController
 
     private string $redirectTo = '/admin/dashboard';
     private string $redirectBack = '/admin';
+    private string $baseViewPath = 'Admin/Authentication/Views/';
 
     public function __construct()
     {
@@ -29,21 +30,21 @@ final class AuthorizationController
      * Load the login page.
      * If the user is already logged in redirect him to the dashboard.
      *
-     * @return Redirect|View
+     * @return Redirect|DomainView
      * @throws InvalidKeyException
      * @throws NoTranslationsForGivenLanguageID
      */
     public function index()
     {
-        $title = Translation::get('login_page_title');
-
         if ($this->user->isLoggedIn()) {
             return new Redirect($this->redirectTo);
         }
 
-        return new View(
-            'admin/authorization/login',
-            compact('title')
+        return new DomainView(
+            $this->baseViewPath . 'login',
+            [
+                'title' => Translation::get('login_page_title')
+            ]
         );
     }
 

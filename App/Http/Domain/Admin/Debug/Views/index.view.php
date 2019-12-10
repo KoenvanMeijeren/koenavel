@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 use App\Src\Core\Env;
+use App\Src\Core\Request;
 use App\Src\Translation\Translation;
 
-$request = new \App\Src\Core\Request();
+$request = new Request();
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -76,7 +78,7 @@ $request = new \App\Src\Core\Request();
                         Log informatie
                     </h4>
 
-                    <?php if (empty($logs ?? '')) : ?>
+                    <?php if (sizeof($logs ?? []) < 1) : ?>
                         <p class="mt-2 font-weight-bold">
                             Er is geen log data gevonden op
                             <?= $request->get('logDate') ?>.
@@ -86,6 +88,7 @@ $request = new \App\Src\Core\Request();
 
                 <form class="form-inline float-right" method="get">
                     <div class="form-group mr-2">
+                        <label for="datepicker"></label>
                         <input type="text" name="logDate"
                                autocomplete="off"
                                class="form-control" id="datepicker"
@@ -99,7 +102,7 @@ $request = new \App\Src\Core\Request();
             </div>
             <div class="card-body">
                 <div class="row">
-                    <?php if (!empty($logs ?? '')) : ?>
+                    <?php if (sizeof($logs ?? []) > 0) : ?>
                         <div class="col-sm-4">
                             <div class="form-label-group">
                                 <input type="text" id="searchLog"
@@ -116,8 +119,10 @@ $request = new \App\Src\Core\Request();
                                      id="list-tab" role="tablist">
                                     <?php $active = 'active';
                                     foreach (($logs ?? []) as $key => $log) :
-                                        if (strstr($log['message'] ?? '',
-                                            'ERROR')) {
+                                        if (strpos(
+                                            $log['message'] ?? '',
+                                            'ERROR'
+                                        ) !== false) {
                                             $class = 'active-danger';
                                         } else {
                                             $class = 'active-success';
@@ -139,15 +144,18 @@ $request = new \App\Src\Core\Request();
                             <div class="tab-content" id="nav-tabContent">
                                 <?php $active = 'active';
                                 foreach (($logs ?? []) as $key => $log) : ?>
-                                    <div class="tab-pane fade show <?= $active ?>"
+                                    <div
+                                        class="tab-pane fade show <?= $active ?>"
                                         id="list-<?= $key ?>" role="tabpanel"
                                         aria-labelledby="list-<?= $key ?>">
                                         <h3 class="mt-0 pt-0"><?= $log['date'] ?? '' ?></h3>
 
                                         <ul class="list-group list-group-flush">
                                             <?php
-                                            if (strstr(
-                                                $log['message'] ?? '', 'ERROR')
+                                            if (strpos(
+                                                $log['message'] ?? '',
+                                                'ERROR'
+                                            ) !== false
                                             ) {
                                                 $class = 'list-group-item-danger';
                                             } else {

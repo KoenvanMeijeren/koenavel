@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 
+use App\Http\Domain\Repositories\AccountRepository;
 use App\Src\Core\Request;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 $request = new Request();
+$account = new AccountRepository($account ?? null);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -29,7 +32,7 @@ $request = new Request();
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_name') ?>"
                                        value="<?= !empty($request->post('name')) ?
-                                           $request->post('name') : $account->account_name ?? '' ?>"
+                                           $request->post('name') : $account->getName() ?>"
                                        required>
                             </div>
                         </div>
@@ -42,14 +45,15 @@ $request = new Request();
                                 <input type="email" id="email"
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_email') ?>"
-                                       value="<?= $account->account_email ?? '' ?>"
+                                       value="<?= $account->getEmail() ?>"
                                        disabled
                                        required>
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-default-small float-right">
+                    <button type="submit"
+                            class="btn btn-default-small float-right">
                         <?= Translation::get('save_button') ?>
                         <i class="far fa-save"></i>
                     </button>
@@ -102,7 +106,8 @@ $request = new Request();
                                        value="<?= $request->post('newPassword') ?>"
                                        placeholder="<?= Translation::get('form_new_password') ?>"
                                        required>
-                                <meter max="4" id="password-strength-meter" value="0"></meter>
+                                <meter max="4" id="password-strength-meter"
+                                       value="0"></meter>
                                 <p id="password-strength-text"></p>
                             </div>
                         </div>
@@ -112,7 +117,8 @@ $request = new Request();
                                     <?= Translation::get('form_confirmation_password') ?>
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="password" name="confirmationPassword"
+                                <input type="password"
+                                       name="confirmationPassword"
                                        id="confirmationPassword"
                                        class="form-control"
                                        value="<?= $request->post('confirmationPassword') ?>"
@@ -122,7 +128,8 @@ $request = new Request();
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-default-small float-right">
+                    <button type="submit"
+                            class="btn btn-default-small float-right">
                         <?= Translation::get('save_button') ?>
                         <i class="far fa-save"></i>
                     </button>
