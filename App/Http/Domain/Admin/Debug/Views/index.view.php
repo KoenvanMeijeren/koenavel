@@ -153,9 +153,9 @@ $request = new Request();
                                         <ul class="list-group list-group-flush">
                                             <?php
                                             if (strpos(
-                                                $log['message'] ?? '',
-                                                'ERROR'
-                                            ) !== false
+                                    $log['message'] ?? '',
+                                    'ERROR'
+                                ) !== false
                                             ) {
                                                 $class = 'list-group-item-danger';
                                             } else {
