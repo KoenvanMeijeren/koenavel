@@ -152,7 +152,8 @@ final class DataTable
     /**
      * Add a row to the table.
      *
-     * @param string ...$tds each item represent a piece of data in a row.
+     * @param string|int|bool ...$tds each item represent a piece
+     *                                of data in a row.
      */
     public function addRow(...$tds): void
     {
@@ -162,7 +163,7 @@ final class DataTable
 
         foreach ($tds as $item) {
             $this->addTdStart();
-            $this->add($item, $this->var);
+            $this->add((string) $item, $this->var);
             $this->addTdEnd();
         }
 

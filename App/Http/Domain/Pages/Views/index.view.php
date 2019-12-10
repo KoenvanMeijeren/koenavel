@@ -1,3 +1,7 @@
+<?php
+declare(strict_types=1);
+?>
+
 <div class="image-mobile mt-0 pt-0">
     <img src="https://via.placeholder.com/350x300" width="100%">
 </div>

@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 use App\Models\User;
+use App\Src\Core\Request;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
-$request = new \App\Src\Core\Request();
+$request = new Request();
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -29,8 +31,7 @@ $request = new \App\Src\Core\Request();
                                        class="form-control"
                                        autocomplete="off"
                                        placeholder="<?= Translation::get('form_name') ?>"
-                                       value="<?= !empty($request->post('name')) ?
-                                           $request->post('name') : $account->account_name ?? '' ?>"
+                                       value="<?= $request->post('name')  ?>"
                                        required>
                             </div>
                         </div>
@@ -44,8 +45,7 @@ $request = new \App\Src\Core\Request();
                                        class="form-control"
                                        autocomplete="off"
                                        placeholder="<?= Translation::get('form_email') ?>"
-                                       value="<?= !empty($request->post('email')) ?
-                                           $request->post('email') : $account->account_email ?? '' ?>"
+                                       value="<?= $request->post('email') ?>"
                                        required>
                             </div>
                         </div>

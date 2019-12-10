@@ -1,13 +1,16 @@
 <?php
+declare(strict_types=1);
 
+use App\Http\Domain\Repositories\AccountRepository;
 use App\Models\User;
 use App\Src\Core\Request;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 $request = new Request();
-$rights = (int) $request->post('rights');
-$rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
+$account = new AccountRepository($account ?? null);
+$rights = (int)$request->post('rights');
+$rights = $rights !== 0 ? $rights : $account->getRights();
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -19,8 +22,8 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
             </div>
             <div class="card-body">
                 <form method="post"
-                      action="/admin/account/edit/<?= $account->account_ID ?? '0' ?>/store/data">
-                    <?= CSRF::insertToken('/admin/account/edit/' . ($account->account_ID ?? "0") . '/store/data') ?>
+                      action="/admin/account/edit/<?= $account->getId() ?>/store/data">
+                    <?= CSRF::insertToken('/admin/account/edit/' . $account->getId() . '/store/data') ?>
 
                     <div class="row">
                         <div class="col-sm-6">
@@ -33,7 +36,7 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_name') ?>"
                                        value="<?= !empty($request->post('name')) ?
-                                           $request->post('name') : $account->account_name ?? '' ?>"
+                                           $request->post('name') : $account->getName() ?>"
                                        required>
                             </div>
                         </div>
@@ -52,15 +55,15 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
                                         <?= Translation::get('form_choose_rights') ?>
                                     </option>
                                     <option value="<?= User::ADMIN ?>"
-                                        <?= $rights === User::ADMIN ? 'selected' : '' ?>>
+                                            <?= $rights === User::ADMIN ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_admin') ?>
                                     </option>
                                     <option value="<?= User::SUPER_ADMIN ?>"
-                                        <?= $rights === User::SUPER_ADMIN ? 'selected' : '' ?>>
+                                            <?= $rights === User::SUPER_ADMIN ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_super_admin') ?>
                                     </option>
                                     <option value="<?= User::DEVELOPER ?>"
-                                        <?= $rights === User::DEVELOPER ? 'selected' : '' ?>>
+                                            <?= $rights === User::DEVELOPER ? 'selected' : '' ?>>
                                         <?= Translation::get('form_rights_developer') ?>
                                     </option>
                                 </select>
@@ -99,8 +102,8 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
             </div>
             <div class="card-body">
                 <form method="post"
-                      action="/admin/account/edit/<?= $account->account_ID ?? '0' ?>/store/email">
-                    <?= CSRF::insertToken('/admin/account/edit/' . ($account->account_ID ?? "0") . '/store/email') ?>
+                      action="/admin/account/edit/<?= $account->getId() ?>/store/email">
+                    <?= CSRF::insertToken('/admin/account/edit/' . $account->getId() . '/store/email') ?>
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -114,7 +117,7 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_email') ?>"
                                        value="<?= !empty($request->post('email')) ?
-                                           $request->post('email') : $account->account_email ?? '' ?>"
+                                           $request->post('email') : $account->getEmail() ?>"
                                        required>
                             </div>
                         </div>
@@ -151,8 +154,8 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
             </div>
             <div class="card-body">
                 <form method="post"
-                      action="/admin/account/edit/<?= $account->account_ID ?? '0' ?>/store/password">
-                    <?= CSRF::insertToken('/admin/account/edit/' . ($account->account_ID ?? "0") . '/store/password') ?>
+                      action="/admin/account/edit/<?= $account->getId() ?>/store/password">
+                    <?= CSRF::insertToken('/admin/account/edit/' . $account->getId() . '/store/password') ?>
 
                     <div class="row">
                         <div class="col-sm-6">
@@ -216,7 +219,7 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <?php if ((int)($account->account_is_blocked ?? '0') === 1) : ?>
+                <?php if ($account->isBlocked()) : ?>
                     <div class="card-text mb-4">
                         <h4 class="card-title">
                             Account is geblokkeerd
@@ -224,7 +227,7 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
                     </div>
 
                     <form method="post"
-                          action="/admin/account/unblock/<?= $account->account_ID ?? '0' ?>">
+                          action="/admin/account/unblock/<?= $account->getId() ?>">
                         <button type="submit"
                                 class="btn btn-success">
                             <?= Translation::get('unblock_button') ?>
@@ -240,7 +243,7 @@ $rights = $rights !== 0 ? $rights : (int) ($account->account_rights ?? '0');
                     </div>
 
                     <form method="post"
-                          action="/admin/account/block/<?= $account->account_ID ?? '0' ?>">
+                          action="/admin/account/block/<?= $account->getId() ?>">
                         <button type="submit"
                                 class="btn btn-danger">
                             <?= Translation::get('block_button') ?>
