@@ -11,6 +11,7 @@ use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class UpdateAccountDataAction extends FormAction
 {
@@ -73,28 +74,15 @@ final class UpdateAccountDataAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->name)
-            || empty($this->rights)
-        ) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
+        $validator = new FormValidator();
 
-            return false;
-        }
+        $validator->input($this->name, 'Naam')
+            ->isRequired();
 
-        if ($this->rights < User::ADMIN
-            && $this->rights > User::DEVELOPER
-        ) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_invalid_rights_message')
-            );
+        $validator->input((string)$this->rights, 'Rechten')
+            ->isRequired()
+            ->isBetweenRange(User::ADMIN, User::DEVELOPER);
 
-            return false;
-        }
-
-        return true;
+        return $validator->handleFormValidation();
     }
 }

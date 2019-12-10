@@ -35,7 +35,7 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                 <input type="text" name="name" id="name"
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_name') ?>"
-                                       value="<?= !empty($request->post('name')) ?
+                                       value="<?= $request->post('name') !== '' ?
                                            $request->post('name') : $account->getName() ?>"
                                        required>
                             </div>
@@ -116,7 +116,7 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                        name="email"
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_email') ?>"
-                                       value="<?= !empty($request->post('email')) ?
+                                       value="<?= $request->post('email') !== '' ?
                                            $request->post('email') : $account->getEmail() ?>"
                                        required>
                             </div>
@@ -167,7 +167,6 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                 <input type="password" name="password"
                                        id="password"
                                        class="form-control"
-                                       value="<?= $request->post('newPassword') ?>"
                                        placeholder="<?= Translation::get('form_new_password') ?>"
                                        required>
                                 <meter max="4" id="password-strength-meter"
@@ -186,7 +185,6 @@ $rights = $rights !== 0 ? $rights : $account->getRights();
                                        name="confirmationPassword"
                                        id="confirmationPassword"
                                        class="form-control"
-                                       value="<?= $request->post('confirmationPassword') ?>"
                                        placeholder="<?= Translation::get('form_confirmation_password') ?>"
                                        required>
                             </div>

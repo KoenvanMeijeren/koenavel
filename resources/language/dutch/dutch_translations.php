@@ -220,6 +220,18 @@ return [
     'form_max_invalid_string_length' => '%s mag maximaal %u tekens bevatten.',
 
     /**
+     * Form validator messages
+     */
+    'validator_form_base_error_message' => 'Het formulier kon niet worden verzonden omdat het de volgende fouten bevat:',
+    'validator_form_field_is_required' => '%s is verplicht om in te vullen.',
+    'validator_form_field_is_unique' => '%s bestaat al in de database.',
+    'validator_form_field_has_invalid_range' => '%s mag niet kleiner dan %u en niet groter dan %u zijn.',
+    'validator_form_email_is_invalid' => 'Ongeldige email opgegeven.',
+    'validator_form_passwords_are_not_equal' => 'De nieuwe wachtwoorden zijn niet hetzelfde.',
+    'validator_form_new_password_cannot_be_the_same_as_the_current_password' => 'Het nieuwe wachtwoord mag niet hetzelfde zijn als het huidge wachtwoord.',
+    'validator_form_passwords_is_not_verified' => 'Het huidige wachtwoord is onjuist.',
+
+    /**
      * Buttons.
      */
     'edit' => 'Bewerken',

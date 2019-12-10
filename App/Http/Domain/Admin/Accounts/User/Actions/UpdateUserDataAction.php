@@ -10,6 +10,7 @@ use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class UpdateUserDataAction extends FormAction
 {
@@ -49,14 +50,13 @@ final class UpdateUserDataAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->name)) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
-            return false;
-        }
+        $validator = new FormValidator();
 
-        return true;
+        $validator->input($this->name, 'Naam')
+            ->isRequired();
+
+        $validator->flashErrorsIntoSession();
+
+        return $validator->handleFormValidation();
     }
 }

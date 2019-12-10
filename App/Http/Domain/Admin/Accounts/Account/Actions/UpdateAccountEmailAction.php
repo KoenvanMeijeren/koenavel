@@ -10,6 +10,7 @@ use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class UpdateAccountEmailAction extends FormAction
 {
@@ -48,39 +49,18 @@ final class UpdateAccountEmailAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->email)) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
+        $validator = new FormValidator();
 
-            return false;
-        }
-
-        if (! (bool) filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->session->flash(
-                State::FAILED,
-                sprintf(
-                    Translation::get('form_invalid_email_message'),
-                    $this->email
-                )
-            );
-
-            return false;
-        }
-
-        if ($this->account->getByEmail($this->email) !== null) {
-            $this->session->flash(
-                State::FAILED,
+        $validator->input($this->email, 'Email')
+            ->isEmail()
+            ->isUnique(
+                $this->account->getByEmail($this->email),
                 sprintf(
                     Translation::get('admin_email_already_exists_message'),
                     $this->email
                 )
             );
 
-            return false;
-        }
-
-        return true;
+        return $validator->handleFormValidation();
     }
 }

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Admin\Accounts\Account\Actions;
 
+use App\Http\Domain\Repositories\AccountRepository;
 use App\Models\Admin\Account;
 use App\Src\Action\FormAction;
 use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class UpdateAccountPasswordAction extends FormAction
 {
@@ -53,26 +55,16 @@ final class UpdateAccountPasswordAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->password)
-            || empty($this->confirmationPassword)
-        ) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
+        $validator = new FormValidator();
+        $account = new AccountRepository(
+            $this->account->find($this->account->getID())
+        );
 
-            return false;
-        }
+        $validator->input($this->password, 'Wachtwoord')
+            ->isRequired()
+            ->passwordIsEqual($this->confirmationPassword)
+            ->passwordIsNotCurrentPassword($account->getPassword());
 
-        if ($this->password !== $this->confirmationPassword) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('admin_passwords_are_not_the_same_message')
-            );
-
-            return false;
-        }
-
-        return true;
+        return $validator->handleFormValidation();
     }
 }
