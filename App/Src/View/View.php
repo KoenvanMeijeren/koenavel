@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Src\View;
 
 use App\Src\Core\URI;
-use Symfony\Component\Templating\Loader\FilesystemLoader;
-use Symfony\Component\Templating\PhpEngine;
-use Symfony\Component\Templating\TemplateNameParser;
 
-final class View
+final class View extends BaseView
 {
     /**
      * @param string    $name      the name of the partial view
@@ -17,24 +14,12 @@ final class View
      */
     public function __construct(string $name, array $content = [])
     {
-        $filesystemLoader = new FilesystemLoader(
-            RESOURCES_PATH.'/views/%name%'
-        );
-
-        $templating = new PhpEngine(
-            new TemplateNameParser(),
-            $filesystemLoader
-        );
-
         $layout = 'layout.view.php';
         if (strpos(URI::getUrl(), 'admin') !== false) {
-            $layout = 'admin/layout.view.php';
+            $layout = 'admin.layout.view.php';
         }
 
-        echo $templating->render($layout, [
-            'content' => $this->renderContent($name, $content),
-            'data' => $content
-        ]);
+        parent::__construct($layout, $name, $content);
     }
 
     /**
@@ -45,11 +30,11 @@ final class View
      *
      * @return string
      */
-    private function renderContent(string $name, array $content = []): string
+    protected function renderContent(string $name, array $content = []): string
     {
         ob_start();
 
-        includeFile(RESOURCES_PATH."/views/{$name}.view.php", $content);
+        includeFile(RESOURCES_PATH."/partials/{$name}.view.php", $content);
 
         return (string) ob_get_clean();
     }
