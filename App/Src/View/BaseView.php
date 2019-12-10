@@ -11,6 +11,8 @@ use Symfony\Component\Templating\TemplateNameParser;
 
 abstract class BaseView
 {
+    protected string $templatePathPattern = RESOURCES_PATH . '/partials/%name%';
+
     /**
      * @param string    $layout    the layout of the whole view.
      * @param string    $name      the name of the partial view.
@@ -18,9 +20,7 @@ abstract class BaseView
      */
     protected function __construct(string $layout, string $name, array $content)
     {
-        $filesystemLoader = new FilesystemLoader(
-            RESOURCES_PATH.'/partials/%name%'
-        );
+        $filesystemLoader = new FilesystemLoader($this->templatePathPattern);
 
         $templating = new PhpEngine(
             new TemplateNameParser(),
