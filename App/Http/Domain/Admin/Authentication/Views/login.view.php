@@ -26,6 +26,7 @@ $session = new Session();
                        type="email"
                        id="email"
                        name="email"
+                       required
                        autofocus="autofocus"
                        placeholder="<?= Translation::get('form_email_placeholder') ?>">
                 <label for="email">
@@ -41,6 +42,7 @@ $session = new Session();
                        type="password"
                        id="password"
                        name="password"
+                       required
                        placeholder="<?= Translation::get('form_password_placeholder') ?>">
                 <label for="password">
                     <b>
