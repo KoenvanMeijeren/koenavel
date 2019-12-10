@@ -68,15 +68,12 @@ final class UpdateUserPasswordAction extends FormAction
         $validator = new FormValidator();
 
         $validator->input($this->currentPassword)
-            ->isRequired()
             ->passwordIsVerified($this->account->getPassword());
 
         $validator->input($this->newPassword)
-            ->isRequired();
-
-        $validator->input($this->confirmationPassword)
             ->isRequired()
-            ->passwordIsEqual($this->newPassword);
+            ->passwordIsEqual($this->confirmationPassword)
+            ->passwordIsNotCurrentPassword($this->currentPassword);
 
         return $validator->handleFormValidation();
     }
