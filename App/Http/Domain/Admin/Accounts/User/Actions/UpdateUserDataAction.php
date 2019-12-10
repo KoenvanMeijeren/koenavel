@@ -55,8 +55,6 @@ final class UpdateUserDataAction extends FormAction
         $validator->input($this->name, 'Naam')
             ->isRequired();
 
-        $validator->flashErrorsIntoSession();
-
         return $validator->handleFormValidation();
     }
 }

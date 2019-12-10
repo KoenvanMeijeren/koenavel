@@ -122,8 +122,6 @@ final class LogUserInAction extends FormAction
         $validator->input($this->password, 'Wachtwoord')
             ->isRequired();
 
-        $validator->flashErrorsIntoSession();
-
         return $validator->handleFormValidation();
     }
 
