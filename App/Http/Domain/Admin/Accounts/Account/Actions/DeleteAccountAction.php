@@ -31,7 +31,7 @@ final class DeleteAccountAction extends Action
     {
         $this->account->delete($this->account->getID());
 
-        if ($this->account->find($this->account->getID()) !== null) {
+        if ($this->account->find($this->account->getID()) === null) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 Translation::get('admin_deleted_account_successful_message')
