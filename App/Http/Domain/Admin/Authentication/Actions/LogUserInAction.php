@@ -13,6 +13,7 @@ use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
+use App\Src\Validate\form\FormValidator;
 
 final class LogUserInAction extends FormAction
 {
@@ -112,29 +113,18 @@ final class LogUserInAction extends FormAction
      */
     protected function validate(): bool
     {
-        if (empty($this->email)
-            || empty($this->password)) {
-            $this->session->flash(
-                State::FAILED,
-                Translation::get('form_message_for_required_fields')
-            );
+        $validator = new FormValidator();
 
-            return false;
-        }
+        $validator->input($this->email, 'Email')
+            ->isRequired()
+            ->isEmail();
 
-        if (! (bool) filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $this->session->flash(
-                State::FAILED,
-                sprintf(
-                    Translation::get('form_invalid_email_message'),
-                    $this->email
-                )
-            );
+        $validator->input($this->password, 'Wachtwoord')
+            ->isRequired();
 
-            return false;
-        }
+        $validator->flashErrorsIntoSession();
 
-        return true;
+        return $validator->validate();
     }
 
     private function storeToken(string $token): void

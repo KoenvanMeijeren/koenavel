@@ -27,10 +27,12 @@ $session = new Session();
                        id="email"
                        name="email"
                        autofocus="autofocus"
-                       required
                        placeholder="<?= Translation::get('form_email_placeholder') ?>">
                 <label for="email">
-                    <b><?= Translation::get('form_email') ?></b>
+                    <b>
+                        <?= Translation::get('form_email') ?>
+                        <span>*</span>
+                    </b>
                 </label>
             </div>
 
@@ -39,10 +41,12 @@ $session = new Session();
                        type="password"
                        id="password"
                        name="password"
-                       required
                        placeholder="<?= Translation::get('form_password_placeholder') ?>">
                 <label for="password">
-                    <b><?= Translation::get('form_password') ?></b>
+                    <b>
+                        <?= Translation::get('form_password') ?>
+                        <span>*</span>
+                    </b>
                 </label>
             </div>
 

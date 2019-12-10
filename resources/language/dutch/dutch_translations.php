@@ -220,6 +220,13 @@ return [
     'form_max_invalid_string_length' => '%s mag maximaal %u tekens bevatten.',
 
     /**
+     * Form validator messages
+     */
+    'validator_form_base_error_message' => 'Het formulier kon niet worden verzonden omdat het de volgende fouten bevat:',
+    'validator_form_field_is_required' => '%s is verplicht om in te vullen.',
+    'validator_form_email_is_invalid' => 'Ongeldige email opgegeven.',
+
+    /**
      * Buttons.
      */
     'edit' => 'Bewerken',
