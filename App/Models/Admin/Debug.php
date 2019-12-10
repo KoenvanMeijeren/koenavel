@@ -38,10 +38,8 @@ final class Debug
                     $key,
                     $lifetime->diffInMinutes($expiredAt) . ' minuten'
                 );
-            } elseif ($data === false) {
-                $table->addRow($key, 'false');
-            } elseif ($data === true) {
-                $table->addRow($key, 'true');
+            } elseif (is_bool($data)) {
+                $table->addRow($key, $data ? 'true' : 'false');
             } else {
                 $table->addRow(
                     $key,
