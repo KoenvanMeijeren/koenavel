@@ -225,6 +225,8 @@ return [
     'validator_form_base_error_message' => 'Het formulier kon niet worden verzonden omdat het de volgende fouten bevat:',
     'validator_form_field_is_required' => '%s is verplicht om in te vullen.',
     'validator_form_email_is_invalid' => 'Ongeldige email opgegeven.',
+    'validator_form_passwords_are_not_equal' => 'De nieuwe wachtwoorden zijn niet hetzelfde.',
+    'validator_form_passwords_is_not_verified' => 'Het opgegeven wachtwoord is onjuist.',
 
     /**
      * Buttons.

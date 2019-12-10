@@ -48,6 +48,24 @@ final class FormValidator
         return $this;
     }
 
+    public function passwordIsEqual(string $password): FormValidator
+    {
+        if ($this->input !== $password) {
+            $this->errors[] = Translation::get('validator_form_passwords_are_not_equal');
+        }
+
+        return $this;
+    }
+
+    public function passwordIsVerified(string $hashedPassword): FormValidator
+    {
+        if (!password_verify($this->input, $hashedPassword)) {
+            $this->errors[] = Translation::get('validator_form_passwords_is_not_verified');
+        }
+
+        return $this;
+    }
+
     /**
      * @return string[]
      */
