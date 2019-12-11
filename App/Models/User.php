@@ -7,12 +7,15 @@ namespace App\Models;
 use App\Http\Domain\Admin\Authentication\Actions\LogUserOutAction;
 use App\Services\Auth\IDEncryption;
 use App\Src\Model\Model;
+use App\Src\Model\Scopes\SoftDelete\SoftDelete;
 use App\Src\Response\Redirect;
 use App\Src\Session\Session;
 use stdClass;
 
 final class User extends Model
 {
+    use SoftDelete;
+
     protected string $table = 'account';
     protected string $primaryKey = 'account_ID';
     protected string $softDeletedKey = 'account_is_deleted';

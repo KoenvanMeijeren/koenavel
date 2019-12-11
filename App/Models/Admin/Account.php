@@ -6,10 +6,13 @@ namespace App\Models\Admin;
 
 use App\Src\Core\Router;
 use App\Src\Model\Model;
+use App\Src\Model\Scopes\SoftDelete\SoftDelete;
 use stdClass;
 
 final class Account extends Model
 {
+    use SoftDelete;
+
     protected string $table = 'account';
     protected string $primaryKey = 'account_ID';
     protected string $softDeletedKey = 'account_is_deleted';
