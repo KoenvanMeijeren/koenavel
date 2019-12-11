@@ -12,6 +12,7 @@ abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
+    protected string $softDeletedKey;
 
     /**
      * @var string[]
@@ -142,17 +143,14 @@ abstract class Model
      */
     final protected function firstByAttributes(array $attributes): ?stdClass
     {
+        $this->convertAttributesIntoScope($attributes);
+
         return DB::table($this->table)
             ->select('*')
             ->addStatementWithValues(
                 $this->scopes['query'],
                 $this->scopes['values']
-            )
-            ->addStatementWithValues(
-                $this->convertAttributesIntoWhereQuery($attributes),
-                $this->convertAttributesIntoWhereValues($attributes)
-            )
-            ->first();
+            )->first();
     }
 
     /**
@@ -182,39 +180,16 @@ abstract class Model
 
     /**
      * @param string[] $attributes
-     *
-     * @return string
      */
-    private function convertAttributesIntoWhereQuery(
-        array $attributes
-    ): string {
-        $query = '';
+    private function convertAttributesIntoScope(array $attributes): void {
         foreach ($attributes as $column => $attribute) {
-            $query .= DB::table($this->table)
+            $this->scopes['query'] .= DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getQuery();
-        }
 
-        return $query;
-    }
-
-    /**
-     * Covert the given attributes into values.
-     *
-     * @param string[] $attributes
-     *
-     * @return string[]
-     */
-    private function convertAttributesIntoWhereValues(
-        array $attributes
-    ): array {
-        $values = [];
-        foreach ($attributes as $column => $attribute) {
-            $values = DB::table($this->table)
+            $this->scopes['values'] += DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
         }
-
-        return $values;
     }
 }
