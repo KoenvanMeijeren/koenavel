@@ -32,7 +32,7 @@ final class Resource
                        data-toggle="tooltip"
                        data-placement="top"
                        title="' . Translation::get('table_row_edit') . '">
-                        <i class="fas fa-user-edit"></i>
+                        <i class="fas fa-edit"></i>
                     </a>
 
                     <form method="post"
