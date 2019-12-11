@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Helpers;
 
+use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 final class Resource
@@ -37,6 +38,7 @@ final class Resource
 
                     <form method="post"
                           action="' . $destroyAction . '">
+                          '.CSRF::insertToken($destroyAction).'
                         <button class="btn btn-danger flex-child edit-button ' . $removeBorder . '"
                                 type="submit"
                                 data-toggle="tooltip"
