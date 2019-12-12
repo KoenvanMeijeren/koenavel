@@ -39,6 +39,8 @@ final class User extends Model
 
     public function __construct()
     {
+        $this->initializeSoftDelete();
+
         $this->account = $this->find($this->getID());
 
         $this->authorizeUser();

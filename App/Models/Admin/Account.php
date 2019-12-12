@@ -24,6 +24,11 @@ final class Account extends Model
      */
     public const PASSWORD_ENCRYPTION = PASSWORD_ARGON2ID;
 
+    public function __construct()
+    {
+        $this->initializeSoftDelete();
+    }
+
     /**
      * Get the id of the account.
      *
