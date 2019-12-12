@@ -42,6 +42,16 @@ Router::prefix('admin')->group(static function () {
      */
     Router::get('pages', AdminPageController::class,
         'index', User::ADMIN);
+    Router::get('page/create', AdminPageController::class,
+        'create', User::ADMIN);
+    Router::post('page/create/store', AdminPageController::class,
+        'store', User::ADMIN);
+    Router::get('page/edit/{slug}', AdminPageController::class,
+        'edit', User::ADMIN);
+    Router::post('page/edit/{slug}/store', AdminPageController::class,
+        'update', User::ADMIN);
+    Router::post('page/delete/{slug}', AdminPageController::class,
+        'destroy', User::ADMIN);
 
     /**
      * Account maintenance routes.

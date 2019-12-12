@@ -41,17 +41,28 @@ return [
      * Admin pages maintenance translations.
      */
     'admin_pages_maintenance_title' => 'Pagina\'s beheren',
+    'admin_create_page_title' => 'Pagina aanmaken',
+    'admin_edit_page_title' => 'Pagina %s bewerken',
+    'admin_page_cannot_be_visited' => 'De pagina \'%s\' bestaat niet',
     'no_pages_were_found_message' => 'Er zijn geen pagina\'s gevonden.',
     'page_successfully_created' => 'De pagina is succesvol aangemaakt',
     'page_unsuccessfully_created' => 'De pagina kon niet worden aangemaakt',
-    'page_successfully_updated' => 'De pagina is succesvol bijgewerkt',
-    'page_unsuccessfully_updated' => 'De pagina kon niet worden bijgwerkt',
-    'page_successfully_deleted' => 'De pagina is successvol verwijderd',
-    'page_unsuccessfully_deleted' => 'De pagina kon niet worden verwijderd',
-    'page_already_exists' => 'De pagina die je probeerde aan te maken bestaat al. Kies een andere url en probeer het opnieuw.',
+    'page_successfully_updated' => 'De pagina \'%s\' is succesvol bijgewerkt',
+    'page_already_exists' => 'De pagina \'%s\' bestaat al.',
     'delete_page_confirmation_message' => 'Weet je zeker dat je deze pagina wilt verwijderen?',
     'page_slug_cannot_be_edited' => 'De pagina url van een statische pagina kan niet worden aangepast.',
     'page_in_menu_cannot_be_edited' => 'De pagina in menu waarde van een statische pagina kan niet worden aangepast.',
+    'page_static_cannot_be_edited' => 'De in menu waarde van de statische pagina \'%s\' mag niet worden aangepast.',
+    'page_static_cannot_be_deleted' => 'De statische pagina \'%s\' mag niet worden verwijderd.',
+    'page_successfully_deleted' => 'De pagina \'%s\' is successvol verwijderd',
+    'page_unsuccessfully_deleted' => 'De pagina \'%s\' kon niet worden verwijderd',
+    'page_not_in_menu' => 'Nee',
+    'page_public_in_menu' => 'Ja, openbaar',
+    'page_logged_in_in_menu' => 'Ja, ingelogd',
+    'page_in_footer_menu' => 'Ja, in footer',
+    'page_in_footer_and_in_menu' => 'Ja, in footer en in menu',
+    'page_static' => 'Statisch',
+    'page_in_menu_state_unknown' => 'Onbekende status',
 
     /**
      * Admin settings page translations.
@@ -117,7 +128,7 @@ return [
      * Account rights
      */
     'account_rights' => 'Rechten',
-    'account_rights_placeholder' => 'Kies het rechtenniveau',
+    'account_rights_placeholder' => 'Kies het rechten niveau',
     'account_rights_guest' => 'Gast',
     'account_rights_admin' => 'Beheerder',
     'account_rights_super_admin' => 'Super-beheerder',
@@ -128,12 +139,13 @@ return [
      */
     'table_row_identifier' => 'Nr',
     'table_row_name' => 'Naam',
+    'table_row_slug' => 'URL',
+    'table_row_page_in_menu' => 'Tonen in menu?',
     'table_row_title' => 'Titel',
     'table_row_email' => 'Email',
     'table_row_rights' => 'Rol',
-    'table_row_block' => 'Blokkeren',
     'table_row_edit' => 'Bewerken',
-    'table_row_delete' => 'Bewerken',
+    'table_row_delete' => 'Verwijderen',
 
     /**
      * Regular Form texts translations.
@@ -198,11 +210,13 @@ return [
     'form_page_content' => 'De content van de pagina',
     'form_project_content' => 'De content van het project',
     'form_show_page_in_menu' => 'Pagina in menu',
-    'form_yes' => 'Ja',
-    'form_yes_public' => 'Ja, openbaar',
-    'form_yes_loggedIn' => 'Ja, ingelogd',
-    'form_yes_in_footer' => 'Ja, in de footer',
-    'form_yes_and_in_footer' => 'Ja, in menu én in footer',
+    'form_choose_show_page_in_menu_option' => 'Kies de pagina in menu tonen optie',
+    'form_show_page_not_in_menu' => 'Nee, niet tonen',
+    'form_show_page_public_in_menu' => 'Ja, openbaar',
+    'form_show_page_logged_in_in_menu' => 'Ja, openbaar',
+    'form_show_page_static' => 'Nee, statisch',
+    'form_show_page_in_footer' => 'Ja, in de footer',
+    'form_show_page_in_menu_and_in_footer' => 'Ja, in footer én in menu',
     'form_no' => 'Nee',
     'form_search' => 'Zoeken',
     'form_static' => 'Statisch',
