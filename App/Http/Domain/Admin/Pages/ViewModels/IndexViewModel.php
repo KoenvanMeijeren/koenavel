@@ -46,7 +46,7 @@ final class IndexViewModel
                 $page->getTitle(),
                 $converter->toReadableMenuState(),
                 Resource::addTableEditColumn(
-                    '/admin/page/edit/' . $page->getSlug(),
+                    '/admin/page/edit/' . $page->getId(),
                     '/admin/page/delete/' . $page->getId(),
                     Translation::get('delete_page_confirmation_message')
                 )

@@ -15,7 +15,7 @@ final class CreatePageAction extends PageAction
     protected function handle(): bool
     {
         $this->page->create([
-            'page_slug_ID' => (string) $this->slugId,
+            'page_slug_ID' => (string) $this->getSlugId(),
             'page_title' => $this->title,
             'page_content' => $this->content,
             'page_in_menu' => (string) $this->inMenu
@@ -32,7 +32,10 @@ final class CreatePageAction extends PageAction
 
         $this->session->flash(
             State::SUCCESSFUL,
-            Translation::get('page_successfully_created')
+            sprintf(
+                Translation::get('page_successfully_created'),
+                $this->url
+            )
         );
 
         return true;

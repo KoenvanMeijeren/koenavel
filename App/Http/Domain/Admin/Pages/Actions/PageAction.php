@@ -16,13 +16,13 @@ use App\Src\Validate\form\FormValidator;
 
 abstract class PageAction extends FormAction
 {
+    protected Slug $slug;
     protected Page $page;
     protected PageRepository $pageRepository;
     protected Session $session;
 
     protected int $id;
     protected string $title;
-    protected int $slugId;
     protected string $url;
     protected int $inMenu;
     protected string $content;
@@ -30,27 +30,30 @@ abstract class PageAction extends FormAction
     public function __construct(Page $page)
     {
         $this->page = $page;
-        $slug = new Slug();
+        $this->slug = new Slug();
         $this->session = new Session();
         $request = new Request();
 
         $this->title = $request->post('title');
-        $this->url = $slug->parse($request->post('slug'));
+        $this->url = $this->slug->parse($request->post('slug'));
         $this->inMenu = (int)$request->post('pageInMenu');
         $this->content = $request->post('content');
 
+        $this->pageRepository = new PageRepository(
+            $this->page->find($this->page->getId())
+        );
+        $this->id = $this->pageRepository->getId();
+    }
+
+    protected function getSlugId(): int
+    {
         $slugRepository = new SlugRepository(
-            $slug->firstOrCreate([
+            $this->slug->firstOrCreate([
                 'slug_name' => $this->url
             ])
         );
 
-        $this->slugId = $slugRepository->getId();
-
-        $this->pageRepository = new PageRepository(
-            $this->page->getBySlug($slugRepository->getSlug())
-        );
-        $this->id = $this->pageRepository->getId();
+        return $slugRepository->getId();
     }
 
     /**

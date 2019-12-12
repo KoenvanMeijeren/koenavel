@@ -66,18 +66,18 @@ final class PageController
     public function edit(): DomainView
     {
         $page = new EditViewModel(
-            $this->page->getBySlug($this->page->getSlug())
+            $this->page->find($this->page->getID())
         );
-        $page = new PageRepository($page->get());
+        $pageRepository = new PageRepository($page->get());
 
         return new DomainView(
             $this->baseViewPath . 'edit',
             [
                 'title' => sprintf(
                     Translation::get('admin_edit_page_title'),
-                    $page->getSlug()
+                    $pageRepository->getSlug()
                 ),
-                'page' => $this->page->getBySlug($this->page->getSlug())
+                'page' => $page->get()
             ]
         );
     }

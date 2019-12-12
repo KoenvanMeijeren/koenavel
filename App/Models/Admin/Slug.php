@@ -22,10 +22,10 @@ final class Slug extends Model
 
     public function parse(string $slug): string
     {
-        return replaceString(
+        return strtolower(replaceString(
             ' ',
             '-',
             $slug
-        );
+        ));
     }
 }

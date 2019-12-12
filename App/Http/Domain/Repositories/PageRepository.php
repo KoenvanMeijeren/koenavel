@@ -10,6 +10,7 @@ final class PageRepository
     private string $title;
     private string $content;
     private int $inMenu;
+    private bool $isPublished;
     private bool $isDeleted;
 
     private int $slugID;
@@ -22,6 +23,7 @@ final class PageRepository
         $this->title = $page->page_title ?? '';
         $this->content = $page->page_content ?? '';
         $this->inMenu = (int) ($page->page_in_menu ?? '0');
+        $this->isPublished = (bool) ($page->page_is_published ?? '0');
         $this->isDeleted = (bool) ($page->page_is_deleted ?? '0');
 
         $this->slugID = (int) ($page->slug_ID ?? '0');
@@ -47,6 +49,11 @@ final class PageRepository
     public function getInMenu(): int
     {
         return $this->inMenu;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->isPublished;
     }
 
     public function isDeleted(): bool

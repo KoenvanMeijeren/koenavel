@@ -39,9 +39,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_page_slug') ?>"
                                    value="<?= $request->post(
-    'slug',
-    $page->getSlug()
-) ?>"
+                                       'slug',
+                                       $page->getSlug()
+                                   ) ?>"
                                    required>
                         </div>
                         <div class="col-sm-6">
@@ -53,9 +53,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_title') ?>"
                                    value="<?= $request->post(
-                                           'title',
-                                           $page->getTitle()
-                                       ) ?>"
+                                       'title',
+                                       $page->getTitle()
+                                   ) ?>"
                                    required>
                         </div>
                     </div>
@@ -112,11 +112,12 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                     <?= Translation::get('form_page_content') ?>
                                     <span class="text-danger">*</span>
                                 </label>
-                                <textarea class="form-control" id="content" rows="10"
+                                <textarea class="form-control" id="content"
+                                          rows="10"
                                           name="content"><?= parseHTMLEntities($request->post(
-                                           'content',
-                                           $page->getContent()
-                                       )) ?></textarea>
+                                        'content',
+                                        $page->getContent()
+                                    )) ?></textarea>
                             </div>
                         </div>
                     </div>

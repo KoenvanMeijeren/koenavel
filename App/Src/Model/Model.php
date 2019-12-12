@@ -139,18 +139,15 @@ abstract class Model
      */
     final protected function firstByAttributes(array $attributes): ?stdClass
     {
-        $this->convertAttributesIntoScope($attributes);
-
-        $data =  DB::table($this->table)
+        return DB::table($this->table)
             ->select('*')
             ->addStatementWithValues(
                 $this->scopes['query'],
                 $this->scopes['values']
+            )->addStatementWithValues(
+                $this->convertAttributesIntoWhereQuery($attributes),
+                $this->convertAttributesIntoWhereValues($attributes)
             )->first();
-
-        $this->removeAttributesFromScope($attributes);
-
-        return $data;
     }
 
     /**
@@ -179,38 +176,40 @@ abstract class Model
     }
 
     /**
+     * Convert the given attributes into a query.
+     *
      * @param string[] $attributes
+     *
+     * @return string
      */
-    private function convertAttributesIntoScope(array $attributes): void
-    {
+    private function convertAttributesIntoWhereQuery(
+        array $attributes
+    ): string {
+        $query = '';
         foreach ($attributes as $column => $attribute) {
-            $this->scopes['query'] .= DB::table($this->table)
+            $query .= DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getQuery();
-
-            $this->scopes['values'] += DB::table($this->table)
+        }
+        return $query;
+    }
+    /**
+     * Convert the given attributes into values.
+     *
+     * @param string[] $attributes
+     *
+     * @return string[]
+     */
+    private function convertAttributesIntoWhereValues(
+        array $attributes
+    ): array {
+        $values = [];
+        foreach ($attributes as $column => $attribute) {
+            $values += DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
         }
-    }
 
-    /**
-     * @param string[] $attributes
-     */
-    private function removeAttributesFromScope(array $attributes): void
-    {
-        foreach ($attributes as $column => $attribute) {
-            replaceString(
-                DB::table($this->table)
-                    ->where($column, '=', $attribute)
-                    ->getQuery(),
-                '',
-                $this->scopes['query']
-            );
-
-            if (array_key_exists($column, $this->scopes['values'])) {
-                unset($this->scopes['values'][$column]);
-            }
-        }
+        return $values;
     }
 }

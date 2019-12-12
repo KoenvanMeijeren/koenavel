@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Models\Admin;
 
 use App\Src\Core\Router;
+use App\Src\Core\URI;
 use App\Src\Database\DB;
 use App\Src\Model\Model;
 use App\Src\Model\Scopes\SoftDelete\SoftDelete;
 use stdClass;
 
-// todo make it possible to publish or un-publish a page.
 final class Page extends Model
 {
     use SoftDelete;
@@ -22,6 +22,7 @@ final class Page extends Model
     protected string $primarySlugKey = 'slug_ID';
     protected string $slugKey = 'slug_name';
     protected string $slugSoftDeletedKey = 'slug_is_deleted';
+    protected string $isPublishedKey = 'page_is_published';
     protected string $softDeletedKey = 'page_is_deleted';
 
     /**
@@ -55,6 +56,16 @@ final class Page extends Model
                 '0'
             )
         );
+
+        if ((bool) strpos(URI::getUrl(), 'admin') === false) {
+            $this->addScope(
+                (new DB)->where(
+                    $this->isPublishedKey,
+                    '=',
+                    '0'
+                )
+            );
+        }
 
         $this->initializeSoftDelete();
     }
