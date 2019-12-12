@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Domain\Pages\Controllers;
 
+use App\Http\Domain\Repositories\PageRepository;
+use App\Models\Admin\Page;
 use App\Src\Translation\Translation;
 use App\Src\View\DomainView;
 
@@ -21,12 +23,40 @@ final class PageController
         );
     }
 
+    public function findOr404(): DomainView
+    {
+        $pageModel = new Page();
+
+        $page = $pageModel->getBySlug($pageModel->getSlug());
+        if ($page === null) {
+            $page = $pageModel->getBySlug('pagina-niet-gevonden');
+        }
+
+        if ($page !== null) {
+            return $this->show(new PageRepository($page));
+        }
+
+        return $this->notFound();
+    }
+
+    public function show(PageRepository $page): DomainView
+    {
+        return new DomainView(
+            $this->baseViewPath . 'show',
+            [
+                'title' => $page->getTitle(),
+                'pageContent' => $page->getContent()
+            ]
+        );
+    }
+
     public function notFound(): DomainView
     {
         return new DomainView(
             $this->baseViewPath . '404',
             [
-                'title' => Translation::get('page_not_found_title')
+                'title' => Translation::get('page_not_found_title'),
+                'content' => Translation::get('page_not_found_description')
             ]
         );
     }

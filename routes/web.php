@@ -100,4 +100,4 @@ Router::prefix('admin')->group(static function () {
  * Page not found route.
  */
 Router::get('pageNotFound', PageController::class,
-    'notFound', User::GUEST);
+    'findOr404', User::GUEST);
