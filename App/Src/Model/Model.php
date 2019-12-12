@@ -141,12 +141,16 @@ abstract class Model
     {
         $this->convertAttributesIntoScope($attributes);
 
-        return DB::table($this->table)
+        $data =  DB::table($this->table)
             ->select('*')
             ->addStatementWithValues(
                 $this->scopes['query'],
                 $this->scopes['values']
             )->first();
+
+        $this->removeAttributesFromScope($attributes);
+
+        return $data;
     }
 
     /**
@@ -187,6 +191,26 @@ abstract class Model
             $this->scopes['values'] += DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
+        }
+    }
+
+    /**
+     * @param string[] $attributes
+     */
+    private function removeAttributesFromScope(array $attributes): void
+    {
+        foreach ($attributes as $column => $attribute) {
+            replaceString(
+                DB::table($this->table)
+                    ->where($column, '=', $attribute)
+                    ->getQuery(),
+                '',
+                $this->scopes['query']
+            );
+
+            if (array_key_exists($column, $this->scopes['values'])) {
+                unset($this->scopes['values'][$column]);
+            }
         }
     }
 }
