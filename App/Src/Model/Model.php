@@ -7,16 +7,12 @@ namespace App\Src\Model;
 use App\Src\Database\DB;
 use stdClass;
 
-
 abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
     protected string $softDeletedKey;
 
-    /**
-     * @var string[]
-     */
     protected array $scopes = [
         'query' => '',
         'values' => [],
@@ -181,7 +177,8 @@ abstract class Model
     /**
      * @param string[] $attributes
      */
-    private function convertAttributesIntoScope(array $attributes): void {
+    private function convertAttributesIntoScope(array $attributes): void
+    {
         foreach ($attributes as $column => $attribute) {
             $this->scopes['query'] .= DB::table($this->table)
                 ->where($column, '=', $attribute)
