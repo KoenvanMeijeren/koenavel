@@ -10,7 +10,7 @@
     "autoload": {
         "files": [
             "config/const.php",
-            "App/Functions/autoload.php"
+            "App/Support/Functions/autoload.php"
         ],
         "psr-4": {
             "App\\": "App/"

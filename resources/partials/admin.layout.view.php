@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
-use App\Services\Helpers\Converter;
-use App\Services\Helpers\Resource;
+use App\Domain\Admin\Accounts\User\Models\User;
+use App\Domain\Support\Converter;
+use App\Domain\Support\Resource;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
 
