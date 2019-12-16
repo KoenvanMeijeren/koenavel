@@ -129,7 +129,7 @@ $rights = new AccountRightsConverter($user->getRights())
                                 <span class="no-icon">
                                     <?= Translation::get('welcome_text') ?>
                                     <?= $user->getName() ?> -
-                                    <b><?= $rights->toReadableRights() ?></b>
+                                    <b><?= $rights->toReadable() ?></b>
                                 </span>
                                 </a>
                             </li>
