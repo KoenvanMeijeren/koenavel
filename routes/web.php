@@ -4,7 +4,7 @@ declare(strict_types=1);
 use App\Domain\Admin\Accounts\Account\Controllers\AccountController;
 use App\Domain\Admin\Accounts\User\Controllers\UserAccountController;
 use App\Domain\Admin\Accounts\User\Models\User;
-use App\Domain\Admin\Authentication\Controllers\AuthorizationController;
+use App\Domain\Admin\Authentication\Controllers\AuthenticationController;
 use App\Domain\Admin\Dashboard\Controllers\DashboardController;
 use App\Domain\Admin\Debug\Controllers\DebugController;
 use App\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
@@ -24,11 +24,11 @@ Router::prefix('admin')->group(static function () {
     /**
      * Authorization routes.
      */
-    Router::get('', AuthorizationController::class,
+    Router::get('', AuthenticationController::class,
         'index', User::GUEST);
-    Router::post('login', AuthorizationController::class,
+    Router::post('login', AuthenticationController::class,
         'login', User::GUEST);
-    Router::get('logout', AuthorizationController::class,
+    Router::get('logout', AuthenticationController::class,
         'logout', User::ADMIN);
 
     /**

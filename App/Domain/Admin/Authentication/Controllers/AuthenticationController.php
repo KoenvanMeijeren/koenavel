@@ -13,7 +13,7 @@ use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\DomainView;
 
-final class AuthorizationController
+final class AuthenticationController
 {
     private User $user;
 
