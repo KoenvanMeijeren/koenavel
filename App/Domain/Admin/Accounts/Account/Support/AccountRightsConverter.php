@@ -4,25 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Accounts\Account\Support;
 
+
 use App\Domain\Admin\Accounts\User\Models\User;
+use App\Src\Converter\Converter;
 use App\Src\Translation\Translation;
 
-final class AccountConverter
+final class AccountRightsConverter extends Converter
 {
-    /**
-     * @var mixed
-     */
-    private $var;
-
-    /**
-     * @param mixed $var
-     */
-    public function __construct($var)
-    {
-        $this->var = $var;
-    }
-
-    public function toReadableRights(): string
+    public function toReadable(): string
     {
         $rights = (int) $this->var;
         if ($rights === User::ADMIN) {
@@ -38,14 +27,5 @@ final class AccountConverter
         }
 
         return Translation::get('account_rights_guest');
-    }
-
-    public function toReadableBlockState(): string
-    {
-        if (!(bool) $this->var) {
-            return '';
-        }
-
-        return ' - ' . Translation::get('account_is_blocked');
     }
 }

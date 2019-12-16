@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Accounts\Account\ViewModels;
 
-use App\Domain\Admin\Accounts\Account\Support\AccountConverter;
+use App\Domain\Admin\Accounts\Account\Support\AccountBlockStateConverter;
+use App\Domain\Admin\Accounts\Account\Support\AccountRightsConverter;
 use App\Domain\Admin\Accounts\Repositories\AccountRepository;
 use App\Domain\Admin\Accounts\User\Models\User;
-use App\Domain\Support\Converter;
 use App\Src\Translation\Translation;
 use App\Support\DataTable;
 use App\Support\Resource;
@@ -38,17 +38,17 @@ final class IndexViewModel
 
         foreach ($this->accounts as $singleAccount) {
             $account = new AccountRepository($singleAccount);
-            $rights = new AccountConverter($account->getRights());
-            $blocked = new AccountConverter($account->isBlocked());
+            $rights = new AccountRightsConverter($account->getRights());
+            $blockState = new AccountBlockStateConverter($account->isBlocked());
 
             if ($account->isBlocked()) {
                 $this->dataTable->addClasses('row-warning');
             }
 
             $this->dataTable->addRow(
-                ucfirst($account->getName()) . $blocked->toReadableBlockState(),
+                ucfirst($account->getName()) . $blockState->toReadable(),
                 lcfirst($account->getEmail()),
-                $rights->toReadableRights(),
+                $rights->toReadable(),
                 Resource::addTableEditColumn(
                     '/admin/account/edit/' . $account->getId(),
                     '/admin/account/delete/' . $account->getId(),
