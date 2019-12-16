@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Pages\Models;
 
-
 use App\Src\Core\Router;
 use App\Src\Core\URI;
 use App\Src\Database\DB;

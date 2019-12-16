@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Actions;
 
-
 use App\Domain\Admin\Pages\Models\Page;
 use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Src\Action\FormAction;

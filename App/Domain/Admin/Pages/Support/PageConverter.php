@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Support;
 
-
 use App\Domain\Admin\Pages\Models\Page;
 use App\Src\Translation\Translation;
 
-class PageConverter
+final class PageConverter
 {
     /**
      * @var mixed

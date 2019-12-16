@@ -29,8 +29,8 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                         <form method="post"
                               action="/admin/page/unpublish/<?= $page->getId() ?>">
                             <?= CSRF::insertToken(
-                                '/admin/page/unpublish/' . $page->getId()
-                            ) ?>
+    '/admin/page/unpublish/' . $page->getId()
+) ?>
 
                             <button type="submit" class="btn btn-danger">
                                 <?= Translation::get('unpublish_button') ?>
@@ -64,9 +64,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_page_slug') ?>"
                                    value="<?= $request->post(
-                                       'slug',
-                                       $page->getSlug()
-                                   ) ?>"
+                                'slug',
+                                $page->getSlug()
+                            ) ?>"
                                    required>
                         </div>
                         <div class="col-sm-6">
@@ -140,9 +140,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                 <textarea class="form-control" id="content"
                                           rows="10"
                                           name="content"><?= parseHTMLEntities($request->post(
-                                        'content',
-                                        $page->getContent()
-                                    )) ?></textarea>
+                                       'content',
+                                       $page->getContent()
+                                   )) ?></textarea>
                             </div>
                         </div>
                     </div>

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Accounts\Account\Support;
 
-
 use App\Domain\Admin\Accounts\User\Models\User;
 use App\Src\Translation\Translation;
 
-class AccountConverter
+final class AccountConverter
 {
     /**
      * @var mixed
