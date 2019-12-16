@@ -33,7 +33,7 @@ final class CreatePageAction extends PageAction
     {
         $this->prepare();
 
-        $this->page->create([$this->attributes]);
+        $this->page->create($this->attributes);
 
         if ($this->page->getBySlug($this->url) === null) {
             $this->session->flash(

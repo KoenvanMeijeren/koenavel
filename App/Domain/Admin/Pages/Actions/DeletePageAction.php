@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Actions;
 
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Pages\Models\Page;
 use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Src\Action\FormAction;
@@ -56,7 +57,11 @@ final class DeletePageAction extends FormAction
 
     protected function authorize(): bool
     {
-        if ($this->pageRepository->getInMenu() === Page::PAGE_STATIC) {
+        $user = new User();
+
+        if ($user->getRights() !== User::DEVELOPER &&
+            $this->pageRepository->getInMenu() === Page::PAGE_STATIC
+        ) {
             $this->session->flash(
                 State::FAILED,
                 sprintf(
