@@ -26,7 +26,7 @@ includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/localheinz/phpstan-rules/rules.neon
+    - vendor/ergebnis/phpstan-rules/rules.neon
 services:
   -
     class: TheCodingMachine\PHPStan\Rules\Exceptions\ThrowMustBundlePreviousExceptionRule
