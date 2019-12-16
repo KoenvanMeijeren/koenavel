@@ -4,26 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Support;
 
+
 use App\Domain\Admin\Pages\Models\Page;
+use App\Src\Converter\Converter;
 use App\Src\Translation\Translation;
 
-final class PageConverter
+final class PageInMenuStateConverter extends Converter
 {
-    /**
-     * @var mixed
-     */
-    private $var;
-
-    /**
-     * @param mixed $var
-     */
-    public function __construct($var)
-    {
-        $this->var = $var;
-    }
-
-
-    public function toReadableMenuState(): string
+    public function toReadable(): string
     {
         $menuState = (int) $this->var;
         if ($menuState === Page::PAGE_NOT_IN_MENU) {
@@ -51,14 +39,5 @@ final class PageConverter
         }
 
         return Translation::get('page_in_menu_state_unknown');
-    }
-
-    public function toReadablePublicationState(): string
-    {
-        if ((bool) $this->var) {
-            return Translation::get('admin_page_is_published');
-        }
-
-        return Translation::get('admin_page_is_not_published');
     }
 }

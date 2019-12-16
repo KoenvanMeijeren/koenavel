@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Pages\ViewModels;
 
 use App\Domain\Admin\Pages\Repositories\PageRepository;
-use App\Domain\Admin\Pages\Support\PageConverter;
+use App\Domain\Admin\Pages\Support\PageInMenuStateConverter;
+use App\Domain\Admin\Pages\Support\PageIsPublishedStateConverter;
 use App\Src\Translation\Translation;
 use App\Support\DataTable;
 use App\Support\Resource;
@@ -40,8 +41,10 @@ final class IndexViewModel
 
         foreach ($this->pages as $singlePage) {
             $page = new PageRepository($singlePage);
-            $inMenuState = new PageConverter($page->getInMenu());
-            $isPublishedState = new PageConverter($page->isPublished());
+            $inMenuState = new PageInMenuStateConverter($page->getInMenu());
+            $isPublishedState = new PageIsPublishedStateConverter(
+                $page->isPublished()
+            );
 
             if (!$page->isPublished()) {
                 $this->dataTable->addClasses('row-warning');
@@ -50,8 +53,8 @@ final class IndexViewModel
             $this->dataTable->addRow(
                 '/' . $page->getSlug(),
                 $page->getTitle(),
-                $inMenuState->toReadableMenuState(),
-                $isPublishedState->toReadablePublicationState(),
+                $inMenuState->toReadable(),
+                $isPublishedState->toReadable(),
                 Resource::addTableEditColumn(
                     '/admin/page/edit/' . $page->getId(),
                     '/admin/page/delete/' . $page->getId(),
