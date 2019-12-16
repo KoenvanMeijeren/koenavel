@@ -6,11 +6,13 @@ namespace App\Domain\Admin\Pages\Controllers;
 
 use App\Domain\Admin\Pages\Actions\CreatePageAction;
 use App\Domain\Admin\Pages\Actions\DeletePageAction;
+use App\Domain\Admin\Pages\Actions\PublishPageAction;
+use App\Domain\Admin\Pages\Actions\UnPublishPageAction;
 use App\Domain\Admin\Pages\Actions\UpdatePageAction;
 use App\Domain\Admin\Pages\Models\Page;
+use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Domain\Admin\Pages\ViewModels\EditViewModel;
 use App\Domain\Admin\Pages\ViewModels\IndexViewModel;
-use App\Domain\Repositories\PageRepository;
 use App\Src\Response\Redirect;
 use App\Src\Translation\Translation;
 use App\Src\View\DomainView;
@@ -93,6 +95,26 @@ final class PageController
         }
 
         return $this->edit();
+    }
+
+    public function publish(): Redirect
+    {
+        $publish = new PublishPageAction($this->page);
+        $publish->execute();
+
+        return new Redirect(
+            '/admin/page/edit/' . $this->page->getID()
+        );
+    }
+
+    public function unPublish(): Redirect
+    {
+        $unPublish = new UnPublishPageAction($this->page);
+        $unPublish->execute();
+
+        return new Redirect(
+            '/admin/page/edit/' . $this->page->getID()
+        );
     }
 
     public function destroy(): Redirect

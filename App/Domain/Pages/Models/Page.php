@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Admin\Pages\Models;
+namespace App\Domain\Pages\Models;
+
 
 use App\Src\Core\Router;
 use App\Src\Core\URI;
@@ -25,24 +26,6 @@ final class Page extends Model
     protected string $isPublishedKey = 'page_is_published';
     protected string $softDeletedKey = 'page_is_deleted';
 
-    /**
-     * Possible page visibility options.
-     * - Page not in menu
-     * - Page public in menu
-     * - Page logged in in menu
-     * - Page is static
-     * - Page in footer
-     * - Page in menu and in footer
-     *
-     * @var int
-     */
-    public const PAGE_NOT_IN_MENU = 0;
-    public const PAGE_PUBLIC_IN_MENU = 1;
-    public const PAGE_LOGGED_IN_IN_MENU = 2;
-    public const PAGE_STATIC = 3;
-    public const PAGE_IN_FOOTER = 4;
-    public const PAGE_IN_MENU_AND_IN_FOOTER = 5;
-
     public function __construct()
     {
         $this->addScope(
@@ -54,15 +37,14 @@ final class Page extends Model
                 $this->slugSoftDeletedKey,
                 '=',
                 '0'
+            )->where(
+                $this->isPublishedKey,
+                '=',
+                '1'
             )
         );
 
         $this->initializeSoftDelete();
-    }
-
-    public function getID(): int
-    {
-        return (int) Router::getWildcard();
     }
 
     public function getSlug(): string

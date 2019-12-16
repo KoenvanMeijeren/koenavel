@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use App\Domain\Admin\Pages\Models\Page;
-use App\Domain\Repositories\PageRepository;
+use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Src\Core\Request;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
@@ -14,16 +14,41 @@ $action = '/admin/page/create/store';
 if ($page->getId() !== 0) {
     $action = '/admin/page/edit/' . $page->getId() . '/store';
 }
-
 $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
 ?>
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">
+                <h4 class="card-title float-left">
                     <?= $title ?? '' ?>
                 </h4>
+
+                <div class="float-right">
+                    <?php if ($page->isPublished()) : ?>
+                        <form method="post"
+                              action="/admin/page/unpublish/<?= $page->getId() ?>">
+                            <?= CSRF::insertToken(
+                                '/admin/page/unpublish/' . $page->getId()
+                            ) ?>
+
+                            <button type="submit" class="btn btn-danger">
+                                <?= Translation::get('unpublish_button') ?>
+                            </button>
+                        </form>
+                    <?php else : ?>
+                        <form method="post"
+                              action="/admin/page/publish/<?= $page->getId() ?>">
+                            <?= CSRF::insertToken(
+                                '/admin/page/publish/' . $page->getId()
+                            ) ?>
+
+                            <button type="submit" class="btn btn-success">
+                                <?= Translation::get('publish_button') ?>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="card-body">
                 <form method="post" action="<?= $action ?>">

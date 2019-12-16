@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Admin\Accounts\Repositories\AccountRepository;
 use App\Domain\Admin\Accounts\User\Models\User;
-use App\Domain\Repositories\AccountRepository;
 use App\Src\Core\Request;
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;

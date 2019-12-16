@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Accounts\Account\ViewModels;
 
+use App\Domain\Admin\Accounts\Account\Support\AccountConverter;
+use App\Domain\Admin\Accounts\Repositories\AccountRepository;
 use App\Domain\Admin\Accounts\User\Models\User;
-use App\Domain\Repositories\AccountRepository;
 use App\Domain\Support\Converter;
-use App\Domain\Support\Resource;
 use App\Src\Translation\Translation;
 use App\Support\DataTable;
+use App\Support\Resource;
 
 final class IndexViewModel
 {
@@ -37,11 +38,11 @@ final class IndexViewModel
 
         foreach ($this->accounts as $singleAccount) {
             $account = new AccountRepository($singleAccount);
-            $rights = new Converter($account->getRights());
-            $blocked = new Converter($account->isBlocked());
+            $rights = new AccountConverter($account->getRights());
+            $blocked = new AccountConverter($account->isBlocked());
 
             if ($account->isBlocked()) {
-                $this->dataTable->addClasses('user-blocked');
+                $this->dataTable->addClasses('row-warning');
             }
 
             $this->dataTable->addRow(

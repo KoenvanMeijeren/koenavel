@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Support;
+namespace App\Support;
 
 use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;

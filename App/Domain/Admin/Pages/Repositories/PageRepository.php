@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Repositories;
+namespace App\Domain\Admin\Pages\Repositories;
 
 final class PageRepository
 {

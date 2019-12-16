@@ -2,13 +2,13 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Support;
+namespace App\Domain\Admin\Pages\Support;
 
-use App\Domain\Admin\Accounts\User\Models\User;
+
 use App\Domain\Admin\Pages\Models\Page;
 use App\Src\Translation\Translation;
 
-final class Converter
+class PageConverter
 {
     /**
      * @var mixed
@@ -23,32 +23,6 @@ final class Converter
         $this->var = $var;
     }
 
-    public function toReadableRights(): string
-    {
-        $rights = (int) $this->var;
-        if ($rights === User::ADMIN) {
-            return Translation::get('account_rights_admin');
-        }
-
-        if ($rights === User::SUPER_ADMIN) {
-            return Translation::get('account_rights_super_admin');
-        }
-
-        if ($rights === User::DEVELOPER) {
-            return Translation::get('account_rights_developer');
-        }
-
-        return Translation::get('account_rights_guest');
-    }
-
-    public function toReadableBlockState(): string
-    {
-        if (!(bool) $this->var) {
-            return '';
-        }
-
-        return ' - ' . Translation::get('account_is_blocked');
-    }
 
     public function toReadableMenuState(): string
     {
@@ -78,5 +52,14 @@ final class Converter
         }
 
         return Translation::get('page_in_menu_state_unknown');
+    }
+
+    public function toReadablePublicationState(): string
+    {
+        if ((bool) $this->var) {
+            return Translation::get('admin_page_is_published');
+        }
+
+        return Translation::get('admin_page_is_not_published');
     }
 }

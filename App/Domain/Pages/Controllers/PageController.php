@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Pages\Controllers;
 
-use App\Domain\Admin\Pages\Models\Page;
-use App\Domain\Repositories\PageRepository;
+use App\Domain\Admin\Pages\Repositories\PageRepository;
+use App\Domain\Pages\Models\Page;
 use App\Src\Translation\Translation;
 use App\Src\View\DomainView;
 

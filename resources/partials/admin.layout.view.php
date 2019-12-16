@@ -1,13 +1,13 @@
 <?php
 
+use App\Domain\Admin\Accounts\Account\Support\AccountConverter;
 use App\Domain\Admin\Accounts\User\Models\User;
-use App\Domain\Support\Converter;
-use App\Domain\Support\Resource;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
+use App\Support\Resource;
 
 $user = new User();
-$rights = new Converter($user->getRights())
+$rights = new AccountConverter($user->getRights())
 ?>
 <!DOCTYPE html>
 <html lang="<?= Translation::DUTCH_LANGUAGE_CODE ?>">

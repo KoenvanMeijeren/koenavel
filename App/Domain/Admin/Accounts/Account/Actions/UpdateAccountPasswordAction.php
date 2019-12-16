@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Accounts\Account\Actions;
 
 use App\Domain\Admin\Accounts\Account\Models\Account;
-use App\Domain\Repositories\AccountRepository;
+use App\Domain\Admin\Accounts\Repositories\AccountRepository;
 use App\Src\Action\FormAction;
 use App\Src\Core\Request;
 use App\Src\Session\Session;

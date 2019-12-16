@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\ViewModels;
 
-use App\Domain\Repositories\PageRepository;
-use App\Domain\Support\Converter;
-use App\Domain\Support\Resource;
+use App\Domain\Admin\Pages\Repositories\PageRepository;
+use App\Domain\Admin\Pages\Support\PageConverter;
 use App\Src\Translation\Translation;
 use App\Support\DataTable;
+use App\Support\Resource;
 
 final class IndexViewModel
 {
@@ -34,17 +34,24 @@ final class IndexViewModel
             Translation::get('table_row_slug'),
             Translation::get('table_row_title'),
             Translation::get('table_row_page_in_menu'),
+            Translation::get('table_row_publish_state'),
             Translation::get('table_row_edit'),
         );
 
         foreach ($this->pages as $singlePage) {
             $page = new PageRepository($singlePage);
-            $converter = new Converter($page->getInMenu());
+            $inMenuState = new PageConverter($page->getInMenu());
+            $isPublishedState = new PageConverter($page->isPublished());
+
+            if (!$page->isPublished()) {
+                $this->dataTable->addClasses('row-warning');
+            }
 
             $this->dataTable->addRow(
                 '/' . $page->getSlug(),
                 $page->getTitle(),
-                $converter->toReadableMenuState(),
+                $inMenuState->toReadableMenuState(),
+                $isPublishedState->toReadablePublicationState(),
                 Resource::addTableEditColumn(
                     '/admin/page/edit/' . $page->getId(),
                     '/admin/page/delete/' . $page->getId(),

@@ -6,8 +6,8 @@ namespace App\Domain\Admin\Pages\Actions;
 
 use App\Domain\Admin\Pages\Models\Page;
 use App\Domain\Admin\Pages\Models\Slug;
-use App\Domain\Repositories\PageRepository;
-use App\Domain\Repositories\SlugRepository;
+use App\Domain\Admin\Pages\Repositories\PageRepository;
+use App\Domain\Admin\Pages\Repositories\SlugRepository;
 use App\Src\Action\FormAction;
 use App\Src\Core\Request;
 use App\Src\Session\Session;

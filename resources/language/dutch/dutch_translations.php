@@ -48,10 +48,16 @@ return [
     'page_successfully_created' => 'De pagina \'%s\' is succesvol aangemaakt',
     'page_unsuccessfully_created' => 'De pagina kon niet worden aangemaakt',
     'page_successfully_updated' => 'De pagina \'%s\' is succesvol bijgewerkt',
+    'page_unsuccessfully_published' => 'De pagina \'%s\' kon niet worden gepubliceerd',
+    'page_unsuccessfully_unpublished' => 'De publicatie van de pagina \'%s\' kon niet ongedaan worden gemaakt.',
+    'page_successfully_published' => 'De pagina \'%s\' is succesvol gepubliceerd',
+    'page_successfully_unpublished' => 'De publicatie van de pagina \'%s\' is succesvol ongedaan gemaakt.',
     'page_already_exists' => 'De pagina \'%s\' bestaat al.',
     'delete_page_confirmation_message' => 'Weet je zeker dat je deze pagina wilt verwijderen?',
     'page_static_slug_cannot_be_edited' => 'De pagina url van de statische pagina \'%s\' kan niet worden aangepast.',
     'page_static_cannot_be_edited' => 'De pagina zichtbaarheid van de statische pagina \'%s\' mag niet worden aangepast.',
+    'page_static_cannot_be_published' => 'Statische pagina\'s worden standaard al gepubliceerd.',
+    'page_static_cannot_be_unpublished' => 'Statische pagina\'s moeten altijd gepubliceerd zijn.',
     'page_static_cannot_be_deleted' => 'De statische pagina \'%s\' mag niet worden verwijderd.',
     'page_successfully_deleted' => 'De pagina \'%s\' is successvol verwijderd',
     'page_unsuccessfully_deleted' => 'De pagina \'%s\' kon niet worden verwijderd',
@@ -62,6 +68,8 @@ return [
     'page_in_footer_and_in_menu' => 'In footer en in menu tonen',
     'page_static' => 'Statisch',
     'page_in_menu_state_unknown' => 'Onbekende zichtbaarheid',
+    'admin_page_is_published' => 'Gepubliceerd',
+    'admin_page_is_not_published' => 'Niet gepubliceerd',
 
     /**
      * Admin settings page translations.
@@ -143,6 +151,7 @@ return [
     'table_row_title' => 'Titel',
     'table_row_email' => 'Email',
     'table_row_rights' => 'Rol',
+    'table_row_publish_state' => 'Publicatie status',
     'table_row_edit' => 'Bewerken',
     'table_row_delete' => 'Verwijderen',
 
@@ -260,6 +269,8 @@ return [
     'upload_button' => 'Uploaden',
     'block_button' => 'Blokkeren',
     'unblock_button' => 'Deblokkeren',
+    'publish_button' => 'Publiceren',
+    'unpublish_button' => 'Publicatie terugtrekken',
     'add_account_button' => 'Account toevoegen',
     'create_page_button' => 'Pagina toevoegen',
 

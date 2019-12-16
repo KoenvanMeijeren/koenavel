@@ -50,6 +50,10 @@ Router::prefix('admin')->group(static function () {
         'edit', User::ADMIN);
     Router::post('page/edit/{slug}/store', AdminPageController::class,
         'update', User::ADMIN);
+    Router::post('page/publish/{slug}', AdminPageController::class,
+        'publish', User::ADMIN);
+    Router::post('page/unpublish/{slug}', AdminPageController::class,
+        'unPublish', User::ADMIN);
     Router::post('page/delete/{slug}', AdminPageController::class,
         'destroy', User::ADMIN);
 

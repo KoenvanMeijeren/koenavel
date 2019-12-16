@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Actions;
 
+
 use App\Domain\Admin\Pages\Models\Page;
 use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Src\Action\FormAction;
@@ -11,7 +12,7 @@ use App\Src\Session\Session;
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 
-final class DeletePageAction extends FormAction
+final class PublishPageAction extends FormAction
 {
     private Page $page;
     private PageRepository $pageRepository;
@@ -29,24 +30,14 @@ final class DeletePageAction extends FormAction
      */
     protected function handle(): bool
     {
-        $this->page->delete($this->page->getID());
-
-        if ($this->page->find($this->page->getID()) !== null) {
-            $this->session->flash(
-                State::FAILED,
-                sprintf(
-                    Translation::get('page_unsuccessfully_deleted'),
-                    $this->pageRepository->getSlug()
-                )
-            );
-
-            return false;
-        }
+        $this->page->update($this->pageRepository->getId(), [
+            'page_is_published' => '1'
+        ]);
 
         $this->session->flash(
             State::SUCCESSFUL,
             sprintf(
-                Translation::get('page_successfully_deleted'),
+                Translation::get('page_successfully_published'),
                 $this->pageRepository->getSlug()
             )
         );
@@ -54,16 +45,17 @@ final class DeletePageAction extends FormAction
         return true;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function authorize(): bool
     {
         if ($this->pageRepository->getInMenu() === Page::PAGE_STATIC) {
             $this->session->flash(
                 State::FAILED,
-                sprintf(
-                    Translation::get('page_static_cannot_be_deleted'),
-                    $this->pageRepository->getSlug()
-                )
+                Translation::get('page_static_cannot_be_published')
             );
+
             return false;
         }
 
