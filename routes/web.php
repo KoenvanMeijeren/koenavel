@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-use App\Http\Domain\Admin\Accounts\Account\Controllers\AccountController;
-use App\Http\Domain\Admin\Accounts\User\Controllers\UserAccountController;
-use App\Http\Domain\Admin\Authentication\Controllers\AuthorizationController;
-use App\Http\Domain\Admin\Dashboard\Controllers\DashboardController;
-use App\Http\Domain\Admin\Debug\Controllers\DebugController;
-use App\Http\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
-use App\Http\Domain\Pages\Controllers\PageController;
-use App\Models\User;
+use App\Domain\Admin\Accounts\Account\Controllers\AccountController;
+use App\Domain\Admin\Accounts\User\Controllers\UserAccountController;
+use App\Domain\Admin\Accounts\User\Models\User;
+use App\Domain\Admin\Authentication\Controllers\AuthorizationController;
+use App\Domain\Admin\Dashboard\Controllers\DashboardController;
+use App\Domain\Admin\Debug\Controllers\DebugController;
+use App\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
+use App\Domain\Pages\Controllers\PageController;
 use App\Src\Core\Router;
 
 /**
@@ -42,6 +42,20 @@ Router::prefix('admin')->group(static function () {
      */
     Router::get('pages', AdminPageController::class,
         'index', User::ADMIN);
+    Router::get('page/create', AdminPageController::class,
+        'create', User::ADMIN);
+    Router::post('page/create/store', AdminPageController::class,
+        'store', User::ADMIN);
+    Router::get('page/edit/{slug}', AdminPageController::class,
+        'edit', User::ADMIN);
+    Router::post('page/edit/{slug}/store', AdminPageController::class,
+        'update', User::ADMIN);
+    Router::post('page/publish/{slug}', AdminPageController::class,
+        'publish', User::ADMIN);
+    Router::post('page/unpublish/{slug}', AdminPageController::class,
+        'unPublish', User::ADMIN);
+    Router::post('page/delete/{slug}', AdminPageController::class,
+        'destroy', User::ADMIN);
 
     /**
      * Account maintenance routes.
@@ -90,4 +104,4 @@ Router::prefix('admin')->group(static function () {
  * Page not found route.
  */
 Router::get('pageNotFound', PageController::class,
-    'notFound', User::GUEST);
+    'findOr404', User::GUEST);

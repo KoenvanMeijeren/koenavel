@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
-use App\Models\User;
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
 use App\Src\Session\Session;

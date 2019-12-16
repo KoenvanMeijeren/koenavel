@@ -1,13 +1,13 @@
 <?php
 
-use App\Models\User;
-use App\Services\Helpers\Converter;
-use App\Services\Helpers\Resource;
+use App\Domain\Admin\Accounts\Account\Support\AccountConverter;
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Src\Core\URI;
 use App\Src\Translation\Translation;
+use App\Support\Resource;
 
 $user = new User();
-$rights = new Converter($user->getRights())
+$rights = new AccountConverter($user->getRights())
 ?>
 <!DOCTYPE html>
 <html lang="<?= Translation::DUTCH_LANGUAGE_CODE ?>">
@@ -200,6 +200,9 @@ $rights = new Converter($user->getRights())
         src="/resources/assets/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
 <script type="text/javascript" charset="utf8"
         src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
+
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/tinymce/tinymce.js"></script>
 
 <!-- Default JS -->
 <script type="text/javascript" charset="utf8"

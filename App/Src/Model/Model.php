@@ -7,19 +7,16 @@ namespace App\Src\Model;
 use App\Src\Database\DB;
 use stdClass;
 
-/**
- * Class Model
- * @package App\Src\Model
- *
- * @todo find out how i can add dynamic scopes and statements
- * @todo find out how i can define relations between classes and automatic select both records
- */
 abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
-    protected bool $softDelete = true;
     protected string $softDeletedKey;
+
+    protected array $scopes = [
+        'query' => '',
+        'values' => [],
+    ];
 
     /**
      * Create a new record.
@@ -89,16 +86,13 @@ abstract class Model
      */
     final public function all(array $columns = array('*')): array
     {
-        $queryColumns = implode(',', $columns);
-
-        if ($this->softDelete) {
-            return (array) DB::table($this->table)
-                ->select($queryColumns)
-                ->where($this->softDeletedKey, '=', '0')
-                ->get();
-        }
-
-        return (array) DB::table($this->table)->select($queryColumns)->get();
+        return (array) DB::table($this->table)
+            ->select(implode(',', $columns))
+            ->addStatementWithValues(
+                $this->scopes['query'],
+                $this->scopes['values']
+            )
+            ->get();
     }
 
     /**
@@ -111,18 +105,12 @@ abstract class Model
      */
     final public function find(int $id, array $columns = array('*')): ?stdClass
     {
-        $queryColumns = implode(',', $columns);
-
-        if ($this->softDelete) {
-            return DB::table($this->table)
-                ->select($queryColumns)
-                ->where($this->primaryKey, '=', (string) $id)
-                ->where($this->softDeletedKey, '=', '0')
-                ->first();
-        }
-
         return DB::table($this->table)
-            ->select($queryColumns)
+            ->select(implode(',', $columns))
+            ->addStatementWithValues(
+                $this->scopes['query'],
+                $this->scopes['values']
+            )
             ->where($this->primaryKey, '=', (string) $id)
             ->first();
     }
@@ -151,19 +139,12 @@ abstract class Model
      */
     final protected function firstByAttributes(array $attributes): ?stdClass
     {
-        if ($this->softDelete) {
-            return DB::table($this->table)
-                ->select('*')
-                ->where($this->softDeletedKey, '=', '0')
-                ->addStatementWithValues(
-                    $this->convertAttributesIntoWhereQuery($attributes),
-                    $this->convertAttributesIntoWhereValues($attributes)
-                )->first();
-        }
-
         return DB::table($this->table)
             ->select('*')
             ->addStatementWithValues(
+                $this->scopes['query'],
+                $this->scopes['values']
+            )->addStatementWithValues(
                 $this->convertAttributesIntoWhereQuery($attributes),
                 $this->convertAttributesIntoWhereValues($attributes)
             )->first();
@@ -178,21 +159,25 @@ abstract class Model
      */
     final protected function firstByID(int $id): ?stdClass
     {
-        if ($this->softDelete) {
-            return DB::table($this->table)
-                ->select('*')
-                ->where($this->primaryKey, '=', (string) $id)
-                ->where($this->softDeletedKey, '=', '0')
-                ->first();
-        }
-
         return DB::table($this->table)
             ->select('*')
+            ->addStatementWithValues(
+                $this->scopes['query'],
+                $this->scopes['values']
+            )
             ->where($this->primaryKey, '=', (string) $id)
             ->first();
     }
 
+    final protected function addScope(DB $builder): void
+    {
+        $this->scopes['query'] .= $builder->getQuery();
+        $this->scopes['values'] += $builder->getValues();
+    }
+
     /**
+     * Convert the given attributes into a query.
+     *
      * @param string[] $attributes
      *
      * @return string
@@ -206,12 +191,10 @@ abstract class Model
                 ->where($column, '=', $attribute)
                 ->getQuery();
         }
-
         return $query;
     }
-
     /**
-     * Covert the given attributes into values.
+     * Convert the given attributes into values.
      *
      * @param string[] $attributes
      *
@@ -222,7 +205,7 @@ abstract class Model
     ): array {
         $values = [];
         foreach ($attributes as $column => $attribute) {
-            $values = DB::table($this->table)
+            $values += DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
         }

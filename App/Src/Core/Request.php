@@ -22,39 +22,43 @@ final class Request
     /**
      * Get a server item.
      *
-     * @param string $key the key to search for the corresponding
-     *                    value in the server array
+     * @param string $key     the key to search for the corresponding
+     *                        value in the server array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function server(string $key): string
+    public function server(string $key, string $default = ''): string
     {
-        return $this->request($_SERVER, $key);
+        return $this->request($_SERVER, $key, $default);
     }
 
     /**
      * Get a post item.
      *
-     * @param string $key the key to search for the corresponding
- *                        value in the post array
+     * @param string $key     the key to search for the corresponding
+ *                            value in the post array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function post(string $key): string
+    public function post(string $key, string $default = ''): string
     {
-        return $this->request($_POST, $key);
+        return $this->request($_POST, $key, $default);
     }
 
     /**
      * Get a get item.
      *
-     * @param string $key the key to search for the corresponding value in the get array
+     * @param string $key     the key to search for the corresponding
+     *                        value in the get array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function get(string $key): string
+    public function get(string $key, string $default = ''): string
     {
-        return $this->request($_GET, $key);
+        return $this->request($_GET, $key, $default);
     }
 
     /**
@@ -74,40 +78,43 @@ final class Request
     /**
      * Get an env item.
      *
-     * @param string $key the key to search for the corresponding
+     * @param string $key     the key to search for the corresponding
      *                        value in the env array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function env(string $key): string
+    public function env(string $key, string $default = ''): string
     {
-        return $this->request($_ENV, $key);
+        return $this->request($_ENV, $key, $default);
     }
 
     /**
      * Get a cookie item.
      *
-     * @param string $key the key to search for the corresponding
+     * @param string $key     the key to search for the corresponding
      *                        value in the cookie array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function cookie(string $key): string
+    public function cookie(string $key, string $default = ''): string
     {
-        return $this->request($_COOKIE, $key);
+        return $this->request($_COOKIE, $key, $default);
     }
 
     /**
      * Get a session item.
      *
-     * @param string $key the key to search for the corresponding
+     * @param string $key     the key to search for the corresponding
      *                        value in the session array
+     * @param string $default the default value to return
      *
      * @return string
      */
-    public function session(string $key): string
+    public function session(string $key, string $default = ''): string
     {
-        return $this->request($_SESSION, $key);
+        return $this->request($_SESSION, $key, $default);
     }
 
     /**
@@ -116,13 +123,14 @@ final class Request
      * @param array[]  $superGlobal get the data from the super global
      * @param string   $key         the key to search for the corresponding
      *                              value in the super global
+     * @param string   $default     the default value to return
      *
      * @return string the data from the super global
      */
-    private function request(array $superGlobal, string $key): string
+    private function request(array $superGlobal, string $key, string $default = ''): string
     {
         if (!array_key_exists($key, $superGlobal)) {
-            return '';
+            return $default;
         }
 
         if (is_array($superGlobal[$key])) {
