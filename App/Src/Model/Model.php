@@ -7,15 +7,12 @@ namespace App\Src\Model;
 use App\Src\Database\DB;
 use stdClass;
 
-
 abstract class Model
 {
     protected string $table;
     protected string $primaryKey;
+    protected string $softDeletedKey;
 
-    /**
-     * @var string[]
-     */
     protected array $scopes = [
         'query' => '',
         'values' => [],
@@ -147,12 +144,10 @@ abstract class Model
             ->addStatementWithValues(
                 $this->scopes['query'],
                 $this->scopes['values']
-            )
-            ->addStatementWithValues(
+            )->addStatementWithValues(
                 $this->convertAttributesIntoWhereQuery($attributes),
                 $this->convertAttributesIntoWhereValues($attributes)
-            )
-            ->first();
+            )->first();
     }
 
     /**
@@ -181,6 +176,8 @@ abstract class Model
     }
 
     /**
+     * Convert the given attributes into a query.
+     *
      * @param string[] $attributes
      *
      * @return string
@@ -194,12 +191,10 @@ abstract class Model
                 ->where($column, '=', $attribute)
                 ->getQuery();
         }
-
         return $query;
     }
-
     /**
-     * Covert the given attributes into values.
+     * Convert the given attributes into values.
      *
      * @param string[] $attributes
      *
@@ -210,7 +205,7 @@ abstract class Model
     ): array {
         $values = [];
         foreach ($attributes as $column => $attribute) {
-            $values = DB::table($this->table)
+            $values += DB::table($this->table)
                 ->where($column, '=', $attribute)
                 ->getValues();
         }

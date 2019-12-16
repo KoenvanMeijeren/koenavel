@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Core;
 
-use App\Models\User;
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Src\Exceptions\Basic\UndefinedRouteException;
 use App\Src\Exceptions\Object\InvalidMethodCalledException;
 use App\Src\Exceptions\Object\InvalidObjectException;

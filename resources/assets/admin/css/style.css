@@ -320,6 +320,6 @@ tr.shown td.details-control:before {
     text-align: center;
 }
 
-.user-blocked, .user-blocked:hover {
+.row-warning, .row-warning:hover {
     background-color: #f5c6cb !important;
 }
