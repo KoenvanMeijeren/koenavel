@@ -50,8 +50,10 @@ final class IndexViewModel
                 $this->dataTable->addClasses('row-warning');
             }
 
+            $slug = "<a href='/{$page->getSlug()}' target='_blank'>{$page->getSlug()}</a>";
+
             $this->dataTable->addRow(
-                '/' . $page->getSlug(),
+                $slug,
                 $page->getTitle(),
                 $inMenuState->toReadable(),
                 $isPublishedState->toReadable(),
