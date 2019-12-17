@@ -59,6 +59,10 @@ final class IDEncryption
      */
     public function decrypt(string $encryptedId): int
     {
+        if ($encryptedId === '') {
+            return 0;
+        }
+
         [$id, $token, $mac] = explode(':', $encryptedId);
 
         if (!hash_equals(
