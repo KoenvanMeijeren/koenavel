@@ -44,11 +44,7 @@ final class LogUserOutAction extends Action
      */
     protected function authorize(): bool
     {
-        if (!$this->user->isLoggedIn()) {
-            return false;
-        }
-
-        return true;
+        return $this->user->isLoggedIn();
     }
 
     /**
