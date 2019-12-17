@@ -7,6 +7,7 @@ use App\Src\Validate\Validate;
 $filenames = [
     'default',
     'csv',
+    'math',
     'load_items',
 ];
 

@@ -24,7 +24,7 @@ if (!function_exists('array_replace_keys')) {
      * This function replaces the keys of an associate array by those supplied in the keys array.
      *
      * @param array $array target associative array in which the keys are intended to be replaced
-     * @param array $keys  associate array where search key => replace by key, for replacing respective keys
+     * @param array $keys associate array where search key => replace by key, for replacing respective keys
      *
      * @return array with replaced keys
      */
@@ -59,11 +59,11 @@ if (!function_exists('replaceString')) {
     /**
      * Replace all found strings in a string.
      *
-     * @param string $toRemove  the string to be replaced
+     * @param string $toRemove the string to be replaced
      * @param string $toReplace the new value of the string
      *                          which is going to be replaced
-     * @param string $string    the string to search in
-     * @param int    $limit     limit the number of matches
+     * @param string $string the string to search in
+     * @param int $limit limit the number of matches
      *
      * @return string
      */
@@ -73,8 +73,8 @@ if (!function_exists('replaceString')) {
         string $string,
         int $limit = -1
     ) {
-        return (string) preg_replace(
-            '/\b('.$toRemove.')\b/',
+        return (string)preg_replace(
+            '/\b(' . $toRemove . ')\b/',
             $toReplace,
             $string,
             $limit
@@ -98,7 +98,7 @@ if (!function_exists('replaceDot')) {
         string $string,
         int $limit = -1
     ) {
-        return (string) preg_replace(
+        return (string)preg_replace(
             '/\./',
             $toReplace,
             $string,
@@ -111,10 +111,10 @@ if (!function_exists('replaceAllExceptFirstString')) {
     /**
      * Replace all found strings in a string.
      *
-     * @param string $toRemove  the string to be replaced
+     * @param string $toRemove the string to be replaced
      * @param string $toReplace the new value of the string
      *                          which is going to be replaced
-     * @param string $string    the string to search in
+     * @param string $string the string to search in
      *
      * @return string
      */
@@ -176,8 +176,8 @@ if (!function_exists('random_string')) {
      * For PHP 7, random_int is a PHP core function
      * For PHP 5.x, depends on https://github.com/paragonie/random_compat
      *
-     * @param int       $length     How many characters do we want?
-     * @param string    $keyspace   A string of all possible characters
+     * @param int $length How many characters do we want?
+     * @param string $keyspace A string of all possible characters
      *                              to select from
      *
      * @return string
@@ -194,7 +194,7 @@ if (!function_exists('random_string')) {
         $pieces = [];
         $max = mb_strlen($keyspace, '8bit') - 1;
         for ($i = 0; $i < $length; ++$i) {
-            $pieces []= $keyspace[random_int(0, $max)];
+            $pieces [] = $keyspace[random_int(0, $max)];
         }
 
         return implode('', $pieces);
