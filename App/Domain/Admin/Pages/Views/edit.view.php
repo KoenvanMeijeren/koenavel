@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Pages\Models\Page;
 use App\Domain\Admin\Pages\Repositories\PageRepository;
 use App\Src\Core\Request;
@@ -8,7 +9,15 @@ use App\Src\Security\CSRF;
 use App\Src\Translation\Translation;
 
 $page = new PageRepository($page ?? null);
+$user = new User();
 $request = new Request();
+
+$disabled = '';
+if ($user->getRights() !== User::DEVELOPER
+    && $page->getInMenu() === Page::PAGE_STATIC
+) {
+    $disabled = 'disabled';
+}
 
 $action = '/admin/page/create/store';
 if ($page->getId() !== 0) {
@@ -25,23 +34,19 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                 </h4>
 
                 <div class="float-right">
-                    <?php if ($page->isPublished()) : ?>
+                    <?php if ($disabled === '' && $page->isPublished()) : ?>
                         <form method="post"
                               action="/admin/page/unpublish/<?= $page->getId() ?>">
-                            <?= CSRF::insertToken(
-    '/admin/page/unpublish/' . $page->getId()
-) ?>
+                            <?= CSRF::insertToken('/admin/page/unpublish/' . $page->getId()) ?>
 
                             <button type="submit" class="btn btn-danger">
                                 <?= Translation::get('unpublish_button') ?>
                             </button>
                         </form>
-                    <?php else : ?>
+                    <?php elseif ($disabled === '') : ?>
                         <form method="post"
                               action="/admin/page/publish/<?= $page->getId() ?>">
-                            <?= CSRF::insertToken(
-                                '/admin/page/publish/' . $page->getId()
-                            ) ?>
+                            <?= CSRF::insertToken('/admin/page/publish/' . $page->getId()) ?>
 
                             <button type="submit" class="btn btn-success">
                                 <?= Translation::get('publish_button') ?>
@@ -64,9 +69,10 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_page_slug') ?>"
                                    value="<?= $request->post(
-                                'slug',
-                                $page->getSlug()
-                            ) ?>"
+                                       'slug',
+                                       $page->getSlug()
+                                   ) ?>"
+                                   <?= $disabled ?>
                                    required>
                         </div>
                         <div class="col-sm-6">
@@ -96,6 +102,7 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                 <select id="pageInMenu"
                                         class="form-control"
                                         name="pageInMenu"
+                                        <?= $disabled ?>
                                         required>
                                     <option
                                         value="<?= Page::PAGE_NOT_IN_MENU ?>"
@@ -140,9 +147,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                 <textarea class="form-control" id="content"
                                           rows="10"
                                           name="content"><?= parseHTMLEntities($request->post(
-                                       'content',
-                                       $page->getContent()
-                                   )) ?></textarea>
+                                        'content',
+                                        $page->getContent()
+                                    )) ?></textarea>
                             </div>
                         </div>
                     </div>
