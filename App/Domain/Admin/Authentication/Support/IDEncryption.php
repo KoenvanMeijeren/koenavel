@@ -21,12 +21,14 @@ final class IDEncryption
     /**
      * Safely generate the random unique token.
      *
+     * @param int $length the length of the token
+     *
      * @return string
      * @throws Exception
      */
-    public function generateToken(): string
+    public function generateToken(int $length = 200): string
     {
-        return bin2hex(random_bytes(200));
+        return bin2hex(random_bytes($length));
     }
 
     /**
@@ -57,10 +59,6 @@ final class IDEncryption
      */
     public function decrypt(string $encryptedId): int
     {
-        if (strlen($encryptedId) <= 1) {
-            return 0;
-        }
-
         [$id, $token, $mac] = explode(':', $encryptedId);
 
         if (!hash_equals(
@@ -93,16 +91,8 @@ final class IDEncryption
             return true;
         }
 
-        if (strlen($encryptedId) <= 1) {
-            return false;
-        }
-
         [$id, $token, $mac] = explode(':', $encryptedId);
 
-        if (hash_equals($userToken, $token)) {
-            return true;
-        }
-
-        return false;
+        return hash_equals($userToken, $token);
     }
 }
