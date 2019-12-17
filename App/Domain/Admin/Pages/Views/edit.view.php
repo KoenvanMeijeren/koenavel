@@ -69,9 +69,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_page_slug') ?>"
                                    value="<?= $request->post(
-                                       'slug',
-                                       $page->getSlug()
-                                   ) ?>"
+    'slug',
+    $page->getSlug()
+) ?>"
                                    <?= $disabled ?>
                                    required>
                         </div>
@@ -147,9 +147,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                 <textarea class="form-control" id="content"
                                           rows="10"
                                           name="content"><?= parseHTMLEntities($request->post(
-                                        'content',
-                                        $page->getContent()
-                                    )) ?></textarea>
+                                       'content',
+                                       $page->getContent()
+                                   )) ?></textarea>
                             </div>
                         </div>
                     </div>

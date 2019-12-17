@@ -38,7 +38,7 @@ final class Resource
 
                     <form method="post"
                           action="' . $destroyAction . '">
-                          '.CSRF::insertToken($destroyAction).'
+                          ' . CSRF::insertToken($destroyAction) . '
                         <button class="btn btn-danger flex-child edit-button ' . $removeBorder . '"
                                 type="submit"
                                 data-toggle="tooltip"

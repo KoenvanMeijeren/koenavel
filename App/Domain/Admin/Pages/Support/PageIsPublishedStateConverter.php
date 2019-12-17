@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Pages\Support;
 
-
 use App\Src\Converter\Converter;
 use App\Src\Translation\Translation;
 
