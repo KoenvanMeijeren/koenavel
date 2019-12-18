@@ -6,7 +6,7 @@ if (!function_exists('sampling')) {
     {
         // if it's the first iteration, the first set
         // of combinations is the same as the set of characters
-        if (empty($combinations)) {
+        if (sizeof($combinations) < 1) {
             $combinations = $chars;
         }
 
@@ -67,7 +67,7 @@ if (!function_exists('generateCombinations')) {
 }
 
 if (!function_exists('getCombination')) {
-// State-based way of generating combinations:
+    // State-based way of generating combinations:
     function getCombination($values, $count, $index)
     {
         $result = array();

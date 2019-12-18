@@ -70,11 +70,20 @@ $rights = new AccountRightsConverter($user->getRights())
                             </a>
                         </li>
                         <li class="nav-item <?= strpos(URI::getUrl(),
-                            'pages') !== false ? 'active' : '' ?>">
+                            'page') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/pages">
                                 <i class="fas fa-sitemap"></i>
                                 <p>
                                     <?= Translation::get('admin_menu_pages') ?>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item <?= strpos(URI::getUrl(),
+                            'setting') !== false ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/settings">
+                                <i class="fas fa-cogs"></i>
+                                <p>
+                                    <?= Translation::get('admin_menu_settings') ?>
                                 </p>
                             </a>
                         </li>
