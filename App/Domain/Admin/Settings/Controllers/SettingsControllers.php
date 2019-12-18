@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Settings\Controllers;
 
-
 use App\Domain\Admin\Settings\Actions\CreateSettingAction;
 use App\Domain\Admin\Settings\Actions\DestroySettingAction;
 use App\Domain\Admin\Settings\Actions\UpdateSettingAction;

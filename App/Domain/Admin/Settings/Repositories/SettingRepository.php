@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Settings\Repositories;
 
-
 final class SettingRepository
 {
     private ?object $setting;
@@ -18,7 +17,7 @@ final class SettingRepository
     {
         $this->setting = $setting;
 
-        $this->id = (int) ($setting->setting_ID ?? '');
+        $this->id = (int) ($setting->setting_ID ?? '0');
         $this->key = $setting->setting_key ?? '';
         $this->value = $setting->setting_value ?? '';
         $this->isDeleted = (bool) ($setting->setting_is_deleted ?? '0');

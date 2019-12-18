@@ -102,9 +102,9 @@ $disabled = $user->getRights() === User::DEVELOPER ? '' : 'disabled';
                                        <?= $disabled ?>
                                        placeholder="<?= Translation::get('form_key') ?>"
                                        value="<?= $request->post(
-                                           'setting_key',
-                                           $setting->getKey()
-                                       ) ?>"
+    'setting_key',
+    $setting->getKey()
+) ?>"
                                        required>
                             </div>
                             <div class="col-sm-6">

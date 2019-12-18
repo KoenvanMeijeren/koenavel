@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Settings\ViewModels;
 
-
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use App\Src\Exceptions\Basic\NoTranslationsForGivenLanguageID;
 use App\Src\Response\Redirect;

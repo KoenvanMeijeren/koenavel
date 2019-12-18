@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Settings\Actions;
 
-
 use App\Src\State\State;
 use App\Src\Translation\Translation;
 

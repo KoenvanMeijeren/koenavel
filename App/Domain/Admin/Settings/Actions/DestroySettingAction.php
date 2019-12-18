@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Settings\Actions;
 
-
 use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Settings\Models\Setting;
 use App\Domain\Admin\Settings\Repositories\SettingRepository;

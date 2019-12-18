@@ -67,7 +67,7 @@ if (!function_exists('generateCombinations')) {
 }
 
 if (!function_exists('getCombination')) {
-// State-based way of generating combinations:
+    // State-based way of generating combinations:
     function getCombination($values, $count, $index)
     {
         $result = array();
