@@ -8,6 +8,7 @@ use App\Domain\Admin\Authentication\Controllers\AuthenticationController;
 use App\Domain\Admin\Dashboard\Controllers\DashboardController;
 use App\Domain\Admin\Debug\Controllers\DebugController;
 use App\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
+use App\Domain\Admin\Settings\Controllers\SettingsControllers;
 use App\Domain\Pages\Controllers\PageController;
 use App\Src\Core\Router;
 
@@ -58,7 +59,21 @@ Router::prefix('admin')->group(static function () {
         'destroy', User::ADMIN);
 
     /**
-     * Account maintenance routes.
+     * Settings routes.
+     */
+    Router::get('settings', SettingsControllers::class,
+        'index', User::ADMIN);
+    Router::post('setting/create/store', SettingsControllers::class,
+        'store', User::ADMIN);
+    Router::get('setting/edit/{slug}', SettingsControllers::class,
+        'edit', User::ADMIN);
+    Router::post('setting/edit/{slug}/update', SettingsControllers::class,
+        'update', User::ADMIN);
+    Router::post('setting/delete/{slug}', SettingsControllers::class,
+        'destroy', User::ADMIN);
+
+    /**
+     * Account routes.
      */
     Router::get('account', AccountController::class,
         'index', User::SUPER_ADMIN);

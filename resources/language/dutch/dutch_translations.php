@@ -20,7 +20,7 @@ return [
      */
     'admin_menu_dashboard' => 'Dashboard',
     'admin_menu_pages' => 'Pagina\'s',
-    'admin_menu_settings' => 'Instellingen',
+    'admin_menu_settings' => 'Website instellingen',
     'admin_menu_translations' => 'Teksten',
     'admin_menu_account' => 'Account',
     'admin_menu_accounts' => 'Accounts',
@@ -59,7 +59,7 @@ return [
     'page_static_cannot_be_published' => 'Statische pagina\'s worden standaard al gepubliceerd.',
     'page_static_cannot_be_unpublished' => 'Statische pagina\'s moeten altijd gepubliceerd zijn.',
     'page_static_cannot_be_deleted' => 'De statische pagina \'%s\' mag niet worden verwijderd.',
-    'page_successfully_deleted' => 'De pagina \'%s\' is successvol verwijderd',
+    'page_successfully_deleted' => 'De pagina \'%s\' is succesvol verwijderd',
     'page_unsuccessfully_deleted' => 'De pagina \'%s\' kon niet worden verwijderd',
     'page_not_in_menu' => 'Niet in menu tonen',
     'page_public_in_menu' => 'Openbaar in het menu tonen',
@@ -74,13 +74,15 @@ return [
     /**
      * Admin settings page translations.
      */
-    'admin_settings_title' => 'Instellingen',
-    'admin_updated_settings_successful_message' => 'Instellingen zijn succesvol opgeslagen.',
-    'admin_updated_settings_failed_message' => 'Instellingen opslaan is mislukt.',
-    'admin_company_settings_title' => 'Bedrijf',
-    'admin_social_settings_title' => 'Sociale media',
-    'admin_email_settings_title' => 'Student en docent email domein',
-    'admin_regular_settings_title' => 'Algemeen',
+    'settings_title' => 'Website instellingen',
+    'setting_does_not_exists' => 'Deze instelling bestaat niet.',
+    'setting_already_exists' => 'De instelling \'%s\' bestaat al.',
+    'setting_successful_created' => 'De instelling \'%s\' is succesvol aangemaakt.',
+    'setting_unsuccessful_created' => 'De instelling \'%s\' kon niet worden aangemaakt.',
+    'setting_successful_updated' => 'De instelling \'%s\' is succesvol bijgewerkt.',
+    'setting_successful_deleted' => 'De instelling \'%s\' is succesvol verwijderd',
+    'setting_unsuccessful_deleted' => 'De instelling \'%s\' kon niet worden verwijderd',
+    'delete_setting_confirmation_message' => 'Weet je zeker dat je de instelling %s wil verwijderen?',
 
     /**
      * Admin translation page translations.
@@ -149,6 +151,8 @@ return [
     'table_row_slug' => 'URL',
     'table_row_page_in_menu' => 'Zichtbaarheid',
     'table_row_title' => 'Titel',
+    'table_row_key' => 'Sleutel',
+    'table_row_value' => 'Waarde',
     'table_row_email' => 'Email',
     'table_row_rights' => 'Rol',
     'table_row_publish_state' => 'Publicatie status',
@@ -169,6 +173,8 @@ return [
     'form_choose_file' => 'Bestand kiezen',
     'form_no_file__is_chosen' => 'Geen bestand gekozen',
     'form_name' => 'Naam',
+    'form_key' => 'Sleutel',
+    'form_value' => 'Waarde',
     'form_name_placeholder' => 'Typ naam',
     'form_email' => 'Email',
     'form_email_placeholder' => 'Typ email',
