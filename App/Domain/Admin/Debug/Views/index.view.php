@@ -120,9 +120,13 @@ $request = new Request();
                                     <?php $active = 'active';
                                     foreach (($logs ?? []) as $key => $log) :
                                         if (strpos(
-                                            $log['message'] ?? '',
-                                            'ERROR'
-                                        ) !== false) {
+                                                $log['message'] ?? '',
+                                                'ERROR'
+                                            ) !== false
+                                            || strpos(
+                                                $log['message'] ?? '',
+                                                'failed'
+                                            ) !== false) {
                                             $class = 'active-danger';
                                         } else {
                                             $class = 'active-success';
@@ -153,9 +157,13 @@ $request = new Request();
                                         <ul class="list-group list-group-flush">
                                             <?php
                                             if (strpos(
-                                    $log['message'] ?? '',
-                                    'ERROR'
-                                ) !== false
+                                                    $log['message'] ?? '',
+                                                    'ERROR'
+                                                ) !== false
+                                                || strpos(
+                                                    $log['message'] ?? '',
+                                                    'failed'
+                                                ) !== false
                                             ) {
                                                 $class = 'list-group-item-danger';
                                             } else {
