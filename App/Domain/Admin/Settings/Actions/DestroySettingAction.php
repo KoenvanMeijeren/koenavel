@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Settings\Actions;
 
 
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Settings\Models\Setting;
 use App\Domain\Admin\Settings\Repositories\SettingRepository;
 use App\Src\Action\FormAction;
@@ -54,6 +55,21 @@ final class DestroySettingAction extends FormAction
             )
         );
         return false;
+    }
+
+    protected function authorize(): bool
+    {
+        $user = new User();
+        if ($user->getRights() !== User::DEVELOPER) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('setting_destroy_not_allowed')
+            );
+
+            return false;
+        }
+
+        return parent::authorize();
     }
 
     /**

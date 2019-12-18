@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Settings\ViewModels;
 
 
+use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Settings\Repositories\SettingRepository;
 use App\Src\Translation\Translation;
 use App\Support\DataTable;
@@ -36,6 +37,7 @@ final class IndexViewModel
             Translation::get('table_row_edit')
         );
 
+        $user = new User();
         foreach ($this->settings as $item) {
             $setting = new SettingRepository($item);
 
@@ -48,7 +50,8 @@ final class IndexViewModel
                     sprintf(
                         Translation::get('delete_setting_confirmation_message'),
                         $setting->getKey()
-                    )
+                    ),
+                    $user->getRights() !== User::DEVELOPER
                 )
             );
         }
