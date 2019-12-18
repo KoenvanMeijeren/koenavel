@@ -133,7 +133,10 @@ final class Session
      */
     public function logRequest(string $key, string $value): void
     {
-        if ($key !== State::FAILED && $key !== State::SUCCESSFUL) {
+        if ($key !== State::FAILED
+            && $key !== State::SUCCESSFUL
+            && $key !== State::FORM_VALIDATION_FAILED
+        ) {
             return;
         }
 
