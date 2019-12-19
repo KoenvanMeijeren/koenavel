@@ -12,6 +12,7 @@ final class Request
      * @var string
      */
     public const URI = 'REQUEST_URI';//used URI for page access
+    public const PATH_INFO = 'PATH_INFO';//used path info for page access
     public const METHOD = 'REQUEST_METHOD';//used method for page access
     public const HTTP_HOST = 'HTTP_HOST';// host header from current request
     public const HTTP_REFERER = 'HTTP_REFERER';// complete URL of current page

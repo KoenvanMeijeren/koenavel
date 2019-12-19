@@ -28,4 +28,7 @@ return [
     // Encryption token
     'encryptionToken' => '',
     'secretKey' => '',
+
+    // Inspector token
+    'inspector_token' => '',
 ];
