@@ -20,8 +20,10 @@ final class Upload
      * @var string[]
      */
     public const ALLOWED_FILE_TYPES = [
-        'image/jpg', 'image/jpeg',
-        'image/svg+xml', 'image/png'
+        'image/jpg' => 'jpg',
+        'image/jpeg' => 'jpeg',
+        'image/svg+xml' => 'svg',
+        'image/png' => 'png'
     ];
 
     private Session $session;
@@ -160,13 +162,13 @@ final class Upload
 
         if (!array_key_exists($type, self::ALLOWED_FILE_TYPES)) {
             $this->session->flash(
-                'error',
+                State::FAILED,
                 Translation::get('not_allowed_file_upload')
             );
             return false;
         }
 
-        $this->file['name'] = $randomBytes.self::ALLOWED_FILE_TYPES[$type];
+        $this->file['name'] = $randomBytes.'.'.self::ALLOWED_FILE_TYPES[$type];
         return true;
     }
 

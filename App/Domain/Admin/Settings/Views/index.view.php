@@ -117,9 +117,9 @@ $disabled = $user->getRights() === User::DEVELOPER ? '' : 'disabled';
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_value') ?>"
                                        value="<?= $request->post(
-                                           'setting_value',
-                                           $setting->getValue()
-                                       ) ?>"
+    'setting_value',
+    $setting->getValue()
+) ?>"
                                        required>
                             </div>
                         </div>
