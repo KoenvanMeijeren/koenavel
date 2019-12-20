@@ -63,11 +63,11 @@ abstract class PageAction extends FormAction
     {
         $validator = new FormValidator();
 
-        $validator->input($this->title)
+        $validator->input($this->title, 'Title')
             ->isRequired();
 
         if ($this->url !== $this->pageRepository->getSlug()) {
-            $validator->input($this->url)
+            $validator->input($this->url, 'Slug')
                 ->isRequired()
                 ->isUnique(
                     $this->page->getBySlug($this->url),
@@ -78,14 +78,14 @@ abstract class PageAction extends FormAction
                 );
         }
 
-        $validator->input((string)$this->inMenu)
+        $validator->input((string)$this->inMenu, 'Zichtbaarheid van de pagina')
             ->isRequired()
             ->isBetweenRange(
                 Page::PAGE_NOT_IN_MENU,
                 Page::PAGE_IN_MENU_AND_IN_FOOTER
             );
 
-        $validator->input($this->content)
+        $validator->input($this->content, 'Pagina content')
             ->isRequired();
 
         return $validator->handleFormValidation();
