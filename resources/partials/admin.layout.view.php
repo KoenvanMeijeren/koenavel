@@ -210,8 +210,11 @@ $rights = new AccountRightsConverter($user->getRights())
 <script type="text/javascript" charset="utf8"
         src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
 
+<!-- Tiny Mce editor -->
 <script type="text/javascript" charset="utf8"
         src="/resources/assets/vendor/tinymce/tinymce.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="/resources/assets/vendor/tinymce/initiateTinyMce.js"></script>
 
 <!-- Default JS -->
 <script type="text/javascript" charset="utf8"
