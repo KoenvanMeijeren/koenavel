@@ -7,6 +7,7 @@ use App\Domain\Admin\Accounts\User\Models\User;
 use App\Domain\Admin\Authentication\Controllers\AuthenticationController;
 use App\Domain\Admin\Dashboard\Controllers\DashboardController;
 use App\Domain\Admin\Debug\Controllers\DebugController;
+use App\Domain\Admin\File\Controllers\UploadFileController;
 use App\Domain\Admin\Pages\Controllers\PageController as AdminPageController;
 use App\Domain\Admin\Settings\Controllers\SettingsControllers;
 use App\Domain\Pages\Controllers\PageController;
@@ -57,6 +58,12 @@ Router::prefix('admin')->group(static function () {
         'unPublish', User::ADMIN);
     Router::post('page/delete/{slug}', AdminPageController::class,
         'destroy', User::ADMIN);
+
+    /**
+     * File upload routes.
+     */
+    Router::post('upload/file', UploadFileController::class,
+        'store', User::ADMIN);
 
     /**
      * Settings routes.

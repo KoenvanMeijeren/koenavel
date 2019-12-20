@@ -6,6 +6,9 @@ return [
     // App name
     'appName' => '',
 
+    // App url
+    'appUri' => '',
+
     // Database
     'databaseName' => '',
     'databaseUserName' => '',
