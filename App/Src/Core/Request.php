@@ -19,6 +19,7 @@ final class Request
     public const HTTP_USER_AGENT = 'HTTP_USER_AGENT';// the agent of the user
     public const USER_IP_ADDRESS = 'REMOTE_ADDR';// IP address from the user his IP
     public const DOCUMENT_ROOT = 'DOCUMENT_ROOT';// the root of the document
+    public const HTTP_ORIGIN = 'HTTP_ORIGIN';// the http origin of the request
 
     /**
      * Get a server item.
