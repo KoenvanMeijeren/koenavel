@@ -23,6 +23,7 @@ final class PageController
 
     private string $baseViewPath = 'Admin/Pages/Views/';
     private string $redirectBack = '/admin/pages';
+    private string $redirectSame = '/admin/page/edit/';
 
     public function __construct()
     {
@@ -91,7 +92,7 @@ final class PageController
     {
         $update = new UpdatePageAction($this->page);
         if ($update->execute()) {
-            return new Redirect($this->redirectBack);
+            return new Redirect($this->redirectSame . $this->page->getID());
         }
 
         return $this->edit();
@@ -102,9 +103,7 @@ final class PageController
         $publish = new PublishPageAction($this->page);
         $publish->execute();
 
-        return new Redirect(
-            '/admin/page/edit/' . $this->page->getID()
-        );
+        return new Redirect($this->redirectSame . $this->page->getID());
     }
 
     public function unPublish(): Redirect
@@ -112,9 +111,7 @@ final class PageController
         $unPublish = new UnPublishPageAction($this->page);
         $unPublish->execute();
 
-        return new Redirect(
-            '/admin/page/edit/' . $this->page->getID()
-        );
+        return new Redirect($this->redirectSame . $this->page->getID());
     }
 
     public function destroy(): Redirect
