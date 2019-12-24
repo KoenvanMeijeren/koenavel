@@ -35,11 +35,9 @@ final class Upload
     /**
      * Prepare the file.
      *
-     * @param string[] $file the file
-     * @param string $path the path to store the file in
-     * @param string $stripedPath the striped path to store the file in
-     *
-     * @throws Exception
+     * @param string[]  $file           the file to be uploaded
+     * @param string    $path           the path to store the file in
+     * @param string    $stripedPath    the striped path to store the file in
      */
     public function __construct(
         array $file,
@@ -53,23 +51,11 @@ final class Upload
         $this->stripedPath = $stripedPath;
     }
 
-    /**
-     * Prepare the file.
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
     public function prepare(): bool
     {
         return $this->convertFileName();
     }
 
-    /**
-     * Get the file location if the file exists.
-     *
-     * @return string
-     */
     public function getFileIfItExists(): string
     {
         $request = new Request();
@@ -81,14 +67,6 @@ final class Upload
         return file_exists($file) ? $fileLocation : '';
     }
 
-    /**
-     * Upload the file.
-     *
-     * @return bool
-     *
-     * @throws ErrorWhileUploadingFileException
-     * @throws Exception
-     */
     public function execute(): bool
     {
         $uploadHandler = new UploadHandler($this->path);
@@ -134,27 +112,14 @@ final class Upload
         return false;
     }
 
-    /**
-     * Get the stored file path.
-     *
-     * @return string
-     */
     public function getStoredFilePath(): string
     {
         return $this->storedPath;
     }
 
-    /**
-     * Convert the file name into a non readable name.
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
     private function convertFileName(): bool
     {
         $randomBytes = bin2hex($this->file['name']);
-        $randomBytes .= bin2hex(random_bytes(40));
 
         $type = array_key_exists('type', $this->file) &&
             array_key_exists('name', $this->file) ?
@@ -172,11 +137,6 @@ final class Upload
         return true;
     }
 
-    /**
-     * Set the stored file path.
-     *
-     * @param string $path the stored path of the file
-     */
     private function setStoredFilePath(string $path): void
     {
         $this->storedPath = $path;
