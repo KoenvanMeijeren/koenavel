@@ -112,6 +112,7 @@ return [
     'admin_accounts_maintenance_title' => 'Accounts beheren',
     'admin_create_account_title' => 'Account aanmaken',
     'admin_create_account_successful_message' => 'Account is succesvol aangemaakt.',
+    'admin_create_account_unsuccessful_message' => 'Account kon niet worden aangemaakt.',
     'admin_edit_account_title' => 'Account bewerken',
     'admin_edit_account_wrong_current_password_message' => 'Onjuist huidig wachtwoord gegeven. Wachtwoord is niet bijgewerkt.',
     'admin_edited_account_successful_message' => 'Account is succesvol bijgewerkt.',

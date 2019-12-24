@@ -42,7 +42,7 @@ final class CreateAccountAction extends FormAction
      */
     protected function handle(): bool
     {
-        $this->account->create([
+        $account = $this->account->firstOrCreate([
             'account_name' => $this->name,
             'account_email' => $this->email,
             'account_password' => (string)password_hash(
@@ -51,6 +51,15 @@ final class CreateAccountAction extends FormAction
             ),
             'account_rights' => (string)$this->rights,
         ]);
+
+        if ($account === null) {
+            $this->session->flash(
+                State::FAILED,
+                Translation::get('admin_create_account_unsuccessful_message')
+            );
+
+            return false;
+        }
 
         $this->session->flash(
             State::SUCCESSFUL,
