@@ -10,6 +10,11 @@ use App\Src\Translation\Translation;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- SEO -->
+    <meta name="description" content="Christelijk koor wijdt Hem uw kunst">
+    <meta name="keywords" content="Christelijk koor, Harderwijk">
+    <meta name="author" content="Chirstelijk koor wijdt Hem uw kunst">
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"
           rel="stylesheet">
