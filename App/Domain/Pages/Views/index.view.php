@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
+
+use App\Support\DateTime;
+use Cake\Chronos\Chronos;
+
 ?>
 
 <div class="image-mobile mt-0 pt-0">
-    <img src="https://via.placeholder.com/350x300" width="100%">
+    <img src="https://via.placeholder.com/350x300" alt="foto" width="100%">
 </div>
 
 <div class="image-desktop mt-0 pt-0">
-    <img src="/resources/assets/images/test_image.jpg" width="100%">
+    <img src="/resources/assets/images/test_image.jpg" alt="foto" width="100%">
 </div>
 
 <div class="container page">
@@ -31,11 +35,11 @@ declare(strict_types=1);
 </div>
 
 <div class="image-mobile m-0 p-0">
-    <img src="https://via.placeholder.com/350x300" width="100%">
+    <img src="https://via.placeholder.com/350x300" alt="foto" width="100%">
 </div>
 
 <div class="image-desktop m-0 p-0">
-    <img src="https://via.placeholder.com/1519x300" width="100%">
+    <img src="https://via.placeholder.com/1519x300" alt="foto" width="100%">
 </div>
 
 <div class="container page">
@@ -43,7 +47,7 @@ declare(strict_types=1);
         <h1 class="text-center">Komende concerten in november</h1>
 
         <?php
-        $date = new \App\Support\DateTime(new \Cake\Chronos\Chronos());
+        $date = new DateTime(new Chronos());
         for ($x = 8; $x < 15; $x++) : ?>
             <div class="row event event-border rounded shadow">
                 <div class="col-1 pt-2 default-color">
