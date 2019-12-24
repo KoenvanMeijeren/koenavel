@@ -48,12 +48,7 @@ final class Page extends Model
 
     public function getSlug(): string
     {
-        $slug = Router::getWildcard();
-        if ($slug === '') {
-            $slug = URI::getUrl();
-        }
-
-        return $slug;
+        return Router::getWildcard() === '' ? URI::getUrl() : Router::getWildcard();
     }
 
     public function getBySlug(string $slug): ?stdClass
