@@ -176,7 +176,7 @@ $rights = new AccountRightsConverter($user->getRights())
 
 <!-- Jquery -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/jquery/jquery-3.3.1.js"></script>
+        src="/resources/assets/vendor/jquery/jquery-3.4.1.js"></script>
 
 <!-- Bootstrap -->
 <script type="text/javascript" charset="utf8"
