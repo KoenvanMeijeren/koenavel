@@ -33,9 +33,9 @@ final class CreatePageAction extends PageAction
     {
         $this->prepare();
 
-        $this->page->create($this->attributes);
+        $page = $this->page->firstOrCreate($this->attributes);
 
-        if ($this->page->getBySlug($this->url) === null) {
+        if ($page === null) {
             $this->session->flash(
                 State::FAILED,
                 Translation::get('page_unsuccessfully_created')
