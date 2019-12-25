@@ -66,13 +66,6 @@ final class DB
         return new DatabaseProcessor($this->query, $this->values);
     }
 
-    /**
-     * Add a statement to the query.
-     *
-     * @param string $statement the statement to be added to the query
-     *
-     * @return DB
-     */
     public function addStatement(string $statement): DB
     {
         if (strpos($this->query, 'WHERE') !== false) {
@@ -88,14 +81,6 @@ final class DB
         return $this;
     }
 
-    /**
-     * Add a statement to the query.
-     *
-     * @param string    $statement the statement to be added to the query
-     * @param string[]  $values    the values to bind to the query
-     *
-     * @return DB
-     */
     public function addStatementWithValues(string $statement, array $values): DB
     {
         if (strpos($this->query, 'WHERE') !== false) {
@@ -118,11 +103,6 @@ final class DB
         return $this;
     }
 
-    /**
-     * Get the prepared query.
-     *
-     * @return string
-     */
     public function getQuery(): string
     {
         $this->addHooksForInnerJoins();
@@ -130,12 +110,6 @@ final class DB
         return $this->query;
     }
 
-    /**
-     * Add values. These values will be used when
-     *             the query is going to be executed
-     *
-     * @param string[] $values The values to be added
-     */
     public function addValues(array $values): void
     {
         foreach ($values as $column => $condition) {
@@ -143,21 +117,11 @@ final class DB
         }
     }
 
-    /**
-     * Get the prepared values.
-     *
-     * @return string[]
-     */
     public function getValues(): array
     {
         return $this->values;
     }
 
-    /**
-     * Count the inner joins in the query.
-     *
-     * @return int the number of full pattern matches (which might be zero)
-     */
     private function countInnerJoinsInQuery(): int
     {
         return (int) preg_match_all('/\b(JOIN)\b/', $this->query);
