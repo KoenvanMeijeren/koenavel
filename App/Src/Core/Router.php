@@ -16,10 +16,15 @@ final class Router
 {
     /**
      * All the routes, stored based on the request type -> rights -> url.
-     * Rights:
-     * 0 = Public
-     * 1 = Maintainer
-     * 2 = Super maintainer
+     * For example:
+     * GET =>
+     *      0 => [
+     *          'some_route_unauthorized' => ...
+     *          ],
+     *      1 => [
+     *          'some_route_authorized' => ...
+     *          ],
+     *      ...
      */
     private static array $routes = [
         'GET' => [],
