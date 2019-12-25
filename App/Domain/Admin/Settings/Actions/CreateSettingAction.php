@@ -15,12 +15,12 @@ final class CreateSettingAction extends SettingAction
      */
     protected function handle(): bool
     {
-        $this->setting->create([
+        $setting = $this->setting->firstOrCreate([
             $this->setting->key => $this->key,
             $this->setting->valueKey => $this->value
         ]);
 
-        if ($this->setting->getByKey($this->key) !== null) {
+        if ($setting !== null) {
             $this->session->flash(
                 State::SUCCESSFUL,
                 sprintf(
