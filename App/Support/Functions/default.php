@@ -213,3 +213,42 @@ if (!function_exists('strip_whitespace')) {
         return trim($string);
     }
 }
+
+if (!function_exists('')) {
+    /**
+     * Encode a string into a url-save string.
+     *
+     * Test string: Mess'd up --text-- just (to) stress /test/ ?our! `little` \\clean\\ url fun.ction!?-->
+     *
+     * @param string $string
+     * @param array $replace
+     * @param string $delimiter
+     *
+     * @return string
+     */
+    function encodeUrl(string $string, array $replace = [], string $delimiter = '-')
+    {
+        if (count($replace) > 1) {
+            $string = str_replace($replace, ' ', $string);
+        }
+
+        $charset = (string) iconv(
+            'UTF-8',
+            'ASCII//TRANSLIT',
+            $string
+        );
+        $clean = (string) preg_replace(
+            "/[^a-zA-Z0-9\/_|+ -]/",
+            '',
+            $charset
+        );
+        $trimmedString = strtolower(trim($clean, '-'));
+        $clean = (string) preg_replace(
+            "/[\/_|0-9+ -]+/",
+            $delimiter,
+            $trimmedString
+        );
+
+        return $clean;
+    }
+}

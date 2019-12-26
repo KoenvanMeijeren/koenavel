@@ -31,7 +31,8 @@
         "siriusphp/upload": "^2.1",
         "symfony/filesystem": "^4.4",
         "symfony/templating": "^4.4",
-        "twbs/bootstrap": "^4.4.1"
+        "twbs/bootstrap": "^4.4.1",
+        "ext-iconv": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
