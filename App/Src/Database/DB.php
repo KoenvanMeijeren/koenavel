@@ -81,6 +81,11 @@ final class DB
         return $this;
     }
 
+    /**
+     * @param string $statement
+     * @param string[] $values
+     * @return DB
+     */
     public function addStatementWithValues(string $statement, array $values): DB
     {
         if (strpos($this->query, 'WHERE') !== false) {
@@ -110,6 +115,9 @@ final class DB
         return $this->query;
     }
 
+    /**
+     * @param string[] $values
+     */
     public function addValues(array $values): void
     {
         foreach ($values as $column => $condition) {

@@ -84,9 +84,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                    class="form-control"
                                    placeholder="<?= Translation::get('form_title') ?>"
                                    value="<?= $request->post(
-                                       'title',
-                                       $page->getTitle()
-                                   ) ?>"
+    'title',
+    $page->getTitle()
+) ?>"
                                    required>
                         </div>
                     </div>
@@ -148,9 +148,9 @@ $pageInMenu = (int)$request->post('pageInMenu', (string)$page->getInMenu());
                                           rows="10" name="content">
                                     <?= parseHTMLEntities(
                                        $request->post(
-                                            'content',
-                                            $page->getContent()
-                                        )
+                                           'content',
+                                           $page->getContent()
+                                       )
                                    ) ?>
                                 </textarea>
                             </div>
