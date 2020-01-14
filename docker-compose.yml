@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  mariadb:
+    container_name: "koenavel_mariadb"
+    image: wodby/mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: koenavelPassRoot
+      MYSQL_DATABASE: koenavel
+      MYSQL_USER: koenavelUser
+      MYSQL_PASSWORD: koenavelPass
+    ports:
+      - 8306:3306
+  php:
+    container_name: "koenavel_php"
+    image: wodby/drupal-php:7.4
+    environment:
+      PHP_FPM_CLEAR_ENV: "no"
+      MYSQL_DATABASE: koenavel
+      MYSQL_HOSTNAME: mariadb
+      MYSQL_USER: koenavelUser
+      MYSQL_PASSWORD: koenavelPass
+      MYSQL_PORT: 8306:3306
+      REDIS_HOST: redis
+    volumes:
+      - ./:/var/www/html:cached
+  nginx:
+    container_name: "koenavel_nginx"
+    image: wodby/nginx:latest
+    depends_on:
+      - php
+    environment:
+      NGINX_STATIC_OPEN_FILE_CACHE: "off"
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_BACKEND_HOST: php
+      NGINX_SERVER_ROOT: /var/www/html/
+      NGINX_VHOST_PRESET: php
+    volumes:
+      - ./:/var/www/html:cached
+    ports:
+      - 8888:80
+  redis:
+    container_name: "koenavel_redis"
+    image: wodby/redis:latest
