@@ -32,10 +32,11 @@ abstract class DatabaseConnection
         try {
             $dsn = $config->get('databaseServer')->toString() . ';';
             $dbName = 'dbname=' . $config->get('databaseName')->toString() . ';';
-            $charset = 'charset' . $config->get('databaseCharset')->toString().';';
+            $charset = 'charset=' . $config->get('databaseCharset')->toString() . ';';
+            $port = 'port=' . $config->get('databasePort')->toString() . ';';
 
             $this->pdo = new PDO(
-                $dsn . $dbName . $charset,
+                $dsn . $dbName . $charset . $port,
                 $config->get('databaseUsername')->toString(),
                 $config->get('databasePassword')->toString(),
                 $config->get('databaseOptions')->toArray()
