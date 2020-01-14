@@ -49,18 +49,18 @@ final class UploadFileAction extends FileAction
     {
         $request = new Request();
 
-        if (!in_array(
-            $request->server(Request::HTTP_ORIGIN),
+        if (!in_array($request->server(Request::HTTP_ORIGIN),
             $this->acceptedOrigins,
-            true
-        )
+            true)
         ) {
             header('HTTP/1.1 403 Origin Denied');
 
             return false;
         }
 
-        header('Access-Control-Allow-Origin: ' . $request->server(Request::HTTP_ORIGIN));
+        header('Access-Control-Allow-Origin: ' .
+            $request->server(Request::HTTP_ORIGIN)
+        );
 
         return true;
     }
