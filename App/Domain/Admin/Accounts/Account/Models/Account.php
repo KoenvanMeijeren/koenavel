@@ -18,11 +18,11 @@ final class Account extends Model
     protected string $softDeletedKey = 'account_is_deleted';
 
     /**
-     * The encryption of the account password.
+     * The hash method of the account password.
      *
      * @var int
      */
-    public const PASSWORD_ENCRYPTION = PASSWORD_ARGON2ID;
+    public const PASSWORD_HASH_METHOD = PASSWORD_ARGON2ID;
 
     public function __construct()
     {

@@ -134,12 +134,12 @@ final class LogUserInAction extends FormAction
     {
         if (password_needs_rehash(
             $this->account->getPassword(),
-            Account::PASSWORD_ENCRYPTION
+            Account::PASSWORD_HASH_METHOD
         )
         ) {
             $this->attributes['account_password'] = (string) password_hash(
                 $this->account->getPassword(),
-                Account::PASSWORD_ENCRYPTION
+                Account::PASSWORD_HASH_METHOD
             );
         }
     }

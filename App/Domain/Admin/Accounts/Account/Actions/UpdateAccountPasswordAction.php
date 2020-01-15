@@ -39,7 +39,7 @@ final class UpdateAccountPasswordAction extends FormAction
         $this->account->update($this->account->getID(), [
             'account_password' => (string) password_hash(
                 $this->password,
-                Account::PASSWORD_ENCRYPTION
+                Account::PASSWORD_HASH_METHOD
             ),
         ]);
 

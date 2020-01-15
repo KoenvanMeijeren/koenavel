@@ -47,7 +47,7 @@ final class CreateAccountAction extends FormAction
             'account_email' => $this->email,
             'account_password' => (string)password_hash(
                 $this->password,
-                Account::PASSWORD_ENCRYPTION
+                Account::PASSWORD_HASH_METHOD
             ),
             'account_rights' => (string)$this->rights,
         ]);
