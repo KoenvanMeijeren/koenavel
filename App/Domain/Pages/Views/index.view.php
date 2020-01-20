@@ -48,7 +48,7 @@ use Cake\Chronos\Chronos;
 
         <?php
         $date = new DateTime(new Chronos());
-        for ($x = 8; $x < 15; $x++) : ?>
+        for ($x = 8; $x < 12; $x++) : ?>
             <div class="row event event-border rounded shadow">
                 <div class="col-1 pt-2 default-color">
                 <span class="h3 font-weight-bold">
@@ -81,5 +81,13 @@ use Cake\Chronos\Chronos;
                 </div>
             </div>
         <?php endfor; ?>
+
+        <div class="row text-center mt-5 mb-5">
+            <div class="col">
+                <button type="button" class="btn btn-default">
+                    Bekijk alle concerten
+                </button>
+            </div>
+        </div>
     </div>
 </div>

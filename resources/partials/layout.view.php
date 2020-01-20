@@ -40,9 +40,13 @@ use App\Src\Translation\Translation;
 <nav class="navbar navbar-expand-lg m-0 p-0">
     <div class="container">
         <div class="d-flex flex-grow-1">
-            <a class="navbar-brand logo" href="#">
-                <img src="/resources/assets/images/logo.png"
-                     alt="Wijdt Hem uw kunst logo" width="100%">
+            <a class="navbar-brand logo" href="/">
+<!--                <img src="/resources/assets/images/logo.png"-->
+<!--                     alt="Wijdt Hem uw kunst logo" width="100%">-->
+                <h1 class="m-2">
+                    Christelijk koor <br>
+                    Wijdt Hem Uw Kunst
+                </h1>
             </a>
 
             <button class="navbar-toggler button-unstyled"
