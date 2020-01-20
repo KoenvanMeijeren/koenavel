@@ -18,7 +18,7 @@ tinymce.init({
     browser_spellcheck: true,
     relative_urls: false,
     language: 'nl',
-    language_url: '/resources/assets/vendor/tinymce/langs/nl.js',
+    language_url: '/js/tinymce/langs/nl.js',
     /* enable title field in the Image dialog*/
     image_title: true,
     /* enable automatic uploads of images represented by blob or data URIs*/
