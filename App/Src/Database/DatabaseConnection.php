@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Src\Database;
 
 use App\Src\Config\Config;
+use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use PDO;
 use PDOException;
@@ -28,17 +29,18 @@ abstract class DatabaseConnection
     final public function __construct(string $query, array $values)
     {
         $config = new Config();
+        $request = new Request();
 
         try {
-            $dsn = $config->get('databaseServer')->toString() . ';';
-            $dbName = 'dbname=' . $config->get('databaseName')->toString() . ';';
-            $charset = 'charset=' . $config->get('databaseCharset')->toString() . ';';
-            $port = 'port=' . $config->get('databasePort')->toString() . ';';
+            $dsn = $request->env('databaseServer') . ';';
+            $dbName = 'dbname=' . $request->env('databaseName') . ';';
+            $charset = 'charset=' . $request->env('databaseCharset') . ';';
+            $port = 'port=' . $request->env('databasePort') . ';';
 
             $this->pdo = new PDO(
                 $dsn . $dbName . $charset . $port,
-                $config->get('databaseUsername')->toString(),
-                $config->get('databasePassword')->toString(),
+                $request->env('databaseUsername'),
+                $request->env('databasePassword'),
                 $config->get('databaseOptions')->toArray()
             );
         } catch (InvalidKeyException $e) {
