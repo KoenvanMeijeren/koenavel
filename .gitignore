@@ -3,7 +3,4 @@
 /vendor
 .phpunit.result.cache
 .php_cs.cache
-/config/dev_config.php
-/config/production_config.php
 /coverage
-composer.lock

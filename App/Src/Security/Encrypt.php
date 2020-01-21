@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Src\Security;
 
-use App\Src\Config\Config;
-use App\Src\Exceptions\Basic\InvalidKeyException;
+use App\Src\Core\Request;
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
@@ -40,16 +39,15 @@ final class Encrypt
      * Load the key from the config.
      *
      * @return Key
-     * @throws InvalidKeyException
      * @throws BadFormatException
      * @throws EnvironmentIsBrokenException
      */
     private function loadKeyFromConfig(): Key
     {
-        $config = new Config();
+        $request = new Request();
 
         return Key::loadFromAsciiSafeString(
-            $config->get('encryptionToken')->toString()
+            $request->env('encryptionToken')
         );
     }
 }

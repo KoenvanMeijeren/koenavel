@@ -11,7 +11,7 @@ use Cake\Chronos\Chronos;
 </div>
 
 <div class="image-desktop mt-0 pt-0">
-    <img src="/resources/assets/images/test_image.jpg" alt="foto" width="100%">
+    <img src="/images/test_image.jpg" alt="foto" width="100%">
 </div>
 
 <div class="container page">

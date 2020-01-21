@@ -9,6 +9,7 @@ use App\Src\Log\Log;
 use App\Src\Session\Builder as SessionBuilder;
 use App\Src\Session\Session;
 use App\Src\State\State;
+use Dotenv\Dotenv;
 use Exception;
 
 final class App
@@ -35,6 +36,14 @@ final class App
 
         $env = new Env();
         $env->setErrorHandling();
+
+        $dotEnvFile = '.env.development';
+        if ($env->get() === Env::PRODUCTION) {
+            $dotEnvFile = '.env.production';
+        }
+
+        $dotEnv = Dotenv::createImmutable(APP_PATH . '/../', $dotEnvFile);
+        $dotEnv->load();
 
         $sessionBuilder = new SessionBuilder();
         $sessionBuilder->startSession();

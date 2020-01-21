@@ -23,25 +23,25 @@ use App\Src\Translation\Translation;
 
     <!-- Bootstrap -->
     <link rel="stylesheet"
-          href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <!-- Font awesome -->
     <script src="https://kit.fontawesome.com/ec953a682d.js"
             crossorigin="anonymous"></script>
 
     <!-- Theme -->
-    <link rel="stylesheet" href="/resources/assets/css/theme.css">
+    <link rel="stylesheet" href="/css/theme.css">
 
     <title><?= $data['title'] ?? 'Undefined' ?></title>
 
-    <link rel="icon" href="/resources/assets/images/logo.png">
+    <link rel="icon" href="/images/logo.png">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg m-0 p-0">
     <div class="container">
         <div class="d-flex flex-grow-1">
             <a class="navbar-brand logo" href="/">
-<!--                <img src="/resources/assets/images/logo.png"-->
+<!--                <img src="/web/assets/images/logo.png"-->
 <!--                     alt="Wijdt Hem uw kunst logo" width="100%">-->
                 <h1 class="m-2">
                     Christelijk koor <br>
@@ -160,15 +160,15 @@ use App\Src\Translation\Translation;
     </div>
 
     <!-- Jquery -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/jquery/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
     <!-- Bootstrap -->
-    <script
-        src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <!-- Site JS -->
-    <script src="/resources/assets/js/default.js"></script>
+    <script src="/js/default.js"></script>
 </footer>
 </body>
 </html>
