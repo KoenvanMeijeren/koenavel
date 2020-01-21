@@ -30,17 +30,14 @@
         "monolog/monolog": "^2.0.2",
         "paragonie/anti-csrf": "^2.2.1",
         "siriusphp/upload": "^2.1.1",
-        "symfony/filesystem": "^4.4.2",
-        "symfony/templating": "^4.4.2",
-        "twbs/bootstrap": "^4.4.1",
-        "ext-iconv": "*"
+        "symfony/filesystem": "^4.4.3",
+        "symfony/templating": "^4.4.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
         "bmitch/churn-php": "^1.0.3",
         "daniel-werner/php-quality-tools": "^1.1.0",
         "ergebnis/phpstan-rules": "^0.13.0",
-        "nunomaduro/phpinsights": "^1.11.1",
         "php-coveralls/php-coveralls": "^2.2.0",
         "phploc/phploc": "^5.0.0",
         "phpstan/phpstan-deprecation-rules": "^0.11.2",
@@ -62,8 +59,7 @@
             "phpcpd app",
             "phploc app",
             "phpmnd app",
-            "phpstan analyse app -c phpstan.neon --level=7",
-            "vendor/bin/phpinsights"
+            "phpstan analyse app -c phpstan.neon --level=7"
         ],
         "phpstan": [
             "phpstan analyse -c phpstan.neon"
