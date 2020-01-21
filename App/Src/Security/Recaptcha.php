@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Security;
 
-use App\Src\Config\Config;
 use App\Src\Core\Request;
 use App\Src\Session\Session;
 use App\Src\State\State;
@@ -26,10 +25,9 @@ final class Recaptcha
     public function __construct()
     {
         $request = new Request();
-        $config = new Config();
 
         $recaptcha = http_build_query([
-            'secret' => $config->get('recaptcha_secret_key')->toString(),
+            'secret' => $request->env('recaptcha_secret_key'),
             'response' => $request->post('g-recaptcha-response'),
             'remoteip' => $request->server(Request::USER_IP_ADDRESS),
         ]);

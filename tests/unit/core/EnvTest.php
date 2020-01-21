@@ -55,7 +55,7 @@ class EnvTest extends TestCase
         $this->env = new Env();
         $this->env->setErrorHandling();
 
-        $this->assertEquals(Env::DEVELOPMENT, $this->env->getEnv());
+        $this->assertEquals(Env::DEVELOPMENT, $this->env->get());
     }
 
     public function test_that_we_can_get_the_production_env()
@@ -64,7 +64,7 @@ class EnvTest extends TestCase
         $this->env = new Env();
         $this->env->setErrorHandling();
 
-        $this->assertEquals(Env::PRODUCTION, $this->env->getEnv());
+        $this->assertEquals(Env::PRODUCTION, $this->env->get());
     }
 
     public function tearDown(): void

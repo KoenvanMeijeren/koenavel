@@ -37,7 +37,12 @@ final class App
         $env = new Env();
         $env->setErrorHandling();
 
-        $dotEnv = Dotenv::createImmutable(APP_PATH . '/../');
+        $dotEnvFile = '.env.development';
+        if ($env->get() === Env::PRODUCTION) {
+            $dotEnvFile = '.env.production';
+        }
+
+        $dotEnv = Dotenv::createImmutable(APP_PATH . '/../', $dotEnvFile);
         $dotEnv->load();
 
         $sessionBuilder = new SessionBuilder();

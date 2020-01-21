@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Src\Database;
 
-use App\Src\Config\Config;
 use App\Src\Core\Request;
 use App\Src\Exceptions\Basic\InvalidKeyException;
 use PDO;
@@ -28,7 +27,6 @@ abstract class DatabaseConnection
      */
     final public function __construct(string $query, array $values)
     {
-        $config = new Config();
         $request = new Request();
 
         try {
@@ -41,7 +39,10 @@ abstract class DatabaseConnection
                 $dsn . $dbName . $charset . $port,
                 $request->env('databaseUsername'),
                 $request->env('databasePassword'),
-                $config->get('databaseOptions')->toArray()
+                [
+                    PDO::ATTR_EMULATE_PREPARES, $request->env('PDO_ATTR_EMULATE_PREPARES'),
+                    PDO::ATTR_ERRMODE => $request->env('PDO_ATTR_ERRMODE')
+                ]
             );
         } catch (InvalidKeyException $e) {
             throw new PDOException($e->getMessage(), $e->getCode(), $e);

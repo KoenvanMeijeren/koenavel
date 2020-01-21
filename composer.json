@@ -29,6 +29,7 @@
         "kminek/email-obfuscator": "^1.0.1",
         "monolog/monolog": "^2.0.2",
         "paragonie/anti-csrf": "^2.2.1",
+        "phpunit/phpunit": "8.4",
         "siriusphp/upload": "^2.1.1",
         "symfony/filesystem": "^4.4.3",
         "symfony/templating": "^4.4.2",
@@ -45,7 +46,6 @@
         "phpstan/phpstan-deprecation-rules": "^0.11.2",
         "phpstan/phpstan-phpunit": "^0.11.2",
         "phpstan/phpstan-strict-rules": "^0.11.1",
-        "phpunit/phpunit": "8.5.*",
         "sebastian/phpcpd": "^4.1.0",
         "thecodingmachine/phpstan-strict-rules": "^0.11.2"
     },

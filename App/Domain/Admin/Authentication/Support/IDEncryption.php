@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Authentication\Support;
 
-use App\Src\Config\Config;
+use App\Src\Core\Request;
 use Exception;
 
 final class IDEncryption
@@ -13,9 +13,9 @@ final class IDEncryption
 
     public function __construct()
     {
-        $config = new Config();
+        $request = new Request();
 
-        $this->secretToken = $config->get('secretKey')->toString();
+        $this->secretToken = $request->env('secretKey');
     }
 
     /**

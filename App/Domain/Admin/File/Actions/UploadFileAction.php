@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Admin\File\Actions;
 
 use App\Src\Action\FileAction;
-use App\Src\Config\Config;
 use App\Src\Core\Request;
 use App\Src\Core\Upload;
 
@@ -13,9 +12,9 @@ final class UploadFileAction extends FileAction
 {
     public function __construct()
     {
-        $config = new Config();
+        $request = new Request();
 
-        $this->acceptedOrigins[] = $config->get('appUri')->toString();
+        $this->acceptedOrigins[] = $request->env('appUri');
     }
 
     /**
