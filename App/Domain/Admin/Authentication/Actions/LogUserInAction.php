@@ -17,11 +17,6 @@ use App\Src\Validate\form\FormValidator;
 
 final class LogUserInAction extends FormAction
 {
-    /**
-     * @var int
-     */
-    public const MAXIMUM_LOGIN_ATTEMPTS = 3;
-
     private User $user;
     private Session $session;
     private AccountRepository $account;
@@ -29,16 +24,21 @@ final class LogUserInAction extends FormAction
     private string $email;
     private string $password;
 
+    private int $maximumLoginAttempts;
+
     private array $attributes = [];
 
     public function __construct(User $user)
     {
         $request = new Request();
-        $this->user = $user;
         $this->session = new Session();
+
+        $this->user = $user;
 
         $this->email = $request->post('email');
         $this->password = $request->post('password');
+
+        $this->maximumLoginAttempts = (int) $request->env('loginAttempts');
 
         $this->account = new AccountRepository(
             $this->user->getByEmail($this->email)
@@ -170,7 +170,7 @@ final class LogUserInAction extends FormAction
     private function blockAccount(): void
     {
         if ($this->account->getRights() > User::ADMIN
-            || $this->account->getFailedLogInAttempts() < self::MAXIMUM_LOGIN_ATTEMPTS) {
+            || $this->account->getFailedLogInAttempts() < $this->maximumLoginAttempts) {
             return;
         }
 

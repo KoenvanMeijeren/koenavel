@@ -17,46 +17,51 @@ $rights = new AccountRightsConverter($user->getRights())
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css"
-          href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-
-    <!-- Font awesome -->
-    <script type="text/javascript" charset="utf8"
-            src="/resources/assets/vendor/fontawesome/fontawesome.js"></script>
-
-    <!-- Theme css -->
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/vendor/cms-theme/css/light-bootstrap-dashboard.css">
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/admin/css/style.css">
-
-    <!-- Data tables -->
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/vendor/datatables/css/dataTables.bootstrap4.min.css">
-
-    <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css"
-          href="/resources/assets/vendor/datepicker/css/datepicker.css">
-
-    <?php if (!$user->isLoggedIn()) : ?>
-        <!-- Login CSS -->
-        <link rel="stylesheet" type="text/css"
-              href="/resources/assets/admin/css/login.css">
-    <?php endif; ?>
-
     <!-- Title -->
     <title><?= $data['title'] ?? 'Undefined' ?></title>
 
     <!-- Fav icon -->
     <link rel="icon" type="image/png" sizes="96x96"
-          href="/resources/assets/admin/images/favicon/favicon-96x96.png">
+          href="/admin/images/favicon/favicon-96x96.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/ec953a682d.js"
+            crossorigin="anonymous"></script>
+
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css"
+          href="/vendor/cms-theme/css/light-bootstrap-dashboard.css">
+
+    <!-- Data tables -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css"
+          href="/vendor/datepicker/css/datepicker.css">
+
+    <?php if (!$user->isLoggedIn()) : ?>
+        <!-- Login CSS -->
+        <link rel="stylesheet" type="text/css" href="/admin/css/login.css">
+    <?php endif; ?>
+
+    <!-- Customized theme css -->
+    <link rel="stylesheet" type="text/css" href="/admin/css/style.css">
+
+    <!-- Tiny MCE -->
+    <script
+        src="https://cdn.tiny.cloud/1/amyz5vlo9d4hlbop0b78rh9earl2dxn0ljxerv4vuyfcqawj/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 <body>
 <?php if ($user->isLoggedIn()) : ?>
     <div class="wrapper">
         <div class="sidebar" data-color="orange"
-             data-image="/resources/assets/vendor/cms-theme/img/sidebar-5.jpg">
+             data-image="/vendor/cms-theme/img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <?php if ($user->getRights() >= User::ADMIN) : ?>
@@ -175,49 +180,44 @@ $rights = new AccountRightsConverter($user->getRights())
 <?php endif; ?>
 
 <!-- Jquery -->
-<script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/jquery/jquery-3.4.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
-<script type="text/javascript" charset="utf8"
-        src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<!-- Popper js -->
-<script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/popper/popper.min.js"></script>
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <!-- Data tables -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+        src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/admin/js/datatables.js"></script>
+        src="/admin/js/datatables.js"></script>
 
 <!-- Datepicker -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/datepicker/js/datepicker.js"></script>
+        src="/vendor/datepicker/js/datepicker.js"></script>
 
 <!-- Password strength indicator -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/password-strength-indicator/zxcvbn.js"></script>
+        src="/vendor/password-strength-indicator/zxcvbn.js"></script>
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/admin/js/password-strength-indicator.js"></script>
+        src="/admin/js/password-strength-indicator.js"></script>
 
 <!-- Theme js -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
+        src="/vendor/cms-theme/js/light-bootstrap-dashboard.js"></script>
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
+        src="/vendor/cms-theme/js/plugins/bootstrap-notify.js"></script>
 
-<!-- Tiny Mce editor -->
+<!-- Initialize the Tiny Mce editor -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/tinymce/tinymce.js"></script>
-<script type="text/javascript" charset="utf8"
-        src="/resources/assets/vendor/tinymce/initiateTinyMce.js"></script>
+        src="/js/tinymce/tinymce.js"></script>
 
 <!-- Default JS -->
 <script type="text/javascript" charset="utf8"
-        src="/resources/assets/admin/js/default.js"></script>
+        src="/admin/js/default.js"></script>
 </body>
 </html>

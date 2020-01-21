@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Admin\File\Actions;
 
 use App\Src\Action\FileAction;
-use App\Src\Config\Config;
 use App\Src\Core\Request;
 use App\Src\Core\Upload;
 
@@ -13,9 +12,9 @@ final class UploadFileAction extends FileAction
 {
     public function __construct()
     {
-        $config = new Config();
+        $request = new Request();
 
-        $this->acceptedOrigins[] = $config->get('appUri')->toString();
+        $this->acceptedOrigins[] = $request->env('appUri');
     }
 
     /**
@@ -49,16 +48,19 @@ final class UploadFileAction extends FileAction
     {
         $request = new Request();
 
-        if (!in_array($request->server(Request::HTTP_ORIGIN),
+        if (!in_array(
+            $request->server(Request::HTTP_ORIGIN),
             $this->acceptedOrigins,
-            true)
+            true
+        )
         ) {
             header('HTTP/1.1 403 Origin Denied');
 
             return false;
         }
 
-        header('Access-Control-Allow-Origin: ' .
+        header(
+            'Access-Control-Allow-Origin: ' .
             $request->server(Request::HTTP_ORIGIN)
         );
 

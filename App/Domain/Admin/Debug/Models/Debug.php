@@ -19,7 +19,7 @@ final class Debug
     {
         $env = new Env();
 
-        return $env->getEnv();
+        return $env->get();
     }
 
     public function getSessionSettingsInformation(): string

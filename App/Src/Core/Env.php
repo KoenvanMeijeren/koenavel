@@ -35,7 +35,7 @@ final class Env
     public function __construct()
     {
         $this->setHost();
-        $this->setEnv();
+        $this->set();
     }
 
     /**
@@ -62,7 +62,7 @@ final class Env
      *
      * @throws InvalidEnvException
      */
-    private function setEnv(): void
+    private function set(): void
     {
         $this->env = self::PRODUCTION;
         if (strpos($this->host, 'localhost') !== false ||
@@ -74,7 +74,7 @@ final class Env
         Validate::var($this->env)->isEnv();
     }
 
-    public function getEnv(): string
+    public function get(): string
     {
         return $this->env;
     }

@@ -66,7 +66,7 @@ $request = new Request();
                                 <meter max="4" id="password-strength-meter" value="0"></meter>
                                 <p id="password-strength-text"></p>
 
-                                <input type="password" id="password"
+                                <input type="password" id="confirmationPassword"
                                        name="confirmationPassword"
                                        class="form-control"
                                        placeholder="<?= Translation::get('form_confirmation_password') ?>"
